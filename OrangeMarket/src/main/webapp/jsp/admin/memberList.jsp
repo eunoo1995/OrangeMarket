@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/css/admin_main.css">
 
 <script src="/js/admin.js"></script>
-        
+
 </head>
 <body>
 	<%@include file="/include/admin_header.jsp" %>
@@ -22,7 +22,7 @@
     		<div class="section-content">
     			<div class="section-search">
 		    		<select name="">
-						<option value="">아이디</option>	    		
+						<option value="">아이디</option>
 						<option value="">닉네임</option>	    		
 		    		</select>
 		    		<input type="text" name="" value="" placeholder="검색하실 내용을 입력하세요.">
