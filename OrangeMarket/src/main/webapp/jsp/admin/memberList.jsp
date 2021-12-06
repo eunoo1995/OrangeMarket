@@ -58,7 +58,7 @@
 							<td>연락처 : 010-0000-0000</td>
 							<td>주소 : 서울특별시 강남구</td>
 							<td>최근접속일 : 2021/01/01</td>
-							<td><button type="button" class="section-btn" value="unq">계정정지</button></td>
+							<td><button type="button" class="section-btn">계정정지</button></td>
 						</tr>
 					</table>
 					<div style="width:1000px; margin-top:50px; text-align:center;">《 1 2 3 4 5 》</div>

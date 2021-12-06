@@ -5,10 +5,10 @@ $(function(){
 		var detail = currentRow.next('tr');
 		if(!detail.is(':visible')) {
 			detail.show();
-			$(this).attr('src', '../images/icon_up.png');
+			$(this).attr('src', '/images/admin/icon_up.png');
 		} else {
 			detail.hide();
-			$(this).attr('src', '../images/icon_down.png');
+			$(this).attr('src', '/images/admin/icon_down.png');
 		}
 	});
 	
