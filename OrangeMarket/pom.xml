@@ -6,7 +6,7 @@
 	<artifactId>OrangeMarket</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	<name>mywork1</name>
+	<name>OrangeMarket</name>
 	<url>http://www.egovframe.go.kr</url>
 
 	<licenses>
