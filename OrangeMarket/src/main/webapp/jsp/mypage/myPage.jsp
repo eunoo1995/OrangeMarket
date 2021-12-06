@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
 <!-- 헤더 -->
 <jsp:include page="/include/header.jsp" flush="false">
 	<jsp:param name="cssName" value="mypage" />
