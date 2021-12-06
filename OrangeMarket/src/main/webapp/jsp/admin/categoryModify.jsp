@@ -14,7 +14,7 @@
 	
     <section id="section">
     	<div class="section-inner">
-    		<div class="section-title">카테고리 메뉴관리1</div>
+    		<div class="section-title">카테고리 메뉴관리</div>
     		<div class="section-content">
     			<div class="category-menu">
     				<div class="category-title">
