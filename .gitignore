@@ -26,4 +26,9 @@ hs_err_pid*
 # system
 Servers/
 .metadata/
-/target/m2e-wtp/
+*/target/m2e-wtp/*
+*/target/m2e-wtp/web-resources/*
+*/pom.properties/*
+.project 
+.classpath 
+.settings
