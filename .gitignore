@@ -27,4 +27,7 @@ hs_err_pid*
 Servers/
 .metadata/
 */target/*
-pom.properties
+*/pom.properties/*
+.project 
+.classpath 
+.settings
