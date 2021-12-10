@@ -26,4 +26,5 @@ hs_err_pid*
 # system
 Servers/
 .metadata/
-OrangeMarket/target/m2e-wtp/
+*/target/*
+pom.properties
