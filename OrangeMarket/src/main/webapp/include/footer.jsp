@@ -63,7 +63,7 @@
 	if(jsName != null && !jsName.equals("")) {
 		pageContext.setAttribute("jsName", jsName);
 	%>
-		<link type="text/css" rel="stylesheet" href="/js/${jsName}.js"/>
+		<script type="text/javascript" src="/js/${jsName}.js"></script>
 	<%
 	}
 	%>

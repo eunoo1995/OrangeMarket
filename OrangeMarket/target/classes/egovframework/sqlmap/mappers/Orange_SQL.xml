@@ -9,6 +9,7 @@
 		, loc
 		FROM DEPT
 		WHERE deptno=#{deptno}
+		
 	</select>
 
 	<select id="selectDeptList" resultType="egovMap">

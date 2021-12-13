@@ -19,7 +19,7 @@ public class OrangeController {
 	@RequestMapping(value = "/deptList.do")
 	public String deptlist(DeptVO vo, Model model) throws Exception {
 		
-		int deptno = 20;
+		int deptno = 10;
 		
 		/*
 		List<?> list = sampleService.selectDeptList();
@@ -32,13 +32,13 @@ public class OrangeController {
 	}
 	
 
-	@RequestMapping(value="/main.do")
+	@RequestMapping(value="/main")
 	public String showMainPage() throws Exception {
 		
 		return "main/main";
 	}
 	
-	@RequestMapping(value="/productList.do")
+	@RequestMapping(value="/product-list")
 	public String selectProductList() throws Exception {
 		
 		return "product/productList";
