@@ -192,5 +192,7 @@
 <!-- 페이지 wraper end -->
 
 <!-- 푸터 -->
-<jsp:include page="/include/footer.jsp" flush="false" />
+<jsp:include page="/include/footer.jsp" flush="false" >
+	<jsp:param name="jsName" value="mypage" />
+</jsp:include>
 <!-- 푸터 -->
