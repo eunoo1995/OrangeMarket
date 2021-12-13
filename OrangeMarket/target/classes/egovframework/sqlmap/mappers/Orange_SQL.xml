@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orange.service.impl.OrangeMapper">
+
+	<select id="selectDeptDetail" parameterType="int"
+		resultType="DeptVO">
+		SELECT deptno
+		, d_name
+		, loc
+		FROM DEPT
+		WHERE deptno=#{deptno}
+	</select>
+
+	<select id="selectDeptList" resultType="egovMap">
+		select * from dept
+	</select>
+
+</mapper>
