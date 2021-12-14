@@ -16,8 +16,7 @@
 	<!-- 타이틀 및 메뉴 -->
 	<header class="sub-page-head">
 		<div class="cont-inner">
-			<h2 class="sub-page-title">문의하기</h2>
-			<p class="sub-page-desc">고객센터</p>
+			<h2 class="sub-page-title">고객센터</h2>
 		</div>
 	</header>
 
@@ -28,8 +27,8 @@
 		
 			<nav class="board-menu-wrap">
 				<ul class="board-menu">
-					<li class="menu_li on"><a href="askBoardList.do">자주하는질문</a></li>
-					<li class="menu_li"><a href="infoAccount.do"><b>문의하기</b></a></li>
+					<li class="menu_li on"><a href="inquiry-list">문의내역</a></li>
+					<li class="menu_li"><a href="report-list"><b>신고내역</b></a></li>
 				</ul>
 			</nav>
 
@@ -68,7 +67,7 @@
 
 			<div class="btn1_div">
 				<button type="button" class="btn"
-					onclick="location='askBoardWrite.do'">문의하기</button>
+					onclick="location='askBoardWrite.do'">작성하기</button>
 			</div>
 
 			<article class="pager-wrap">

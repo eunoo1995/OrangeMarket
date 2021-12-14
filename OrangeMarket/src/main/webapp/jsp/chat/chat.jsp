@@ -16,7 +16,7 @@
 		<div class="cont-inner clx">
 			<div class="chat-list">
 				<!-- 채팅목록 시작 -->
-				<div class="chatlist-item">
+				<div class="chatlist-item" style="cursor:pointer">
 					<!--반복문-->
 
 					<div class="item-left">
@@ -66,11 +66,7 @@
 					<!-- 채팅창에 띄워진 상대방 프사,닉네임,거래품목이미지,가격 -->
 
 					<div class="bar-inner">
-						<img class="chatlist-image bar-item"
-							src="/images/icons/ico_user_solid.png">
-						<p class=" bar-item">상대 닉네임</p>
-
-						<img class="chatlist-image  bar-item" src="/images/icons/star.png">
+						<p class=" bar-item">게시물 제목</p>
 						<p class=" bar-item">가격</p>
 					</div>
 

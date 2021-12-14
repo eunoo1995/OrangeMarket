@@ -16,7 +16,6 @@
 	<header class="sub-page-head">
 		<div class="cont-inner">
 			<h2 class="sub-page-title">문의하기</h2>
-			<p class="sub-page-desc">고객센터</p>
 		</div>
 	</header>
 
@@ -24,15 +23,7 @@
 	<article class="board-wrap">
 		<!-- container -->
 		<div class="cont-inner">
-			<nav>
-				<ul class="board-menu">
-					<li class="menu_li on"><a href="askBoardList.do">자주하는질문</a></li>
-					<li class="menu_li"><a href="infoAccount.do"><b>문의하기</b></a></li>
-				</ul>
-			</nav>
 
-
-			<form name="frm" method="post" action="">
 				<table class="board-detail-table">
 					<thead>
 						<tr>
@@ -49,14 +40,23 @@
 							<td><div class="content" readonly>test1</div></td>
 						</tr>
 					</tbody>
-
+				</table>
+				<table class="board-detail-table">
+					<thead>
+						<tr>
+							<td><span style="font-weight:bold; font-size:16px;">re:test1</span><br>
+							<span class="board-writer">상담사</span>
+							<span class="board-date">2021.11.30</span></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><div class="content" readonly>답변내용</div></td>
+						</tr>
+					</tbody>
 				</table>
 
-			</form>
-			<div class="btn-div">
-				<button class="btn" onclick="location='ask-boardList.jsp'">취소하기</button>
-				<button class="btn btn-solid" onclick="">저장하기</button>
-			</div>
+			
 
 		</div>
 		<!-- container end -->

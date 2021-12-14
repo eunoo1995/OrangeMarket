@@ -86,7 +86,7 @@
 /*문의하기 내용*/
 .board-wrap table .content {
 	width: 100%;
-	height: 300px;
+	height: 200px;
 	text-align: left;
 	font-size: 16px;
 }
@@ -125,7 +125,7 @@
 }
 
 .board-detail-table thead tr:last-child td {
-	padding-bottom: 30px;
+	padding-bottom: 10px;
 }
 
 .board-detail-table tbody tr:first-child td {
@@ -238,14 +238,110 @@
 	padding-right: 300px;
 }
 
-/*ul*/
-.qna-list {
-	margin-top: 15px;
+
+/*QnA*/
+
+.QnA-main {
+	width:1280px;
+	display: inline-block;
+	margin-top:-15px;
+}
+.QnA-search-input {
+	width:90%;
+	height:40px;
+	border:2px solid #ffb319;
+	border-radius:20px 0px 0px 20px;
+	float:left;
+	padding-left:20px;
+	font-size:18px;
+}
+.QnA-search-button {
+	width:10%;
+	height:40px;
+	background:#ffb319;
+	border:2px solid #ffb319;
+	border-radius:0px 20px 20px 0px;
+	float:left;
+	cursor: pointer;
+}
+.QnA-main button:active {
+	background:#ffda77;
+}
+.QnA-titleList {
+	width:100%;
+	margin-top:50px;
+	text-align:center;
+	background:#fbf6f0;
+	border-collapse:collapse;
+	border-radius:8px;
+}
+.QnA-titleList ul {
+	font-size:18px;
+	color:#666;
+}
+.QnA-titleList li {
+	margin-top:14px;
+	margin-bottom:14px;
+	cursor:pointer;
+}
+.QnA-message {
+	margin-top:25px;
+	text-align:left;
+	color:#999;
+	font-size:13px;
+}
+.QnA-accordion {
+	margin-top:10px;
+	text-align:left;
+}
+.QnA-title {
+	width:100%;
+	height:40px;
+	font-size:18px;
+	padding-left:10px;
+	padding-top:10px;
+	background:#fbf6f0;
+	border-bottom:2px solid #eee;
+	cursor: pointer;
+}
+.QnA-detail {
+	width:1000px;
+	border-bottom:2px solid #eee;
+	padding:15px;
+	display:none;
+}
+.QnA-detail p {
+	line-height:23px;
+}
+.QnA-detail button {
+	width:70px;
+	height:25px;
+	color:#fff;
+	font-size:16px;
+	font-weight:bold;
+	margin-top:15px;
+	border:1px solid #ffb319;
+	background:#ffb319;
+	cursor: pointer;
+}
+.QnA-detail button:active {
+	background:#ffda77;
 }
 
-/*li*/
-.qna-content {
-	font-size: 20px;
-	text-align: left;
-	line-height: 2;
+.QnA-add {
+	text-align:right;
+	margin-top:20px;
+}
+.QnA-add button {
+	width:70px;
+	height:25px;
+	color:#fff;
+	font-size:16px;
+	font-weight:bold;
+	border:1px solid #ffb319;
+	background:#ffb319;
+	cursor: pointer;
+}
+.QnA-add button:active {
+	background:#ffda77;
 }
