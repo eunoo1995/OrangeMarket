@@ -13,7 +13,7 @@ import orange.service.OrangeService;
 @Controller
 public class MemberController {
 
-	@RequestMapping(value = "login")
+	@RequestMapping(value = "/login")
 	public String login(){
 				
 		return "member/login";
