@@ -12,4 +12,10 @@ public class ProductController {
 		return "product/productList";
 	}
 	
+	@RequestMapping(value="/product-write")
+	public String productWrite() throws Exception {
+		
+		return "product/productWrite";
+	}
+	
 }
