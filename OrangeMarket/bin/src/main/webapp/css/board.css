@@ -1,0 +1,347 @@
+/*ask-boardList*/
+.board-menu {
+	display: flex;
+	flex-wrap: wrap;
+	text-align: center;
+	margin-left: -4px;
+	margin-right: -4px;
+	margin-bottom: 50px;
+}
+
+.board-menu>li {
+	flex: 1;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.board-menu>li a {
+	display: block;
+	padding: 20px 20px;
+	border: 1px solid #eee;
+	color: #111;
+	border-radius: 5px;
+	font-size: 18px;
+}
+
+.board-menu>li.on a {
+	background-color: #ffb319;
+	color: #fff;
+}
+
+.board-table {
+	text-align: center;
+}
+
+.board-table tr {
+	border-bottom: 1px solid #eee;
+}
+
+.board-table th, .board-table td {
+	padding: 18px 10px;
+	font-size: 16px;
+}
+
+.board-table thead {
+	font-weight: 500;
+	border-top: 1px solid #111;
+}
+
+.board-table tbody td {
+	color: #666;
+}
+
+.board-table .board-tit {
+	font-weight: 500;
+	color: #111;
+	text-align: left;
+}
+
+.board-table .board-writer {
+	color: #111;
+}
+
+.board-table .board-answer {
+	
+}
+
+/* 테이블하단의 버튼 위치지정용*/
+.btn1_div {
+	padding-top: 20px;
+	text-align: right;
+}
+
+.pg-board-list .btn1_div .btn {
+	height: auto;
+	line-height: 1.25;
+	padding: 10px 20px;
+}
+
+/* write and detail common */
+.board-detail-table th, .board-detail-table td, .board-write-table th,
+	.board-write-table td {
+	padding: 10px;
+	font-size: 16px;
+}
+
+/*문의하기 내용*/
+.board-wrap table .content {
+	width: 100%;
+	height: 200px;
+	text-align: left;
+	font-size: 16px;
+}
+
+/* detail */
+.board-detail-table {
+	border-bottom: 1px solid #ddd;
+}
+
+.board-detail-table .board-category {
+	display: inline-block;
+	color: #666;
+	border: 1px solid #666;
+	line-height: 34px;
+	padding: 0 10px;
+	vertical-align: top;
+	margin-top: 2px;
+	margin-right: 10px;
+	font-size: 16px;
+}
+
+.board-detail-table .board-title {
+	color: #111;
+	font-weight: 500;
+	font-size: 28px;
+}
+
+.board-detail-table .board-writer, .board-detail-table .board-date {
+	color: #666;
+	font-size: 14px;
+}
+
+.board-detail-table thead {
+	text-align: left;
+	border-bottom: 1px solid #111;
+}
+
+.board-detail-table thead tr:last-child td {
+	padding-bottom: 10px;
+}
+
+.board-detail-table tbody tr:first-child td {
+	padding-top: 30px;
+}
+
+/* write */
+.board-write-table .board-category-select, .board-write-table .board-title
+	{
+	height: 50px;
+}
+
+/*문의하기 종류*/
+.board-write-table .board-category-select {
+	width: 25%;
+	margin-right: 0.5%;
+}
+
+/*문의하기 제목*/
+.board-write-table .board-title {
+	width: 74%;
+}
+
+.board-write-table .content {
+	padding: 20px;
+}
+
+/*작성페이지 하단버튼 위치지정용*/
+.pg-board-write .btn-div {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.pg-board-write .btn {
+	width: 250px;
+}
+
+/*==== 자주하는 질문 ====*/
+
+/*검색바 외부*/
+.board-wrap .search_bar {
+	background-color: #fbf6f0;
+	border-radius: 4px;
+	padding: 10px 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+}
+
+/*검색창*/
+.board-wrap .search_input {
+	display: block;
+	border-radius: 4px;
+	text-decoration: none;
+	width: 100%;
+	height: 205x;
+	padding: 10px;
+	font-size: 16px;
+	margin: 10px;
+	margin-left: 20px;
+	border: 1px solid #ddd;
+}
+
+.board-wrap .search_input:focus {
+	outline: none;
+}
+
+/*카테고리 - div*/
+.board-wrap .category {
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+
+/*카테고리 전체박스 - ul*/
+.board-wrap .category-box {
+}
+
+/*카테고리 내부박스 - li*/
+.board-wrap  .category-box .box {
+	list-style: none;
+	border: 1px solid #ffda77;
+	font-size: 16px;
+	width: 11.111%;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	background-color: #fff;
+	color: #333333;
+	float: left;
+}
+
+.board-wrap .category-box .box:hover {
+	background-color: #ffb319;
+}
+
+
+/*자주하는질문 카테고리 클릭 시*/
+.board-wrap #click {
+	background-color: #ffb319;
+	color: #FFF;
+}
+
+/*article */
+/*사용자들이 자주 묻는 질문을 확인해보세요!*/
+.middle-title {
+	font-weight: bold;
+	color: #868e96;
+	line-height: 1.0;
+	padding-right: 300px;
+}
+
+
+/*QnA*/
+
+.QnA-main {
+	width:1280px;
+	display: inline-block;
+	margin-top:-15px;
+}
+.QnA-search-input {
+	width:90%;
+	height:40px;
+	border:2px solid #ffb319;
+	border-radius:20px 0px 0px 20px;
+	float:left;
+	padding-left:20px;
+	font-size:18px;
+}
+.QnA-search-button {
+	width:10%;
+	height:40px;
+	background:#ffb319;
+	border:2px solid #ffb319;
+	border-radius:0px 20px 20px 0px;
+	float:left;
+	cursor: pointer;
+}
+.QnA-main button:active {
+	background:#ffda77;
+}
+.QnA-titleList {
+	width:100%;
+	margin-top:50px;
+	text-align:center;
+	background:#fbf6f0;
+	border-collapse:collapse;
+	border-radius:8px;
+}
+.QnA-titleList ul {
+	font-size:18px;
+	color:#666;
+}
+.QnA-titleList li {
+	margin-top:14px;
+	margin-bottom:14px;
+	cursor:pointer;
+}
+.QnA-message {
+	margin-top:25px;
+	text-align:left;
+	color:#999;
+	font-size:13px;
+}
+.QnA-accordion {
+	margin-top:10px;
+	text-align:left;
+}
+.QnA-title {
+	width:100%;
+	height:40px;
+	font-size:18px;
+	padding-left:10px;
+	padding-top:10px;
+	background:#fbf6f0;
+	border-bottom:2px solid #eee;
+	cursor: pointer;
+}
+.QnA-detail {
+	width:1000px;
+	border-bottom:2px solid #eee;
+	padding:15px;
+	display:none;
+}
+.QnA-detail p {
+	line-height:23px;
+}
+.QnA-detail button {
+	width:70px;
+	height:25px;
+	color:#fff;
+	font-size:16px;
+	font-weight:bold;
+	margin-top:15px;
+	border:1px solid #ffb319;
+	background:#ffb319;
+	cursor: pointer;
+}
+.QnA-detail button:active {
+	background:#ffda77;
+}
+
+.QnA-add {
+	text-align:right;
+	margin-top:20px;
+}
+.QnA-add button {
+	width:70px;
+	height:25px;
+	color:#fff;
+	font-size:16px;
+	font-weight:bold;
+	border:1px solid #ffb319;
+	background:#ffb319;
+	cursor: pointer;
+}
+.QnA-add button:active {
+	background:#ffda77;
+}

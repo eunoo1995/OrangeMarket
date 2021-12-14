@@ -1,0 +1,226 @@
+.terms-wrap textarea {
+	width: 100%;
+	height: 200px;
+	padding: 20px;
+	text-align: left;
+}
+
+.terms-wrap .terms {
+	margin-bottom: 100px;
+}
+
+.terms-wrap .terms-tit {
+	margin-bottom: 20px;
+	font-size: 22px;
+}
+
+.terms-wrap .terms-tit .tag {
+	
+}
+
+.terms-wrap .terms-label {
+	display: block;
+	margin-top: 10px;
+	font-size: 16px;
+	text-align: right;
+}
+
+.pg-terms .terms-btn-group {
+	width: 500px;
+	margin: 0 auto;
+}
+
+.pg-terms .terms-btn-group .btn {
+	height: 60px;
+	line-height: 58px;
+}
+
+/* form */
+.form-table {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+.form-table input[type="text"], .form-table select {
+	width: 100%;
+}
+
+.form-table input, .form-table select, .form-table button, .form-table .btn
+	{
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.form-table label>input[type="radio"],
+.form-table label>input[type="checkbox"] {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.form-table label>input[type="radio"]+span,
+.form-table label>input[type="checkbox"]+span {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.form-table input[type="text"], .form-table select, .form-table .with-input,
+	.form-table input.with-btn-2 {
+	height: 50px;
+}
+
+.form-table input.with-btn, .form-table input.with-btn-2 {
+	margin-right: 5px;
+}
+
+.form-table input.with-btn {
+	width: calc(100% - 110px);
+}
+
+.form-table input.with-btn-2 {
+	width: calc(100% - 130px);
+}
+
+.form-table .with-input {
+	width: 100px;
+}
+
+.form-table .with-input-2 {
+	width: 120px;
+}
+
+.form-table .form-tit {
+	font-size: 16px;
+	margin-bottom: 12px;
+	font-weight: bold;
+}
+
+.form-table .form-tit-desc {
+	font-size: 12px;
+	font-weight: normal;
+	color: #666;
+}
+
+.form-table td {
+	padding: 15px 10px;
+}
+
+/* 로그인 */
+.pg-member .sub-page-head {
+	text-align: center;
+}
+
+/* 회원가입 */
+
+.join-form {
+	margin: 0 auto;
+}
+
+/* 회원가입 완료 */
+.pg-join-result {
+	
+}
+
+.join-result-tit {
+	margin-bottom: 50px;
+	font-size: 38px;
+	font-weight: 500;
+}
+
+.pg-join-result .profile-thumb {
+	position: relative;
+	display: inline-block;
+}
+
+.pg-join-result .profile-thumb .profile-img {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+}
+
+.pg-join-result .profile-thumb .btn-profile-edit {
+	position: absolute;
+	bottom: 12px;
+	right: 10px;
+	width: 40px;
+	height: 40px;
+	border: 2px solid #eee;
+	border-radius: 50%;
+	overflow: hidden;
+	font-size: 0;
+	background: #fff url("/images/icons/add.png") no-repeat center center/24px
+		24px;
+}
+
+.pg-join-result .profile-thumb .btn-profile-edit:hover {
+	border-color: #ffb319;
+}
+
+.pg-join-result .notice-box {
+	margin-top: 80px;
+	margin-bottom: 40px;
+	padding: 30px 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.pg-join-result .notice-box .btn {
+	margin-top: 20px;
+	min-width: 160px;
+}
+
+/* 로그인 */
+.pg-join .cont-inner,
+.login .cont-inner {
+	width: 600px; 
+	margin: 0 auto;
+}
+.login .btn-wrap {
+	margin-top: 40px;
+}
+
+.login .login-bottom {
+	border-top: 1px dashed #eee;
+	margin-top: 40px;
+	padding-top: 40px;
+}
+
+/* 계정찾기 */
+.pg-wrap .find-account-wrap {
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.find-result-tit {
+	margin-bottom: 50px;
+	font-size: 38px;
+	font-weight: 500;
+}
+
+
+/* 가입 완료 */
+.pg-join-result .btn-goto-main {
+	display: inline-block;
+	margin-top: 50px;
+}
+
+
+/* common */
+.notice-box {
+	padding: 30px 20px;
+	font-size: 16px;
+	text-align: left;
+	background-color: #fbf6f0;
+	border-radius: 5px;
+	line-height: 1.5;
+}
+
+.notice-box .notice-box-tit {
+	margin-bottom: 16px;
+	font-size: 22px;
+	font-weight: 600;
+}
+
+.notice-box .btn {
+	margin-top: 40px;
+}
