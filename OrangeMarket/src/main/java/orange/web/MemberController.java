@@ -14,7 +14,7 @@ import orange.service.OrangeService;
 public class MemberController {
 
 	@RequestMapping(value = "login")
-	public String deptlist(){
+	public String login(){
 				
 		return "member/login";
 	}	
