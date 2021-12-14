@@ -32,3 +32,4 @@ Servers/
 .project 
 .classpath 
 .settings
+*/.settings
