@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orange.service.impl.InquiryMapper">
+
+	<select id="selectInquiryList" parameterType="inquiryVO" resultType="egovMap">
+		SELECT 
+				unq
+				title
+				category
+				content
+				rdate
+				status
+				nik_name
+				re_content
+		FROM INQUIRY_BOARD
+	</select>
+	
+	<insert id="insertInquiry" parameterType="inquiryVO">
+		INSERT INTO INQUIRY_BOARD
+					(unq,
+					title,
+					category,
+					content,
+					rdate,
+					udate,
+					writer,
+					nik_name) 
+			VALUES (INQUIRY_BOARD_SEQ.NEXTVAL,
+					#{title},
+					#{category},
+					#{content},
+					sysdate,
+					sysdate,
+					#{writer},
+					#{nik_name})
+	</insert>
+</mapper>

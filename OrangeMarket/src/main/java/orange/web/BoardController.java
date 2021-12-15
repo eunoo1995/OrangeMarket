@@ -25,6 +25,12 @@ public class BoardController {
 		return "board/inquiryWrite";
 	}
 	
+	@RequestMapping(value = "/inquiry-writeSave")
+	public String inquiryWriteSave() throws Exception {
+		
+		return "";
+	}
+	
 	//--------------------------------------------------------------
 	// 신고하기 리스트 출력
 	@RequestMapping(value = "/report-list")
