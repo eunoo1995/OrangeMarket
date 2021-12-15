@@ -25,7 +25,7 @@ public class BoardController {
 		return "board/inquiryWrite";
 	}
 	
-	@RequestMapping(value = "/inquiry-writeSave")
+	@RequestMapping(value = "/inquiry-write-save")
 	public String inquiryWriteSave() throws Exception {
 		
 		return "";
