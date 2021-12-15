@@ -8,45 +8,7 @@
 	<jsp:param name="cssName" value="board" />
 </jsp:include>
 <!-- 헤더 -->
-<script>
-	$(function(){
-		$("#inquiryWrite").click(function(){
-			
-	  		if($("#title").val() == "" ) {
-	  			alert("제목을 입력해주세요.");
-	  			$("#title").focus();
-	  			return false;
-	  		}
-	  		if($("#content").val() == "" ) {
-	  			alert("내용을 입력해주세요.");
-	  			$("#content").focus();
-	  			return false;
-	  		}
-	  		
-	  		var formdata = $("#frm").serialize();
-	  		
-	  		$.ajax({
-	  			type : "post",
-	  			url  : "inquiry-write-save",
-	  			data : formdata,
-	  			datatype : "text", //성공여부(ok)
-	  			success : function(data) {
-	  				if(data == "ok") {
-	  					alert("저장성공");
-	  					location="inquiry-list";
-	  				} else {
-	  					alert("저장실패");
-	  				}
-	  			},
-	  			error : function() {
-	  					alert("오류발생");
-	  			}
-	  		});
-	  	});
-		
-	});
 
-</script>
 <!-- 페이지 wrapper -->
 <article class="pg-wrap pg-board-write">
 
@@ -65,7 +27,7 @@
 			<form id="frm">
 				<table class="board-write-table">
 					<tr>
-						<td><select id="category" class="board-category-select">
+						<td><select id="category" name="category" class="board-category-select">
 								<option value="운영정책">운영정책</option>
 								<option value="계정/인증" selected>계정/인증</option>
 								<option value="구매/판매">구매/판매</option>
@@ -76,17 +38,17 @@
 								<option value="지역광고">지역광고</option>
 								<option value="기타">기타</option>
 							</select> 
-							<input type="text" id="title" class="board-title">
+							<input type="text" name="title" id="title" class="board-title">
 						</td>
 					</tr>
 					<tr>
-						<td><textarea id="content" class="content"></textarea></td>
+						<td><textarea id="content" name="content" class="content"></textarea></td>
 					</tr>
 
 
 				</table>
-					<input type="hidden" id="writer" value=20202020>
-					<input type="hidden" id="nik_name" value="홍길동">
+					<input type="hidden" name="writer" id="writer" value=20202020>
+					<input type="hidden" name="nikName" id="nikName" value="홍길동">
 			</form>
 			<div class="btn-div">
 				<button class="btn" onclick="location='inquiry-list'">취소</button>

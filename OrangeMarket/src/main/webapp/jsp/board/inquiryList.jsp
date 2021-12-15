@@ -54,14 +54,16 @@
 					</tr>
 				</thead>
 				<tbody>
+				<c:forEach var="list" items="${list}">
 					<tr>
 						<td class="board-num">1</td>
-						<td>계정/인증</td>
-						<td class="board-tit"><a href="inquiry-detail">test1</a></td>
-						<td class="board-writer">1</td>
-						<td>2021-09-09</td>
-						<td class="board-answer">미답변</td>
+						<td>${list.category}</td>
+						<td class="board-tit"><a href="inquiry-detail?unq=${list.unq}">${list.title}</a></td>
+						<td class="board-writer">${list.nikName}</td>
+						<td>${list.rdate}</td>
+						<td class="board-answer">${list.status }</td>
 					</tr>
+				</c:forEach>	
 				</tbody>
 			</table>
 

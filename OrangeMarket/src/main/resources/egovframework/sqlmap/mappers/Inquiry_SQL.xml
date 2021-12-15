@@ -4,19 +4,18 @@
 
 	<select id="selectInquiryList" parameterType="inquiryVO" resultType="egovMap">
 		SELECT 
-				unq
-				title
-				category
-				content
-				rdate
-				status
+				unq,
+				title,
+				category,
+				content,
+				to_char(rdate,'yyyy-mm-dd') rdate,
+				decode(status,'N','답변대기','답변완료') status,
 				nik_name
-				re_content
 		FROM INQUIRY_BOARD
 	</select>
 	
 	<insert id="insertInquiry" parameterType="inquiryVO">
-		INSERT INTO INQUIRY_BOARD
+		INSERT INTO INQUIRY_BOARD 
 					(unq,
 					title,
 					category,
@@ -32,6 +31,6 @@
 					sysdate,
 					sysdate,
 					#{writer},
-					#{nik_name})
+					#{nikName})
 	</insert>
 </mapper>
