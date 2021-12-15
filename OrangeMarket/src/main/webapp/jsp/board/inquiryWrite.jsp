@@ -26,7 +26,7 @@
 	  		var formdata = $("#frm").serialize();
 	  		
 	  		$.ajax({
-	  			type : "post" ,
+	  			type : "post",
 	  			url  : "inquiry-write-save",
 	  			data : formdata,
 	  			datatype : "text", //성공여부(ok)

@@ -1,14 +1,30 @@
 package orange.web;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import orange.service.InquiryService;
+import orange.service.InquiryVO;
 
 @Controller
 public class BoardController {
 	
+	@Resource(name="inquiryService")
+	private InquiryService inquiryService;
+	
 	// 문의하기 리스트 출력
 	@RequestMapping(value = "/inquiry-list")
-	public String inquiryList() throws Exception {
+	public String inquiryList(InquiryVO vo, Model model) throws Exception {
+		
+		List<?> list = inquiryService.selectInquiryList(vo);
+		
+		model.addAttribute("list",list);
 		
 		return "board/inquiryList";
 	}
@@ -24,11 +40,17 @@ public class BoardController {
 		
 		return "board/inquiryWrite";
 	}
-	
+	// 문의하기 문의 작성 저장
+	@ResponseBody
 	@RequestMapping(value = "/inquiry-write-save")
-	public String inquiryWriteSave() throws Exception {
-		
-		return "";
+	public String inquiryWriteSave(InquiryVO vo) throws Exception {
+		System.out.println(vo.getCategory());
+		int result = inquiryService.insertInquiry(vo);
+		String rs = "";
+		if(result == 1) {
+			rs = "ok";
+		}
+		return rs;
 	}
 	
 	//--------------------------------------------------------------
