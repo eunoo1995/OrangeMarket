@@ -471,7 +471,7 @@
         	font-size:20px;
         	padding-top:3px;
         	padding-left:40px;
-        	background-image: url(../images/icon_User.png);
+        	background-image: url(/images/admin/icon_User.png);
  			background-position: 12px center;
  			background-repeat: no-repeat;
         }
@@ -484,7 +484,7 @@
         	font-size:20px;
         	padding-top:3px;
         	padding-left:40px;
-        	background-image: url(../images/icon_Lock.png);
+        	background-image: url(/images/admin/icon_Lock.png);
  			background-position: 12px center;
  			background-repeat: no-repeat;
         }

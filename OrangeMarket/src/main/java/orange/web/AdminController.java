@@ -5,7 +5,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AdminController {
-
+	
+	@RequestMapping(value = "/admin-login")
+	public String adminLogin() throws Exception {
+		
+		return "admin/loginWrite";
+	}	
+	
 	@RequestMapping(value = "/admin-memberlist")
 	public String adminMemberList() throws Exception {
 		

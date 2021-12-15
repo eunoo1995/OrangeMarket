@@ -57,7 +57,7 @@
 					<tr>
 						<td class="board-num">1</td>
 						<td>계정/인증</td>
-						<td class="board-tit"><a href="askBoardDetail.do">test1</a></td>
+						<td class="board-tit"><a href="inquiry-detail">test1</a></td>
 						<td class="board-writer">1</td>
 						<td>2021-09-09</td>
 						<td class="board-answer">미답변</td>
@@ -67,7 +67,7 @@
 
 			<div class="btn1_div">
 				<button type="button" class="btn"
-					onclick="location='askBoardWrite.do'">작성하기</button>
+					onclick="location='inquiry-write'">작성하기</button>
 			</div>
 
 			<article class="pager-wrap">

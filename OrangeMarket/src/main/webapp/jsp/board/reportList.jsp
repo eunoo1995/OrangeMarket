@@ -57,7 +57,7 @@
 					<tr>
 						<td class="board-num">1</td>
 						<td>계정/인증</td>
-						<td class="board-tit"><a href="askBoardDetail.do">test1</a></td>
+						<td class="board-tit"><a href="report-detail">test1</a></td>
 						<td class="board-writer">1</td>
 						<td>2021-09-09</td>
 						<td class="board-answer">미답변</td>

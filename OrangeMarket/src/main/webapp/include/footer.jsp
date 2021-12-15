@@ -39,6 +39,12 @@
 							<li><a href="inquiry-list">문의하기</a></li>
 							<li><a href="qna-list">자주묻는질문</a></li>
 							<li><a href="#">운영정책</a></li>
+							<li>
+								<button type="button" 
+								 style="background:#eee; height:10px; 
+								 border:1px solid #eee;"
+								 onclick="location='admin-login'"></button>
+							</li>
 						</ul>
 					</li>
 					<li>
