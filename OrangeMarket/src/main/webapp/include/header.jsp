@@ -47,7 +47,7 @@
 
 <header id="header">
 	<div class="header-inner">
-		<a href="#"><img class="logo-img" src="/images/logo-header.png"></a>
+		<a href="main"><img class="logo-img" src="/images/logo-header.png"></a>
 		<div class="header-search">
 			<input type="text" name="" id="">
 			<button type="button">
@@ -65,7 +65,7 @@
 			</ul>
 		</div>
 		<div class="util-menu">
-			<a href="#"><img src="/images/icons/ico_chat.png" /></a> <a href="#"><img
+			<a href="chat"><img src="/images/icons/ico_chat.png" /></a> <a href="mypage"><img
 				src="/images/icons/ico_user_line.png" /></a>
 		</div>
 	</div>

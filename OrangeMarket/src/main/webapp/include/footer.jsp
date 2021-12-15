@@ -36,8 +36,8 @@
 					<li>
 						<p class="footer-nav-tit">고객센터</p>
 						<ul class="depth2">
-							<li><a href="#">문의하기</a></li>
-							<li><a href="#">자주묻는질문</a></li>
+							<li><a href="inquiry-list">문의하기</a></li>
+							<li><a href="qna-list">자주묻는질문</a></li>
 							<li><a href="#">운영정책</a></li>
 						</ul>
 					</li>
