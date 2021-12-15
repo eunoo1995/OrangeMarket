@@ -16,7 +16,7 @@
 		<div class="cont-inner clx">
 			<div class="chat-list">
 				<!-- 채팅목록 시작 -->
-				<div class="chatlist-item" style="cursor:pointer">
+				<div class="chatlist-item">
 					<!--반복문-->
 
 					<div class="item-left">
@@ -52,9 +52,23 @@
 					</div>
 
 				</div>
-				<!-- chatlist-item end -->
+				<div class="chatlist-item">
 
+					<div class="item-left">
+						<img class="chatlist-image" src="/images/icons/ico_user_solid.png"><br>
+					</div>
 
+					<div class="item-center">
+						<p class="profile-nick">사용자2</p>
+						<p class="chatlist-content">키보드 팔렸나요?</p>
+					</div>
+
+					<div class="item-right">
+						<span class="chatlist-time">2021-09-09</span><br>
+					</div>
+
+				</div>
+				
 			</div>
 			<!-- chat-list end/ 채팅목록 종료 -->
 
@@ -77,6 +91,40 @@
 					<div class="inner">
 
 
+						<div class="item" id="item">
+							<div class="box">
+								<p class="msg">안녕하세요</p>
+								<span class="time">오전 10:00</span>
+							</div>
+							<!--box end  -->
+						</div>
+						<!--item end  -->
+
+						<div class="item mymsg">
+							<div class="box">
+								<p class="msg">안녕하세요</p>
+								<span class="time">오전 10:00</span>
+							</div>
+							<!--box end  -->
+						</div>
+						<!--item end  -->
+						<div class="item" id="item">
+							<div class="box">
+								<p class="msg">안녕하세요</p>
+								<span class="time">오전 10:00</span>
+							</div>
+							<!--box end  -->
+						</div>
+						<!--item end  -->
+
+						<div class="item mymsg">
+							<div class="box">
+								<p class="msg">안녕하세요</p>
+								<span class="time">오전 10:00</span>
+							</div>
+							<!--box end  -->
+						</div>
+						<!--item end  -->
 						<div class="item" id="item">
 							<div class="box">
 								<p class="msg">안녕하세요</p>

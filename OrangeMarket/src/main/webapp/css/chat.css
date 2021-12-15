@@ -5,6 +5,7 @@
 	width: 1000px;
 	height: 500px;
 	border: 1px solid #eee;
+	border-radius:10px;
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
@@ -15,9 +16,21 @@
 	height: 500px;
 	float: left;
 	border-right: 1px solid #eee;
-	background-color: #f0f0f0;
+	border-radius:10px 0px 0px 10px;
+	background-color: #eee;
+	overflow:auto;
 }
-
+/*채팅목록 스크롤바 디자인*/
+.chat-cont-wrap .chat-list::-webkit-scrollbar {
+    width: 10px;
+  }
+.chat-cont-wrap .chat-list::-webkit-scrollbar-thumb {
+    background:#DCDCDC;
+    border-radius:10px;
+  }
+.chat-cont-wrap .chat-list::-webkit-scrollbar-track  {
+    background:#eee;
+  }
 /*채팅내용 우측칸*/
 .chat-cont-wrap .chat-content {
 	width: 1000px;
@@ -34,6 +47,7 @@
 	height: 70px;
 	font-size: 15px;
 	display: flex;
+	cursor:pointer
 }
 
 /*chatlist 프로필이미지*/
@@ -42,15 +56,15 @@
 	width: 70px;
 	display: table-cell;
 	vertical-align: middle;
-	padding-top: 5px;
-	padding-left: 15px;
+	padding-top: 15px;
+	padding-left: 12px;
 }
 
 /*chatlist 채팅내용*/
 .chat-cont-wrap  .item-center {
 	height: 70px;
 	width: 170px;
-	padding-top: 25px;
+	padding-top: 20px;
 }
 
 /*chatlist 날짜,알림*/
@@ -64,7 +78,8 @@
 .chat-cont-wrap  .chatlist-image {
 	background-color: #FFF;
 	border-radius: 20px;
-	width: 30px;
+	width:40px;
+	height:40px;
 }
 
 /*chatlist 닉네임*/
@@ -98,6 +113,7 @@
 	width: auto;
 	height: 50px;
 	border-bottom: 1px solid #eee;
+	border-radius:10px;
 	background-color: #FBF6F0;
 }
 
@@ -121,12 +137,23 @@
 	padding: 5px;
 	font-size: 13px;
 }
-
+/*채팅 내용 스크롤바 디자인*/
+.chat-cont-wrap .chat_wrap  .inner::-webkit-scrollbar {
+    width: 7px;
+  }
+.chat-cont-wrap .chat_wrap  .inner::-webkit-scrollbar-thumb {
+    background:#ffda77;
+    border-radius:10px;
+  }
+.chat-cont-wrap .chat_wrap  .inner::-webkit-scrollbar-track  {
+    background:#fff;
+  }
 /*채팅방 배경*/
 .chat-cont-wrap  .chat_wrap .inner {
 	padding: 10px;
 	overflow-y: auto;
-	margin-top: 15px;
+	margin-top: 5px;
+	padding-left:30px;
 	height: 300px;
 }
 
@@ -236,12 +263,13 @@
 }
 
 .chat-cont-wrap #input-text {
-	margin-top: 10px;
+	margin-top: 20px;
 	margin-left: 30px;
-	height: 30px;
-	width: 200px;
+	height: 50px;
+	width: 450px;
 	font-size: 14px;
 	border: none;
+	float:left;
 	/*   resize:none;
     overflow:hidden;*/
 }
@@ -258,8 +286,8 @@
 
 /*전송하기 버튼*/
 .chat-cont-wrap .sendbtn {
-	float: right;
-	margin-top: 30px;
+	float: left;
+	margin-top: 27px;
 	margin-right: 20px;
 	padding: 10px;
 	background-color: #FFB319;
