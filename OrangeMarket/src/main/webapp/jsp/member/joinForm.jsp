@@ -40,16 +40,14 @@
 							<tr>
 								<td colspan="2">
 									<p class="form-tit required">연락처</p>
-									<input type="text" name="tel" class="with-btn" placeholder="- 없이 숫자만 입력해주세요" required />
-									<button type="button" id="btnChkTel" class="btn-solid with-input">중복검사</button>
+									<input type="text" name="tel" placeholder="- 없이 숫자만 입력해주세요" required />
 									<p class="form-err-msg"></p>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
 									<p class="form-tit required">닉네임</p>
-									<input type="text" name="nickname" class="with-btn" placeholder="닉네임(6-12자리)" required />
-									<button type="button" id="btnChkNik" class="btn-solid with-input">중복검사</button>
+									<input type="text" name="nickname" placeholder="닉네임(6-12자리)" required />
 									<p class="form-err-msg"></p>
 								</td>
 							</tr>
