@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import orange.service.InquiryService;
 import orange.service.InquiryVO;
+import orange.service.PagingVO;
+import orange.service.ReportService;
+import orange.service.ReportVO;
 
 @Controller
 public class BoardController {
@@ -18,14 +21,23 @@ public class BoardController {
 	@Resource(name="inquiryService")
 	private InquiryService inquiryService;
 	
+	@Resource(name="reportService")
+	private ReportService reportService;
+	
+	
+	
 	// 문의하기 리스트 출력
 	@RequestMapping(value = "/inquiry-list")
-	public String inquiryList(InquiryVO vo, Model model) throws Exception {
+	public String inquiryList(PagingVO vo, Model model) throws Exception {
 		
-		List<?> list = inquiryService.selectInquiryList(vo);
-		  
+		int total = inquiryService.selectInquiryTotal();
+		int pageNo = vo.getPageNo();
+		//페이징 객체 생성
+		vo = new PagingVO(total, pageNo, 5);
+		
+		List<InquiryVO> list = inquiryService.selectInquiryList(vo);
 		model.addAttribute("list",list);
-		 
+		model.addAttribute("page",vo);
 		return "board/inquiryList";
 	}
 	// 문의하기 상세보기
@@ -60,16 +72,24 @@ public class BoardController {
 	//--------------------------------------------------------------
 	// 신고하기 리스트 출력
 	@RequestMapping(value = "/report-list")
-	public String reportList() throws Exception {
+	public String reportList(ReportVO vo, Model model) throws Exception {
 		
+		List<?> list = reportService.selectReportList(vo);
+		int chk = list.size();
+		model.addAttribute("list",list);
+		model.addAttribute("chk",chk);
 		return "board/reportList";
 	}
 	// 신고하기 상세보기
-		@RequestMapping(value = "/report-detail")
-		public String reportDetail() throws Exception {
-			
-			return "board/reportDetail";
-		}
+	@RequestMapping(value = "/report-detail")
+	public String reportDetail(ReportVO vo, Model model) throws Exception {
+		
+		vo = reportService.selectReportDetail(vo);
+		
+		model.addAttribute("vo",vo);
+		
+		return "board/reportDetail";
+	}
 	//--------------------------------------------------------------
 	// 자주묻는질문 리스트 출력
 	@RequestMapping(value = "/qna-list")

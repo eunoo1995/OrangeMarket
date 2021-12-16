@@ -54,23 +54,25 @@
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach var="list" items="${list}">
-				<c:if test="${list.unq ne null}">
-					<tr>
-						<td class="board-num">1</td>
-						<td>${list.category}</td>
-						<td class="board-tit"><a href="inquiry-detail?unq=${list.unq}">${list.title}</a></td>
-						<td class="board-writer">${list.nikName}</td>
-						<td>${list.rdate}</td>
-						<td class="board-answer">${list.status}</td>
-					</tr>
-				</c:if>
-				<c:if test="${list.unq eq null}">
+				<c:choose>
+				<c:when test="${chk eq 0}">
 					<tr>
 						<th colspan="6">고객센터에 신고하신 내역이 없습니다.</th>
 					</tr>
-				</c:if>
+				</c:when>
+				<c:when test="${chk ne 0}">
+				<c:forEach var="list" items="${list}">
+					<tr>
+						<td class="board-num">1</td>
+						<td>${list.sellerNik}</td>
+						<td class="board-tit"><a href="report-detail?unq=${list.unq}">${list.title}</a></td>
+						<td class="board-writer">${list.writerNik}</td>
+						<td>${list.rdate}</td>
+						<td class="board-answer">${list.status}</td>
+					</tr>
 				</c:forEach>	
+				</c:when>
+				</c:choose>
 				</tbody>
 			</table>
 
