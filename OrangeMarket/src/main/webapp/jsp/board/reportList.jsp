@@ -45,23 +45,32 @@
 				<thead>
 					<tr>
 						<th>번호</th>
-						<th>종류</th>
+						<th>작성자</th>
 						<th>제목</th>
 						<!--제목 누르면 상세내용으로 이동  클릭시 고유값 가지고 이동-->
-						<th>글쓴이</th>
+						<th>신고자</th>
 						<th>작성일</th>
 						<th>답변여부</th>
 					</tr>
 				</thead>
 				<tbody>
+				<c:forEach var="list" items="${list}">
+				<c:if test="${list.unq ne null}">
 					<tr>
 						<td class="board-num">1</td>
-						<td>계정/인증</td>
-						<td class="board-tit"><a href="report-detail">test1</a></td>
-						<td class="board-writer">1</td>
-						<td>2021-09-09</td>
-						<td class="board-answer">미답변</td>
+						<td>${list.category}</td>
+						<td class="board-tit"><a href="inquiry-detail?unq=${list.unq}">${list.title}</a></td>
+						<td class="board-writer">${list.nikName}</td>
+						<td>${list.rdate}</td>
+						<td class="board-answer">${list.status}</td>
 					</tr>
+				</c:if>
+				<c:if test="${list.unq eq null}">
+					<tr>
+						<th colspan="6">고객센터에 신고하신 내역이 없습니다.</th>
+					</tr>
+				</c:if>
+				</c:forEach>	
 				</tbody>
 			</table>
 

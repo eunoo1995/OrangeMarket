@@ -11,4 +11,6 @@ public interface InquiryMapper {
 	List<?> selectInquiryList(InquiryVO vo);
 	
 	int insertInquiry(InquiryVO vo);
+	
+	InquiryVO selectInquiryDetail(InquiryVO vo);
 }

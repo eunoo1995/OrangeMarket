@@ -23,41 +23,40 @@
 	<article class="board-wrap">
 		<!-- container -->
 		<div class="cont-inner">
-
+		
 				<table class="board-detail-table">
 					<thead>
 						<tr>
-							<td><span class="board-category">운영정책</span> <span
-								class="board-title">test</span></td>
+							<td><span class="board-category">${vo.category }</span> <span
+								class="board-title">${vo.title }</span></td>
 						</tr>
 						<tr>
-							<td><span class="board-writer">홍길동</span> <span
-								class="board-date">2021.11.30</span></td>
+							<td><span class="board-writer">${vo.nikName }</span> <span
+								class="board-date">${vo.rdate }</span></td>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><div class="content" readonly>test1</div></td>
+							<td><div class="content" readonly>${vo.content }</div></td>
 						</tr>
 					</tbody>
 				</table>
+				<c:if test="${vo.reContent ne null }">
 				<table class="board-detail-table">
 					<thead>
 						<tr>
-							<td><span style="font-weight:bold; font-size:16px;">re:test1</span><br>
-							<span class="board-writer">상담사</span>
-							<span class="board-date">2021.11.30</span></td>
+							<td><span style="font-weight:bold; font-size:16px;">re:${vo.title }</span><br>
+							<span class="board-writer">오렌지마켓 고객센터</span>
+							<span class="board-date">${vo.udate }</span></td>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><div class="content" readonly>답변내용</div></td>
+							<td><div class="content" readonly>${vo.reContent }</div></td>
 						</tr>
 					</tbody>
 				</table>
-
-			
-
+				</c:if>
 		</div>
 		<!-- container end -->
 	</article>

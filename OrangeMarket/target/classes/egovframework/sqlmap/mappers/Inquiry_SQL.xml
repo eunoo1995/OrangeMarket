@@ -10,8 +10,25 @@
 				content,
 				to_char(rdate,'yyyy-mm-dd') rdate,
 				decode(status,'N','답변대기','답변완료') status,
-				nik_name
-		FROM INQUIRY_BOARD
+				nik_name 
+		FROM INQUIRY_BOARD 
+		ORDER BY unq DESC
+	</select>
+	
+	<select id="selectInquiryDetail" parameterType="inquiryVO" resultType="inquiryVO">
+		SELECT	
+				unq,
+				title,
+				category,
+				content,
+				to_char(rdate,'yyyy-mm-dd') rdate,
+				to_char(rdate,'yyyy-mm-dd') Udate,
+				nik_name,
+				re_content 
+		FROM INQUIRY_BOARD 
+		WHERE unq = #{unq}
+	
+	
 	</select>
 	
 	<insert id="insertInquiry" parameterType="inquiryVO">

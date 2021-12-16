@@ -30,7 +30,11 @@ public class BoardController {
 	}
 	// 문의하기 상세보기
 	@RequestMapping(value = "/inquiry-detail")
-	public String inquiryDetail() throws Exception {
+	public String inquiryDetail(InquiryVO vo, Model model) throws Exception {
+		
+		vo = inquiryService.selectInquiryDetail(vo);
+		
+		model.addAttribute("vo",vo);
 		
 		return "board/inquiryDetail";
 	}
