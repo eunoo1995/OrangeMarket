@@ -41,7 +41,7 @@
 	margin-right: -10px;
 }
 
-.form-table input[type="text"], .form-table select {
+.form-table input[type="text"], .form-table input[type="password"], .form-table select {
 	width: 100%;
 }
 
@@ -63,7 +63,7 @@
 	vertical-align: middle;
 }
 
-.form-table input[type="text"], .form-table select, .form-table .with-input,
+.form-table input[type="text"], .form-table input[type="password"], .form-table select, .form-table .with-input,
 	.form-table input.with-btn-2 {
 	height: 50px;
 }
@@ -98,6 +98,13 @@
 	font-size: 12px;
 	font-weight: normal;
 	color: #666;
+}
+
+.form-table .form-err-msg {
+	margin-top: 4px;
+	font-size: 12px;
+	font-weight: normal;
+	color: red;
 }
 
 .form-table td {

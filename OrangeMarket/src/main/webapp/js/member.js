@@ -1,5 +1,5 @@
 /* trim  */
-if (typeof String.trim == 'undefined') {
+if(typeof String.trim == 'undefined') {
 	String.prototype.trim = function() {
 		return this.replace(/(^\s*)|(\s$)/g, '')
 	};
@@ -7,12 +7,14 @@ if (typeof String.trim == 'undefined') {
 
 
 /* 약관 */
-var btnFormNext = document.getElementById('btnTermsNext');
-if (btnFormNext) {
+var joinTermsForm = document.getElementById('formTerms');
+if(joinTermsForm) {
+	var btnFormNext = document.getElementById('btnTermsNext');
 	btnFormNext.addEventListener('click', chkTerms);
 }
 
 function chkTerms() {
+
 	var frm = document.getElementById('formTerms');
 
 	var locationTerm = frm.querySelector('input[name="agreeLocation"]');
@@ -21,12 +23,12 @@ function chkTerms() {
 	var cntMustChecked = 0;
 
 	for (var i = 0; i < mustLength; i++) {
-		if (mustTerms[i].checked == true) {
+		if(mustTerms[i].checked == true) {
 			cntMustChecked++;
 		}
 	}
 
-	if (cntMustChecked < mustLength) {
+	if(cntMustChecked < mustLength) {
 		alert('필수 약관은 반드시 동의가 필요합니다.');
 
 		return false;
@@ -37,79 +39,127 @@ function chkTerms() {
 
 
 /* 회원가입 */
-var btnJoinConfirm = document.getElementById('joinFormConfirm');
-var btnChkTel = document.getElementById('btnChkTel');
-var btnChkNik = document.getElementById('btnChkNik');
+var joinForm = document.getElementById('joinForm');
+if(joinForm) {
+	var frm = joinForm;
+	var btnJoinConfirm = document.getElementById('joinFormConfirm');
+	var btnChkTel = document.getElementById('btnChkTel');
+	var btnChkNik = document.getElementById('btnChkNik');
 
-if (btnJoinConfirm) {
-	btnJoinConfirm.addEventListener('click', chkJoinForm);
-}
+	/* 이름 검사 */
+	frm.userName.addEventListener('blur', function() { chkName(frm) });
+	frm.userName.addEventListener('focusout', function() { chkName(frm) });
 
-if (btnChkTel) {
-	var frm = document.getElementById('joinForm');
-	btnChkTel.addEventListener('click', function() { chkTel(frm) });
-}
+	/* 연락처 검사 */
+	if(btnChkTel) {
+		btnChkTel.addEventListener('click', function() { chkTel(frm) });
+		
+		frm.tel.addEventListener('blur', function() { chkTel(frm) });
+		frm.tel.addEventListener('focusout', function() { chkTel(frm) });
+	}
 
-if (btnChkNik) {
-	var frm = document.getElementById('joinForm');
-	btnChkTel.addEventListener('click', function() { chkNik(frm) });
+	/* 닉네임 검사 */
+	if(btnChkNik) {
+		btnChkNik.addEventListener('click', function() { chkNik(frm) });
+		
+		frm.nickname.addEventListener('blur', function() { chkNik(frm) });
+		frm.nickname.addEventListener('focusout', function() { chkNik(frm) });
+	}
+	
+	/* 연락처 검사 */
+	frm.password.addEventListener('blur', function() { chkPw1(frm) });
+	frm.password.addEventListener('focusout', function() { chkPw1(frm) });
+
+	/* 가입하기 버튼 누른 경우 */
+	if(btnJoinConfirm) {
+		btnJoinConfirm.addEventListener('click', chkJoinForm);
+	}
+
+
 }
 
 function chkJoinForm() {
 	var frm = document.getElementById('joinForm');
 
-	if (frm.userName.value === '') {
-		alert('이름을 입력해주세요');
+	chkName(frm);
 
-		return false;
-	}
+	chkTel(frm);
 
-	if (frm.pw.value === '') {
+	chkNik(frm);
+
+	if(frm.pw.value === '') {
 		alert('비밀번호를 입력해주세요');
 
 		return false;
 	}
 
-	if (frm.pw.value !== frm.rePw.value) {
+	if(frm.pw.value !== frm.rePw.value) {
 		alert('비밀번호를 확인해주세요');
 
 		return false;
 	}
+}
+
+function chkName($target) {
+
+	var frm = $target;
+	var input = frm.userName;
+	var inputTxt = input.value;
+	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
+
+	var regName = /^[가-힣]{2,}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+
+	if(input.value === '') {
+		var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
+		/*alert('이름을 입력해주세요');*/
+		showFormErr(areaErrMsg, '이름을 입력해주세요');
+
+		return false;
+	}
+
+	if(regName.test(inputTxt) === false) {
+		showFormErr(areaErrMsg, '이름은 공백없이 한글 혹은 영문만 가능합니다.');
+
+		return false;
+	}
+
 
 }
+
 
 function chkTel($target) {
 
 	var frm = $target;
-	var telText = frm.tel.value;
+	var input = frm.tel;
+	var inputTxt = input.value;
+	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
 
-	if (telText === '') {
-		alert('연락처를 입력해주세요');
+	if(inputTxt === '') {
+		showFormErr(areaErrMsg, '연락처를 입력해주세요');
 
 		return false;
 	}
 
 	var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
-	var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+	var regPhone = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/;
 
-	telText = telText.replace(regExp, '');
+	inputTxt = inputTxt.replace(regExp, '');
 
-	if (telText.substring(0, 2) != '01') {
-		console.log(telText.substring(0, 2));
-		alert('연락처는 핸드폰 번호만 가능합니다.');
-
-		return false;
-	}
-
-	if (regPhone.test(telText) === false) {
-		alert('연락처를 다시 확인해주세요');
+	if(inputTxt.substring(0, 2) != '01') {
+		showFormErr(areaErrMsg, '연락처는 핸드폰 번호만 가능합니다.');
 
 		return false;
 	}
 
-	if (regPhone.test(telText) === true) {
-		telText = telText.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3");
-		frm.tel.value = telText;
+	if(regPhone.test(inputTxt) === false) {
+		showFormErr(areaErrMsg, '연락처를 다시 확인해주세요');
+
+		return false;
+	}
+
+	if(regPhone.test(inputTxt) === true) {
+		inputTxt = inputTxt.replace(regPhone, "$1-$2-$3");
+		input.value = inputTxt;
 		frm.isSameTel.value = 'N';
 	}
 }
@@ -118,28 +168,86 @@ function chkTel($target) {
 function chkNik($target) {
 
 	var frm = $target;
-	var nikText = frm.nickname.value;
+	var input = frm.nickname;
+	var inputTxt = input.value;
+	var nikStartChat = inputTxt.substring(0, 1);
+	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
 
-	if (nikText === '') {
-		alert('연락처를 입력해주세요');
-
-		return false;
-	}
-
-	var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
-	var regNickName = ;
-
-	nikText = nikText.replace(regExp, '');
-
-	if (regNickName.test(nikText) === false) {
-		alert('연락처를 다시 확인해주세요');
+	if(inputTxt === '') {
+		showFormErr(areaErrMsg, '닉네임 입력해주세요');
 
 		return false;
 	}
 
-	if (regNickName.test(nikText) === true) {
-		nikText = nikText.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3");
-		frm.nikText.value = nikText;
+	/* 닉네임 첫 글자 확인 */
+	var regStartKor = /^[가-힣ㄱ-ㅎ]/;
+	var regStartEng = /^[a-zA-Z]/;
+
+	/* 닉네임 확인 */
+	var regNickName = /^[가-힣ㄱ-ㅎa-zA-Z0-9.]{6,12}$/;
+
+	/* 닉네임 첫 글자가 한글일 경우 */
+	if(nikStartChat != '' && regStartKor.test(nikStartChat) === true) {
+
+		var regKor = /^[가-힣ㄱ-ㅎ]{2,}/;
+
+		if(regKor.test(inputTxt) === false) {
+			showFormErr(areaErrMsg, '한글은 3자 이상 입력해야 합니다.');
+
+			return false;
+		}
+	}
+
+	/* 닉네임 첫 글자가 알파벳일 경우 */
+	if(nikStartChat != '' && regStartEng.test(nikStartChat) === true) {
+		var regEng = /^[a-zA-Z]{4,}/;
+
+		if(regEng.test(inputTxt) === false) {
+			showFormErr(areaErrMsg, '영문자는 4자 이상 입력해야 합니다.');
+
+			return false;
+		}
+	}
+
+
+	/* 닉네임 형식이 맞지 않은 경우 */
+	if(regNickName.test(inputTxt) === false) {
+		showFormErr(areaErrMsg, '닉네임을 다시 확인해주세요');
+
+		return false;
+	}
+
+
+	if(regNickName.test(inputTxt) === true) {
+		input.value = inputTxt;
 		frm.isSameNik.value = 'N';
 	}
 }
+
+function chkPw1($target) {
+
+	var frm = $target;
+	var input = frm.password;
+	var inputTxt = input.value;
+	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
+	
+	var regPassword= '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/';
+	
+	/* 비밀번호는 문자, 숫자, 기호 중 2종류 조합이어야 합니다 */
+	
+	if(inputTxt == '') {
+		showFormErr(areaErrMsg, '비밀번호를 입력해주세요');
+	}
+	
+	if(regPassword.test(inputTxt) === false) {
+		showFormErr(areaErrMsg, '비밀번호는 문자, 숫자, 기호 중 2종류 조합이어야 합니다');
+
+		return false;
+	}
+
+}
+
+function showFormErr($obj, msg) {
+	$obj.innerText = msg;
+}
+
