@@ -25,5 +25,10 @@ public class InquiryImpl extends EgovAbstractServiceImpl implements InquiryServi
 	public int insertInquiry(InquiryVO vo) throws Exception {
 		return inquiryDAO.insertInquiry(vo);
 	}
+
+	@Override
+	public InquiryVO selectInquiryDetail(InquiryVO vo) throws Exception {
+		return inquiryDAO.selectInquiryDetail(vo);
+	}
 	
 }

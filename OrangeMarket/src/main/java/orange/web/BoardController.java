@@ -23,14 +23,18 @@ public class BoardController {
 	public String inquiryList(InquiryVO vo, Model model) throws Exception {
 		
 		List<?> list = inquiryService.selectInquiryList(vo);
-		
+		  
 		model.addAttribute("list",list);
-		
+		 
 		return "board/inquiryList";
 	}
 	// 문의하기 상세보기
 	@RequestMapping(value = "/inquiry-detail")
-	public String inquiryDetail() throws Exception {
+	public String inquiryDetail(InquiryVO vo, Model model) throws Exception {
+		
+		vo = inquiryService.selectInquiryDetail(vo);
+		
+		model.addAttribute("vo",vo);
 		
 		return "board/inquiryDetail";
 	}
@@ -44,7 +48,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/inquiry-write-save")
 	public String inquiryWriteSave(InquiryVO vo) throws Exception {
-		System.out.println(vo.getCategory());
+		
 		int result = inquiryService.insertInquiry(vo);
 		String rs = "";
 		if(result == 1) {

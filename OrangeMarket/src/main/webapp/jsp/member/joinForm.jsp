@@ -49,7 +49,7 @@
 										닉네임 <span class="form-tit-desc">닉네임(6-12자리)</span>
 									</p>
 									<input type="text" name="nickname" class="with-btn" placeholder="닉네임(6-12자리)" required />
-									<button type="button" id="btnChkNik" class="btn-solid with-input">중복검사</button>
+									<button type="button" id="btnChkNik" class="btn-solid with-input">중복검사</button> 
 								</td>
 							</tr>
 							<tr>
