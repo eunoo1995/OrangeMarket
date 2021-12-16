@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orange.service.impl.ReportMapper">
+
+	<select id="selectReportList" parameterType="reportVO" resultType="egovMap">
+	SELECT 
+			unq,
+			title,
+			content,
+			to_char(rdate,'yyyy-mm-dd') rdate,
+			decode(status,'N','답변대기','답변완료') status,
+			witer_nik,
+			seller_nik 
+	FROM REPORT_BOARD 
+	ORDER BY unq DESC		
+	</select>
+</mapper>

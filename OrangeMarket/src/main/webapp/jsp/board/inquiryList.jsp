@@ -8,7 +8,12 @@
 	<jsp:param name="cssName" value="board" />
 </jsp:include>
 <!-- 헤더 -->
+<script>
+	$(function(){
+		
+	});
 
+</script>
 <!-- 페이지 wraper -->
 <article class="pg-wrap pg-board-list">
 
@@ -54,23 +59,27 @@
 					</tr>
 				</thead>
 				<tbody>
+				<c:set var="rownum" value="${page.rownum }"/>
+				<c:choose>
+				<c:when test="${page.total ne 0}">
 				<c:forEach var="list" items="${list}">
-				<c:if test="${list.unq ne null}">
 					<tr>
-						<td class="board-num">1</td>
+						<td class="board-num">${rownum }</td>
 						<td>${list.category}</td>
 						<td class="board-tit"><a href="inquiry-detail?unq=${list.unq}">${list.title}</a></td>
 						<td class="board-writer">${list.nikName}</td>
 						<td>${list.rdate}</td>
 						<td class="board-answer">${list.status}</td>
 					</tr>
-				</c:if>
-				<c:if test="${list.unq eq null}">
+				<c:set var="rownum" value="${rownum-1 }"/>
+				</c:forEach>	
+				</c:when>
+				<c:when test="${page.total eq 0}">
 					<tr>
 						<th colspan="6">고객센터에 문의하신 내역이 없습니다.</th>
 					</tr>
-				</c:if>
-				</c:forEach>	
+				</c:when>
+				</c:choose>
 				</tbody>
 			</table>
 
@@ -81,10 +90,24 @@
 
 			<article class="pager-wrap">
 				<ul class="pager">
-					<li class="on"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
+				<c:set var="before" value="${page.startPage-1}"/>
+				<c:set var="next" value="${page.endPage+1}"/>
+				<c:if test="${page.startPage != 1 }">
+				<li><a href="inquiry-list?pageNo=${before}">&lt;</a></li>
+				</c:if>	
+					<c:forEach var="pageNo" begin="${page.startPage}" end="${page.endPage}">
+						<c:choose>
+						<c:when  test="${pageNo == page.pageNo }">
+							<li class="on"><a href="inquiry-list?pageNo=${pageNo}">${pageNo}</a></li>
+						</c:when>
+						<c:when test="${pageNo != page.pageNo }">
+							<li><a href="inquiry-list?pageNo=${pageNo}">${pageNo}</a></li>
+						</c:when>
+						</c:choose>
+					</c:forEach>
+				<c:if test="${page.endPage != page.totalPage }">
+				<li><a href="inquiry-list?pageNo=${next}">&gt;</a></li>
+				</c:if>		
 				</ul>
 			</article>
 

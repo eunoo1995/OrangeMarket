@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.InquiryService;
 import orange.service.InquiryVO;
+import orange.service.PagingVO;
 
 @Service("inquiryService")
 public class InquiryImpl extends EgovAbstractServiceImpl implements InquiryService{
@@ -17,7 +18,7 @@ public class InquiryImpl extends EgovAbstractServiceImpl implements InquiryServi
 	private InquiryMapper inquiryDAO;
 	
 	@Override
-	public List<?> selectInquiryList(InquiryVO vo) throws Exception {
+	public List<InquiryVO> selectInquiryList(PagingVO vo) throws Exception {
 		return inquiryDAO.selectInquiryList(vo);
 	}
 
@@ -29,6 +30,11 @@ public class InquiryImpl extends EgovAbstractServiceImpl implements InquiryServi
 	@Override
 	public InquiryVO selectInquiryDetail(InquiryVO vo) throws Exception {
 		return inquiryDAO.selectInquiryDetail(vo);
+	}
+
+	@Override
+	public int selectInquiryTotal() throws Exception {
+		return inquiryDAO.selectInquiryTotal();
 	}
 	
 }
