@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
 <!-- 헤더 -->
 <jsp:include page="/include/header.jsp" flush="false">
 	<jsp:param name="cssName" value="product" />
@@ -21,6 +20,87 @@
 			</div>
 		</header>
 		
+		<script type="text/javascript">
+			
+			$(function(){
+					//작성 저장 ajax
+					$("#pro-btn-save").click(function(){
+						
+							var title = $("#title").val();
+							var proCategoryCode = $("#proCategoryCode").val();
+							var addr = $("#addr").val();
+							var refund = $("#refund").val();
+							var price = $("#price").val();
+							var content = $("#content").val();
+							var nego = $("#nego").val();
+							
+							alert("   제목 : " + title + "\n" 
+								+ "카테고리 : " + proCategoryCode + "\n"
+								+ "거래지역 : " + addr + "\n"
+								+ "환불여부 : " + refund + "\n"
+								+ "   가격 : " + price + "\n"
+								+ "   설명 : " + content + "\n"
+								+ "가격협의 : " + nego
+							);
+							
+					  		if($("#title").val() == "" ) {
+					  			alert("제목을 입력해주세요.");
+					  			$("#title").focus();
+					  			return false;
+					  		}
+					  		if($("#content").val() == "" ) {
+					  			alert("내용을 입력해주세요.");
+					  			$("#content").focus();
+					  			return false;
+					  		}
+					  		
+					  		var formdata = $("#frm").serialize();
+					  		
+					  		$.ajax({
+					  			type : "post",
+					  			url  : "product-write-save",
+					  			data : formdata,
+					  			datatype : "text", //성공여부(ok)
+					  			success : function(data) {
+					  				if(data == "ok") {
+					  					alert("저장성공");
+					  				} else {
+					  					alert("저장실패");
+					  				}
+					  			},
+					  			error : function (request, status, error){
+					                
+					  			    var errorMsg = "요청 도중 오류가 발생하였습니다. \n";
+					  			   
+					  			    if(request.status == 0){ //offline
+					  			        errorMsg += "네트워크 연결을 확인해주십시오.";
+					  			    }else if(request.status==401){//Unauthorized
+					  			        errorMsg += "권한이 없습니다. \n관리자에게 문의해주세요.";
+					  			    }else if(request.status==403){//Forbidden
+					  			        errorMsg += "접근이 거부되었습니다. \n관리자에게 문의해주세요.";
+					  			    }else if(request.status==404){//Not Found
+					  			        errorMsg += "요청한 페이지를 찾을 수 없습니다. \n관리자에게 문의해주세요.";
+					  			    }else if(request.status==500){ //Internel Server Error
+					  			        errorMsg += "서버 내 오류가 발생하였습니다. \n관리자에게 문의해주세요.";
+					  			    }else if(status=='parsererror'){ //Error.nParsing JSON Request failed.
+					  			        errorMsg += "응답 본문을 정상적으로 가져올 수 없습니다. \n관리자에게 문의해주세요.";
+					  			    }else if(status=='timeout'){ //Request Time out.
+					  			        errorMsg += "응답 제한 시간을 초과하였습니다. 다시 조회해주세요.";
+					  			    }else { //Unknow Error
+					  			        errorMsg += "\n관리자에게 문의해주세요.";
+					  			    }
+					  			   
+					  			    alert(errorMsg);
+
+					  			}
+					  		});
+					  	});
+					
+				});
+		
+		
+		</script>
+		
 		<div class="product-write-content">
 			<div class="product-write-content__head">
 				<p class="product-write-star1">* 필수항목</p>
@@ -28,6 +108,10 @@
 
 			<div class="product-write-content__detail">
 				<form name="frm" id="frm">
+					
+					<input type="hidden" name="seller" id="seller" value="10">
+					<input type="hidden" name="sellerNik" id="sellerNik" value="판매자 닉네임">
+				
 					<table class="product-write-table">
 
 						<!-- 1. 상품 이미지 -->
@@ -54,9 +138,9 @@
 								제목
 								<span class="orange-star">*</span>
 							</th>
-							<td class="product-write-table-td2"><input type="text"
-								name="title" id="title" maxlength="40"
-								class="product-write-text"></td>
+								<td class="product-write-table-td2">
+								<input type="text" name="title" id="title" maxlength="40" class="product-write-text">
+							</td>
 						</tr>
 
 
@@ -67,22 +151,15 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-								<select name="category" id="category" class="product-write-category">
-									<option>1</option>
-									<option>1</option>
-									<option>1</option>
-									<option>1</option>
-									<option>1</option>
-									<option>1</option>
-									<option>1</option>
-									<option>1</option>
-									<option>1</option>
-									<option>1</option>
+								<select name="proCategoryCode" id="proCategoryCode" class="product-write-category">
+									<option value="">카테고리를 선택해주세요.</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
 								</select>
 
 								<div class="keyword-wrap">
-									<input type="text" name="title" id="title" maxlength="40" placeholder="연관단어를 입력해주세요." onfocus="this.placeholder=''"
-										onblur="this.placeholder='연관단어를 입력해주세요.'" class="product-write-keyword">
+									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." 
+									onfocus="this.placeholder=''" onblur="this.placeholder='연관단어를 입력해주세요.'" class="product-write-keyword">
 									 <span class="product-write-desc">예시 : #오렌지마켓 <br> 연관단어는 반드시 작성하지 않아도 됩니다. </span>
 								</div>
 							</td>
@@ -96,7 +173,7 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-								<input type="text" name="location" id="location" value="인증 사용자 지역명" readonly class="product-write-text">
+								<input type="text" name="addr" id="addr" value="서울시 강남구" readonly class="product-write-text">
 							</td>
 						</tr>
 
@@ -124,10 +201,15 @@
 							<td class="product-write-table-td2">
 
 								<div class="refund">
-									<input type="radio" name="refund" value="no" id="no" checked="checked">
-									<label class="role" for="no" style="margin-right: 40px;">환불불가</label>
-									<input type="radio" name="refund" value="yes" id="yes">
-									<label class="role" for="yes">환불가능</label>
+									<select name="refund" id="refund" class="product-write-category">
+										<option value="">환불 여부를 선택해주세요.</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+									</select>
+									<!-- <input type="radio" name="refund" id="refund" value="0" checked>
+									<label class="role" for="0" style="margin-right: 40px;">환불불가</label>
+									<input type="radio" name="refund" id="refund" value="1" >
+									<label class="role" for="1">환불가능</label> -->
 								</div>
 
 							</td>
@@ -142,11 +224,17 @@
 								<input type="text" name="price" id="price" maxlength="11" onkeyup="inputNumberFormat(this)" placeholder="가격을 입력해주세요."
 								onfocus="this.placeholder=''" onblur="this.placeholder='가격을 입력해주세요.'" class="product-write-price-txt">
 								<font style="margin-right: 10px; font-size: 16px;">원</font>
-
-								<div class="price-chk">
-									<input type="checkbox" name="nego" value="nego" id="nego">
+								
+								<select name="nego" id="nego" class="product-write-category">
+									<option value="">카테고리를 선택해주세요.</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+								</select>
+<!-- 								<div class="price-chk">
+									<input type="checkbox" name="nego" value="0" id="nego">
 									<label class="chk" for="nego">가격협의 가능</label>
-								</div></td>
+								</div> -->
+							</td>
 						</tr>
 
 
@@ -163,7 +251,7 @@
 			</div>
 
 			<div class="btn-match">
-				<button class="btn btn-solid-point">저장</button>
+				<button class="btn btn-solid-point" id="pro-btn-save">저장</button>
 				<button class="btn btn-solid">삭제</button>
 			</div>
 
