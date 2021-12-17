@@ -390,7 +390,7 @@ textarea::placeholder {
 }
 
 /* input */
-input[type="text"], textarea, select {
+input[type="text"], textarea, select, input[type="password"] {
 	vertical-align: top;
 	border: 1px solid #eee;
 	border-radius: 5px;

@@ -20,7 +20,9 @@
 				</header>
 				
 				<form name="joinForm" action="" method="post" id="joinForm" class="join-form">
-					<input type="hidden" name="agreeLocation" value="${agreeLoc}">
+					<input type="hidden" name="agreeLocation" value="${agreeLoc}" />
+					<input type="hidden" name="isSameTel" value="" />
+					<input type="hidden" name="isSameNik" value="" />
 				
 					<table class="form-table">
 						<colgroup>
@@ -32,33 +34,35 @@
 								<td colspan="2">
 									<p class="form-tit required">이름</p>
 									<input type="text" name="userName" required />
+									<p class="form-err-msg"></p>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
 									<p class="form-tit required">연락처</p>
 									<input type="text" name="tel" placeholder="- 없이 숫자만 입력해주세요" required />
+									<p class="form-err-msg"></p>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
-									<p class="form-tit required">
-										닉네임 <span class="form-tit-desc">닉네임(6-12자리)</span>
-									</p>
-									<input type="text" name="nickname" class="with-btn" placeholder="닉네임(6-12자리)" required />
-									<button type="button" class="btn-solid with-input">중복검사</button>
+									<p class="form-tit required">닉네임</p>
+									<input type="text" name="nickname" placeholder="닉네임(6-12자리)" required />
+									<p class="form-err-msg"></p>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<p class="form-tit required">
-										비밀번호 <span class="form-tit-desc">문자, 숫자, 기호 중 2종류 조합</span>
+										비밀번호
 									</p>
-									<input type="text" name="pw" placeholder="비밀번호(8-20자리)" required />
+									<input type="password" name="password" minlength="8" maxlength="20" placeholder="비밀번호(8-20자리)" required />
+									<p class="form-err-msg"></p>
 								</td>
 								<td>
 									<p class="form-tit required">비밀번호 재확인</p>
-									<input type="text" name="rePw" required />
+									<input type="password" name="rePassword" minlength="8" maxlength="20" required />
+									<p class="form-err-msg"></p>
 								</td>
 							</tr>
 							<tr>
