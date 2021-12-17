@@ -9,7 +9,7 @@ public class ReportVO {
 	private String udate;
 	private String status;
 	private int writer;
-	private String witerNik;
+	private String writerNik;
 	private int seller;
 	private String sellerNik;
 	private String reContent;
@@ -57,11 +57,12 @@ public class ReportVO {
 	public void setWriter(int writer) {
 		this.writer = writer;
 	}
-	public String getWiterNik() {
-		return witerNik;
+	
+	public String getWriterNik() {
+		return writerNik;
 	}
-	public void setWiterNik(String witerNik) {
-		this.witerNik = witerNik;
+	public void setWriterNik(String writerNik) {
+		this.writerNik = writerNik;
 	}
 	public int getSeller() {
 		return seller;

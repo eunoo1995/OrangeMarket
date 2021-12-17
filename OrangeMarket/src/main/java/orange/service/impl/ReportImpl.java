@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import orange.service.PagingVO;
 import orange.service.ReportService;
 import orange.service.ReportVO;
 
@@ -17,7 +18,7 @@ public class ReportImpl extends EgovAbstractServiceImpl implements ReportService
 	private ReportMapper reportDAO;
 
 	@Override
-	public List<?> selectReportList(ReportVO vo) throws Exception {
+	public List<ReportVO> selectReportList(PagingVO vo) throws Exception {
 		return reportDAO.selectReportList(vo);
 	}
 
@@ -27,8 +28,13 @@ public class ReportImpl extends EgovAbstractServiceImpl implements ReportService
 	}
 
 	@Override
-	public int insertReprot(ReportVO vo) throws Exception {
-		return reportDAO.insertReprot(vo);
+	public int insertReport(ReportVO vo) throws Exception {
+		return reportDAO.insertReport(vo);
+	}
+
+	@Override
+	public int selectReportTotal() throws Exception {
+		return reportDAO.selectReportTotal();
 	}
 	
 	

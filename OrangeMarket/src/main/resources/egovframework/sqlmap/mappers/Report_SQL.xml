@@ -2,16 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="orange.service.impl.ReportMapper">
 
-	<select id="selectReportList" parameterType="reportVO" resultType="egovMap">
-	SELECT 
-			unq,
-			title,
-			content,
-			to_char(rdate,'yyyy-mm-dd') rdate,
-			decode(status,'N','답변대기','답변완료') status,
-			witer_nik,
-			seller_nik 
-	FROM REPORT_BOARD 
-	ORDER BY unq DESC		
+	<select id="selectReportList" parameterType="pagingVO" resultType="egovMap">
+		SELECT b.* FROM
+			(SELECT rownum rn, a.* FROM
+				(SELECT 
+						unq,
+						title,
+						content,
+						to_char(rdate,'yyyy-mm-dd') rdate,
+						decode(status,'N','답변대기','답변완료') status,
+						writer_nik,
+						seller_nik 
+				FROM REPORT_BOARD 
+				ORDER BY unq DESC ) a ) b 
+		WHERE rn BETWEEN #{startIndex} AND #{endIndex}	
 	</select>
+	<select id="selectReportTotal" resultType="int">
+		SELECT COUNT(*) FROM REPORT_BOARD
+	</select>
+	<select id="selectReportDetail" parameterType="reportVO" resultType="reportVO">
+		SELECT 
+				unq,
+				title,
+				content,
+				to_char(rdate,'yyyy-mm-dd') rdate,
+				to_char(rdate,'yyyy-mm-dd') udate,
+				seller,
+				seller_nik,
+				writer,
+				writer_nik,
+				re_content 
+		FROM REPORT_BOARD 
+		WHERE unq = #{unq}
+	
+	
+	</select>
+	
+	
+	<insert id="insertReport" parameterType="reportVO">
+		INSERT INTO REPORT_BOARD ( unq,
+								   title,
+								   content,
+								   rdate,
+								   udate,
+								   writer,
+								   writer_nik,
+								   seller,
+								   seller_nik) 
+						   VALUES 
+						   		 ( REPORT_BOARD_SEQ.NEXTVAL,
+						   		   #{title},
+						   		   #{content},
+						   		   sysdate,
+						   		   sysdate,
+						   		   #{writer},
+						   		   #{writerNik},
+						   		   #{seller},
+						   		   #{sellerNik})
+	</insert>
 </mapper>

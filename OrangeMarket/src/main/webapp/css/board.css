@@ -151,6 +151,7 @@
 
 .board-write-table .content {
 	padding: 20px;
+	resize : none;
 }
 
 /*작성페이지 하단버튼 위치지정용*/

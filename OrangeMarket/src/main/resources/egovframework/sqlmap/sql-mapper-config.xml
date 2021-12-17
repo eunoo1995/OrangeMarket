@@ -15,5 +15,6 @@
 		<typeAlias alias="productVO" type="orange.service.ProductVO"/>
 		<typeAlias alias="reportVO" type="orange.service.ReportVO"/>
 		<typeAlias alias="pagingVO" type="orange.service.PagingVO"/>
+		<typeAlias alias="qnaVO" type="orange.service.QnaVO"/>
     </typeAliases>
 </configuration>

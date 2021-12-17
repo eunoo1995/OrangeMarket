@@ -62,8 +62,10 @@ public class BoardController {
 	public String inquiryWriteSave(InquiryVO vo) throws Exception {
 		vo.setTitle(vo.getTitle().trim());
 		vo.setContent(vo.getContent().trim());
-		int result = inquiryService.insertInquiry(vo);
+		String content = vo.getContent().replace("\n", "<br>");
+		vo.setContent(content);
 		String rs = "";
+		int result = inquiryService.insertInquiry(vo);
 		if(result == 1) {
 			rs = "ok";
 		}
@@ -73,12 +75,16 @@ public class BoardController {
 	//--------------------------------------------------------------
 	// 신고하기 리스트 출력
 	@RequestMapping(value = "/report-list")
-	public String reportList(ReportVO vo, Model model) throws Exception {
+	public String reportList(PagingVO vo, Model model) throws Exception {
+		//페이징 처리
+		int total = reportService.selectReportTotal();
+		int pageNo = vo.getPageNo();
+		int pageUnit = 5;
+		vo = new PagingVO(total,pageNo,pageUnit);
 		
-		List<?> list = reportService.selectReportList(vo);
-		int chk = list.size();
+		List<ReportVO> list = reportService.selectReportList(vo);
 		model.addAttribute("list",list);
-		model.addAttribute("chk",chk);
+		model.addAttribute("page",vo);
 		return "board/reportList";
 	}
 	// 신고하기 상세보기
@@ -91,6 +97,30 @@ public class BoardController {
 		
 		return "board/reportDetail";
 	}
+	// 신고하기 작성화면
+	@RequestMapping(value = "/report-write")
+	public String reportWrite() throws Exception {
+		
+		return "board/reportWrite";
+	}
+	// 신고하기 작성 저장
+	@RequestMapping(value = "/report-write-save")
+	@ResponseBody
+	public String reportWriteSave(ReportVO vo) throws Exception {
+		
+		vo.setContent(vo.getContent().trim());
+		String content = vo.getContent().replace("\n", "<br>");
+		vo.setContent(content);
+		
+		String result = "";
+		int rs = reportService.insertReport(vo);
+		if(rs == 1) {
+			result = "ok";
+		}
+		return result;
+	}
+	
+	
 	//--------------------------------------------------------------
 	// 자주묻는질문 리스트 출력
 	@RequestMapping(value = "/qna-list")

@@ -38,11 +38,13 @@
 								<option value="지역광고">지역광고</option>
 								<option value="기타">기타</option>
 							</select> 
-							<input type="text" name="title" id="title" class="board-title">
+							<input type="text" name="title" id="title" maxlength="20"
+								placeholder="제목을 입력하세요." class="board-title">
 						</td>
 					</tr>
 					<tr>
-						<td><textarea id="content" name="content" class="content"></textarea></td>
+						<td><textarea id="content" name="content" class="content"
+							 placeholder="문의하실 내용을 입력해주세요."></textarea></td>
 					</tr>
 
 
