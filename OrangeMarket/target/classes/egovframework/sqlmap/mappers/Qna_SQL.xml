@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orange.service.impl.QnaMapper">
+	
+	<select id="selectQnaList" resultType="egovMap">
+		SELECT 
+				title,
+				category,
+				content
+		FROM QNA_BOARD
+		WHERE category = #{category}	
+	</select>
+	
+	<select id="selectCategoryList" resultType="egovMap">
+		SELECT 
+				cate_no,
+       			cate_name
+       FROM QNA_CATEGORY_BOARD
+	</select>
+</mapper>

@@ -27,8 +27,8 @@
 				<table class="board-detail-table">
 					<thead>
 						<tr>
-							<td><span class="board-category">${vo.category }</span> <span
-								class="board-title">${vo.title }</span></td>
+							<td><span class="board-category">${vo.category }</span> 
+							<span class="board-title">${vo.title }</span></td>
 						</tr>
 						<tr>
 							<td><span class="board-writer">${vo.nikName }</span> <span

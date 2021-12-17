@@ -27,8 +27,8 @@
 		
 			<nav class="board-menu-wrap">
 				<ul class="board-menu">
-					<li class="menu_li"><a href="inquiry-list">문의내역</a></li>
-					<li class="menu_li on"><a href="report-list"><b>신고내역</b></a></li>
+					<li class="menu_li"><a href="inquiry-list"><b>문의내역</b></a></li>
+					<li class="menu_li on"><a href="report-list">신고내역</a></li>
 				</ul>
 			</nav>
 
@@ -45,7 +45,7 @@
 				<thead>
 					<tr>
 						<th>번호</th>
-						<th>작성자</th>
+						<th>판매자</th>
 						<th>제목</th>
 						<!--제목 누르면 상세내용으로 이동  클릭시 고유값 가지고 이동-->
 						<th>신고자</th>
@@ -54,23 +54,25 @@
 					</tr>
 				</thead>
 				<tbody>
+				<c:set var="rownum" value="${page.rownum }"/>
 				<c:choose>
-				<c:when test="${chk eq 0}">
-					<tr>
-						<th colspan="6">고객센터에 신고하신 내역이 없습니다.</th>
-					</tr>
-				</c:when>
-				<c:when test="${chk ne 0}">
+				<c:when test="${page.total ne 0}">
 				<c:forEach var="list" items="${list}">
 					<tr>
-						<td class="board-num">1</td>
+						<td class="board-num">${rownum}</td>
 						<td>${list.sellerNik}</td>
 						<td class="board-tit"><a href="report-detail?unq=${list.unq}">${list.title}</a></td>
 						<td class="board-writer">${list.writerNik}</td>
 						<td>${list.rdate}</td>
 						<td class="board-answer">${list.status}</td>
 					</tr>
+				<c:set var="rownum" value="${rownum-1 }"/>
 				</c:forEach>	
+				</c:when>
+				<c:when test="${page.total eq 0}">
+					<tr>
+						<th colspan="6">고객센터에 신고하신 내역이 없습니다.</th>
+					</tr>
 				</c:when>
 				</c:choose>
 				</tbody>
@@ -79,10 +81,24 @@
 
 			<article class="pager-wrap">
 				<ul class="pager">
-					<li class="on"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
+				<c:set var="before" value="${page.startPage-1}"/>
+				<c:set var="next" value="${page.endPage+1}"/>
+				<c:if test="${page.startPage != 1 }">
+				<li><a href="report-list?pageNo=${before}">&lt;</a></li>
+				</c:if>	
+					<c:forEach var="pageNo" begin="${page.startPage}" end="${page.endPage}">
+						<c:choose>
+						<c:when  test="${pageNo == page.pageNo }">
+							<li class="on"><a href="report-list?pageNo=${pageNo}">${pageNo}</a></li>
+						</c:when>
+						<c:when test="${pageNo != page.pageNo }">
+							<li><a href="report-list?pageNo=${pageNo}">${pageNo}</a></li>
+						</c:when>
+						</c:choose>
+					</c:forEach>
+				<c:if test="${page.endPage != page.totalPage }">
+				<li><a href="report-list?pageNo=${next}">&gt;</a></li>
+				</c:if>		
 				</ul>
 			</article>
 

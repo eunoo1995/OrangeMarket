@@ -30,7 +30,7 @@
 				category,
 				content,
 				to_char(rdate,'yyyy-mm-dd') rdate,
-				to_char(rdate,'yyyy-mm-dd') Udate,
+				to_char(rdate,'yyyy-mm-dd') udate,
 				nik_name,
 				re_content 
 		FROM INQUIRY_BOARD 
