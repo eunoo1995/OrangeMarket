@@ -3,11 +3,13 @@ package orange.service;
 public class QnaVO {
 	private int unq;
 	private String title;
-	private int category;
+	private int category = 1;
 	private String content;
 	private String rdate;
 	private String udate;
-	private String deCategory;
+	private int cateNo;
+	private String cateName;
+	
 	public int getUnq() {
 		return unq;
 	}
@@ -44,11 +46,18 @@ public class QnaVO {
 	public void setUdate(String udate) {
 		this.udate = udate;
 	}
-	public String getDeCategory() {
-		return deCategory;
+	public int getCateNo() {
+		return cateNo;
 	}
-	public void setDeCategory(String deCategory) {
-		this.deCategory = deCategory;
+	public void setCateNo(int cateNo) {
+		this.cateNo = cateNo;
 	}
+	public String getCateName() {
+		return cateName;
+	}
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
+	}
+	
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.QnaService;
+import orange.service.QnaVO;
 
 @Service("qnaService")
 public class QnaImpl extends EgovAbstractServiceImpl implements QnaService{
@@ -16,8 +17,13 @@ public class QnaImpl extends EgovAbstractServiceImpl implements QnaService{
 	private QnaMapper qnaDAO;
 	
 	@Override
-	public List<?> selectQnaList() throws Exception {
-		return qnaDAO.selectQnaList();
+	public List<?> selectQnaList(QnaVO vo) throws Exception {
+		return qnaDAO.selectQnaList(vo);
+	}
+
+	@Override
+	public List<?> selectCategoryList() throws Exception {
+		return qnaDAO.selectCategoryList();
 	}
 
 }

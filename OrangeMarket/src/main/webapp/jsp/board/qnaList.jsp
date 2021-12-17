@@ -21,50 +21,34 @@
 	<article class="board-wrap">
 		<!-- container -->
 		<div class="cont-inner">
-		
 			<div class="QnA-main">
-	    			<table class="QnA-titleList">
-	    				<tr>
-							<th>
+	    			<div class="QnA-titleList">
 								<ul>
-									<li>· 운영정책</li>
-									<li>· 거래품목</li>
-									<li>· 이벤트/초대</li>
+								<c:forEach var="cateList" items="${cateList}">
+								<c:choose>
+									<c:when test="${cateList.cateNo == cateNo}">	
+									<li class="on"><a href="qna-list?category=${cateList.cateNo }">· ${cateList.cateName }</a></li>
+									</c:when>
+									<c:when test="${cateList.cateNo != cateNo}">	
+									<li><a href="qna-list?category=${cateList.cateNo }">· ${cateList.cateName }</a></li>
+									</c:when>
+								</c:choose>
+								</c:forEach>
 								</ul>
-							</th>
-							<th>
-								<ul>
-									<li>· 계정/인증</li>
-									<li>· 이용재제</li>
-									<li>· 지역광고</li>
-								</ul>
-							</th>
-							<th>
-								<ul>
-									<li>· 구매/판매</li>
-									<li>· 동네생활</li>
-									<li>· 기타</li>
-								</ul>
-							</th>
-	    				</tr>
-	    			</table>
+	    			</div>
 	    			<div class="QnA-message">사용자들의 자주 묻는 질문을 확인하세요.</div>
     				
     				<div class="QnA-accordion">
-    				<!-- 반복문 사용 -->
+    				<c:forEach var="list" items="${list}">
 						<p class="QnA-title">
-						Q . 커뮤니티 가이드라인
+						Q . ${list.title }
 						</p>
 						<div class="QnA-detail">
 							<p>
-								우리는 함께 신뢰를 만들어요.<br>
-								항상 솔직하게 대화해요.<br>
-								서로 배려하며, 약속은 반드시 지켜요.<br>
-								자세하고 정확한 정보를 제공해요.<br>
-								따뜻한 매너를 함께 만들어요<br>
-								누구나 찾기 쉽고 안전한 공공장소에서 만나요.<br>
+								${list.content}
 							</p>
 						</div>
+    				</c:forEach>
     				</div>
 			</div>
 		</div>

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import orange.service.InquiryService;
 import orange.service.InquiryVO;
 import orange.service.PagingVO;
+import orange.service.QnaService;
+import orange.service.QnaVO;
 import orange.service.ReportService;
 import orange.service.ReportVO;
 
@@ -24,6 +26,8 @@ public class BoardController {
 	@Resource(name="reportService")
 	private ReportService reportService;
 	
+	@Resource(name="qnaService")
+	private QnaService qnaService;
 	
 	
 	// 문의하기 리스트 출력
@@ -124,8 +128,13 @@ public class BoardController {
 	//--------------------------------------------------------------
 	// 자주묻는질문 리스트 출력
 	@RequestMapping(value = "/qna-list")
-	public String infoAccount() throws Exception {
+	public String infoAccount(QnaVO vo, Model model) throws Exception {
 		
+		List<?> list = qnaService.selectQnaList(vo);
+		List<?> cateList = qnaService.selectCategoryList();
+		model.addAttribute("cateNo",vo.getCategory());
+		model.addAttribute("list",list);
+		model.addAttribute("cateList",cateList);
 		return "board/qnaList";
 	}
 	
