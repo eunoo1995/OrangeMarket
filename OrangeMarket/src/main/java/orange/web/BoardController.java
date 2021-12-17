@@ -60,7 +60,8 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/inquiry-write-save")
 	public String inquiryWriteSave(InquiryVO vo) throws Exception {
-		
+		vo.setTitle(vo.getTitle().trim());
+		vo.setContent(vo.getContent().trim());
 		int result = inquiryService.insertInquiry(vo);
 		String rs = "";
 		if(result == 1) {
