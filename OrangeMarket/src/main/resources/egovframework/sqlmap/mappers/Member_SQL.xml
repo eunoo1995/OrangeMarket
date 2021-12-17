@@ -6,5 +6,10 @@
 		SELECT count(*) FROM member 
 		WHERE user_phone = #{tel} 
 	</select>
+	
+	<select id="isMemberNikname" resultType="java.lang.Integer">
+		SELECT count(*) FROM member 
+		WHERE nik_name = #{nikName} 
+	</select>
 
 </mapper>

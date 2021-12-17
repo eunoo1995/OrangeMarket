@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import orange.service.MemberService;
 
@@ -37,13 +38,43 @@ public class MemberController {
 		return "member/joinForm";
 	}
 	
-	@RequestMapping(value="check-user-name")
+	@RequestMapping(value="check-username")
+	@ResponseBody
 	public String checkJoinTel(String tel) throws Exception {
 		
 		String msg = "";
 		int result = memberService.isMemberTel(tel);
 		
-		System.out.println(result);
+		if(result != 0) {
+			msg = "exit";
+		}
+		
+		if(result == 0) {
+			msg = "ok";
+		}
+		
+		System.out.println("tel: " + msg);
+		
+		
+		return msg;
+	}
+	
+	@RequestMapping(value="check-nikname")
+	@ResponseBody
+	public String checkJoinNikname(String nickname) throws Exception {
+		
+		String msg = "";
+		int result = memberService.isMemberNikname(nickname);
+		
+		if(result != 0) {
+			msg = "exit";
+		}
+		
+		if(result == 0) {
+			msg = "ok";
+		}
+		
+		System.out.println(msg);
 		
 		
 		return msg;

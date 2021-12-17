@@ -10,6 +10,8 @@ public interface MemberMapper {
 
 
 	int isMemberTel(String tel);
+
+	int isMemberNikname(String nickname);
 	
 
 }

@@ -24,4 +24,9 @@ public class MemberImpl extends EgovAbstractServiceImpl implements MemberService
 		return memberDAO.isMemberTel(tel);
 	}
 
+	@Override
+	public int isMemberNikname(String nickname) {
+		return memberDAO.isMemberNikname(nickname);
+	}
+
 }
