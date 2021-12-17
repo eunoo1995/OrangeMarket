@@ -59,12 +59,16 @@ if (joinForm) {
 	/* 비밀번호 일치 검사 */
 	frm.rePassword.addEventListener('blur', function() { chkPw2(frm) });
 
+	/* 이메일 형식 */
+
+	console.log(frm.email);
+
+	frm.email.addEventListener('blur', function() { chkEmail(frm) });
+
 	/* 가입하기 버튼 누른 경우 */
 	if (btnJoinConfirm) {
 		btnJoinConfirm.addEventListener('click', chkJoinForm);
 	}
-
-
 }
 
 function chkJoinForm() {
@@ -76,17 +80,11 @@ function chkJoinForm() {
 
 	chkNik(frm);
 
-	if (frm.pw.value === '') {
-		alert('비밀번호를 입력해주세요');
+	chkPw1(frm);
 
-		return false;
-	}
+	chkPw2(frm);
 
-	if (frm.pw.value !== frm.rePw.value) {
-		alert('비밀번호를 확인해주세요');
-
-		return false;
-	}
+	chkEmail(frm);
 }
 
 function chkName($target) {
@@ -119,6 +117,9 @@ function chkName($target) {
 function chkTel($target) {
 
 	var frm = $target;
+	
+	frm.telFlag.value = 'N';
+	
 	var input = frm.tel;
 	var inputTxt = input.value;
 	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
@@ -141,7 +142,7 @@ function chkTel($target) {
 	}
 
 	if (regPhone.test(inputTxt) === false) {
-		showFormErr(areaErrMsg, '연락처를 다시 확인해주세요');
+		showFormErr(areaErrMsg, '연락처를 형식을 확인해주세요');
 
 		return false;
 	}
@@ -149,28 +150,29 @@ function chkTel($target) {
 	if (regPhone.test(inputTxt) === true) {
 		input.value = inputTxt;
 	}
-	
-	var formData = new FormData(frm);
-	
+
+	var formData = 'tel=' + inputTxt;
+
 	$.ajax({
 		type: 'POST',
-		url: 'check-username',
+		url: 'check-usertel',
 		data: formData,
-		processData: false,
-		contentType: false,
+		dataType: 'text',
 		success: function(data) {
 			console.log(data);
-			if(data == 'exist') {
+			if (data == 'exist') {
 				showFormErr(areaErrMsg, '이미 존재하는 연락처입니다.');
-				
+
 				return false;
+			} else if(data == 'ok') {
+				frm.telFlag.value = 'Y';
 			}
 		},
 		error: function() {
-			showFormErr(areaErrMsg, '전송오류');
+			showFormErr(areaErrMsg, '다시 시도해주세요');
 		},
 	});
-	
+
 	hideFormErr(areaErrMsg);
 }
 
@@ -178,6 +180,9 @@ function chkTel($target) {
 function chkNik($target) {
 
 	var frm = $target;
+	
+	frm.nikFlag.value = 'N';
+	
 	var input = frm.nickname;
 	var inputTxt = input.value;
 	var nikStartChat = inputTxt.substring(0, 1);
@@ -190,85 +195,106 @@ function chkNik($target) {
 	}
 
 	/* 닉네임 첫 글자 확인 */
-	var regStartKor = /^[가-힣ㄱ-ㅎ]/;
-	var regStartEng = /^[a-zA-Z]/;
+	if (inputTxt.length < 4) {
+		var regStartKor = /^[가-힣ㄱ-ㅎ]/;
+		var regStartEng = /^[a-zA-Z]/;
+
+		/* 한글일 경우 */
+		if (regStartKor.test(nikStartChat) === true) {
+
+			var regKor = /^[가-힣ㄱ-ㅎ]{3,}/;
+
+			if (regKor.test(inputTxt) === false) {
+				showFormErr(areaErrMsg, '한글은 3자 이상 입력해야 합니다.');
+
+				return false;
+			}
+		}
+
+		/* 알파벳일 경우 */
+		if (regStartEng.test(nikStartChat) === true) {
+			var regEng = /^[a-zA-Z]{4,}/;
+
+			if (regEng.test(inputTxt) === false) {
+				showFormErr(areaErrMsg, '영문자는 4자 이상 입력해야 합니다.');
+
+				return false;
+			}
+		}
+	}
+
 
 	/* 닉네임 확인 */
-	var regNickName = /^[가-힣ㄱ-ㅎa-zA-Z0-9.]{6,12}$/;
-
-	/* 닉네임 첫 글자가 한글일 경우 */
-	if (nikStartChat != '' && regStartKor.test(nikStartChat) === true) {
-
-		var regKor = /^[가-힣ㄱ-ㅎ]{2,}/;
-
-		if (regKor.test(inputTxt) === false) {
-			showFormErr(areaErrMsg, '한글은 3자 이상 입력해야 합니다.');
-
-			return false;
-		}
-	}
-
-	/* 닉네임 첫 글자가 알파벳일 경우 */
-	if (nikStartChat != '' && regStartEng.test(nikStartChat) === true) {
-		var regEng = /^[a-zA-Z]{4,}/;
-
-		if (regEng.test(inputTxt) === false) {
-			showFormErr(areaErrMsg, '영문자는 4자 이상 입력해야 합니다.');
-
-			return false;
-		}
-	}
-
+	var regNickName = /^[가-힣ㄱ-ㅎa-zA-Z0-9.]{3,12}$/;
 
 	/* 닉네임 형식이 맞지 않은 경우 */
 	if (regNickName.test(inputTxt) === false) {
-		showFormErr(areaErrMsg, '닉네임을 다시 확인해주세요 (6-12자)');
+		showFormErr(areaErrMsg, '한글, 영문, 숫자, 마침표만 사용 가능합니다 (3-12자)');
 
 		return false;
 	}
 
-	var formData = new FormData(frm);
-	
+	var formData = { 'nickname': inputTxt };
+	nikFlag = false;
 	$.ajax({
 		type: 'POST',
 		url: 'check-nikname',
 		data: formData,
-		processData: false,
-		contentType: false,
+		dataType: 'text',
 		success: function(data) {
 			console.log(data);
-			if(data == 'exist') {
+			if (data == 'exist') {
 				showFormErr(areaErrMsg, '이미 존재하는 닉네임입니다.');
-				
+
 				return false;
+			} else if(data == 'ok') {
+				frm.nikFlag.value = 'Y';
 			}
 		},
 		error: function() {
-			showFormErr(areaErrMsg, '전송오류');
-		},
+			showFormErr(areaErrMsg, '다시 시도해주세요');
+		}
 	});
 
 	hideFormErr(areaErrMsg);
 }
 
 function chkPw1($target) {
-
+	
 	var frm = $target;
+	
+	frm.pwFlag.value = 'N';
+	
 	var input = frm.password;
 	var inputTxt = input.value;
 	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
 
-	var regPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
-
 	if (inputTxt == '') {
 		showFormErr(areaErrMsg, '비밀번호를 입력해주세요');
-	}
-
-	if (regPassword.test(inputTxt) === false) {
-		showFormErr(areaErrMsg, '문자, 숫자, 기호  3종류 조합으로 해주세요 (8-20 글자)');
 
 		return false;
 	}
+
+	var formData = { 'password': inputTxt };
+
+	$.ajax({
+		type: 'POST',
+		url: 'check-password',
+		data: formData,
+		dataType: 'text',
+		success: function(data) {
+			console.log(data);
+			if (data == 'err') {
+				showFormErr(areaErrMsg, '문자, 숫자, 기호  3종류 조합으로 해주세요 (8-20 글자)');
+
+				return false;
+			}
+		},
+		error: function() {
+			showFormErr(areaErrMsg, '다시 시도해주세요');
+			input.value = '';
+		}
+	});
 
 	hideFormErr(areaErrMsg);
 }
@@ -280,47 +306,64 @@ function chkPw2($target) {
 	var inputTxt = input.value;
 	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
 
-	var regPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
-
 	if (inputTxt == '') {
 		showFormErr(areaErrMsg, '비밀번호를 입력해주세요');
-	}
-
-	if (regPassword.test(inputTxt) === false) {
-		showFormErr(areaErrMsg, '문자, 숫자, 기호  3종류 조합으로 해주세요 (8~20 글자)');
 
 		return false;
 	}
 
-	if (inputTxt != frm.password) {
+	if (inputTxt != frm.password.value) {
 		showFormErr(areaErrMsg, '비밀번호가 일치하지 않습니다.');
 
 		return false;
 	}
 
+
+	var formData = 'password=' + inputTxt;
+
+	$.ajax({
+		type: 'POST',
+		url: 'check-password',
+		data: formData,
+		dataType: 'text',
+		success: function(data) {
+			console.log(data);
+			if (data == 'err') {
+				showFormErr(areaErrMsg, '문자, 숫자, 기호  3종류 조합으로 해주세요 (8-20 글자)');
+
+				return false;
+			} else if(data =='ok') {
+				frm.pwFlag.value = 'Y';
+			}
+		},
+		error: function() {
+			showFormErr(areaErrMsg, '다시 시도해주세요');
+			input.value = '';
+		}
+	});
+
+
 	hideFormErr(areaErrMsg);
 }
 
 function chkEmail($traget) {
-var frm = $target;
+	var frm = $target;
 	var input = frm.email;
 	var inputTxt = input.value;
 	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
 
 	var regEmail = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-	
+
 	if (inputTxt == '') {
 		showFormErr(areaErrMsg, '이메일을 입력해주세요');
 	}
-	
+
 	if (regEmail.test(inputTxt) === false) {
-		showFormErr(areaErrMsg, '이메일을 확인해주세요');
+		showFormErr(areaErrMsg, '이메일 형식을 확인해주세요');
 
 		return false;
 	}
 }
-
-
 
 function showFormErr($obj, msg) {
 	$obj.innerText = msg;
