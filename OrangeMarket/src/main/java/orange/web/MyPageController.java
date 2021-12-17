@@ -18,4 +18,10 @@ public class MyPageController {
 		return "mypage/tradeHistory";
 	}
 	
+	@RequestMapping(value="/withdrawal")
+	public String withdrawalPop() throws Exception {
+		
+		return "mypage/withdrawal";
+	}
+	
 }

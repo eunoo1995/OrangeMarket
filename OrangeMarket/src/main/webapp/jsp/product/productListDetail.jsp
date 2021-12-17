@@ -79,7 +79,7 @@
 	
 							<!-- 배송 여부 -->
 							<div class="mini-div">
-								<span class="mini-title">·배송여부</span> <span class="mini-content">직거래</span>
+								<span class="mini-title">·가격협의</span> <span class="mini-content">직거래</span>
 							</div>
 	
 							<!-- 거래 지역 -->

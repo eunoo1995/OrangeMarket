@@ -140,6 +140,16 @@
 		overflow:auto;
 		border-radius: 5px;
 	}
+	.myPage-likesList::-webkit-scrollbar {
+    	width: 7px;
+  	}
+	.myPage-likesList::-webkit-scrollbar-thumb {
+	    background:#ffda77;
+	    border-radius:10px;
+	}
+	.myPage-likesList::-webkit-scrollbar-track  {
+	    background:#fff;
+	}
 	.myPage-keywords {
 		width:auto;
 		float:left;
