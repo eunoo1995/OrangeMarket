@@ -12,6 +12,7 @@
 		<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
 		<typeAlias alias="deptVO" type="orange.service.DeptVO"/>
 		<typeAlias alias="inquiryVO" type="orange.service.InquiryVO"/>
+		<typeAlias alias="productVO" type="orange.service.ProductVO"/>
 		<typeAlias alias="reportVO" type="orange.service.ReportVO"/>
 		<typeAlias alias="pagingVO" type="orange.service.PagingVO"/>
     </typeAliases>
