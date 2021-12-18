@@ -69,6 +69,7 @@ if (joinForm) {
 
 		var input = frm.confirmEmail;
 		input.value = '';
+		input.style.display = 'block';
 
 		var formData = 'email=' + frm.email.value;
 		var areaErrMsg = frm.email.closest('td').querySelector('.form-err-msg');
@@ -417,6 +418,7 @@ if (joinForm) {
 			success: function(data) {
 				if (data == 'ok') {
 					frm.emailFlag.value = 'Y';
+					input.style.display = 'none';
 				} else if (data == 'err') {
 					showFormErr(areaErrMsg, '인증번호를 다시 확인해주세요');
 				}

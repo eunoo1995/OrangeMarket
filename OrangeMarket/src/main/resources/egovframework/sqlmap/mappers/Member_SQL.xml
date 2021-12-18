@@ -30,7 +30,7 @@
 			            WHERE email = #{email}
 			                  AND expired_time >= to_char(sysdate, 'YYYY-MM-DD HH24:MI')
 			                  AND use = 'N'
-			            ORDER BY expired_time DESC
+			            ORDER BY rdate DESC
 			        ) a
 			    ) b
 			    WHERE rn = 1
