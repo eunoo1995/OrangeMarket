@@ -23,6 +23,7 @@
 					<input type="hidden" name="agreeLocation" value="${agreeLoc}" />
 					<input type="hidden" name="nikFlag" value="N" />
 					<input type="hidden" name="telFlag" value="N" />
+					<input type="hidden" name="pwFlag" value="N" />
 					<input type="hidden" name="emailFlag" value="N" />
 					<input type="hidden" name="areaFlag" value="N" />
 				
@@ -71,8 +72,9 @@
 								<td colspan="2">
 									<p class="form-tit required">이메일</p>
 									<input type="text" name="email" class="with-btn-2" placeholder="아이디@naver.com 형식으로 입력해주세요" required />
-									<button type="button" class="btn btn-solid with-input-2">인증번호 받기</button>
-									<input type="text" name="confirmEmail" placeholder="인증번호 입력" />
+									<button type="button" id="btnConfirmEmail" class="btn btn-solid with-input-2" disabled>인증번호 받기</button>
+									<input type="text" name="confirmEmail" placeholder="인증번호 입력" readonly />
+									<p class="form-err-msg"></p>
 								</td>
 							</tr>
 							<tr>
@@ -80,8 +82,8 @@
 									<p class="form-tit">동네입력</p>
 									<input type="text" name="area" class="with-btn" placeholder="주소를 입력해주세요" />
 									<button type="button" class="btn btn-solid with-input">검색</button>
-									<input type="text" name="confirmArea" placeholder="인증번호 입력" />
-									<button type="button" class="btn btn-solid btn-f">동네 인증하기</button>
+									<input type="text" name="confirmArea" placeholder="인증번호 입력" readonly />
+									<button type="button" id="btnConfirmArea" class="btn btn-solid btn-f">동네 인증하기</button>
 								</td>
 							</tr>
 						</tbody>

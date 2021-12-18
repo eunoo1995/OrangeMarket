@@ -283,7 +283,7 @@ img {
 }
 
 /* btn */
-button {
+button:enabled {
 	cursor: pointer;
 }
 
@@ -302,11 +302,11 @@ button, .btn {
 	transition-property: background, border;
 }
 
-button:focus, .btn:focus {
+button:enabled:focus, .btn:enabled:focus {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-button:hover, .btn:hover {
+button:enabledhover, .btn:enabled:hover {
 	color: #ffb319;
 	border-color: #ffb319;
 }
@@ -316,7 +316,7 @@ button:hover, .btn:hover {
 	color: #111;
 }
 
-.btn-solid:hover, .btn-solid:active {
+.btn-solid:enabled:hover, .btn-solid:enabled:active {
 	border-color: #666;
 	background-color: #666;
 	color: #fff;
@@ -328,7 +328,7 @@ button:hover, .btn:hover {
 	color: #fff;
 }
 
-.btn-solid-point:hover, .btn-solid-point:active {
+.btn-solid-point:enabled:hover, .btn-solid-point:enabled:active {
 	background-color: #fff;
 	color: #ffb319;
 }
@@ -399,7 +399,7 @@ input[type="text"], textarea, select, input[type="password"] {
 }
 
 input[type="text"]:read-only, textarea:read-only {
-	
+	pointer-events: none;
 }
 
 input[type="text"]:read-only:focus, textarea:read-only:focus {

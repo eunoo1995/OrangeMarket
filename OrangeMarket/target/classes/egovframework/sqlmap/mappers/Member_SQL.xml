@@ -9,7 +9,7 @@
 	
 	<select id="isMemberNikname" resultType="java.lang.Integer">
 		SELECT count(*) FROM member 
-		WHERE nik_name = #{nikName} 
+		WHERE nik_name = #{nickname} 
 	</select>
 
 </mapper>
