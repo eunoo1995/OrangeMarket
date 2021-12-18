@@ -10,10 +10,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import orange.service.EmailVerifVO;
 import orange.service.MemberService;
+import orange.service.MemberVO;
 
 @Controller
 public class MemberController {
@@ -54,7 +55,7 @@ public class MemberController {
 		int result = memberService.isMemberTel(tel);
 
 		if (result > 0) {
-			msg = "exit";
+			msg = "exist";
 		}
 
 		if (result == 0) {
@@ -67,14 +68,13 @@ public class MemberController {
 
 	@RequestMapping(value = "check-nikname")
 	@ResponseBody
-	public String checkJoinNikname(@RequestParam Map<String, Object> param) throws Exception {
+	public String checkJoinNikname(MemberVO vo) throws Exception {
 
-		String nickname = (String) param.get("nickname");
 		String msg = "";
-		int result = memberService.isMemberNikname(nickname);
+		int result = memberService.isMemberNikname(vo.getNikName());
 
 		if (result > 0) {
-			msg = "exit";
+			msg = "exist";
 		}
 
 		if (result == 0) {
@@ -87,9 +87,9 @@ public class MemberController {
 
 	@RequestMapping(value = "check-password")
 	@ResponseBody
-	public String checkPassWord(@RequestParam Map<String, Object> param) throws Exception {
+	public String checkPassWord(MemberVO vo) throws Exception {
 
-		String password = (String) param.get("password");
+		String password = vo.getUserPw();
 		String regPassword = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,20}$";
 		String msg = "";
 
@@ -103,22 +103,38 @@ public class MemberController {
 
 		return msg;
 	}
+	
+	@RequestMapping("check-email")
+	@ResponseBody
+	public String checkEmail(MemberVO vo) throws Exception {
+		
+		String msg = "";
+		
+		int result = memberService.isMemberEmail(vo.getEmail());
+
+		if (result > 0) {
+			msg = "exist";
+		}
+
+		if (result == 0) {
+			msg = "ok";
+		}
+
+		return msg;
+	}
+	
 
 	@RequestMapping("send-verif-email")
 	@ResponseBody
-	public String SendVerifEmail(@RequestParam Map<String, Object> param) throws Exception {
+	public String SendVerifEmail(EmailVerifVO vo) throws Exception {
 
-		int serti = (int) ((Math.random() * (99999 - 10000 + 1)) + 10000);
-
+		String code = Integer.toString( ((int) ((Math.random() * (999999 - 100000 + 1)) + 100000)) );
 		String msg = "";
-		String emailTo = (String) param.get("email");
-
-		System.out.println(emailTo);
-
+		
+		String emailTo = vo.getEmail();
 		String emailFrom = "project.e.dev@gmail.com";
-
 		String title = "회원가입시 필요한 인증번호 입니다.";
-		String content = "[인증번호] " + serti + " 입니다. <br/> 인증번호 확인란에 기입해주십시오.";
+		String content = "[인증번호] " + code + " 입니다. <br/> 인증번호 확인란에 기입해주십시오.";
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -128,15 +144,50 @@ public class MemberController {
 			messageHelper.setTo(emailTo);
 			messageHelper.setSubject(title);
 			messageHelper.setText(content);
+			
+			vo.setEmailCode(code);
+			
+			int result = memberService.insertEmailVerif(vo);
+			if(result == 1) {
+				System.out.println("email====> " + emailTo );
+				System.out.println("code====> " + vo.getEmailCode() );
+//				mailSender.send(message);
+			}
 
-			mailSender.send(message);
-
-			msg = Integer.toString(serti);
+			msg = "ok";
 
 		} catch (Exception e) {
 			msg = "err";
 		}
+		
+		System.out.println("code msg ====> " + msg );
 
+		return msg;
+	}
+	
+	@RequestMapping("check-verifcode")
+	@ResponseBody
+	public String checkEmailCode(EmailVerifVO vo) throws Exception {
+		
+		String msg = "";
+		
+		
+		System.out.println("email check!! ==>" + vo.getEmail());
+		System.out.println("email code check!! ==>" + vo.getEmailCode());
+		
+		int result = memberService.selectEmailVerif(vo);
+	
+		
+		System.out.println("result check!! ==>" + result);
+		
+		if(result == 1) {
+			msg = "ok";
+		} else if(result != 1) {
+			msg = "err";
+		} 
+	
+		System.out.println("msg check!! ==>" + msg);
+		
 		return msg;
 	}
 }

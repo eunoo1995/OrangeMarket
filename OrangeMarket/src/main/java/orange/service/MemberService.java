@@ -6,4 +6,10 @@ public interface MemberService {
 
 	int isMemberNikname(String nickname);
 
+	int isMemberEmail(String email);
+	
+	int insertEmailVerif(EmailVerifVO vo) throws Exception;
+	
+	int selectEmailVerif(EmailVerifVO vo) throws Exception;
+
 }

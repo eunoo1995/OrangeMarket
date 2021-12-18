@@ -50,7 +50,7 @@
 							<tr>
 								<td colspan="2">
 									<p class="form-tit required">닉네임</p>
-									<input type="text" name="nickname" minlength="3" maxlength="12" placeholder="닉네임(6-12자리)" required />
+									<input type="text" name="nickname" minlength="3" maxlength="12" placeholder="닉네임(3-12자리)" required />
 									<p class="form-err-msg"></p>
 								</td>
 							</tr>
@@ -73,7 +73,7 @@
 									<p class="form-tit required">이메일</p>
 									<input type="text" name="email" class="with-btn-2" placeholder="아이디@naver.com 형식으로 입력해주세요" required />
 									<button type="button" id="btnConfirmEmail" class="btn btn-solid with-input-2" disabled>인증번호 받기</button>
-									<input type="text" name="confirmEmail" placeholder="인증번호 입력" readonly />
+									<input type="text" id="confirmEmail" name="confirmEmail" placeholder="인증번호 입력" maxlength="6" readonly />
 									<p class="form-err-msg"></p>
 								</td>
 							</tr>
