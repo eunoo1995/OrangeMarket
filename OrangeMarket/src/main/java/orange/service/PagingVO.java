@@ -1,7 +1,9 @@
 package orange.service;
 
 public class PagingVO {
-
+	
+	// 세션 아이디값 
+	private int writer;
 	// 한 화면 출력 게시글 수
 	private int pageUnit;
 	// 페이징 출력 단위
@@ -59,6 +61,13 @@ public class PagingVO {
 	}
 	
 	
+	public int getWriter() {
+		return writer;
+	}
+
+	public void setWriter(int writer) {
+		this.writer = writer;
+	}
 	public int getPageUnit() {
 		return pageUnit;
 	}

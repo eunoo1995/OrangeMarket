@@ -15,5 +15,7 @@ public interface InquiryMapper {
 	
 	InquiryVO selectInquiryDetail(InquiryVO vo);
 	
-	int selectInquiryTotal();
+	int selectInquiryTotal(PagingVO vo);
+	
+	String selectUserNik(int sessionId);
 }

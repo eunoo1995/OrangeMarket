@@ -21,11 +21,10 @@ public class ChatController {
 	@Resource(name="chatService")
 	private ChatService chatService;
 	
-	HttpSession session;
 	
 	@RequestMapping(value="testLogin")
 	public String sessionTest(HttpServletRequest request) throws Exception {
-		session = request.getSession();
+		HttpSession session = request.getSession();
 		int userId = 2021121701;
 		session.setAttribute("sessionId", userId);
 		return "redirect:main";
@@ -44,11 +43,14 @@ public class ChatController {
 	}
 	
 	@RequestMapping(value = "chat")
-	public String chatList(ChatVO vo,ChatSubVO subVo, Model model) throws Exception {
+	public String chatList(ChatVO vo,ChatSubVO subVo,
+							HttpServletRequest request, Model model) throws Exception {
 		// 세션 값 이용해 해당 아이디가 판매,구매자인 채널 검색
-		
-		vo.setBuyer(2021121701);
-		vo.setSeller(2021121701);
+		HttpSession session = request.getSession();
+		if(session.getAttribute("sessionId") == null) return "redirect:login";
+		int sessionId = (int)session.getAttribute("sessionId");
+		vo.setBuyer(sessionId);
+		vo.setSeller(sessionId);
 		// 채팅방 리스트 가져오기
 		List<?> list = chatService.selectChannelList(vo);
 		// 해당 채팅방 대화내용 가져오기
@@ -74,9 +76,11 @@ public class ChatController {
 	
 	@RequestMapping(value="read-chat")
 	@ResponseBody
-	public String readChat(ChatSubVO subVo) throws Exception {
+	public String readChat(ChatSubVO subVo, HttpServletRequest request) throws Exception {
 		// 해당 채팅방 미확인 메세지 업데이트
-		subVo.setReceiver(2021121701);
+		HttpSession session = request.getSession();
+		int sessionId = (int)session.getAttribute("sessionId");
+		subVo.setReceiver(sessionId);
 		chatService.updateChatStatus(subVo);
 		String respon = subVo.getChannel() + "";
 		return respon;

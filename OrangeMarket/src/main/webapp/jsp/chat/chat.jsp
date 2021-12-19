@@ -14,7 +14,7 @@
 <!-- 현재시간 가져오기 -->
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
-
+<c:set var="sessionId" value="${sessionId }"/>
 <!-- 페이지 wrapper -->
 <article class="pg-wrap pg-chat">
 
@@ -31,7 +31,7 @@
 					<input type="hidden" id="nowChannel" name="nowChannel" value="${channel.channel}">
 					<!-- 현재 로그인한 계정의 대화상대 구분 -> 내가 판매자면 구매자 정보, 내가 구매자면 판매자 정보 -->
 					<c:choose>
-						<c:when test="${channel.buyer == 2021121701 }">
+						<c:when test="${channel.buyer == sessionId }">
 						<div class="item-left">
 							<img class="chatlist-image" src="/images/member/${channel.sellerProfile}"><br>
 						</div>
@@ -60,7 +60,7 @@
 							</c:when>
 						</c:choose>
 						</c:when>
-						<c:when test="${channel.buyer != 2021121701 }">
+						<c:when test="${channel.buyer != sessionId }">
 						<div class="item-left">
 							<img class="chatlist-image" src="/images/member/${channel.buyerProfile}"><br>
 						</div>
@@ -119,7 +119,7 @@
 					<!-- 초이스 문을 이용해 세션값이 sender와 같으면 나의 메시지, 다르면 상대 메시지 -->
 					<c:forEach var="chatList" items="${chatList}">
 					<c:choose>
-						<c:when test="${chatList.sender != 2021121701 }">
+						<c:when test="${chatList.sender != sessionId }">
 							<div class="item" id="item">
 								<div class="box">
 									<p class="msg">${chatList.content}</p>
@@ -136,7 +136,7 @@
 							</div>
 							<!--item end  -->
 						</c:when>
-						<c:when test="${chatList.sender == 2021121701 }">
+						<c:when test="${chatList.sender == sessionId }">
 							<div class="item mymsg">
 								<div class="box">
 									<p class="msg">${chatList.content}</p>
@@ -165,14 +165,14 @@
 				<div class="messagebox">
 					<input type="hidden" id="channel" name="channel" value="${vo.channel}">
 				<c:choose>	
-					<c:when test="${vo.seller == 2021121701}">				
+					<c:when test="${vo.seller == sessionId}">				
 					<input type="hidden" id="receiver" name="receiver" value="${vo.buyer}">
 					</c:when>
-					<c:when test="${vo.buyer == 2021121701}">
+					<c:when test="${vo.buyer == sessionId}">
 					<input type="hidden" id="receiver" name="receiver" value="${vo.seller}">
 					</c:when>				
 				</c:choose>	
-					<input type="hidden" id="sender" name="sender" value=2021121701>
+					<input type="hidden" id="sender" name="sender" value="${sessionId}">
 					<input type="text" class="mymsg" name="content"
 							placeholder="메세지를 입력해주세요!" id="input-text" autofocus autocomplete="off">
 					<input type="button" class="sendbtn" id="sendChat" value="전송하기">

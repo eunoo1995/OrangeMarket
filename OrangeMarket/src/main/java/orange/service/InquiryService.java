@@ -14,5 +14,8 @@ public interface InquiryService {
 	InquiryVO selectInquiryDetail(InquiryVO vo) throws Exception;
 	
 	// 문의하기 전체 게시글 수 출력
-	int selectInquiryTotal() throws Exception;
+	int selectInquiryTotal(PagingVO vo) throws Exception;
+	
+	// 문의하기 해당 회원 닉네임 가져오기
+	String selectUserNik(int sessionId) throws Exception;
 }

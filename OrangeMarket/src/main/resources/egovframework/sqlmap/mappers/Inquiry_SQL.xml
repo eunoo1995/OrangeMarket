@@ -14,12 +14,14 @@
 						decode(status,'N','답변대기','답변완료') status,
 						nik_name 
 				FROM INQUIRY_BOARD 
+				WHERE WRITER=#{writer} 
 				ORDER BY unq DESC ) a ) b
 		WHERE rn BETWEEN #{startIndex} AND #{endIndex}		
 	</select>
 	
-	<select id="selectInquiryTotal" resultType="int">
+	<select id="selectInquiryTotal" parameterType="pagingVO" resultType="int">
 		SELECT count(*) FROM INQUIRY_BOARD 
+						WHERE WRITER=#{writer}
 	
 	</select>
 	
@@ -37,6 +39,11 @@
 		WHERE unq = #{unq}
 	
 	
+	</select>
+	<select id="selectUserNik" resultType="String">
+		SELECT NIK_NAME 
+			FROM MEMBER 
+				WHERE USER_ID=#{sessionId} 
 	</select>
 	
 	<insert id="insertInquiry" parameterType="inquiryVO">
