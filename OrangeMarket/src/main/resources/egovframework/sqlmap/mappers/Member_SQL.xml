@@ -9,7 +9,50 @@
 	
 	<select id="isMemberNikname" resultType="java.lang.Integer">
 		SELECT count(*) FROM member 
-		WHERE nik_name = #{nikName} 
+		WHERE nik_name = #{nickname} 
 	</select>
+	
+	<select id="isMemberEmail" resultType="java.lang.Integer">
+		SELECT count(*) from member
+		WHERE email = #{email}
+	</select>
+	
+	<select id="selectEmailVerif" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM (
+			    SELECT email_code
+			    FROM (
+			        SELECT ROWNUM rn
+			             , a.*
+			        FROM (
+			            SELECT email_code
+			            FROM email_verify
+			            WHERE email = #{email}
+			                  AND expired_time >= to_char(sysdate, 'YYYY-MM-DD HH24:MI')
+			                  AND use = 'N'
+			            ORDER BY rdate DESC
+			        ) a
+			    ) b
+			    WHERE rn = 1
+			)
+			WHERE email_code = #{emailCode}
+	</select>
+	
+	
+	<insert id="insertEmailVerif" parameterType="emailVO">
+		INSERT INTO EMAIL_VERIFY(
+			email
+			, email_code
+			, use
+			, rdate
+			, expired_time
+		) VALUES(
+			#{email}
+			, #{emailCode}
+			, 'N'
+			, TO_CHAR(sysdate,'YYYY-MM-DD HH24:MI')
+			, TO_CHAR(sysdate + 2/(24*60),'YYYY-MM-DD HH24:MI')
+		)
+	</insert>
 
 </mapper>

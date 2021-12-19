@@ -1,15 +1,14 @@
 package orange.service.impl;
 
-import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import orange.service.DeptVO;
+import orange.service.EmailVerifVO;
 import orange.service.MemberService;
-import orange.service.OrangeService;
+import orange.service.MemberVO;
 
 
 @Service("memberService")
@@ -27,6 +26,22 @@ public class MemberImpl extends EgovAbstractServiceImpl implements MemberService
 	@Override
 	public int isMemberNikname(String nickname) {
 		return memberDAO.isMemberNikname(nickname);
+	}
+
+	@Override
+	public int isMemberEmail(String email) {
+		return  memberDAO.isMemberEmail(email);
+	}
+
+	@Override
+	public int insertEmailVerif(EmailVerifVO vo) throws Exception {
+		return memberDAO.insertEmailVerif(vo);
+	}
+
+	@Override
+	public int selectEmailVerif(EmailVerifVO vo) throws Exception {
+		System.out.println("impl===> " + vo.getEmailCode());
+		return memberDAO.selectEmailVerif(vo);
 	}
 
 }

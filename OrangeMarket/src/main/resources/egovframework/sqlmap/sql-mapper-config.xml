@@ -13,11 +13,19 @@
 		<typeAlias alias="chatSubVO" type="orange.service.ChatSubVO"/>
 		<typeAlias alias="chatVO" type="orange.service.ChatVO"/>
 		<typeAlias alias="deptVO" type="orange.service.DeptVO"/>
+		
+		<!-- 1 -->
 		<typeAlias alias="inquiryVO" type="orange.service.InquiryVO"/>
-		<typeAlias alias="memberVO" type="orange.service.MemberVO"/>
-		<typeAlias alias="productVO" type="orange.service.ProductVO"/>
 		<typeAlias alias="reportVO" type="orange.service.ReportVO"/>
 		<typeAlias alias="pagingVO" type="orange.service.PagingVO"/>
 		<typeAlias alias="qnaVO" type="orange.service.QnaVO"/>
+		
+		<!-- 2 -->
+		<typeAlias alias="memberVO" type="orange.service.MemberVO"/>
+		<typeAlias alias="emailVO" type="orange.service.EmailVerifVO"/>
+		
+		<!-- 3 -->
+		<typeAlias alias="productVO" type="orange.service.ProductVO"/>
+		
     </typeAliases>
 </configuration>
