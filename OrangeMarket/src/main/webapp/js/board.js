@@ -10,7 +10,6 @@ $(function(){
     });
 	//문의하기 작성 저장 ajax
 	$("#inquiryWrite").click(function(){
-			
 	  		if($("#title").val().trim() == "" ) {
 	  			alert("제목을 입력해주세요.");
 	  			$("#title").focus();
@@ -21,9 +20,7 @@ $(function(){
 	  			$("#content").focus();
 	  			return false;
 	  		}
-	  		
 	  		var formdata = $("#frm").serialize();
-	  		
 	  		$.ajax({
 	  			type : "post",
 	  			url  : "inquiry-write-save",
@@ -44,15 +41,12 @@ $(function(){
 	  	});
 		// 신고하기 작성 저장
 		$("#reportWrite").click(function(){
-			
 	  		if($("#content").val().trim() == "" ) {
 	  			alert("내용을 입력해주세요.");
 	  			$("#content").focus();
 	  			return false;
 	  		}
-	  		
 	  		var formdata = $("#frm").serialize();
-	  		
 	  		$.ajax({
 	  			type : "post",
 	  			url  : "report-write-save",

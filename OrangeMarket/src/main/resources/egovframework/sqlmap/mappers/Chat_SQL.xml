@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orange.service.impl.ChatMapper">
+
+	<select id="selectChannelList" parameterType="chatVO" resultType="egovMap">
+		SELECT  
+				channel,
+				title,
+				to_char(price,'999,999,999,999') price,
+				seller,
+				buyer,
+				rdate,
+				udate,
+				seller_nik,
+				buyer_nik,
+				last_content,
+				buyer_profile,
+				seller_profile 
+		FROM CHAT 
+		WHERE buyer=#{buyer} or seller=#{seller} 
+		ORDER BY UDATE DESC		
+	</select>
+
+	<select id="selectChatList" parameterType="chatSubVO" resultType="egovMap">
+		SELECT 
+				channel,
+				title,
+				price,
+				receiver,
+				sender,
+				content,
+				status,
+				rdate 
+		FROM CHAT_SUB
+		WHERE channel=#{channel}
+	
+	</select>
+	
+	<select id="selectChatInfo" parameterType="chatVO" resultType="chatVO">
+		SELECT
+				channel,
+				title,
+				to_char(price,'999,999,999,999') price,
+				seller,
+				buyer
+		FROM CHAT
+		WHERE channel=#{channel}
+	</select>
+	
+	<insert id="insertChatSave" parameterType="chatSubVO">
+		INSERT INTO CHAT_SUB (  CHANNEL,
+								TITLE,
+								PRICE,
+								RECEIVER,
+								SENDER,
+								CONTENT,
+								RDATE )
+					VALUES	 
+							 (  #{channel},
+								#{title},
+								#{price},
+								#{receiver},
+								#{sender},
+								#{content},
+								sysdate )		
+	</insert>
+	<insert id="updateLastChat" parameterType="chatSubVO">
+		UPDATE CHAT SET 
+							LAST_CONTENT = #{content},
+							UDATE = sysdate 
+				WHERE CHANNEL = #{channel}				
+	</insert>
+</mapper>

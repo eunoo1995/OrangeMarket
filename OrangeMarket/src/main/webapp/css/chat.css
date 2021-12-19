@@ -84,16 +84,17 @@
 
 /*chatlist 닉네임*/
 .chat-cont-wrap  .profile-nick {
-	font-size: 13px;
+	font-size: 15px;
+	font-weight:bold;
 	text-align: left;
 	margin-top: -15px;
 }
 
 /*chatlist-최근채팅내용*/
 .chat-cont-wrap  .chatlist-content {
-	font-size: 10px;
+	font-size: 13px;
 	text-align: left;
-	color: #919191;
+	color: #999;
 	padding-top: 5px;
 }
 
@@ -120,17 +121,26 @@
 /*채팅바 - 가로정렬*/
 .chat-cont-wrap .bar-inner {
 	display: flex;
-	text-align: center;
+	text-align:center;
 	justify-content: center;
 	align-items: center;
 	padding-top: 10px;
 }
 
 /*바 내부 - 아이템 간격 */
-.bar-item {
-	margin-right: 5px;
+.bar-title {
+	padding-left:20%;
+	width:80%;
+	font-weight:bold;
+	font-size:18px;
 }
-
+.bar-price {
+	width:20%;
+	margin-left:15px;
+	padding-top:7px;
+	font-size:13px;
+	color:#666;
+}
 /*------- 채팅 메인화면-------*/
 /*채팅 메인 화면*/
 .chat-cont-wrap  .chat_wrap {
@@ -294,4 +304,5 @@
 	border: 1px solid #fff;
 	color: #fff;
 	border-radius: 12px;
+	cursor:pointer;
 }
