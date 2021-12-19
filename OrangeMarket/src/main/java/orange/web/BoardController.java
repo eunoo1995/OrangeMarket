@@ -3,6 +3,8 @@ package orange.web;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +31,9 @@ public class BoardController {
 	@Resource(name="qnaService")
 	private QnaService qnaService;
 	
-	
 	// 문의하기 리스트 출력
 	@RequestMapping(value = "/inquiry-list")
 	public String inquiryList(PagingVO vo, Model model) throws Exception {
-		
 		int total = inquiryService.selectInquiryTotal();
 		int pageNo = vo.getPageNo();
 		//페이징 객체 생성

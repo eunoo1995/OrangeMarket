@@ -17,7 +17,7 @@
 	float: left;
 	border-right: 1px solid #eee;
 	border-radius:10px 0px 0px 10px;
-	background-color: #eee;
+	background-color:#F5F5F5;
 	overflow:auto;
 }
 /*채팅목록 스크롤바 디자인*/
@@ -130,8 +130,8 @@
 	width: auto;
 	height: 50px;
 	border-bottom: 1px solid #eee;
-	border-radius:10px;
-	background-color: #FBF6F0;
+	border-radius:10px 10px 0px 0px;
+	background-color: #fbf6f0;
 }
 
 /*채팅바 - 가로정렬*/

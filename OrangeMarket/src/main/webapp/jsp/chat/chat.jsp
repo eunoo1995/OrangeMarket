@@ -9,66 +9,6 @@
 </jsp:include>
 <!-- 헤더 -->
 <script>
-$(function(){
-	// 채팅방 채팅 클릭시 해당 채팅방으로 이동
-	$(".chatlist-item").click(function(){
-		var channel = $(this).children("#nowChannel").val();
-		$.ajax({
-  			type : "post",
-  			url  : "read-chat",
-  			data : "channel="+channel,
-  			datatype : "text",
-  			success : function(data) {
-  				location="chat?channel="+data;
-  			},
-  			error : function() {
-  					alert("오류발생");
-  			}
-  		});
-	});
-	// 신규 메시지 전송
-	$("#sendChat").click(function(){
-		if($("#channel").val().trim() == "" ) {
-  			alert("대화방을 선택 후 메세지를 전송해주세요.");
-  			return false;
-  		}
-		if($("#input-text").val().trim() == "" ) {
-  			alert("메세지를 입력하지 않았습니다.");
-  			$("#input-text").focus();
-  			return false;
-  		}
-		var formdata = $("#frm").serialize();
-  		$.ajax({
-  			type : "post",
-  			url  : "chat-save",
-  			data : formdata,
-  			datatype : "text",
-  			success : function(data) {
-  				location="chat?channel="+data;
-  			},
-  			error : function() {
-  					alert("전송실패");
-  			}
-  		});
-	});
- 	$("#input-text").keydown(function(key) {
-        //키의 코드가 13번일 경우 (13번은 엔터키)
-        // 인풋상자에서 엔터키 누를 시 버튼클릭 이벤트 발생
-        if (key.keyCode == 13) {
-        	if($("#channel").val().trim() == "" ) {
-      			alert("대화방을 선택 후 메세지를 전송해주세요.");
-      			return false;
-      		}
-    		if($("#input-text").val().trim() == "" ) {
-      			alert("메세지를 입력하지 않았습니다.");
-      			$("#input-text").focus();
-      			return false;
-      		}
-            $("#sendChat").click();
-        }
-    });
-});
-
 
 </script>
 <!-- 현재시간 가져오기 -->
@@ -83,7 +23,11 @@ $(function(){
 			<div class="chat-list">
 				<!-- 채팅목록 시작 -->
 				<c:forEach var="channel" items="${list}">
-				<div class="chatlist-item">
+				<c:choose>
+				<c:when test="${channel.channel == vo.channel}"><c:set var="on" value="style='background:#FFFAFA;'"/></c:when>
+				<c:when test="${channel.channel != vo.channel}"><c:set var="on" value=""/></c:when>
+				</c:choose>
+				<div class="chatlist-item" ${on}>
 					<input type="hidden" id="nowChannel" name="nowChannel" value="${channel.channel}">
 					<!-- 현재 로그인한 계정의 대화상대 구분 -> 내가 판매자면 구매자 정보, 내가 구매자면 판매자 정보 -->
 					<c:choose>
@@ -93,7 +37,7 @@ $(function(){
 						</div>
 	
 						<div class="item-center">
-							<p class="profile-nick">${channel.sellerNik}<span>${channel.status}</span></p>
+							<p class="profile-nick">${channel.sellerNik}</p>
 							<p class="chatlist-content">${channel.lastContent}</p>
 						</div>
 						<!-- 얻어온 현재시간과 db에서 불러온 udate를 비교하여 오늘이면 시간, 지난 날짜면 연월일 출력 -->
@@ -101,11 +45,17 @@ $(function(){
 							<c:when test="${fn:substring(channel.udate,0,10) == today}">
 								<div class="item-right">
 									<span class="chatlist-time">${fn:substring(channel.udate,10,16)}</span><br>
+								<c:if test="${channel.status != 0}">	
+									<div class="item-count">${channel.status}</div>
+								</c:if>
 								</div>
 							</c:when>
 							<c:when test="${fn:substring(channel.udate,0,10) != today}">
 								<div class="item-right">
 									<span class="chatlist-time">${fn:substring(channel.udate,0,10)}</span><br>
+								<c:if test="${channel.status != 0}">	
+									<div class="item-count">${channel.status}</div>
+								</c:if>
 								</div>
 							</c:when>
 						</c:choose>
@@ -224,7 +174,7 @@ $(function(){
 				</c:choose>	
 					<input type="hidden" id="sender" name="sender" value=2021121701>
 					<input type="text" class="mymsg" name="content"
-							placeholder="메세지를 입력해주세요!" id="input-text" autofocus>
+							placeholder="메세지를 입력해주세요!" id="input-text" autofocus autocomplete="off">
 					<input type="button" class="sendbtn" id="sendChat" value="전송하기">
 				</div>
 				</form>
@@ -240,5 +190,7 @@ $(function(){
 <!-- 페이지 wraper end -->
 
 <!-- 푸터 -->
-<jsp:include page="/include/footer.jsp" flush="false" />
+<jsp:include page="/include/footer.jsp" flush="false" >
+	<jsp:param name="jsName" value="chat" />
+</jsp:include>
 <!-- 푸터 -->

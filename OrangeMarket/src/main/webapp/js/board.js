@@ -28,7 +28,6 @@ $(function(){
 	  			datatype : "text", //성공여부(ok)
 	  			success : function(data) {
 	  				if(data == "ok") {
-	  					alert("저장성공");
 	  					location="inquiry-list";
 	  				} else {
 	  					alert("저장실패");
@@ -54,7 +53,6 @@ $(function(){
 	  			datatype : "text", //성공여부(ok)
 	  			success : function(data) {
 	  				if(data == "ok") {
-	  					alert("저장성공");
 	  					location="report-list";
 	  				} else {
 	  					alert("저장실패");

@@ -1,9 +1,10 @@
 package orange.web;
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,15 @@ public class ChatController {
 	@Resource(name="chatService")
 	private ChatService chatService;
 	
+	HttpSession session;
 	
+	@RequestMapping(value="testLogin")
+	public String sessionTest(HttpServletRequest request) throws Exception {
+		session = request.getSession();
+		int userId = 2021121701;
+		session.setAttribute("sessionId", userId);
+		return "redirect:main";
+	}
 	
 	// 게시글 상세보기 채팅버튼 누를 시 넘어오는 값을 받아 신규 채팅채널 추가
 	@RequestMapping(value = "create-chat")
@@ -37,6 +46,7 @@ public class ChatController {
 	@RequestMapping(value = "chat")
 	public String chatList(ChatVO vo,ChatSubVO subVo, Model model) throws Exception {
 		// 세션 값 이용해 해당 아이디가 판매,구매자인 채널 검색
+		
 		vo.setBuyer(2021121701);
 		vo.setSeller(2021121701);
 		// 채팅방 리스트 가져오기
@@ -45,7 +55,6 @@ public class ChatController {
 		List<?> chatList = chatService.selectChatList(subVo);
 		// 해당 채팅방 정보 가져오기
 		vo = chatService.selectChatInfo(vo);
-		
 		model.addAttribute("vo",vo);
 		model.addAttribute("list",list);
 		model.addAttribute("chatList",chatList);

@@ -54,14 +54,12 @@
 								RECEIVER,
 								SENDER,
 								CONTENT,
-								STATUS,
 								RDATE )
 					VALUES	 
 							 (  #{channel},
 								#{receiver},
 								#{sender},
 								#{content},
-								'Y',
 								sysdate )		
 	</insert>
 	<update id="updateLastChat" parameterType="chatSubVO">
