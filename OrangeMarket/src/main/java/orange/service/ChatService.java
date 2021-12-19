@@ -18,4 +18,6 @@ public interface ChatService {
 	
 	// 마지막 대화 내용 저장
 	int updateLastChat(ChatSubVO vo) throws Exception;
+	
+	int updateChatStatus(ChatSubVO subVo) throws Exception;
 }

@@ -3,8 +3,6 @@ package orange.service;
 public class ChatSubVO {
 
 	private int channel;
-	private String title;
-	private String price;
 	private int receiver;
 	private int sender;
 	private String content;
@@ -17,18 +15,6 @@ public class ChatSubVO {
 	}
 	public void setChannel(int channel) {
 		this.channel = channel;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getPrice() {
-		return price;
-	}
-	public void setPrice(String price) {
-		this.price = price;
 	}
 	public int getReceiver() {
 		return receiver;

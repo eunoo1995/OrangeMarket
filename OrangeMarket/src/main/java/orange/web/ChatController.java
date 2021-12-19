@@ -39,9 +39,11 @@ public class ChatController {
 		// 세션 값 이용해 해당 아이디가 판매,구매자인 채널 검색
 		vo.setBuyer(2021121701);
 		vo.setSeller(2021121701);
-		
+		// 채팅방 리스트 가져오기
 		List<?> list = chatService.selectChannelList(vo);
+		// 해당 채팅방 대화내용 가져오기
 		List<?> chatList = chatService.selectChatList(subVo);
+		// 해당 채팅방 정보 가져오기
 		vo = chatService.selectChatInfo(vo);
 		
 		model.addAttribute("vo",vo);
@@ -54,11 +56,20 @@ public class ChatController {
 	@ResponseBody
 	public String chatSave(ChatSubVO vo) throws Exception {
 		// chat sub 테이블 인서트
-		vo.setPrice(vo.getPrice().replace(",", ""));
-		int rs1 = chatService.insertChatSave(vo);
+		chatService.insertChatSave(vo);
 		// chat 테이블 마지막 메시지 인서트
-		int rs2 = chatService.updateLastChat(vo);
+		chatService.updateLastChat(vo);
 		String respon = vo.getChannel() +"";
+		return respon;
+	}
+	
+	@RequestMapping(value="read-chat")
+	@ResponseBody
+	public String readChat(ChatSubVO subVo) throws Exception {
+		// 해당 채팅방 미확인 메세지 업데이트
+		subVo.setReceiver(2021121701);
+		chatService.updateChatStatus(subVo);
+		String respon = subVo.getChannel() + "";
 		return respon;
 	}
 }

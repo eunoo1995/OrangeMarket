@@ -10,11 +10,23 @@
 <!-- 헤더 -->
 <script>
 $(function(){
-	
+	// 채팅방 채팅 클릭시 해당 채팅방으로 이동
 	$(".chatlist-item").click(function(){
 		var channel = $(this).children("#nowChannel").val();
-		location = "chat?channel="+channel;
+		$.ajax({
+  			type : "post",
+  			url  : "read-chat",
+  			data : "channel="+channel,
+  			datatype : "text",
+  			success : function(data) {
+  				location="chat?channel="+data;
+  			},
+  			error : function() {
+  					alert("오류발생");
+  			}
+  		});
 	});
+	// 신규 메시지 전송
 	$("#sendChat").click(function(){
 		if($("#channel").val().trim() == "" ) {
   			alert("대화방을 선택 후 메세지를 전송해주세요.");
@@ -39,6 +51,22 @@ $(function(){
   			}
   		});
 	});
+ 	$("#input-text").keydown(function(key) {
+        //키의 코드가 13번일 경우 (13번은 엔터키)
+        // 인풋상자에서 엔터키 누를 시 버튼클릭 이벤트 발생
+        if (key.keyCode == 13) {
+        	if($("#channel").val().trim() == "" ) {
+      			alert("대화방을 선택 후 메세지를 전송해주세요.");
+      			return false;
+      		}
+    		if($("#input-text").val().trim() == "" ) {
+      			alert("메세지를 입력하지 않았습니다.");
+      			$("#input-text").focus();
+      			return false;
+      		}
+            $("#sendChat").click();
+        }
+    });
 });
 
 
@@ -51,7 +79,7 @@ $(function(){
 <article class="pg-wrap pg-chat">
 
 	<article class="chat-cont-wrap">
-		<div class="cont-inner clx">
+		<div class="cont-inner clx" id="chatRefresh">
 			<div class="chat-list">
 				<!-- 채팅목록 시작 -->
 				<c:forEach var="channel" items="${list}">
@@ -65,7 +93,7 @@ $(function(){
 						</div>
 	
 						<div class="item-center">
-							<p class="profile-nick">${channel.sellerNik}</p>
+							<p class="profile-nick">${channel.sellerNik}<span>${channel.status}</span></p>
 							<p class="chatlist-content">${channel.lastContent}</p>
 						</div>
 						<!-- 얻어온 현재시간과 db에서 불러온 udate를 비교하여 오늘이면 시간, 지난 날짜면 연월일 출력 -->
@@ -95,11 +123,17 @@ $(function(){
 							<c:when test="${fn:substring(channel.udate,0,10) == today}">
 								<div class="item-right">
 									<span class="chatlist-time">${fn:substring(channel.udate,10,16)}</span><br>
+								<c:if test="${channel.status != 0}">	
+									<div class="item-count">${channel.status}</div>
+								</c:if>	
 								</div>
 							</c:when>
 							<c:when test="${fn:substring(channel.udate,0,10) != today}">
 								<div class="item-right">
 									<span class="chatlist-time">${fn:substring(channel.udate,0,10)}</span><br>
+								<c:if test="${channel.status != 0}">
+									<div class="item-count">${channel.status}</div>
+								</c:if>	
 								</div>
 							</c:when>
 						</c:choose>
@@ -173,13 +207,13 @@ $(function(){
 					</c:forEach>	
 					</div>
 					<!--inner end  -->
+					<!--scrollbar set  -->
+					<script src="js/scrollbar.js"></script>
 				</div>
 				<!--chat_wrap end  -->
 				<form id="frm">
 				<div class="messagebox">
 					<input type="hidden" id="channel" name="channel" value="${vo.channel}">
-					<input type="hidden" id="title" name="title" value="${vo.title}">
-					<input type="hidden" id="price" name="price" value="${vo.price}">
 				<c:choose>	
 					<c:when test="${vo.seller == 2021121701}">				
 					<input type="hidden" id="receiver" name="receiver" value="${vo.buyer}">
@@ -190,7 +224,7 @@ $(function(){
 				</c:choose>	
 					<input type="hidden" id="sender" name="sender" value=2021121701>
 					<input type="text" class="mymsg" name="content"
-							placeholder="메세지를 입력해주세요!" id="input-text">
+							placeholder="메세지를 입력해주세요!" id="input-text" autofocus>
 					<input type="button" class="sendbtn" id="sendChat" value="전송하기">
 				</div>
 				</form>

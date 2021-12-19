@@ -41,6 +41,11 @@ public class ChatImpl extends EgovAbstractServiceImpl implements ChatService {
 	public int updateLastChat(ChatSubVO vo) throws Exception {
 		return chatDAO.updateLastChat(vo);
 	}
+
+	@Override
+	public int updateChatStatus(ChatSubVO subVo) throws Exception {
+		return chatDAO.updateChatStatus(subVo);
+	}
 	
 
 }
