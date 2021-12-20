@@ -41,10 +41,12 @@
 							<p class="chatlist-content">${channel.lastContent}</p>
 						</div>
 						<!-- 얻어온 현재시간과 db에서 불러온 udate를 비교하여 오늘이면 시간, 지난 날짜면 연월일 출력 -->
+						<fmt:parseDate var="timeFmt" pattern="yyyy-mm-dd HH:mm:ss.SSS" value="${channel.udate}"/>
+						<fmt:formatDate var="times" pattern="a hh:mm" value="${timeFmt}"/>
 						<c:choose>
 							<c:when test="${fn:substring(channel.udate,0,10) == today}">
 								<div class="item-right">
-									<span class="chatlist-time">${fn:substring(channel.udate,10,16)}</span><br>
+									<span class="chatlist-time">${times}</span><br>
 								<c:if test="${channel.status != 0}">	
 									<div class="item-count">${channel.status}</div>
 								</c:if>
@@ -69,10 +71,12 @@
 							<p class="profile-nick">${channel.buyerNik}</p>
 							<p class="chatlist-content">${channel.lastContent}</p>
 						</div>
+						<fmt:parseDate var="timeFmt" pattern="yyyy-mm-dd HH:mm:ss.SSS" value="${channel.udate}"/>
+						<fmt:formatDate var="times" pattern="a h:mm" value="${timeFmt}"/>
 						<c:choose>
 							<c:when test="${fn:substring(channel.udate,0,10) == today}">
 								<div class="item-right">
-									<span class="chatlist-time">${fn:substring(channel.udate,10,16)}</span><br>
+									<span class="chatlist-time">${times}</span><br>
 								<c:if test="${channel.status != 0}">	
 									<div class="item-count">${channel.status}</div>
 								</c:if>	
@@ -93,11 +97,7 @@
 			</c:forEach>
 			</div>
 			<!-- chat-list end/ 채팅목록 종료 -->
-
-
 			<div class="chat-content">
-
-
 				<div class="chat-bar">
 					<!-- 채팅창에 띄워진 상대방 프사,닉네임,거래품목이미지,가격 -->
 					<div class="bar-inner">
@@ -118,42 +118,28 @@
 					<div class="inner" id="chatWrap">
 					<!-- 초이스 문을 이용해 세션값이 sender와 같으면 나의 메시지, 다르면 상대 메시지 -->
 					<c:forEach var="chatList" items="${chatList}">
+					<c:if test="${fn:substring(chatList.rdate,0,10) != changeDate }">
+					<div class="changeDate">${fn:substring(chatList.rdate,0,10)}</div>
+					</c:if>
 					<c:choose>
 						<c:when test="${chatList.sender != sessionId }">
-							<div class="item" id="item">
-								<div class="box">
-									<p class="msg">${chatList.content}</p>
-									<c:choose>
-										<c:when test="${fn:substring(chatList.rdate,0,10) == today}">
-											<span class="time">${fn:substring(chatList.rdate,10,16)}</span>
-										</c:when>
-										<c:when test="${fn:substring(chatList.rdate,0,10) != today}">
-											<span class="time">${fn:substring(chatList.rdate,0,10)}</span>
-										</c:when>
-									</c:choose>
-								</div>
-								<!--box end  -->
-							</div>
-							<!--item end  -->
+						<c:set var="msg" value="class='item' id='item'"/>
 						</c:when>
 						<c:when test="${chatList.sender == sessionId }">
-							<div class="item mymsg">
+						<c:set var="msg" value="class='item mymsg'"/>
+						</c:when>
+					</c:choose>	
+						<fmt:parseDate var="timeFmt" pattern="yyyy-mm-dd HH:mm:ss.SSS" value="${chatList.rdate}"/>
+						<fmt:formatDate var="times" pattern="a h:mm" value="${timeFmt}"/>
+							<div ${msg}>
 								<div class="box">
 									<p class="msg">${chatList.content}</p>
-									<c:choose>
-										<c:when test="${fn:substring(chatList.rdate,0,10) == today}">
-											<span class="time">${fn:substring(chatList.rdate,10,16)}</span>
-										</c:when>
-										<c:when test="${fn:substring(chatList.rdate,0,10) != today}">
-											<span class="time">${fn:substring(chatList.rdate,0,10)}</span>
-										</c:when>
-									</c:choose>
+									<span class="time">${times}</span>
 								</div>
 								<!--box end  -->
 							</div>
 							<!--item end  -->
-						</c:when>
-					</c:choose>
+					<c:set var="changeDate" value="${fn:substring(chatList.rdate,0,10)}"/>
 					</c:forEach>	
 					</div>
 					<!--inner end  -->
@@ -180,8 +166,6 @@
 				</form>
 			</div>
 			<!-- chatcontent div end -->
-		</div>
-
 		</div>
 		<!-- container div end -->
 	</article>

@@ -35,6 +35,7 @@ public class BoardController {
 	@RequestMapping(value = "/inquiry-list")
 	public String inquiryList(PagingVO vo, Model model,HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();
+		if(session.getAttribute("sessionId") == null) return "redirect:login";
 		int sessionId = (int) session.getAttribute("sessionId");
 		vo.setWriter(sessionId);
 		int total = inquiryService.selectInquiryTotal(vo);

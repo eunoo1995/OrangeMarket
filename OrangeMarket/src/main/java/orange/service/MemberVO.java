@@ -2,7 +2,7 @@ package orange.service;
 
 public class MemberVO {
 
-	private String userId;
+	private int userId;
 	private String email;
 	private String userName;
 	private String userPhone;
@@ -16,10 +16,11 @@ public class MemberVO {
 	private String reportCount;
 	
 	
-	public String getUserId() {
+	
+	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 	public String getEmail() {
