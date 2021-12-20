@@ -11,21 +11,8 @@ $(function(){
 		$("#myPage-withdrawal-btn").click(function(){
 			window.open("withdrawal","회원탈퇴 확인","width=600, height=500, left=450, top=150");
 		});
-		//프로필 사진 미리보기 설정
+		//프로필 사진 버튼 연동
 		$(".myPage-img-btn").click(function(){
 			$("#myPage-img-file").click();
 		});
-		$("#myPage-img-file").on('change', function(){
-		    readURL(this);
-		});
 	});
-	//프로필 사진 미리보기 설정
-	function readURL(input) {
-	    if (input.files && input.files[0]) {
-	       var reader = new FileReader();
-	       reader.onload = function (e) {
-	          $('.myPage-img').attr('src', e.target.result);
-	       }
-	       reader.readAsDataURL(input.files[0]);
-	    }
-	}

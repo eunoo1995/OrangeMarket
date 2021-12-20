@@ -7,4 +7,6 @@ import orange.service.MemberVO;
 public interface MyPageMapper {
 	
 	MemberVO selectMemberInfo(MemberVO vo);
+	
+	int updateProfile(MemberVO vo);
 }

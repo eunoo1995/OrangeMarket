@@ -33,7 +33,7 @@
 					<c:choose>
 						<c:when test="${channel.buyer == sessionId }">
 						<div class="item-left">
-							<img class="chatlist-image" src="/images/member/${channel.sellerProfile}"><br>
+							<img class="chatlist-image" src="/images/profiles/${channel.sellerProfile}"><br>
 						</div>
 	
 						<div class="item-center">
@@ -64,7 +64,7 @@
 						</c:when>
 						<c:when test="${channel.buyer != sessionId }">
 						<div class="item-left">
-							<img class="chatlist-image" src="/images/member/${channel.buyerProfile}"><br>
+							<img class="chatlist-image" src="/images/profiles/${channel.buyerProfile}"><br>
 						</div>
 	
 						<div class="item-center">

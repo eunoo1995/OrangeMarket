@@ -20,6 +20,11 @@
 		WHERE USER_ID=#{userId}		
 		
 	</select>
-
+	
+	<update id="updateProfile" parameterType="memberVO">
+		UPDATE MEMBER SET PROFILE_IMG= #{profileImg} 
+			WHERE USER_ID = #{userId} 
+		
+	</update>
 
 </mapper>

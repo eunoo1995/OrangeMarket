@@ -18,6 +18,11 @@ public class MyPageImpl extends EgovAbstractServiceImpl implements MyPageService
 	public MemberVO selectMemberInfo(MemberVO vo) throws Exception {
 		return myPageDAO.selectMemberInfo(vo);
 	}
+
+	@Override
+	public int updateProfile(MemberVO vo) throws Exception {
+		return myPageDAO.updateProfile(vo);
+	}
 	
 	
 }

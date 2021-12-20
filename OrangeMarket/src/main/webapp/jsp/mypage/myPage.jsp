@@ -7,7 +7,29 @@
 	<jsp:param name="cssName" value="mypage" />
 </jsp:include>
 <!-- 헤더 -->
-
+<script>
+$(function(){
+	$("#myPage-img-file").change(function(){
+		if(confirm("선택하신 사진으로 변경하시겠습니까?")) {
+			var formdata = new FormData(document.getElementById("frm-profile"));
+			$.ajax({
+	  			type : "post",
+	  			url  : "change-profile",
+	  			data : formdata,
+	  			processData : false,
+	  			contentType : false,
+	  			datatype : "text",
+	  			success : function(data) {
+	  					location="mypage";
+	  			},	
+	  			error : function() {
+	  					alert("오류발생");
+	  			}
+	  		});
+		}
+	});
+});
+</script>
 <!-- 페이지 wrapper -->
 <article class="pg-wrap myPage-main">
 
@@ -30,9 +52,14 @@
 					<col width="80%">
 				</colgroup>
 				<tr>
-					<th><img class="myPage-img" src="/images/member/${vo.profileImg}"><br>
+					<th><img class="myPage-img" src="/images/profiles/${vo.profileImg}"><br>
 						<input type="button" class="myPage-img-btn" value="사진 변경">
-						<input type="file" id="myPage-img-file" style="display: none;">
+					<form id="frm-profile" method="post" enctype="multipart/form-data">
+						<input type="hidden" id=userId name="userId" value="${sessionId}">
+						<input type="hidden" id=profileImg name="profileImg" value="${vo.profileImg}">
+						<input type="file" id="myPage-img-file" name="uploadProfile" 
+							accept="image/gif,image/png,image/jpeg" multiple style="display: none;">
+					</form>
 					</th>
 					<td>
 						<table class="myPage-info-table">
