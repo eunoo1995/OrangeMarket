@@ -108,7 +108,7 @@
 					<p class="product-content-title">상품정보</p>
 	
 					<div class="product-content-detail">
-						사용자 설명란 <br> 물품 정보 적는 중입니다. 테스트 중입니다.
+						${product.content }
 					</div>
 				</div>
 	
@@ -118,7 +118,8 @@
 	
 					<!-- 연관 상품 표시 -->
 					<div class="related-text">
-						<p class="rel-title">연관상품</p>
+						<!-- 실제 구현 시 키워드는 표시하지 않고 연관 상품만 표시 -->
+						<p class="rel-title">연관상품 (키워드 : ${product.keyword })</p>
 					</div>
 	
 					<!-- 연관 상품 리스트  -->
