@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="orange.service.impl.ProductMapper">
-
+	
+	<!-- insert -->
+	
+	<!-- 제품 등록 -->
 	<insert id="insertProduct" parameterType="productVO">
 	
 		INSERT INTO product
@@ -30,6 +33,52 @@
 			#{sellerNik})
 	
 	</insert>
+	
+	
+	
+	<!-- select -->
+	
+	<!-- 제품 리스트 표시 -->
+	<select id="selectProductList" resultType="egovMap">
+		SELECT
+			pro_code,
+			title,
+			price,
+			addr
+		FROM 
+			product
+	</select>
+	
+	<!-- 제품 상세보기 -->
+	<select id="selectProductDetail" resultType="productVO">
+		SELECT
+			pro_code,
+			seller,
+			pro_category_code,
+			title,
+			keyword,
+			addr,
+			price,
+			content,
+			rdate,
+			udate,
+			status,
+			hits,
+			nvl(buyer, '0') as buyer,
+			refund,
+			nego,
+			seller_nik,
+			nvl(buyer_nik, '0') as buyer_nik
+			
+		FROM 
+			product
+			
+		WHERE
+			pro_code = ${proCode}
+	</select>
+	
+	<!-- select end -->
+	
 
 
 </mapper>

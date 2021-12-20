@@ -1,8 +1,11 @@
 package orange.web;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,9 +19,23 @@ public class ProductController {
 	private ProductService productService;
 
 	@RequestMapping(value="/product-list")
-	public String productList() throws Exception {
+	public String productList(ProductVO vo, Model model) throws Exception {
+		
+		//등록된 판매 제품 목록 리스트
+		List<?> list = productService.selectProductList(vo);
+		
+		
+		model.addAttribute("list", list);
 		
 		return "product/productList";
+	}
+	
+	@RequestMapping(value="/product-list-detail")
+	public String selectProductDetail(ProductVO vo, Model model) throws Exception {
+		vo = productService.selectProductDetail(vo);
+		model.addAttribute("product", vo);
+		
+		return "product/productDetail";
 	}
 	
 	@RequestMapping(value="/product-write")

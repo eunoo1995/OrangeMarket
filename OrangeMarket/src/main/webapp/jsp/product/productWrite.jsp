@@ -160,7 +160,6 @@
 								<div class="keyword-wrap">
 									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." 
 									onfocus="this.placeholder=''" onblur="this.placeholder='연관단어를 입력해주세요.'" class="product-write-keyword">
-									 <span class="product-write-desc">예시 : #오렌지마켓 <br> 연관단어는 반드시 작성하지 않아도 됩니다. </span>
 								</div>
 							</td>
 						</tr>
@@ -203,8 +202,8 @@
 								<div class="refund">
 									<select name="refund" id="refund" class="product-write-category">
 										<option value="">환불 여부를 선택해주세요.</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
+										<option value="1">가능</option>
+										<option value="2">불가능</option>
 									</select>
 									<!-- <input type="radio" name="refund" id="refund" value="0" checked>
 									<label class="role" for="0" style="margin-right: 40px;">환불불가</label>
@@ -225,11 +224,13 @@
 								onfocus="this.placeholder=''" onblur="this.placeholder='가격을 입력해주세요.'" class="product-write-price-txt">
 								<font style="margin-right: 10px; font-size: 16px;">원</font>
 								
-								<select name="nego" id="nego" class="product-write-category">
-									<option value="">카테고리를 선택해주세요.</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-								</select>
+								<div class="keyword-wrap">
+									<select name="nego" id="nego" class="product-write-category">
+										<option value="">가격협상 여부를 선택해주세요.</option>
+										<option value="1">가능</option>
+										<option value="2">불가능</option>
+									</select>
+								</div>
 <!-- 								<div class="price-chk">
 									<input type="checkbox" name="nego" value="0" id="nego">
 									<label class="chk" for="nego">가격협의 가능</label>
@@ -241,7 +242,7 @@
 						<!-- 8. 제품 설명 -->
 						<tr class="product-table-tr">
 							<th>설명</th>
-							<td class="product-write-table-td2">
+							<td class="product-write-table-content">
 								<textarea name="content" id="content" class="product-write-content1"></textarea>
 							</td>
 						</tr>

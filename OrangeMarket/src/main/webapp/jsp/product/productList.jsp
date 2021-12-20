@@ -31,13 +31,13 @@
 				<ul class="pro-list">
 	
 					<!-- 상품 리스트 -->
-					<c:forEach var="i" begin="1" end="8">
-						<li class="list-item"
-							onclick="location='productListDetail.do?category=category'">
+					<c:forEach var="product" items="${list}">
+ 						<li class="list-item"
+							onclick="location='product-list-detail?proCode=${product.proCode}'">
 							<a href="#"> <!-- 상품 이미지 -->
 								<figure class="pro-thumb">
 									<span class="pro-thumb-img"><img
-										src="<c:url value='/images/product/org_goods/test_goods0${i}.jpeg'/>"></span>
+										src="<c:url value='/images/product/org_goods/test_goods01.jpeg'/>"></span>
 									<span class="pro-detail-grade trust">신뢰</span>
 									<!-- 
 		                            	안전 등급은 
@@ -45,9 +45,9 @@
 		                             -->
 								</figure> <!-- 상품 이미지 --> <!-- 상품 내용 및 상세 내용 -->
 								<div class="pro-detail">
-									<p class="pro-detail-tit">제품명</p>
-									<p class="pro-detail-price">19,000원</p>
-									<p class="pro-detail-area">지역명</p>
+									<p class="pro-detail-tit">${product.title}</p>
+									<p class="pro-detail-price">${product.price}</p>
+									<p class="pro-detail-area">${product.addr}</p>
 								</div> <!-- 상품 내용 및 상세 내용 -->
 						</a>
 						</li>
