@@ -16,7 +16,7 @@
 		<div class="cont-inner">
 			<!-- class="myPage-title" -->
 			<h2 class="sub-page-title">
-				<span>오렌지</span>님의 마이페이지
+				<span>${vo.nikName}</span>님의 마이페이지
 			</h2>
 		</div>
 	</header>
@@ -30,7 +30,7 @@
 					<col width="80%">
 				</colgroup>
 				<tr>
-					<th><img class="myPage-img" src="/images/icons/ico_user_solid.png"><br>
+					<th><img class="myPage-img" src="/images/member/${vo.profileImg}"><br>
 						<input type="button" class="myPage-img-btn" value="사진 변경">
 						<input type="file" id="myPage-img-file" style="display: none;">
 					</th>

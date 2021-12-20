@@ -1,5 +1,10 @@
 package orange.service.impl;
 
-public interface MyPageMapper {
+import egovframework.rte.psl.dataaccess.mapper.Mapper;
+import orange.service.MemberVO;
 
+@Mapper("myPageMapper")
+public interface MyPageMapper {
+	
+	MemberVO selectMemberInfo(MemberVO vo);
 }

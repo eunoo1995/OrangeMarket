@@ -14,7 +14,7 @@ public class MemberVO {
 	private String rdate;
 	private String udate;
 	private String reportCount;
-	
+	private String profileImg;
 	
 	
 	public int getUserId() {
@@ -89,9 +89,12 @@ public class MemberVO {
 	public void setReportCount(String reportCount) {
 		this.reportCount = reportCount;
 	}
-	
-	
-	
+	public String getProfileImg() {
+		return profileImg;
+	}
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
 	
 	
 }
