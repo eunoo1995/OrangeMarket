@@ -38,25 +38,25 @@
 						<table class="myPage-info-table">
 							<tr>
 								<th>email</th>
-								<td>rrr@sdafas.com</td>
+								<td>${vo.email}</td>
 								<th></th>
 								<td></td>
 							</tr>
 							<tr>
 								<th>닉네임</th>
-								<td>홍길동</td>
+								<td>${vo.nikName}</td>
 								<th>회원가입일</th>
-								<td>2021-01-01</td>
+								<td>${vo.rdate}</td>
 							</tr>
 							<tr>
 								<th>연락처</th>
-								<td>010-1111-1111</td>
+								<td>${vo.userPhone}</td>
 								<th>최종접속일</th>
-								<td>2021-01-02</td>
+								<td>${vo.udate}</td>
 							</tr>
 							<tr>
 								<th>우리동네</th>
-								<td colspan="3">서울특별시 강남구</td>
+								<td colspan="3">${vo.addr}</td>
 							</tr>
 						</table>
 						<div class="myPage-div1">
