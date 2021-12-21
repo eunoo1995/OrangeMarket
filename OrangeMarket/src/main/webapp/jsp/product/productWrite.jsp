@@ -22,27 +22,7 @@
 		
 		<script type="text/javascript">
 			
-			$(function(){
-					 //프로필 사진 미리보기 설정
-				  $("#image-add").click(function(){
-				  	$("#product-img-file").click();
-				  });
-				  
-					 $("#product-img-file").on('change', function(){
-				  	readURL(this);
-				  });
-				   
-				  //프로필 사진 미리보기 설정
-				   function readURL(input) {
-				       if (input.files && input.files[0]) {
-				          var reader = new FileReader();
-				          reader.onload = function (e) {
-				             $('#btn-img-save').attr('src', e.target.result);
-				          }
-				          reader.readAsDataURL(input.files[0]);
-				       }
- 
-				
+				$(function(){
 					//작성 저장 ajax
 					$("#pro-btn-save").click(function(){
 						
@@ -116,8 +96,26 @@
 					  		});
 					  	});
 					
+					 //프로필 사진 미리보기 설정
+				      $("#product-img-btn").click(function(){
+				         $("#product-img-file").click();
+				      });
+				      $("#product-img-file").on('change', function(){
+				          readURL(this);
+				      });
+					
 				});
-		
+				
+				//프로필 사진 미리보기 설정
+				function readURL(input) {
+				       if (input.files && input.files[0]) {
+				          var reader = new FileReader();
+				          reader.onload = function (e) {
+				             $('#product-img').attr('src', e.target.result);
+				          }
+				          reader.readAsDataURL(input.files[0]);
+				       }
+				   }
 		
 		</script>
 		
@@ -141,16 +139,9 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-
-								<!-- <div class="button">
-									<label class="img-label" for="chooseFile">
-										<button class="btn-image">+</button>
-									</label>
-								</div> -->
-								<img class="btn-image" src="/images/icons/ico_user_solid.png" id="btn-img-save">
-                 				<button class="btn-image" id="image-add">+</button>
-                 				<input type="file" id="product-img-file" style="display: none;"/>
-
+								<img class="btn-image" id="product-img" src="/images/icons/ico_user_solid.png">
+				                <button type="button" class="btn-image" id="product-img-btn">+</button>
+				                <input type="file" id="product-img-file" style="display: none;">
 							</td>
 						</tr>
 
