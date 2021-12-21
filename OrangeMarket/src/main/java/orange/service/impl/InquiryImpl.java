@@ -33,8 +33,13 @@ public class InquiryImpl extends EgovAbstractServiceImpl implements InquiryServi
 	}
 
 	@Override
-	public int selectInquiryTotal() throws Exception {
-		return inquiryDAO.selectInquiryTotal();
+	public int selectInquiryTotal(PagingVO vo) throws Exception {
+		return inquiryDAO.selectInquiryTotal(vo);
+	}
+
+	@Override
+	public String selectUserNik(int sessionId) throws Exception {
+		return inquiryDAO.selectUserNik(sessionId);
 	}
 	
 }

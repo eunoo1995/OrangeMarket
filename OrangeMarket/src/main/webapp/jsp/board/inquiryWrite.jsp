@@ -39,7 +39,7 @@
 								<option value="기타">기타</option>
 							</select> 
 							<input type="text" name="title" id="title" maxlength="20"
-								placeholder="제목을 입력하세요." class="board-title">
+								placeholder="제목을 입력하세요." class="board-title" autocomplete="off">
 						</td>
 					</tr>
 					<tr>
@@ -49,8 +49,8 @@
 
 
 				</table>
-					<input type="hidden" name="writer" id="writer" value=20202020>
-					<input type="hidden" name="nikName" id="nikName" value="홍길동">
+					<input type="hidden" name="writer" id="writer" value="${sessionId}">
+					<input type="hidden" name="nikName" id="nikName" value="${userNik}">
 			</form>
 			<div class="btn-div">
 				<button class="btn" onclick="location='inquiry-list'">취소</button>

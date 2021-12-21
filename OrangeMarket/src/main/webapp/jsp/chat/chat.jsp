@@ -9,59 +9,31 @@
 </jsp:include>
 <!-- 헤더 -->
 <script>
-$(function(){
-	
-	$(".chatlist-item").click(function(){
-		var channel = $(this).children("#nowChannel").val();
-		location = "chat?channel="+channel;
-	});
-	$("#sendChat").click(function(){
-		if($("#channel").val().trim() == "" ) {
-  			alert("대화방을 선택 후 메세지를 전송해주세요.");
-  			return false;
-  		}
-		if($("#input-text").val().trim() == "" ) {
-  			alert("메세지를 입력하지 않았습니다.");
-  			$("#input-text").focus();
-  			return false;
-  		}
-		var formdata = $("#frm").serialize();
-  		$.ajax({
-  			type : "post",
-  			url  : "chat-save",
-  			data : formdata,
-  			datatype : "text",
-  			success : function(data) {
-  				location="chat?channel="+data;
-  			},
-  			error : function() {
-  					alert("전송실패");
-  			}
-  		});
-	});
-});
-
 
 </script>
 <!-- 현재시간 가져오기 -->
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
-
+<c:set var="sessionId" value="${sessionId }"/>
 <!-- 페이지 wrapper -->
 <article class="pg-wrap pg-chat">
 
 	<article class="chat-cont-wrap">
-		<div class="cont-inner clx">
+		<div class="cont-inner clx" id="chatRefresh">
 			<div class="chat-list">
 				<!-- 채팅목록 시작 -->
 				<c:forEach var="channel" items="${list}">
-				<div class="chatlist-item">
+				<c:choose>
+				<c:when test="${channel.channel == vo.channel}"><c:set var="on" value="style='background:#FFFAFA;'"/></c:when>
+				<c:when test="${channel.channel != vo.channel}"><c:set var="on" value=""/></c:when>
+				</c:choose>
+				<div class="chatlist-item" ${on}>
 					<input type="hidden" id="nowChannel" name="nowChannel" value="${channel.channel}">
 					<!-- 현재 로그인한 계정의 대화상대 구분 -> 내가 판매자면 구매자 정보, 내가 구매자면 판매자 정보 -->
 					<c:choose>
-						<c:when test="${channel.buyer == 2021121701 }">
+						<c:when test="${channel.buyer == sessionId }">
 						<div class="item-left">
-							<img class="chatlist-image" src="/images/member/${channel.sellerProfile}"><br>
+							<img class="chatlist-image" src="/images/profiles/${channel.sellerProfile}"><br>
 						</div>
 	
 						<div class="item-center">
@@ -69,37 +41,53 @@ $(function(){
 							<p class="chatlist-content">${channel.lastContent}</p>
 						</div>
 						<!-- 얻어온 현재시간과 db에서 불러온 udate를 비교하여 오늘이면 시간, 지난 날짜면 연월일 출력 -->
+						<fmt:parseDate var="timeFmt" pattern="yyyy-mm-dd HH:mm:ss.SSS" value="${channel.udate}"/>
+						<fmt:formatDate var="times" pattern="a hh:mm" value="${timeFmt}"/>
 						<c:choose>
 							<c:when test="${fn:substring(channel.udate,0,10) == today}">
 								<div class="item-right">
-									<span class="chatlist-time">${fn:substring(channel.udate,10,16)}</span><br>
+									<span class="chatlist-time">${times}</span><br>
+								<c:if test="${channel.status != 0}">	
+									<div class="item-count">${channel.status}</div>
+								</c:if>
 								</div>
 							</c:when>
 							<c:when test="${fn:substring(channel.udate,0,10) != today}">
 								<div class="item-right">
 									<span class="chatlist-time">${fn:substring(channel.udate,0,10)}</span><br>
+								<c:if test="${channel.status != 0}">	
+									<div class="item-count">${channel.status}</div>
+								</c:if>
 								</div>
 							</c:when>
 						</c:choose>
 						</c:when>
-						<c:when test="${channel.buyer != 2021121701 }">
+						<c:when test="${channel.buyer != sessionId }">
 						<div class="item-left">
-							<img class="chatlist-image" src="/images/member/${channel.buyerProfile}"><br>
+							<img class="chatlist-image" src="/images/profiles/${channel.buyerProfile}"><br>
 						</div>
 	
 						<div class="item-center">
 							<p class="profile-nick">${channel.buyerNik}</p>
 							<p class="chatlist-content">${channel.lastContent}</p>
 						</div>
+						<fmt:parseDate var="timeFmt" pattern="yyyy-mm-dd HH:mm:ss.SSS" value="${channel.udate}"/>
+						<fmt:formatDate var="times" pattern="a h:mm" value="${timeFmt}"/>
 						<c:choose>
 							<c:when test="${fn:substring(channel.udate,0,10) == today}">
 								<div class="item-right">
-									<span class="chatlist-time">${fn:substring(channel.udate,10,16)}</span><br>
+									<span class="chatlist-time">${times}</span><br>
+								<c:if test="${channel.status != 0}">	
+									<div class="item-count">${channel.status}</div>
+								</c:if>	
 								</div>
 							</c:when>
 							<c:when test="${fn:substring(channel.udate,0,10) != today}">
 								<div class="item-right">
 									<span class="chatlist-time">${fn:substring(channel.udate,0,10)}</span><br>
+								<c:if test="${channel.status != 0}">
+									<div class="item-count">${channel.status}</div>
+								</c:if>	
 								</div>
 							</c:when>
 						</c:choose>
@@ -109,11 +97,7 @@ $(function(){
 			</c:forEach>
 			</div>
 			<!-- chat-list end/ 채팅목록 종료 -->
-
-
 			<div class="chat-content">
-
-
 				<div class="chat-bar">
 					<!-- 채팅창에 띄워진 상대방 프사,닉네임,거래품목이미지,가격 -->
 					<div class="bar-inner">
@@ -134,70 +118,54 @@ $(function(){
 					<div class="inner" id="chatWrap">
 					<!-- 초이스 문을 이용해 세션값이 sender와 같으면 나의 메시지, 다르면 상대 메시지 -->
 					<c:forEach var="chatList" items="${chatList}">
+					<c:if test="${fn:substring(chatList.rdate,0,10) != changeDate }">
+					<div class="changeDate">${fn:substring(chatList.rdate,0,10)}</div>
+					</c:if>
 					<c:choose>
-						<c:when test="${chatList.sender != 2021121701 }">
-							<div class="item" id="item">
+						<c:when test="${chatList.sender != sessionId }">
+						<c:set var="msg" value="class='item' id='item'"/>
+						</c:when>
+						<c:when test="${chatList.sender == sessionId }">
+						<c:set var="msg" value="class='item mymsg'"/>
+						</c:when>
+					</c:choose>	
+						<fmt:parseDate var="timeFmt" pattern="yyyy-mm-dd HH:mm:ss.SSS" value="${chatList.rdate}"/>
+						<fmt:formatDate var="times" pattern="a h:mm" value="${timeFmt}"/>
+							<div ${msg}>
 								<div class="box">
 									<p class="msg">${chatList.content}</p>
-									<c:choose>
-										<c:when test="${fn:substring(chatList.rdate,0,10) == today}">
-											<span class="time">${fn:substring(chatList.rdate,10,16)}</span>
-										</c:when>
-										<c:when test="${fn:substring(chatList.rdate,0,10) != today}">
-											<span class="time">${fn:substring(chatList.rdate,0,10)}</span>
-										</c:when>
-									</c:choose>
+									<span class="time">${times}</span>
 								</div>
 								<!--box end  -->
 							</div>
 							<!--item end  -->
-						</c:when>
-						<c:when test="${chatList.sender == 2021121701 }">
-							<div class="item mymsg">
-								<div class="box">
-									<p class="msg">${chatList.content}</p>
-									<c:choose>
-										<c:when test="${fn:substring(chatList.rdate,0,10) == today}">
-											<span class="time">${fn:substring(chatList.rdate,10,16)}</span>
-										</c:when>
-										<c:when test="${fn:substring(chatList.rdate,0,10) != today}">
-											<span class="time">${fn:substring(chatList.rdate,0,10)}</span>
-										</c:when>
-									</c:choose>
-								</div>
-								<!--box end  -->
-							</div>
-							<!--item end  -->
-						</c:when>
-					</c:choose>
+					<c:set var="changeDate" value="${fn:substring(chatList.rdate,0,10)}"/>
 					</c:forEach>	
 					</div>
 					<!--inner end  -->
+					<!--scrollbar set  -->
+					<script src="js/scrollbar.js"></script>
 				</div>
 				<!--chat_wrap end  -->
 				<form id="frm">
 				<div class="messagebox">
 					<input type="hidden" id="channel" name="channel" value="${vo.channel}">
-					<input type="hidden" id="title" name="title" value="${vo.title}">
-					<input type="hidden" id="price" name="price" value="${vo.price}">
 				<c:choose>	
-					<c:when test="${vo.seller == 2021121701}">				
+					<c:when test="${vo.seller == sessionId}">				
 					<input type="hidden" id="receiver" name="receiver" value="${vo.buyer}">
 					</c:when>
-					<c:when test="${vo.buyer == 2021121701}">
+					<c:when test="${vo.buyer == sessionId}">
 					<input type="hidden" id="receiver" name="receiver" value="${vo.seller}">
 					</c:when>				
 				</c:choose>	
-					<input type="hidden" id="sender" name="sender" value=2021121701>
+					<input type="hidden" id="sender" name="sender" value="${sessionId}">
 					<input type="text" class="mymsg" name="content"
-							placeholder="메세지를 입력해주세요!" id="input-text">
+							placeholder="메세지를 입력해주세요!" id="input-text" autofocus autocomplete="off">
 					<input type="button" class="sendbtn" id="sendChat" value="전송하기">
 				</div>
 				</form>
 			</div>
 			<!-- chatcontent div end -->
-		</div>
-
 		</div>
 		<!-- container div end -->
 	</article>
@@ -206,5 +174,7 @@ $(function(){
 <!-- 페이지 wraper end -->
 
 <!-- 푸터 -->
-<jsp:include page="/include/footer.jsp" flush="false" />
+<jsp:include page="/include/footer.jsp" flush="false" >
+	<jsp:param name="jsName" value="chat" />
+</jsp:include>
 <!-- 푸터 -->

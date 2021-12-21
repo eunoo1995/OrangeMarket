@@ -191,10 +191,9 @@
 	padding-top: 20px;
 }
 
-.pg-pro-detail .pro-detail-top .product-info .info-icon-count .user-nickname {
-	vertical-align: middle;
+.pg-pro-detail .pro-detail-top .product-info .mini-div .mini-div .user-nickname {
+	font-size: 24px; 
 	float: right;
-	font-size: 20px;
 }
 
 .pg-pro-detail .pro-detail-top .product-info .mini-div {
@@ -379,11 +378,15 @@
 	padding-left: 5px;
 }
 
+.product-write-table-content {
+	height: 400px;
+}
+
 .product-write-content1 {
 	border: 1px solid #999;
 	border-radius: 2px;
 	width: 900px;
-	height: 200px;
+	height: 400px;
 	padding-left: 5px;
 	resize: none;
 }

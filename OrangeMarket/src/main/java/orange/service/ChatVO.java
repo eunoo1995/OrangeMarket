@@ -14,7 +14,7 @@ public class ChatVO {
 	private String lastContent;
 	private String buyerProfile;
 	private String sellerProfile;
-	
+	private int status;
 	
 	public int getChannel() {
 		return channel;
@@ -87,6 +87,12 @@ public class ChatVO {
 	}
 	public void setSellerProfile(String sellerProfile) {
 		this.sellerProfile = sellerProfile;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 }

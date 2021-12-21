@@ -29,7 +29,6 @@
 	<article class="board-wrap">
 		<!-- container -->
 		<div class="cont-inner">
-		
 			<nav class="board-menu-wrap">
 				<ul class="board-menu">
 					<li class="menu_li on"><a href="inquiry-list">문의내역</a></li>

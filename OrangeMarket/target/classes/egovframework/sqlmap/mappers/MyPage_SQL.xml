@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orange.service.impl.MyPageMapper">
+
+	<select id="selectMemberInfo" parameterType="memberVO" resultType="memberVO">
+		SELECT 	USER_ID,
+				EMAIL,
+				USER_NAME,
+				USER_PHONE,
+				NIK_NAME,
+				USER_PW,
+				ADDR,
+				ADDR_PASS,
+				USER_LEVEL,
+				TO_CHAR(RDATE,'YYYY-MM-DD') RDATE,
+				TO_CHAR(UDATE,'YYYY-MM-DD') UDATE,
+				REPORT_COUNT,
+				PROFILE_IMG 
+		FROM MEMBER
+		WHERE USER_ID=#{userId}		
+		
+	</select>
+	
+	<update id="updateProfile" parameterType="memberVO">
+		UPDATE MEMBER SET PROFILE_IMG= #{profileImg} 
+			WHERE USER_ID = #{userId} 
+		
+	</update>
+
+</mapper>

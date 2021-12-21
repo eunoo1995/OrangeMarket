@@ -7,7 +7,29 @@
 	<jsp:param name="cssName" value="mypage" />
 </jsp:include>
 <!-- 헤더 -->
-
+<script>
+$(function(){
+	$("#myPage-img-file").change(function(){
+		if(confirm("선택하신 사진으로 변경하시겠습니까?")) {
+			var formdata = new FormData(document.getElementById("frm-profile"));
+			$.ajax({
+	  			type : "post",
+	  			url  : "change-profile",
+	  			data : formdata,
+	  			processData : false,
+	  			contentType : false,
+	  			datatype : "text",
+	  			success : function(data) {
+	  					location="mypage";
+	  			},	
+	  			error : function() {
+	  					alert("오류발생");
+	  			}
+	  		});
+		}
+	});
+});
+</script>
 <!-- 페이지 wrapper -->
 <article class="pg-wrap myPage-main">
 
@@ -16,7 +38,7 @@
 		<div class="cont-inner">
 			<!-- class="myPage-title" -->
 			<h2 class="sub-page-title">
-				<span>오렌지</span>님의 마이페이지
+				<span>${vo.nikName}</span>님의 마이페이지
 			</h2>
 		</div>
 	</header>
@@ -30,33 +52,38 @@
 					<col width="80%">
 				</colgroup>
 				<tr>
-					<th><img class="myPage-img" src="/images/icons/ico_user_solid.png"><br>
+					<th><img class="myPage-img" src="/images/profiles/${vo.profileImg}"><br>
 						<input type="button" class="myPage-img-btn" value="사진 변경">
-						<input type="file" id="myPage-img-file" style="display: none;">
+					<form id="frm-profile" method="post" enctype="multipart/form-data">
+						<input type="hidden" id=userId name="userId" value="${sessionId}">
+						<input type="hidden" id=profileImg name="profileImg" value="${vo.profileImg}">
+						<input type="file" id="myPage-img-file" name="uploadProfile" 
+							accept="image/gif,image/png,image/jpeg" multiple style="display: none;">
+					</form>
 					</th>
 					<td>
 						<table class="myPage-info-table">
 							<tr>
 								<th>email</th>
-								<td>rrr@sdafas.com</td>
+								<td>${vo.email}</td>
 								<th></th>
 								<td></td>
 							</tr>
 							<tr>
 								<th>닉네임</th>
-								<td>홍길동</td>
+								<td>${vo.nikName}</td>
 								<th>회원가입일</th>
-								<td>2021-01-01</td>
+								<td>${vo.rdate}</td>
 							</tr>
 							<tr>
 								<th>연락처</th>
-								<td>010-1111-1111</td>
+								<td>${vo.userPhone}</td>
 								<th>최종접속일</th>
-								<td>2021-01-02</td>
+								<td>${vo.udate}</td>
 							</tr>
 							<tr>
 								<th>우리동네</th>
-								<td colspan="3">서울특별시 강남구</td>
+								<td colspan="3">${vo.addr}</td>
 							</tr>
 						</table>
 						<div class="myPage-div1">

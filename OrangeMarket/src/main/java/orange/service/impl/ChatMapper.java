@@ -18,4 +18,6 @@ public interface ChatMapper {
 	int insertChatSave(ChatSubVO vo);
 	
 	int updateLastChat(ChatSubVO vo);
+	
+	int updateChatStatus(ChatSubVO subVo);
 }

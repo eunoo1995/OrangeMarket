@@ -3,6 +3,8 @@ package orange.web;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,15 +31,18 @@ public class BoardController {
 	@Resource(name="qnaService")
 	private QnaService qnaService;
 	
-	
 	// 문의하기 리스트 출력
 	@RequestMapping(value = "/inquiry-list")
-	public String inquiryList(PagingVO vo, Model model) throws Exception {
-		
-		int total = inquiryService.selectInquiryTotal();
+	public String inquiryList(PagingVO vo, Model model,HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("sessionId") == null) return "redirect:login";
+		int sessionId = (int) session.getAttribute("sessionId");
+		vo.setWriter(sessionId);
+		int total = inquiryService.selectInquiryTotal(vo);
 		int pageNo = vo.getPageNo();
 		//페이징 객체 생성
 		vo = new PagingVO(total, pageNo, 5);
+		vo.setWriter(sessionId);
 		
 		List<InquiryVO> list = inquiryService.selectInquiryList(vo);
 		model.addAttribute("list",list);
@@ -56,8 +61,11 @@ public class BoardController {
 	}
 	// 문의하기 문의 작성
 	@RequestMapping(value = "/inquiry-write")
-	public String inquiryWrite() throws Exception {
-		
+	public String inquiryWrite(Model model,HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		int sessionId = (int) session.getAttribute("sessionId");
+		String userNik = inquiryService.selectUserNik(sessionId);
+		model.addAttribute("userNik",userNik);
 		return "board/inquiryWrite";
 	}
 	// 문의하기 문의 작성 저장

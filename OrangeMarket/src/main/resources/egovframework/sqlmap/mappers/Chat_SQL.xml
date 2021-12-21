@@ -6,7 +6,7 @@
 		SELECT  
 				channel,
 				title,
-				to_char(price,'999,999,999,999') price,
+				price,
 				seller,
 				buyer,
 				rdate,
@@ -15,7 +15,11 @@
 				buyer_nik,
 				last_content,
 				buyer_profile,
-				seller_profile 
+				seller_profile,
+				(SELECT COUNT(*) FROM CHAT_SUB WHERE
+                CHAT_SUB.STATUS = 'N' AND
+                CHAT_SUB.CHANNEL = CHAT.CHANNEL AND
+                CHAT_SUB.RECEIVER = #{buyer}) STATUS 
 		FROM CHAT 
 		WHERE buyer=#{buyer} or seller=#{seller} 
 		ORDER BY UDATE DESC		
@@ -24,8 +28,6 @@
 	<select id="selectChatList" parameterType="chatSubVO" resultType="egovMap">
 		SELECT 
 				channel,
-				title,
-				price,
 				receiver,
 				sender,
 				content,
@@ -49,25 +51,28 @@
 	
 	<insert id="insertChatSave" parameterType="chatSubVO">
 		INSERT INTO CHAT_SUB (  CHANNEL,
-								TITLE,
-								PRICE,
 								RECEIVER,
 								SENDER,
 								CONTENT,
 								RDATE )
 					VALUES	 
 							 (  #{channel},
-								#{title},
-								#{price},
 								#{receiver},
 								#{sender},
 								#{content},
 								sysdate )		
 	</insert>
-	<insert id="updateLastChat" parameterType="chatSubVO">
+	<update id="updateLastChat" parameterType="chatSubVO">
 		UPDATE CHAT SET 
 							LAST_CONTENT = #{content},
 							UDATE = sysdate 
 				WHERE CHANNEL = #{channel}				
-	</insert>
+	</update>
+	<update id="updateChatStatus" parameterType="chatSubVO">
+		UPDATE CHAT_SUB SET
+							STATUS = 'Y'
+				WHERE CHANNEL = #{channel}
+				AND   RECEIVER = #{receiver}			
+	
+	</update>
 </mapper>
