@@ -1,6 +1,6 @@
 package orange.service;
 
-public class ProductVO {
+public class ProductVO extends ProductSubVO {
 	private int proCode;
 	private int seller;
 	private int proCategoryCode;
