@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- 헤더 -->
 <jsp:include page="/include/header.jsp" flush="false">
 	<jsp:param name="cssName" value="mypage" />
@@ -28,6 +28,45 @@ $(function(){
 	  		});
 		}
 	});
+	$("#addMyKeyword").click(function(){
+		var mykeyword = $("#mykeyword").val();
+		if(mykeyword.trim() == "") {
+			alert("키워드를 입력해주세요.");
+			$("#mykeyword").val("");
+			$("#mykeyword").focus();
+			return false;
+		} 
+		if(mykeyword.trim().length > 20) {
+			alert("키워드 단어는 20자 이내로 작성해주세요.");
+			$("#mykeyword").val("");
+			$("#mykeyword").focus();
+			return false;
+		} 
+		$.ajax({
+			type : "post",
+			url  : "mykeyword-save",
+			data : "mykeyword="+mykeyword,
+			datatype : "text",
+			success : function(data) {
+					location="mypage";
+			},	
+			error : function() {
+					alert("오류발생");
+			}
+		});
+	});
+	$("#mykeyword").keydown(function(key) {
+        //키의 코드가 13번일 경우 (13번은 엔터키)
+        // 인풋상자에서 엔터키 누를 시 버튼클릭 이벤트 발생
+        if (key.keyCode == 13) {
+        	if($("#mykeyword").val().trim() == "") {
+    			alert("키워드를 입력해주세요.");
+    			$("#mykeyword").focus();
+    			return false;
+    		}
+            $("#addMyKeyword").click();
+        }
+    });
 });
 </script>
 <!-- 페이지 wrapper -->
@@ -66,8 +105,8 @@ $(function(){
 							<tr>
 								<th>email</th>
 								<td>${vo.email}</td>
-								<th></th>
-								<td></td>
+								<th>등급</th>
+								<td>${vo.userLevel}</td>
 							</tr>
 							<tr>
 								<th>닉네임</th>
@@ -87,9 +126,9 @@ $(function(){
 							</tr>
 						</table>
 						<div class="myPage-div1">
-							<input type="button" id="" value="동네인증하기"> <input
-								type="button" id="" value="정보수정"> <input type="button"
-								id="myPage-withdrawal-btn" value="회원탈퇴">
+							<input type="button" id="" value="동네인증하기"> 
+							<input type="button" id="" value="정보수정"> 
+							<input type="button" id="myPage-withdrawal-btn" value="회원탈퇴">
 						</div>
 					</td>
 				</tr>
@@ -100,33 +139,23 @@ $(function(){
 				<div class="myPage-keyword">
 					<p>관심키워드</p>
 					<div class="myPage-keywordList">
-						<input type="text" id="" name="" value=""
-							placeholder="추가하실 키워드를 입력하세요!">
-						<button type="button" class="myPage-keywordAdd-btn" id="">추가</button>
+					<form id="frm">
+						<input type="text" id="mykeyword" name="mykeyword" autocomplete="off" 
+									 placeholder="추가하실 키워드를 입력하세요!">
+						<button type="button" class="myPage-keywordAdd-btn" id="addMyKeyword">추가</button>
+					</form>	
 						<div style="margin-top: 30px; padding: 20px;">
-							<!-- 반복문 사용예정 -->
-							<div class="myPage-keywords">
-								자전거 <a href="">×</a>
-							</div>
-							<div class="myPage-keywords">
-								전자레인지 <a href="">×</a>
-							</div>
-							<div class="myPage-keywords">
-								컴퓨터 <a href="">×</a>
-							</div>
-							<div class="myPage-keywords">
-								콜라 <a href="">×</a>
-							</div>
-							<div class="myPage-keywords">
-								섬유유연제 <a href="">×</a>
-							</div>
-							<div class="myPage-keywords">
-								돌돌이 <a href="">×</a>
-							</div>
-							<div class="myPage-keywords">
-								에어팟 <a href="">×</a>
-							</div>
-							<!-- 반복문 사용예정 -->
+							<c:if test="${fn:length(keywordList) == 0 }">
+								<div style="margin-top:200px; color:#999;">
+								등록하신 관심키워드가 없습니다!
+								</div>
+							</c:if>
+							<c:forEach var="keywordList" items="${keywordList}">
+								<div class="myPage-keywords">
+									${keywordList.mykeyword} 
+									<a href="mykeyword-delete?mykeywordUnq=${keywordList.mykeywordUnq}">×</a>
+								</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>

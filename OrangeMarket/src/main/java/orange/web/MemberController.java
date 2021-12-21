@@ -160,8 +160,6 @@ public class MemberController {
 			msg = "err";
 		}
 		
-		System.out.println("code msg ====> " + msg );
-
 		return msg;
 	}
 	
@@ -170,16 +168,8 @@ public class MemberController {
 	public String checkEmailCode(EmailVerifVO vo) throws Exception {
 		
 		String msg = "";
-		
-		
-		System.out.println("email check!! ==>" + vo.getEmail());
-		System.out.println("email code check!! ==>" + vo.getEmailCode());
-		
 		int result = memberService.selectEmailVerif(vo);
 	
-		
-		System.out.println("result check!! ==>" + result);
-		
 		if(result == 1) {
 			msg = "ok";
 		} else if(result != 1) {

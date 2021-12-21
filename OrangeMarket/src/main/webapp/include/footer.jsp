@@ -14,7 +14,7 @@
 
 		<article class="footer-top">
 			<div class="footer-center">
-				<ul class="footer-nav">
+				<ul class="footer-nav clx">
 					<li>
 						<p class="footer-nav-tit">Product</p>
 						<ul class="depth2">

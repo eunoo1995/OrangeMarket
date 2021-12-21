@@ -11,7 +11,9 @@
 				USER_PW,
 				ADDR,
 				ADDR_PASS,
-				USER_LEVEL,
+				CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
+					 WHEN USER_LEVEL >= 40 THEN '일반회원' 
+				 	 ELSE '주의회원' END AS USER_LEVEL,
 				TO_CHAR(RDATE,'YYYY-MM-DD') RDATE,
 				TO_CHAR(UDATE,'YYYY-MM-DD') UDATE,
 				REPORT_COUNT,
@@ -20,11 +22,50 @@
 		WHERE USER_ID=#{userId}		
 		
 	</select>
+	<select id="countSeller" parameterType="memberVO" resultType="int">
+		SELECT COUNT(*) FROM CHAT
+			WHERE SELLER = #{userId}
+	</select>
+	<select id="countBuyer" parameterType="memberVO" resultType="int">
+		SELECT COUNT(*) FROM CHAT
+			WHERE BUYER = #{userId}
+	</select>
 	
 	<update id="updateProfile" parameterType="memberVO">
 		UPDATE MEMBER SET PROFILE_IMG= #{profileImg} 
 			WHERE USER_ID = #{userId} 
-		
+	</update>
+	<update id="updateSellerProfile" parameterType="memberVO">
+		UPDATE CHAT SET SELLER_PROFILE= #{profileImg} 
+			WHERE SELLER = #{userId} 
+	</update>
+	<update id="updateBuyerPrifile" parameterType="memberVO">
+		UPDATE CHAT SET BUYER_PROFILE= #{profileImg} 
+			WHERE BUYER = #{userId} 
 	</update>
 
+
+
+	<select id="selectMyKeywordList" parameterType="myKeywordVO" resultType="egovMap">
+		SELECT  MYKEYWORD_UNQ,
+				MYKEYWORD,
+				RDATE,
+				USER_ID 
+		FROM MYKEYWORD 
+		WHERE USER_ID = #{userId}			
+	</select>
+	<insert id="insertMyKeyword" parameterType="mykeywordVO">
+		INSERT INTO MYKEYWORD( MYKEYWORD_UNQ,
+							   MYKEYWORD,
+							   RDATE,
+							   USER_ID )
+					  VALUES ( MYKEYWORD_SEQ.NEXTVAL,
+							   #{mykeyword},
+							   SYSDATE,
+							   #{userId} )		   
+	</insert>
+	<delete id="deleteMyKeyword" parameterType="mykeywordVO">
+		DELETE FROM MYKEYWORD WHERE MYKEYWORD_UNQ = ${mykeywordUnq}
+	
+	</delete>
 </mapper>

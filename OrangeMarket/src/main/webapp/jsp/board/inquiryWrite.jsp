@@ -23,7 +23,6 @@
 		<!-- container -->
 		<div class="cont-inner">
 
-
 			<form id="frm">
 				<table class="board-write-table">
 					<tr>

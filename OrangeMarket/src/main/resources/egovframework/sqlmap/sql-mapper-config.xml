@@ -19,6 +19,7 @@
 		<typeAlias alias="reportVO" type="orange.service.ReportVO"/>
 		<typeAlias alias="pagingVO" type="orange.service.PagingVO"/>
 		<typeAlias alias="qnaVO" type="orange.service.QnaVO"/>
+		<typeAlias alias="myKeywordVO" type="orange.service.MyKeywordVO"/>
 		
 		<!-- 2 -->
 		<typeAlias alias="memberVO" type="orange.service.MemberVO"/>

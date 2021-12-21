@@ -62,7 +62,7 @@
 							</c:when>
 						</c:choose>
 						</c:when>
-						<c:when test="${channel.buyer != sessionId }">
+						<c:when test="${channel.buyer != sessionId}">
 						<div class="item-left">
 							<img class="chatlist-image" src="/images/profiles/${channel.buyerProfile}"><br>
 						</div>
