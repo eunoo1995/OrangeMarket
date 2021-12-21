@@ -12,5 +12,8 @@ public interface ProductService {
 
 	// 판매 제품 상세보기 기능
 	ProductVO selectProductDetail(ProductVO vo);
+
+	// 판매 제품 정보 수정위한 데이터 표시
+	ProductVO selectProductModify(ProductVO vo);
 	
 }

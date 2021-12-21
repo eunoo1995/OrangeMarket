@@ -25,13 +25,13 @@
 			<div class="cont-inner">
 				<!-- 작성자에게 보이는 수정 및 삭제 버튼 -->
 				<div class="btn-wrap txt-r user-btn-wrap">
-					<button class="btn btn-solid-point">수정</button>
-					<button class="btn btn-solid">삭제</button>
+					<button class="btn btn-solid-point" onclick="location='product-modify?proCode=${product.proCode }'">수정</button>
+					<button class="btn btn-solid" onclick="location='product-delete?proCode=${product.proCode }'">삭제</button>
 				</div>
 	
 				<!-- 상품 내용 및 상세 내용 -->
 				<div class="pro-detail-top">
-	
+					
 					<div class="product-img-wrap">
 						<!-- 제품 이미지 -->
 						<img class="product-img"

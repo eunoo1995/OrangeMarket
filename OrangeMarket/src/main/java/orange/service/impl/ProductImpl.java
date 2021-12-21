@@ -33,6 +33,12 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		// TODO Auto-generated method stub
 		return productDAO.selectProductDetail(vo);
 	}
+
+	@Override
+	public ProductVO selectProductModify(ProductVO vo) {
+		// TODO Auto-generated method stub
+		return productDAO.selectProductModify(vo);
+	}
 	
 	
 	

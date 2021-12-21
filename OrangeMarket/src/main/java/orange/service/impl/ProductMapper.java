@@ -14,4 +14,6 @@ public interface ProductMapper {
 
 	ProductVO selectProductDetail(ProductVO vo);
 
+	ProductVO selectProductModify(ProductVO vo);
+
 }

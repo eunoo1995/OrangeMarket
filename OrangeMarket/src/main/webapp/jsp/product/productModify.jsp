@@ -58,14 +58,14 @@
 					  		
 					  		$.ajax({
 					  			type : "post",
-					  			url  : "product-write-save",
+					  			url  : "product-modify-save",
 					  			data : formdata,
 					  			datatype : "text", //성공여부(ok)
 					  			success : function(data) {
 					  				if(data == "ok") {
-					  					alert("저장성공");
+					  					alert("수정성공");
 					  				} else {
-					  					alert("저장실패");
+					  					alert("수정실패");
 					  				}
 					  			},
 					  			error : function (request, status, error){
@@ -109,8 +109,8 @@
 			<div class="product-write-content__detail">
 				<form name="frm" id="frm">
 					
-					<input type="hidden" name="seller" id="seller" value="10">
-					<input type="hidden" name="sellerNik" id="sellerNik" value="판매자 닉네임">
+					<input type="hidden" name="seller" id="seller" value="${product.seller }">
+					<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
 				
 					<table class="product-write-table">
 
@@ -139,7 +139,7 @@
 								<span class="orange-star">*</span>
 							</th>
 								<td class="product-write-table-td2">
-								<input type="text" name="title" id="title" maxlength="40" class="product-write-text">
+								<input type="text" name="title" id="title" maxlength="40" class="product-write-text" value="${product.title }">
 							</td>
 						</tr>
 
@@ -158,7 +158,7 @@
 								</select>
 
 								<div class="keyword-wrap">
-									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." 
+									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." value="${product.keyword }"
 									onfocus="this.placeholder=''" onblur="this.placeholder='연관단어를 입력해주세요.'" class="product-write-keyword">
 								</div>
 							</td>
@@ -172,7 +172,7 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-								<input type="text" name="addr" id="addr" value="서울시 강남구" readonly class="product-write-text">
+								<input type="text" name="addr" id="addr" value="${product.addr }" readonly class="product-write-text">
 							</td>
 						</tr>
 
@@ -220,7 +220,7 @@
 							<th>가격<span
 								class="orange-star">*</span></th>
 							<td class="product-write-table-td2">
-								<input type="text" name="price" id="price" maxlength="11" onkeyup="inputNumberFormat(this)" placeholder="가격을 입력해주세요."
+								<input type="text" name="price" id="price" maxlength="11" value="${product.price }" onkeyup="inputNumberFormat(this)" placeholder="가격을 입력해주세요."
 								onfocus="this.placeholder=''" onblur="this.placeholder='가격을 입력해주세요.'" class="product-write-price-txt">
 								<font style="margin-right: 10px; font-size: 16px;">원</font>
 								
@@ -243,7 +243,7 @@
 						<tr class="product-table-tr">
 							<th>설명</th>
 							<td class="product-write-table-content">
-								<textarea name="content" id="content" class="product-write-content1"></textarea>
+								<textarea name="content" id="content" class="product-write-content1">${product.content }</textarea>
 							</td>
 						</tr>
 

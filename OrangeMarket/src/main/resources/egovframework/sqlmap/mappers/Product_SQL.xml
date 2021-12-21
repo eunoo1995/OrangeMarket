@@ -77,6 +77,28 @@
 			pro_code = ${proCode}
 	</select>
 	
+	<!-- 수정 위한 제품 데이터 보기 -->
+	<select id="selectProductModify" resultType="productVO">
+		SELECT
+			pro_code,
+			seller,
+			pro_category_code,
+			title,
+			keyword,
+			addr,
+			price,
+			content,
+			rdate,
+			udate,
+			seller_nik
+			
+		FROM
+			product
+			
+		WHERE
+			pro_code = ${proCode}
+	</select>
+	
 	<!-- select end -->
 	
 
