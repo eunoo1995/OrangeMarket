@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>오렌지 마켓</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/mypage.css'/>"/>
 </head>

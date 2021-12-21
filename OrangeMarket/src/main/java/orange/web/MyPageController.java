@@ -1,9 +1,9 @@
 package orange.web;
 
 import java.io.File;
+import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import orange.service.MemberVO;
+import orange.service.MyKeywordVO;
 import orange.service.MyPageService;
 
 @Controller
@@ -23,16 +24,17 @@ public class MyPageController {
 	private MyPageService myPageService;
 	
 	@RequestMapping(value="/mypage")
-	public String mypageMain(MemberVO vo, Model model, HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
- 		if(session.getAttribute("sessionId") == null) return "redirect:login";
+	public String mypageMain(MemberVO vo, MyKeywordVO kvo, Model model, HttpSession session) throws Exception {
+ 		// 세션값이 없으면 로그인 화면으로 리턴
+		if(session.getAttribute("sessionId") == null) return "redirect:login";
 		int sessionId = (int) session.getAttribute("sessionId");
 		vo.setUserId(sessionId);
-		
 		vo = myPageService.selectMemberInfo(vo);
+		kvo.setUserId(sessionId);
+		List<?> keywordList = myPageService.selectMyKeywordList(kvo); 
 		
 		model.addAttribute("vo",vo);
-		
+		model.addAttribute("keywordList",keywordList);
 		return "mypage/myPage";
 	}
 	
@@ -58,15 +60,40 @@ public class MyPageController {
 			File saveFile = new File(path, profileImg);
 			multipartFile.transferTo(saveFile);
 		}
-		// 새로 저장한 파일 이름 set
+		// 새로 저장한 프로필 업데이트
 		vo.setProfileImg(profileImg);
 		myPageService.updateProfile(vo);
-		
+		// 내 정보 판매자, 구매자 존재 유무 확인 후 프로필 업데이트
+		int sellerCnt = myPageService.countSeller(vo);
+		if(sellerCnt != 0) {
+			myPageService.updateSellerProfile(vo);
+		}
+		int buyerCnt = myPageService.countBuyer(vo);
+		if(buyerCnt != 0) {
+			myPageService.updateBuyerPrifile(vo);
+		}
 		return "";
 	}
 	
+	// 관심키워드 추가
+	@RequestMapping(value="mykeyword-save")
+	@ResponseBody
+	public String addMyKeyword(MyKeywordVO vo, HttpSession session) throws Exception {
+		int sessionId = (int) session.getAttribute("sessionId");
+		vo.setUserId(sessionId);
+		myPageService.insertMyKeyword(vo);
+		return "";
+	}
+	
+	// 관심키워드 삭제
+	@RequestMapping(value="mykeyword-delete")
+	public String deleteMyKeyword(MyKeywordVO vo) throws Exception {
+		myPageService.deleteMyKeyword(vo);
+		return "redirect:mypage";
+	}
+	
 	@RequestMapping(value="/withdrawal")
-	public String withdrawalPop(HttpServletRequest request) throws Exception {
+	public String withdrawalPop(HttpSession session) throws Exception {
 		return "mypage/withdrawal";
 	}
 	

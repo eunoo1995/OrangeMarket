@@ -1,6 +1,6 @@
 package orange.service;
 
-public class ChatVO {
+public class ChatVO{
 	
 	private int channel;
 	private String title;

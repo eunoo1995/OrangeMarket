@@ -33,8 +33,7 @@ public class BoardController {
 	
 	// 문의하기 리스트 출력
 	@RequestMapping(value = "/inquiry-list")
-	public String inquiryList(PagingVO vo, Model model,HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
+	public String inquiryList(PagingVO vo, Model model,HttpSession session) throws Exception {
 		if(session.getAttribute("sessionId") == null) return "redirect:login";
 		int sessionId = (int) session.getAttribute("sessionId");
 		vo.setWriter(sessionId);
@@ -61,8 +60,7 @@ public class BoardController {
 	}
 	// 문의하기 문의 작성
 	@RequestMapping(value = "/inquiry-write")
-	public String inquiryWrite(Model model,HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
+	public String inquiryWrite(Model model,HttpSession session) throws Exception {
 		int sessionId = (int) session.getAttribute("sessionId");
 		String userNik = inquiryService.selectUserNik(sessionId);
 		model.addAttribute("userNik",userNik);
