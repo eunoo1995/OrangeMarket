@@ -26,7 +26,7 @@
 					<input type="hidden" name="pwFlag" value="N" />
 					<input type="hidden" name="emailFlag" value="N" />
 					<input type="hidden" name="areaFlag" value="N" />
-				
+			
 					<table class="form-table">
 						<colgroup>
 							<col width="50%" />
@@ -80,10 +80,9 @@
 							<tr>
 								<td colspan="2">
 									<p class="form-tit">동네입력</p>
-									<input type="text" name="area" class="with-btn" placeholder="주소를 입력해주세요" />
-									<button type="button" class="btn btn-solid with-input">검색</button>
-									<input type="text" name="confirmArea" placeholder="인증번호 입력" readonly />
+									<input type="text" name="addrArea" placeholder="주소를 입력해주세요" />
 									<button type="button" id="btnConfirmArea" class="btn btn-solid btn-f">동네 인증하기</button>
+									<p class="form-err-msg"></p>
 								</td>
 							</tr>
 						</tbody>
