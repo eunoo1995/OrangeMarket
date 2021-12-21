@@ -41,14 +41,21 @@
 					<!-- 제품 정보 -->
 					<div class="product-info">
 						<div class="product-head">
-							<h3 class="product-title">상품 제목</h3>
-							<p class="product-price">가격</p>
+							<h3 class="product-title">${product.title}</h3>
+							<p class="product-price">${product.price}</p>
 							<p class="product-grade">평가점수</p>
 						</div>
 	
 	
 						<!-- 게시글 세부 정보 -->
 						<div class="info-detail">
+	
+							<div class="mini-div"> 
+								<!-- 닉네임 클릭 시 마이 페이지 이동 : 판매 내역 통한 다른 제품 판매 확인 -->
+								<span class="user-nickname" style="font-size: 24px; float: right;">
+									<a href="">${product.sellerNik }</a>
+								</span>
+							</div>					
 	
 							<ul class="info-icon-count">
 								<!-- 999 이상 시 999+ 표시 -->
@@ -60,32 +67,27 @@
 								<!-- 채팅수 -->
 								<li><img class="other-icon"
 									src="<c:url value='/images/icons/comment.png'/>"> <span
-									class="count">999+</span></li>
+									class="count">0</span></li>
 	
 								<!-- 조회수 -->
 								<li><img class="other-icon"
 									src="<c:url value='/images/icons/search.png'/>"> <span
-									class="count">0</span></li>
-	
-								<!-- 닉네임 클릭 시 마이 페이지 이동 : 판매 내역 통한 다른 제품 판매 확인 -->
-								<li><span class="user-nickname">판매자닉네임</span></li>
-	
+									class="count">${product.hits }</span></li>
 							</ul>
-	
+							
 							<!-- 환불 여부 -->
 							<div class="mini-div">
-								<span class="mini-title">·환불여부</span> <span class="mini-content">불가능</span>
+								<span class="mini-title">·환불여부</span> <span class="mini-content">${product.refund}</span>
 							</div>
 	
 							<!-- 배송 여부 -->
 							<div class="mini-div">
-								<span class="mini-title">·가격협의</span> <span class="mini-content">직거래</span>
+								<span class="mini-title">·가격협의</span> <span class="mini-content">${product.nego }</span>
 							</div>
 	
 							<!-- 거래 지역 -->
 							<div class="mini-div">
-								<span class="mini-title">·거래지역</span> <span class="mini-content">서울시
-									강남구</span>
+								<span class="mini-title">·거래지역</span> <span class="mini-content">${product.addr}</span>
 							</div>
 	
 						</div>
@@ -106,7 +108,7 @@
 					<p class="product-content-title">상품정보</p>
 	
 					<div class="product-content-detail">
-						사용자 설명란 <br> 물품 정보 적는 중입니다. 테스트 중입니다.
+						${product.content }
 					</div>
 				</div>
 	
@@ -116,7 +118,8 @@
 	
 					<!-- 연관 상품 표시 -->
 					<div class="related-text">
-						<p class="rel-title">연관상품</p>
+						<!-- 실제 구현 시 키워드는 표시하지 않고 연관 상품만 표시 -->
+						<p class="rel-title">연관상품 (키워드 : ${product.keyword })</p>
 					</div>
 	
 					<!-- 연관 상품 리스트  -->

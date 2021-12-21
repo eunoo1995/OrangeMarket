@@ -28,6 +28,8 @@ img {
 	max-width: 100%;
 }
 
+/* float: left를 쓴 요소의 부모에게 적용 */
+.clx:before,
 .clx:after {
 	content: "";
 	display: table;
@@ -175,6 +177,7 @@ img {
 
 /*footer*/
 #footer {
+	width: 100%;
 	background: #eee;
 	padding-top: 10px;
 	padding-bottom: 10px;

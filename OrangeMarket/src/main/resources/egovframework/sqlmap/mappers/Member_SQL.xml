@@ -28,8 +28,8 @@
 			            SELECT email_code
 			            FROM email_verify
 			            WHERE email = #{email}
-			                  AND expired_time >= to_char(sysdate, 'YYYY-MM-DD HH24:MI')
 			                  AND use = 'N'
+			                  AND expired_time >= TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI')
 			            ORDER BY rdate DESC
 			        ) a
 			    ) b
