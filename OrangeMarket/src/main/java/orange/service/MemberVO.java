@@ -1,6 +1,6 @@
 package orange.service;
 
-public class MemberVO {
+public class MemberVO extends MemberSubVO {
 
 	private int userId;
 	private String email;
