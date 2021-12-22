@@ -25,7 +25,7 @@
 				$(function(){
 					//작성 저장 ajax
 					$("#pro-btn-save").click(function(){
-						
+							var img = $("#product-img").val();
 							var title = $("#title").val();
 							var proCategoryCode = $("#proCategoryCode").val();
 							var addr = $("#addr").val();
@@ -34,7 +34,8 @@
 							var content = $("#content").val();
 							var nego = $("#nego").val();
 							
-							alert("   제목 : " + title + "\n" 
+							alert("  이미지 : " + img + "\n"
+								+ "   제목 : " + title + "\n" 
 								+ "카테고리 : " + proCategoryCode + "\n"
 								+ "거래지역 : " + addr + "\n"
 								+ "환불여부 : " + refund + "\n"
@@ -54,12 +55,14 @@
 					  			return false;
 					  		}
 					  		
-					  		var formdata = $("#frm").serialize();
+					  	    var formdata = new FormData(document.getElementById("frm"));
 					  		
 					  		$.ajax({
 					  			type : "post",
 					  			url  : "product-write-save",
 					  			data : formdata,
+					  			processData : false,
+					  			contentType : false,
 					  			datatype : "text", //성공여부(ok)
 					  			success : function(data) {
 					  				if(data == "ok") {
@@ -97,7 +100,7 @@
 					  	});
 					
 					 //프로필 사진 미리보기 설정
-				      $("#product-img-btn").click(function(){
+				      $("#product-img").click(function(){
 				         $("#product-img-file").click();
 				      });
 				      $("#product-img-file").on('change', function(){
@@ -114,6 +117,7 @@
 				             $('#product-img').attr('src', e.target.result);
 				          }
 				          reader.readAsDataURL(input.files[0]);
+				          var URL = "productWrite.jsp?data=" + input.files[0];
 				       }
 				   }
 		
@@ -125,7 +129,7 @@
 			</div>
 
 			<div class="product-write-content__detail">
-				<form name="frm" id="frm">
+				<form id="frm" method="post" enctype="multipart/form-data">
 					
 					<input type="hidden" name="seller" id="seller" value="10">
 					<input type="hidden" name="sellerNik" id="sellerNik" value="판매자 닉네임">
@@ -139,8 +143,8 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-								<img class="btn-image" id="product-img" src="/images/icons/ico_user_solid.png">
-				                <button type="button" class="btn-image" id="product-img-btn">+</button>
+									<img class="btn-image" id="product-img" src="/images/icons/add.png">
+				                <!-- <button type="button" class="btn-image" id="product-img-btn">+</button> -->
 				                <input type="file" id="product-img-file" style="display: none;">
 							</td>
 						</tr>
@@ -257,7 +261,8 @@
 						<tr class="product-table-tr">
 							<th>설명</th>
 							<td class="product-write-table-content">
-								<textarea name="content" id="content" class="product-write-content1"></textarea>
+								<textarea name="content" id="content" class="product-write-content1" 
+								style="border: 1px solid #eee; border-radius: 2px; width: 900px; height: 250px; padding-left: 5px; resize: none;"></textarea>
 							</td>
 						</tr>
 

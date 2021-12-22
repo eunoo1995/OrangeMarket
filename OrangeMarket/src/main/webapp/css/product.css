@@ -3,8 +3,8 @@
 
 .pg-wrap .btn_menu {
 	position: fixed;
-	top: 830px;
-	left: 1480px;
+	top: 750px;
+	left: 1500px;
 	right: 0;
 	
 	border: 2px solid #ffb319;
@@ -403,8 +403,8 @@
 	height: 400px;
 }
 
-.product-write-content1 {
-	border: 1px solid #999;
+.product-write-table-content .product-write-content1 {
+	border: 1px solid #eee;
 	border-radius: 2px;
 	width: 900px;
 	height: 400px;
@@ -420,6 +420,7 @@
 	width: 200px;
 	font-size: 36px;
 	color: #fff;
+	object-fit:cover;
 }
 
 .btn-match {
@@ -430,3 +431,4 @@
 .btn-match .btn {
 	width: 200px;
 }
+
