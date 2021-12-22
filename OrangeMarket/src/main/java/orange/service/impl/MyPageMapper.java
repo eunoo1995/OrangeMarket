@@ -5,6 +5,8 @@ import java.util.List;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 import orange.service.MemberVO;
 import orange.service.MyKeywordVO;
+import orange.service.ProductSubVO;
+import orange.service.ProductVO;
 
 @Mapper("myPageMapper")
 public interface MyPageMapper {
@@ -26,4 +28,8 @@ public interface MyPageMapper {
 	int insertMyKeyword(MyKeywordVO vo);
 	
 	int deleteMyKeyword(MyKeywordVO vo);
+	
+	List<?> selectLikeProduct(ProductVO pvo);
+	
+	int deleteLikeList(ProductVO vo);
 }

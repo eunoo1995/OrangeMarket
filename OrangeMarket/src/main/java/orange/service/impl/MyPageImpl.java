@@ -10,6 +10,8 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.MemberVO;
 import orange.service.MyKeywordVO;
 import orange.service.MyPageService;
+import orange.service.ProductSubVO;
+import orange.service.ProductVO;
 
 @Service("myPageService")
 public class MyPageImpl extends EgovAbstractServiceImpl implements MyPageService {
@@ -60,6 +62,16 @@ public class MyPageImpl extends EgovAbstractServiceImpl implements MyPageService
 	@Override
 	public int deleteMyKeyword(MyKeywordVO vo) throws Exception {
 		return myPageDAO.deleteMyKeyword(vo);
+	}
+
+	@Override
+	public List<?> selectLikeProduct(ProductVO pvo) throws Exception {
+		return myPageDAO.selectLikeProduct(pvo);
+	}
+
+	@Override
+	public int deleteLikeList(ProductVO vo) throws Exception {
+		return myPageDAO.deleteLikeList(vo);
 	}
 	
 	

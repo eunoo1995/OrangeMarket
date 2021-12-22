@@ -13,12 +13,14 @@
 	<div class="login-main">
 		<div class="login-text"><img class="login-logo-img" src="/images/admin/hdlogo.PNG">ADMIN</div>
 		<div class="login-inner">
+		<form id="frm">
 			<div class="login-input">
-				<input type="text" class="login-input_id" placeholder="아이디를 입력하세요.">
-				<input type="password" class="login-input_pw" placeholder="비밀번호를 입력하세요.">
+				<input type="text" id="adminId" name="adminId" class="login-input_id" placeholder="아이디를 입력하세요.">
+				<input type="password" id="adminPass" name="adminPass" class="login-input_pw" placeholder="비밀번호를 입력하세요.">
 			</div>
+		</form>	
 			<div class="login-ckbox"><input type="checkbox">아이디 저장</div>
-			<button class="login-btn" type="submit">로그인</button>
+			<button class="login-btn" id="login">로그인</button>
 		</div>
 	</div>
 </div>

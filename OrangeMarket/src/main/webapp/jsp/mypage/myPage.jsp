@@ -7,68 +7,7 @@
 	<jsp:param name="cssName" value="mypage" />
 </jsp:include>
 <!-- 헤더 -->
-<script>
-$(function(){
-	$("#myPage-img-file").change(function(){
-		if(confirm("선택하신 사진으로 변경하시겠습니까?")) {
-			var formdata = new FormData(document.getElementById("frm-profile"));
-			$.ajax({
-	  			type : "post",
-	  			url  : "change-profile",
-	  			data : formdata,
-	  			processData : false,
-	  			contentType : false,
-	  			datatype : "text",
-	  			success : function(data) {
-	  					location="mypage";
-	  			},	
-	  			error : function() {
-	  					alert("오류발생");
-	  			}
-	  		});
-		}
-	});
-	$("#addMyKeyword").click(function(){
-		var mykeyword = $("#mykeyword").val();
-		if(mykeyword.trim() == "") {
-			alert("키워드를 입력해주세요.");
-			$("#mykeyword").val("");
-			$("#mykeyword").focus();
-			return false;
-		} 
-		if(mykeyword.trim().length > 20) {
-			alert("키워드 단어는 20자 이내로 작성해주세요.");
-			$("#mykeyword").val("");
-			$("#mykeyword").focus();
-			return false;
-		} 
-		$.ajax({
-			type : "post",
-			url  : "mykeyword-save",
-			data : "mykeyword="+mykeyword,
-			datatype : "text",
-			success : function(data) {
-					location="mypage";
-			},	
-			error : function() {
-					alert("오류발생");
-			}
-		});
-	});
-	$("#mykeyword").keydown(function(key) {
-        //키의 코드가 13번일 경우 (13번은 엔터키)
-        // 인풋상자에서 엔터키 누를 시 버튼클릭 이벤트 발생
-        if (key.keyCode == 13) {
-        	if($("#mykeyword").val().trim() == "") {
-    			alert("키워드를 입력해주세요.");
-    			$("#mykeyword").focus();
-    			return false;
-    		}
-            $("#addMyKeyword").click();
-        }
-    });
-});
-</script>
+
 <!-- 페이지 wrapper -->
 <article class="pg-wrap myPage-main">
 
@@ -93,7 +32,7 @@ $(function(){
 				<tr>
 					<th><img class="myPage-img" src="/images/profiles/${vo.profileImg}"><br>
 						<input type="button" class="myPage-img-btn" value="사진 변경">
-					<form id="frm-profile" method="post" enctype="multipart/form-data">
+					<form id="frm-profile" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 						<input type="hidden" id=userId name="userId" value="${sessionId}">
 						<input type="hidden" id=profileImg name="profileImg" value="${vo.profileImg}">
 						<input type="file" id="myPage-img-file" name="uploadProfile" 
@@ -162,6 +101,10 @@ $(function(){
 				<div class="myPage-likes">
 					<p class="myPage-likes-p">관심게시물 리스트</p>
 					<div class="myPage-likesList">
+					<c:if test="${fn:length(likeList) == 0}">
+					<div style="margin-top:270px; color:#999">
+					아직 좋아요를 누른 게시물이 없습니다. 판매중인 다양한 물품을 둘러보세요!</div>
+					</c:if>
 						<table class="likesList-table">
 							<colgroup>
 								<col width="15%">
@@ -169,69 +112,21 @@ $(function(){
 								<col width="15%">
 							</colgroup>
 							<!-- 반복문 사용예정 -->
+							<c:forEach var="likeList" items="${likeList}">
 							<tr>
 								<th><img src="/images/icons/lock.png"></th>
 								<td>
-									<p class="likesList-title">아이폰 13 미니 128 블랙 새제품 미개봉</p>
-									<p class="likesList-loc">서초1동 · 10분전</p>
-									<p class="likesList-price">890,000원</p>
+									<p class="likesList-title">${likeList.title}</p>
+									<p class="likesList-loc">${likeList.addr} · ${likeList.sellerNik}</p>
+									<p class="likesList-price">${likeList.price}원</p>
 								</td>
-								<th><img class="ex" src="/images/icons/favorite_color.png"></th>
+								<th>
+									<a href="delete-likelist?unq=${likeList.unq}">
+										<img class="ex" src="/images/icons/favorite_color.png">
+									</a>
+								</th>
 							</tr>
-							<tr>
-								<th><img src="/images/icons/lock.png"></th>
-								<td>
-									<p class="likesList-title">아이폰 13 미니 128 블랙 새제품 미개봉</p>
-									<p class="likesList-loc">서초1동 · 10분전</p>
-									<p class="likesList-price">890,000원</p>
-								</td>
-								<th><img class="" src="/images/icons/favorite_color.png"></th>
-							</tr>
-							<tr>
-								<th><img src="/images/icons/lock.png"></th>
-								<td>
-									<p class="likesList-title">아이폰 13 미니 128 블랙 새제품 미개봉</p>
-									<p class="likesList-loc">서초1동 · 10분전</p>
-									<p class="likesList-price">890,000원</p>
-								</td>
-								<th><img class="" src="/images/icons/favorite_color.png"></th>
-							</tr>
-							<tr>
-								<th><img src="/images/icons/lock.png"></th>
-								<td>
-									<p class="likesList-title">아이폰 13 미니 128 블랙 새제품 미개봉</p>
-									<p class="likesList-loc">서초1동 · 10분전</p>
-									<p class="likesList-price">890,000원</p>
-								</td>
-								<th><img class="" src="/images/icons/favorite_color.png"></th>
-							</tr>
-							<tr>
-								<th><img src="/images/icons/lock.png"></th>
-								<td>
-									<p class="likesList-title">아이폰 13 미니 128 블랙 새제품 미개봉</p>
-									<p class="likesList-loc">서초1동 · 10분전</p>
-									<p class="likesList-price">890,000원</p>
-								</td>
-								<th><img class="" src="/images/icons/favorite_color.png"></th>
-							</tr>
-							<tr>
-								<th><img src="/images/icons/lock.png"></th>
-								<td>
-									<p class="likesList-title">아이폰 13 미니 128 블랙 새제품 미개봉</p>
-									<p class="likesList-loc">서초1동 · 10분전</p>
-									<p class="likesList-price">890,000원</p>
-								</td>
-								<th><img class="" src="/images/icons/favorite_color.png"></th>
-							</tr>
-							<tr>
-								<th><img src="/images/icons/lock.png"></th>
-								<td>
-									<p class="likesList-title">아이폰 13 미니 128 블랙 새제품 미개봉</p>
-									<p class="likesList-loc">서초1동 · 10분전</p>
-									<p class="likesList-price">890,000원</p>
-								</td>
-								<th><img class="" src="/images/icons/favorite_color.png"></th>
-							</tr>
+							</c:forEach>
 							<!-- 반복문 사용예정 -->
 						</table>
 					</div>
