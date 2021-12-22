@@ -73,7 +73,7 @@
 									<p class="form-tit required">이메일</p>
 									<input type="text" name="email" class="with-btn-2" placeholder="아이디@naver.com 형식으로 입력해주세요" required />
 									<button type="button" id="btnConfirmEmail" class="btn btn-solid with-input-2" disabled>인증번호 받기</button>
-									<input type="text" id="confirmEmail" name="confirmEmail" placeholder="인증번호 입력" maxlength="6" readonly />
+									<input type="text" id="confirmEmail" name="confirmEmail" placeholder="인증번호 입력" maxlength="6" readonly  style="display: none;" />
 									<p class="form-err-msg"></p>
 								</td>
 							</tr>
@@ -81,8 +81,14 @@
 								<td colspan="2">
 									<p class="form-tit">동네입력</p>
 									<input type="text" name="addrArea" placeholder="주소를 입력해주세요" />
-									<button type="button" id="btnConfirmArea" class="btn btn-solid btn-f">동네 인증하기</button>
+									<button type="button" id="btnConfirmArea" class="btn btn-solid btn-f" disabled>동네 인증하기</button>
 									<p class="form-err-msg"></p>
+									<div id="form-notice-box" class="form-notice-box" style="display: none;">
+					                    <p class="notice-box-tit">주소 인증에 어려움이 있으신가요?</p>
+					                    <p>
+							                        정확한 위치 확인을 위해 스마트폰으로 시도해주세요
+					                    </p>
+									</div>
 								</td>
 							</tr>
 						</tbody>

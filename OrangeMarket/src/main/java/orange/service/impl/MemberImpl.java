@@ -40,7 +40,6 @@ public class MemberImpl extends EgovAbstractServiceImpl implements MemberService
 
 	@Override
 	public int selectEmailVerif(EmailVerifVO vo) throws Exception {
-		System.out.println("impl===> " + vo.getEmailCode());
 		return memberDAO.selectEmailVerif(vo);
 	}
 
