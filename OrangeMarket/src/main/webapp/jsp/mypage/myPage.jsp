@@ -93,7 +93,7 @@ $(function(){
 				<tr>
 					<th><img class="myPage-img" src="/images/profiles/${vo.profileImg}"><br>
 						<input type="button" class="myPage-img-btn" value="사진 변경">
-					<form id="frm-profile" method="post" enctype="multipart/form-data">
+					<form id="frm-profile" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 						<input type="hidden" id=userId name="userId" value="${sessionId}">
 						<input type="hidden" id=profileImg name="profileImg" value="${vo.profileImg}">
 						<input type="file" id="myPage-img-file" name="uploadProfile" 

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import orange.service.MemberVO;
 import orange.service.MyKeywordVO;
 import orange.service.MyPageService;
+import orange.service.ProductVO;
 
 @Controller
 public class MyPageController {
@@ -24,14 +25,19 @@ public class MyPageController {
 	private MyPageService myPageService;
 	
 	@RequestMapping(value="/mypage")
-	public String mypageMain(MemberVO vo, MyKeywordVO kvo, Model model, HttpSession session) throws Exception {
+	public String mypageMain(MemberVO vo, MyKeywordVO kvo, ProductVO pvo,
+					Model model, HttpSession session) throws Exception {
  		// 세션값이 없으면 로그인 화면으로 리턴
 		if(session.getAttribute("sessionId") == null) return "redirect:login";
 		int sessionId = (int) session.getAttribute("sessionId");
+		// 회원 정보 가져오기
 		vo.setUserId(sessionId);
 		vo = myPageService.selectMemberInfo(vo);
+		// 회원 키워드 목록 가져오기
 		kvo.setUserId(sessionId);
 		List<?> keywordList = myPageService.selectMyKeywordList(kvo); 
+		// 회원 관심게시글 목록 가져오기
+		pvo.setLiker(sessionId);
 		
 		model.addAttribute("vo",vo);
 		model.addAttribute("keywordList",keywordList);
@@ -92,6 +98,7 @@ public class MyPageController {
 		return "redirect:mypage";
 	}
 	
+	// 회원 탈퇴 팝업
 	@RequestMapping(value="/withdrawal")
 	public String withdrawalPop(HttpSession session) throws Exception {
 		return "mypage/withdrawal";

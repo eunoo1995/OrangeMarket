@@ -6,7 +6,7 @@ public class ProductSubVO {
 	private String cateStatus;
 	private int userId;
 	private String imgs;
-	
+	private int liker;
 	
 	public String getCategory() {
 		return category;
@@ -33,4 +33,11 @@ public class ProductSubVO {
 	public void setImgs(String imgs) {
 		this.imgs = imgs;
 	}
+	public int getLiker() {
+		return liker;
+	}
+	public void setLiker(int liker) {
+		this.liker = liker;
+	}
+	
 }
