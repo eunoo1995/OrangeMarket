@@ -24,4 +24,11 @@ public interface MyPageService {
 	
 	// 관심키워드 삭제
 	int deleteMyKeyword(MyKeywordVO vo) throws Exception;
+	
+	// 관심게시글 목록
+	List<?> selectLikeProduct(ProductVO pvo) throws Exception;
+	
+	// 관심게시글 삭제
+	int deleteLikeList(ProductVO vo) throws Exception;
+	
 }

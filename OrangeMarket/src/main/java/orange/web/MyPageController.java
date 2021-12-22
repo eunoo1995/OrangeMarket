@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import orange.service.MemberVO;
 import orange.service.MyKeywordVO;
 import orange.service.MyPageService;
+import orange.service.ProductSubVO;
 import orange.service.ProductVO;
 
 @Controller
@@ -38,9 +39,11 @@ public class MyPageController {
 		List<?> keywordList = myPageService.selectMyKeywordList(kvo); 
 		// 회원 관심게시글 목록 가져오기
 		pvo.setLiker(sessionId);
+		List<?> likeList = myPageService.selectLikeProduct(pvo);
 		
 		model.addAttribute("vo",vo);
 		model.addAttribute("keywordList",keywordList);
+		model.addAttribute("likeList",likeList);
 		return "mypage/myPage";
 	}
 	
@@ -95,6 +98,13 @@ public class MyPageController {
 	@RequestMapping(value="mykeyword-delete")
 	public String deleteMyKeyword(MyKeywordVO vo) throws Exception {
 		myPageService.deleteMyKeyword(vo);
+		return "redirect:mypage";
+	}
+	
+	// 관심게시글 삭제
+	@RequestMapping(value="delete-likelist")
+	public String deleteLikeList(ProductVO vo) throws Exception {
+		myPageService.deleteLikeList(vo);
 		return "redirect:mypage";
 	}
 	

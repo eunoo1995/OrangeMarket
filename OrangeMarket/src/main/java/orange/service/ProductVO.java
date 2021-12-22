@@ -11,7 +11,7 @@ public class ProductVO extends ProductSubVO {
 	private String content;
 	private String rdate;
 	private String udate;
-	private int status;
+	private String status;
 	private int hits;
 	private int buyer;
 	private int refund;
@@ -99,11 +99,11 @@ public class ProductVO extends ProductSubVO {
 		this.udate = udate;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
