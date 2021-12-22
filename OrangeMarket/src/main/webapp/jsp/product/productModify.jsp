@@ -22,10 +22,10 @@
 		
 		<script type="text/javascript">
 			
-				$(function(){
+			$(function(){
 					//작성 저장 ajax
 					$("#pro-btn-save").click(function(){
-							var img = $("#product-img").val();
+						
 							var title = $("#title").val();
 							var proCategoryCode = $("#proCategoryCode").val();
 							var addr = $("#addr").val();
@@ -34,8 +34,7 @@
 							var content = $("#content").val();
 							var nego = $("#nego").val();
 							
-							alert("  이미지 : " + img + "\n"
-								+ "   제목 : " + title + "\n" 
+							alert("   제목 : " + title + "\n" 
 								+ "카테고리 : " + proCategoryCode + "\n"
 								+ "거래지역 : " + addr + "\n"
 								+ "환불여부 : " + refund + "\n"
@@ -55,20 +54,18 @@
 					  			return false;
 					  		}
 					  		
-					  	    var formdata = new FormData(document.getElementById("frm"));
+					  		var formdata = $("#frm").serialize();
 					  		
 					  		$.ajax({
 					  			type : "post",
-					  			url  : "product-write-save",
+					  			url  : "product-modify-save",
 					  			data : formdata,
-					  			processData : false,
-					  			contentType : false,
 					  			datatype : "text", //성공여부(ok)
 					  			success : function(data) {
 					  				if(data == "ok") {
-					  					alert("저장성공");
+					  					alert("수정성공");
 					  				} else {
-					  					alert("저장실패");
+					  					alert("수정실패");
 					  				}
 					  			},
 					  			error : function (request, status, error){
@@ -99,27 +96,8 @@
 					  		});
 					  	});
 					
-					 //프로필 사진 미리보기 설정
-				      $("#product-img").click(function(){
-				         $("#product-img-file").click();
-				      });
-				      $("#product-img-file").on('change', function(){
-				          readURL(this);
-				      });
-					
 				});
-				
-				//프로필 사진 미리보기 설정
-				function readURL(input) {
-				       if (input.files && input.files[0]) {
-				          var reader = new FileReader();
-				          reader.onload = function (e) {
-				             $('#product-img').attr('src', e.target.result);
-				          }
-				          reader.readAsDataURL(input.files[0]);
-				          var URL = "productWrite.jsp?data=" + input.files[0];
-				       }
-				   }
+		
 		
 		</script>
 		
@@ -129,10 +107,10 @@
 			</div>
 
 			<div class="product-write-content__detail">
-				<form id="frm" method="post" enctype="multipart/form-data">
+				<form name="frm" id="frm">
 					
-					<input type="hidden" name="seller" id="seller" value="10">
-					<input type="hidden" name="sellerNik" id="sellerNik" value="판매자 닉네임">
+					<input type="hidden" name="seller" id="seller" value="${product.seller }">
+					<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
 				
 					<table class="product-write-table">
 
@@ -143,9 +121,13 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-									<img class="btn-image" id="product-img" src="/images/icons/add.png">
-				                <!-- <button type="button" class="btn-image" id="product-img-btn">+</button> -->
-				                <input type="file" id="product-img-file" style="display: none;">
+
+								<div class="button">
+									<label class="img-label" for="chooseFile">
+										<button class="btn-image">+</button>
+									</label>
+								</div>
+
 							</td>
 						</tr>
 
@@ -157,7 +139,7 @@
 								<span class="orange-star">*</span>
 							</th>
 								<td class="product-write-table-td2">
-								<input type="text" name="title" id="title" maxlength="40" class="product-write-text">
+								<input type="text" name="title" id="title" maxlength="40" class="product-write-text" value="${product.title }">
 							</td>
 						</tr>
 
@@ -169,6 +151,7 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
+								<c:set var="proCategoryCode" value="${product.proCategoryCode}" ></c:set>
 								<select name="proCategoryCode" id="proCategoryCode" class="product-write-category">
 									<option value="">카테고리를 선택해주세요.</option>
 									<option value="1">1</option>
@@ -176,7 +159,7 @@
 								</select>
 
 								<div class="keyword-wrap">
-									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." 
+									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." value="${product.keyword }"
 									onfocus="this.placeholder=''" onblur="this.placeholder='연관단어를 입력해주세요.'" class="product-write-keyword">
 								</div>
 							</td>
@@ -190,7 +173,7 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-								<input type="text" name="addr" id="addr" value="서울시 강남구" readonly class="product-write-text">
+								<input type="text" name="addr" id="addr" value="${product.addr }" readonly class="product-write-text">
 							</td>
 						</tr>
 
@@ -238,7 +221,7 @@
 							<th>가격<span
 								class="orange-star">*</span></th>
 							<td class="product-write-table-td2">
-								<input type="text" name="price" id="price" maxlength="11" onkeyup="inputNumberFormat(this)" placeholder="가격을 입력해주세요."
+								<input type="text" name="price" id="price" maxlength="11" value="${product.price }" onkeyup="inputNumberFormat(this)" placeholder="가격을 입력해주세요."
 								onfocus="this.placeholder=''" onblur="this.placeholder='가격을 입력해주세요.'" class="product-write-price-txt">
 								<font style="margin-right: 10px; font-size: 16px;">원</font>
 								
@@ -261,8 +244,7 @@
 						<tr class="product-table-tr">
 							<th>설명</th>
 							<td class="product-write-table-content">
-								<textarea name="content" id="content" class="product-write-content1" 
-								style="border: 1px solid #eee; border-radius: 2px; width: 900px; height: 250px; padding-left: 5px; resize: none;"></textarea>
+								<textarea name="content" id="content" class="product-write-content1">${product.content }</textarea>
 							</td>
 						</tr>
 

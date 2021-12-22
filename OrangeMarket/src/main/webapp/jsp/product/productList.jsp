@@ -11,7 +11,7 @@
 
 <!-- 페이지 wraper -->
 <article class="pg-wrap">
-
+		<button class="btn_menu" onclick="location='product-write'">+</button>
 
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
