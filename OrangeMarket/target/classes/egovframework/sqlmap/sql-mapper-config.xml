@@ -27,6 +27,7 @@
 		
 		<!-- 3 -->
 		<typeAlias alias="productVO" type="orange.service.ProductVO"/>
+		<typeAlias alias="productSubVO" type="orange.service.ProductSubVO"/>
 		
     </typeAliases>
 </configuration>
