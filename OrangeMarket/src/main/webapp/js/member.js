@@ -155,7 +155,7 @@ if (joinForm) {
 					dataType: 'text',
 					success: function(data) {
 						if (data == 'ok') {
-							location.href='login'
+							location.replace='login'
 						} else if (data == 'err') {
 							alert('다시 시도해주세요')
 						}
