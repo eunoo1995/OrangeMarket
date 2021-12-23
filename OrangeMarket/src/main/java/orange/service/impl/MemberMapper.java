@@ -17,6 +17,12 @@ public interface MemberMapper {
 	int insertEmailVerif(EmailVerifVO vo);
 
 	int selectEmailVerif(EmailVerifVO vo);
+
+	int insertNewMember(MemberVO vo);
+
+	int updateUseEmailCode(MemberVO vo);
+
+	int updateUseEmailCode(EmailVerifVO vo);
 	
 
 }

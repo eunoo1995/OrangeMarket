@@ -81,6 +81,7 @@
 								<td colspan="2">
 									<p class="form-tit">동네입력</p>
 									<input type="text" name="addrArea" placeholder="주소를 입력해주세요" />
+									<input type="hidden" name="addr" />
 									<button type="button" id="btnConfirmArea" class="btn btn-solid btn-f" disabled>동네 인증하기</button>
 									<p class="form-err-msg"></p>
 									<div id="form-notice-box" class="form-notice-box" style="display: none;">

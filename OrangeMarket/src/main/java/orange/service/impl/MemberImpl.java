@@ -1,6 +1,5 @@
 package orange.service.impl;
 
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -10,12 +9,11 @@ import orange.service.EmailVerifVO;
 import orange.service.MemberService;
 import orange.service.MemberVO;
 
-
 @Service("memberService")
 public class MemberImpl extends EgovAbstractServiceImpl implements MemberService {
 
 	// TODO mybatis 사용
-	@Resource(name="memberMapper")
+	@Resource(name = "memberMapper")
 	private MemberMapper memberDAO;
 
 	@Override
@@ -24,13 +22,13 @@ public class MemberImpl extends EgovAbstractServiceImpl implements MemberService
 	}
 
 	@Override
-	public int isMemberNikname(String nickname) {
+	public int isMemberNikname(String nickname) throws Exception {
 		return memberDAO.isMemberNikname(nickname);
 	}
 
 	@Override
-	public int isMemberEmail(String email) {
-		return  memberDAO.isMemberEmail(email);
+	public int isMemberEmail(String email) throws Exception {
+		return memberDAO.isMemberEmail(email);
 	}
 
 	@Override
@@ -41,6 +39,16 @@ public class MemberImpl extends EgovAbstractServiceImpl implements MemberService
 	@Override
 	public int selectEmailVerif(EmailVerifVO vo) throws Exception {
 		return memberDAO.selectEmailVerif(vo);
+	}
+
+	@Override
+	public int insertNewMember(MemberVO vo) throws Exception {
+		return memberDAO.insertNewMember(vo);
+	}
+
+	@Override
+	public int updateUseEmailCode(EmailVerifVO vo) throws Exception {
+		return memberDAO.updateUseEmailCode(vo);
 	}
 
 }

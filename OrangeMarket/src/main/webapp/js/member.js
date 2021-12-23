@@ -130,29 +130,56 @@ if (joinForm) {
 
 				if (frm.areaFlag.value === 'N') {
 					if (!confirm('동네인증 없이 진행하시겠습니까?')) {
+						console.log('ddddddd');
 						return false;
 					};
 				}
 
-				frm.submit();
-			}
+				var formData = {
+					'userName': frm.userName.value,
+					'userPhone': frm.tel.value,
+					'nikName': frm.nickname.value,
+					'userPw': frm.password.value,
+					'email': frm.email.value,
+					'addr': frm.addr.value,
+					'addrPass': frm.areaFlag.value.toUpperCase(),
+					'emailCode': frm.confirmEmail.value
+				};
 
-			chkName(frm);
-			chkTel(frm);
-			chkNik(frm);
-			chkPw1(frm);
-			chkPw2(frm);
-			chkEmail(frm);
-			
-			if(frm.email.value !== '' && frm.emailFlag.value === 'N') {
-				chkEmailVerif(frm);	
+				console.log(formData);
+
+				$.ajax({
+					type: 'POST',
+					url: 'insert-member',
+					data: formData,
+					dataType: 'text',
+					success: function(data) {
+						if (data == 'ok') {
+							location.href='login'
+						} else if (data == 'err') {
+							alert('다시 시도해주세요')
+						}
+					},
+					error: function() {
+					}
+				});
+			} else {
+
+				chkName(frm);
+				chkTel(frm);
+				chkNik(frm);
+				chkPw1(frm);
+				chkPw2(frm);
+				chkEmail(frm);
+	
+				if (frm.email.value !== '' && frm.emailFlag.value === 'N') {
+					chkEmailVerif(frm);
+				}
+	
+				chkArea(frm);
 			}
-			
-			chkArea(frm);
 		});
 	}
-
-
 }
 
 function chkName($target) {
@@ -207,7 +234,7 @@ function chkTel($target) {
 	}
 
 	if (regPhone.test(inputTxt) === false) {
-		showFormErr(areaErrMsg, '연락처를 형식을 확인해주세요');
+		showFormErr(areaErrMsg, '연락처 형식을 확인해주세요');
 
 		return false;
 	}
@@ -298,7 +325,7 @@ function chkNik($target) {
 	}
 
 	var formData = {
-		nickname: inputTxt
+		nikName: inputTxt
 	};
 	nikFlag = false;
 	$.ajax({
@@ -506,6 +533,9 @@ function chkEmailVerif($target) {
 		'email': frm.email.value,
 		'emailCode': inputTxt
 	};
+
+	console.log(formData);
+
 	$.ajax({
 		type: 'POST',
 		url: 'check-verifcode',
@@ -526,6 +556,38 @@ function chkEmailVerif($target) {
 	});
 
 	hideFormErr(areaErrMsg);
+}
+
+
+var getWriteAddr = function($target, $area) {
+	// 입력한 주소의 정보 가져오기
+	var frm = $target;
+	var options = {
+		method: 'GET',
+		headers: {
+			Authorization: 'KakaoAK 78ca57b17929b0d8592c839763406d9a'
+		}
+	}
+
+	fetch('https://dapi.kakao.com/v2/local/search/address.json?query=' + $area, options)
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(data) {
+			console.log(data.documents[0].address);
+
+			enterAreaInfo = {
+				'allInfo': data.documents[0].address,
+				'srchAreaCode': data.documents[0].address.b_code,
+				'myAreaTo3Depth': data.documents[0].address.region_1depth_name + ' ' + data.documents[0].address.region_2depth_name + ' ' + data.documents[0].address.region_3depth_name
+			}
+
+			return enterAreaInfo;
+		})
+		.then(function() {
+			frm.addr.value = enterAreaInfo.myAreaTo3Depth;
+		})
+		.catch(error => console.log(error));
 }
 
 function srchArea($target) {
@@ -558,6 +620,10 @@ function srchArea($target) {
 			}
 
 			input.disabled = false;
+
+			/* 전체 도로명 주소 적용하기 */
+			getWriteAddr(frm, input.value);
+
 			frm.querySelector('#btnConfirmArea').disabled = false;
 			hideFormErr(areaErrMsg);
 
@@ -578,14 +644,10 @@ function srchArea($target) {
 
 function chkArea($target) {
 
-
 	var frm = $target;
 	var input = frm.addrArea;
 	var inputTxt = input.value;
 	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
-
-	console.log('chkArea-------' + inputTxt);
-	console.log('chkArea length-------' + inputTxt.length);
 
 	if (inputTxt == '') {
 		showFormErr(areaErrMsg, '주소를 입력해주세요');
@@ -607,8 +669,6 @@ function chkAreaVerif($target) {
 	console.log(frm.agreeLocation.value == 'false');
 
 	if (frm.agreeLocation.value === 'false') {
-		console.log('agreeLocation: ' + frm.agreeLocation.value);
-
 		if (confirm('위치정보 제공 약관의 동의가 필요합니다.\n동의하시겠습니까?')) {
 			frm.agreeLocation.value = 'true';
 		} else {
@@ -623,9 +683,9 @@ function chkAreaVerif($target) {
 			'Authorization': 'KakaoAK 78ca57b17929b0d8592c839763406d9a'
 		},
 		type: 'GET',
-		success: function(srchData) {
-			srchAreaCode = srchData.documents[0].address.b_code;
-			console.log('가져온위치==> ' + JSON.stringify(srchData.documents[0].address.b_code));
+		success: function(data) {
+			srchAreaCode = data.documents[0].address.b_code;
+			console.log('입력한 위치==> ' + JSON.stringify(data.documents[0].address));
 			getCurrLocation();
 		},
 		error: function(e) {
@@ -680,9 +740,9 @@ function chkAreaVerif($target) {
 					'Authorization': 'KakaoAK 78ca57b17929b0d8592c839763406d9a'
 				},
 				type: 'GET',
-				success: function(currData) {
-					console.log('현재위치==> ' + JSON.stringify(currData.documents[0]));
-					myAreaCode = currData.documents[0].code;
+				success: function(data) {
+					console.log('현재위치==> ' + JSON.stringify(data.documents[0]));
+					myAreaCode = data.documents[0].code;
 
 					if (srchAreaCode != myAreaCode) {
 						showFormErr(areaErrMsg, '입력하신 주소와 맞지 않습니다.');
@@ -690,6 +750,7 @@ function chkAreaVerif($target) {
 					} else {
 						frm.areaFlag.value = 'Y';
 						hideFormErr(areaErrMsg);
+						frm.addr.value = data.documents[0].address_name;
 						frm.querySelector('#btnConfirmArea').style.display = 'none';
 						frm.querySelector('#form-notice-box').style.display = 'none';
 					}
