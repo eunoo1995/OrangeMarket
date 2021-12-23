@@ -159,7 +159,7 @@
 }
 /*------- 채팅 메인화면-------*/
 /*채팅 메인 화면*/
-.chat-cont-wrap  .chat_wrap {
+.chat-cont-wrap .chat_wrap {
 	padding: 5px;
 	font-size: 13px;
 }

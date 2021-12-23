@@ -2,11 +2,12 @@ package orange.service;
 
 public class ProductSubVO {
 
+	private int unq;
 	private String category;
 	private String cateStatus;
 	private int userId;
 	private String imgs;
-	
+	private int liker;
 	
 	public String getCategory() {
 		return category;
@@ -33,4 +34,17 @@ public class ProductSubVO {
 	public void setImgs(String imgs) {
 		this.imgs = imgs;
 	}
+	public int getLiker() {
+		return liker;
+	}
+	public void setLiker(int liker) {
+		this.liker = liker;
+	}
+	public int getUnq() {
+		return unq;
+	}
+	public void setUnq(int unq) {
+		this.unq = unq;
+	}
+	
 }

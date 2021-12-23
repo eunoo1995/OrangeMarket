@@ -26,6 +26,7 @@
 		<typeAlias alias="emailVO" type="orange.service.EmailVerifVO"/>
 		
 		<!-- 3 -->
+		<typeAlias alias="productSubVO" type="orange.service.ProductSubVO"/>
 		<typeAlias alias="productVO" type="orange.service.ProductVO"/>
 		<typeAlias alias="productSubVO" type="orange.service.ProductSubVO"/>
 		

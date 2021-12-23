@@ -66,6 +66,25 @@
 	</insert>
 	<delete id="deleteMyKeyword" parameterType="mykeywordVO">
 		DELETE FROM MYKEYWORD WHERE MYKEYWORD_UNQ = ${mykeywordUnq}
-	
 	</delete>
+	
+	
+	
+	<select id="selectLikeProduct" parameterType="productVO" resultType="egovMap">
+		SELECT A.PRO_CODE, 
+			   A.TITLE, 
+			   TO_CHAR(A.PRICE,'999,999,999,999') PRICE, 
+			   A.ADDR, 
+			   DECODE(A.STATUS,1,'판매중',2,'예약중','거래완료') STATUS, 
+			   B.UNQ,
+			   C.IMGS, 
+			   B.LIKER, 
+			   A.SELLER_NIK
+		FROM PRODUCT A, LIKE_PRODUCT B, PRO_IMG C 
+		WHERE B.LIKER = #{liker}
+	</select>
+	<delete id="deleteLikeList" parameterType="productVO">
+		DELETE FROM LIKE_PRODUCT WHERE UNQ = #{unq}
+	</delete>
+	
 </mapper>

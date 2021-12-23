@@ -1,6 +1,5 @@
 $(function(){
 	$('.detail-btn').click(function(){
-		
 		var currentRow = $(this).closest('tr');
 		var detail = currentRow.next('tr');
 		if(!detail.is(':visible')) {
@@ -11,22 +10,7 @@ $(function(){
 			$(this).attr('src', '/images/admin/icon_down.png');
 		}
 	});
-	
-	$('.QnA-title').click(function(){
-		var detail = $(this).next('div');
-		 if(!detail.is(':visible')) {
-				detail.slideDown('300');
-			} else {
-				detail.slideUp('300');
-			}
-    });
-	
-	
-	
-	
-	
 });
-
 function inquiry_detail() {
 	window.open('inquiryDetail.jsp','','width=450, height=400, left=540, top=150');		
 }

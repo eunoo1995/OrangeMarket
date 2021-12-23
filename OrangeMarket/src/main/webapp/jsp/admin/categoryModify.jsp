@@ -1,17 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>OrangeMarket 관리자 페이지</title>
-<link rel="stylesheet" href="/css/admin_main.css">
-
-</head>
+    
+<!-- 헤더 -->
+<jsp:include page="/include/admin_header.jsp" flush="false"/>
+<jsp:include page="/include/admin_nav.jsp" flush="false">
+	<jsp:param name="jsName" value="admin" />
+</jsp:include>
+<!-- 헤더 -->
 <body>
-	<%@include file="/include/admin_header.jsp" %>
-	<%@include file="/include/admin_nav.jsp" %>
-	
     <section id="section">
     	<div class="section-inner">
     		<div class="section-title">카테고리 메뉴관리</div>

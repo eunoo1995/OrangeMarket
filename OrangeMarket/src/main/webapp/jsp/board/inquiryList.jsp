@@ -8,12 +8,7 @@
 	<jsp:param name="cssName" value="board" />
 </jsp:include>
 <!-- 헤더 -->
-<script>
-	$(function(){
-		
-	});
 
-</script>
 <!-- 페이지 wraper -->
 <article class="pg-wrap pg-board-list">
 
