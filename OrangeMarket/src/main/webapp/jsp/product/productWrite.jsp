@@ -25,7 +25,7 @@
 				$(function(){
 					//작성 저장 ajax
 					$("#pro-btn-save").click(function(){
-							var img = $("#product-img").val();
+							var img = $("#imgs").val();
 							var title = $("#title").val();
 							var proCategoryCode = $("#proCategoryCode").val();
 							var addr = $("#addr").val();
@@ -66,9 +66,12 @@
 					  			datatype : "text", //성공여부(ok)
 					  			success : function(data) {
 					  				if(data == "ok") {
-					  					alert("저장성공");
+					  					alert("저장 성공");
+					  					location='product-list';
+					  				} else if(data == "img_fail"){
+					  					alert("이미지 저장 실패");
 					  				} else {
-					  					alert("저장실패");
+					  					alert("저장 실패");
 					  				}
 					  			},
 					  			error : function (request, status, error){
@@ -100,7 +103,7 @@
 					  	});
 					
 					 //프로필 사진 미리보기 설정
-				      $("#product-img").click(function(){
+				      $("#imgs").click(function(){
 				         $("#product-img-file").click();
 				      });
 				      $("#product-img-file").on('change', function(){
@@ -114,7 +117,7 @@
 				       if (input.files && input.files[0]) {
 				          var reader = new FileReader();
 				          reader.onload = function (e) {
-				             $('#product-img').attr('src', e.target.result);
+				             $('#imgs').attr('src', e.target.result);
 				          }
 				          reader.readAsDataURL(input.files[0]);
 				          var URL = "productWrite.jsp?data=" + input.files[0];
@@ -129,7 +132,7 @@
 			</div>
 
 			<div class="product-write-content__detail">
-				<form id="frm" method="post" enctype="multipart/form-data">
+				<form id="frm" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 					
 					<input type="hidden" name="seller" id="seller" value="10">
 					<input type="hidden" name="sellerNik" id="sellerNik" value="판매자 닉네임">
@@ -143,7 +146,7 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-									<img class="btn-image" id="product-img" src="/images/icons/add.png">
+									<img class="btn-image" id="imgs" name="imgs" src="/images/icons/add.png">
 				                <!-- <button type="button" class="btn-image" id="product-img-btn">+</button> -->
 				                <input type="file" id="product-img-file" style="display: none;">
 							</td>
