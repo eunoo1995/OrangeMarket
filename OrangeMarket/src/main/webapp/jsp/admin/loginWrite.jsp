@@ -7,7 +7,8 @@
 <title>OrangeMarket 관리자 페이지</title>
 </head>
 <link rel="stylesheet" href="/css/admin_main.css">
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="/js/admin.js"></script>
 <body>
 <div class="out-line">
 	<div class="login-main">
@@ -20,7 +21,7 @@
 			</div>
 		</form>	
 			<div class="login-ckbox"><input type="checkbox">아이디 저장</div>
-			<button class="login-btn" id="login">로그인</button>
+			<button class="login-btn" id="adminLogin">로그인</button>
 		</div>
 	</div>
 </div>

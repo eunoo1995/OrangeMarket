@@ -13,11 +13,7 @@
     		<div class="section-title">회원정보목록</div>
     		<div class="section-content">
     			<div class="section-search">
-		    		<select name="">
-						<option value="">아이디</option>
-						<option value="">닉네임</option>	    		
-		    		</select>
-		    		<input type="text" name="" value="" placeholder="검색하실 내용을 입력하세요.">
+		    		<input type="text" name="" value="" placeholder="검색하실 '닉네임'을 입력하세요!">
 		    		<button type="submit" onclick=""><img src="/images/admin/search_w.png"></button>
     			</div>
 				<div class="section-main">
@@ -31,14 +27,14 @@
 						</colgroup>
 						<tr>
 							<th></th>
-							<th>아이디</th>
+							<th>Email</th>
 							<th>닉네임</th>
 							<th>가입일</th>
 							<th>상세</th>
 						</tr>
 						<!-- 반복문 사용 예정 -->
 						<tr>
-							<td>4</td>
+							<td style="font-weight:bold;">4</td>
 							<td>123@123.com</td>
 							<td>홍길동</td>
 							<td>2021-01-01</td>
@@ -46,11 +42,10 @@
 						</tr>
 						<tr style="display:none; font-size:14px;">
 							<td></td>
-							
-							<td>연락처 : 010-0000-0000</td>
-							<td>주소 : 서울특별시 강남구</td>
-							<td>최근접속일 : 2021/01/01</td>
-							<td><button type="button" class="section-btn">계정정지</button></td>
+							<td><div class="detail">주소</div><br>서울특별시 강남구</td>
+							<td><div class="detail">연락처</div><br>010-0000-0000</td>
+							<td><div class="detail">최근접속일</div><br>2021-01-01</td>
+							<td><br><button type="button" class="section-btn">계정정지</button></td>
 						</tr>
 					</table>
 					<div style="width:1000px; margin-top:50px; text-align:center;">《 1 2 3 4 5 》</div>
