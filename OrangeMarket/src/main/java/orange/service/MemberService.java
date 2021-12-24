@@ -1,5 +1,8 @@
 package orange.service;
 
+import java.util.List;
+import java.util.Map;
+
 public interface MemberService {
 
 	int isMemberTel(String tel) throws Exception;
@@ -15,5 +18,11 @@ public interface MemberService {
 	int insertNewMember(MemberVO vo) throws Exception;
 	
 	int updateUseEmailCode(EmailVerifVO vo) throws Exception;
+
+	int insertAgreeTerms(List<Map<String, Object>> insertList) throws Exception;
+
+	int selectUserId() throws Exception;
+
+	int insertMemberStatus(int userId) throws Exception;
 
 }

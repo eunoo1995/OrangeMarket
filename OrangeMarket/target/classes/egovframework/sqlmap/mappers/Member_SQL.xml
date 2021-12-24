@@ -38,6 +38,15 @@
 			WHERE email_code = #{emailCode}
 	</select>
 	
+	<select id="selectUserId" resultType="java.lang.Integer">
+       SELECT to_char(sysdate, 'yymmdd') || lpad((
+           SELECT COUNT(*)
+           FROM member
+           WHERE user_id LIKE to_char(sysdate, 'yymmdd') || '%'
+       ) + 1, 4, '0') user_id
+       FROM dual
+	</select>
+	
 	
 	<insert id="insertEmailVerif" parameterType="emailVO">
 		INSERT INTO EMAIL_VERIFY(
@@ -70,14 +79,7 @@
 			, rdate
 			, udate
 		) VALUES(
-			(
-		        SELECT to_char(sysdate, 'yymmdd') || lpad((
-		            SELECT COUNT(*)
-		            FROM member
-		            WHERE user_id LIKE to_char(sysdate, 'yymmdd') || '%'
-		        ) + 1, 4, '0')
-		        FROM dual
-		    )
+			#{userId}
 			, #{email}
 			, #{userName}
 			, #{userPhone}
@@ -88,6 +90,32 @@
 			, sysdate
 			, sysdate
 		)
+	</insert>
+	
+	<insert id="insertMemberStatus">
+		INSERT INTO mem_status(
+			mem_state_code 
+			, user_id
+		) VALUES (
+			'1'
+			, #{userId}
+		)
+	</insert>
+	
+	<insert id="insertAgreeTerms" parameterType="java.util.List" >
+		<foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+		INTO terms_agree
+			( term_code
+            , user_id
+            , agree
+			)
+		VALUES
+			(
+			#{item.termCode}
+            , #{item.userId}
+            , #{item.agree}
+			)
+		</foreach>
 	</insert>
 	
 	<update id="updateUseEmailCode">

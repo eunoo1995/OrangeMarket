@@ -20,12 +20,15 @@
 				</header>
 				
 				<form name="joinForm" action="" method="post" id="joinForm" class="join-form">
-					<input type="hidden" name="agreeLocation" value="${agreeLoc}" />
-					<input type="hidden" name="nikFlag" value="N" />
-					<input type="hidden" name="telFlag" value="N" />
-					<input type="hidden" name="pwFlag" value="N" />
-					<input type="hidden" name="emailFlag" value="N" />
-					<input type="hidden" name="areaFlag" value="N" />
+					<fieldset>
+						<input type="hidden" name="agreeLocation" value="${agreeLoc}" />
+						<input type="hidden" name="nikFlag" value="N" />
+						<input type="hidden" name="telFlag" value="N" />
+						<input type="hidden" name="pwFlag" value="N" />
+						<input type="hidden" name="emailFlag" value="N" />
+						<input type="hidden" name="areaFlag" value="N" />
+						<input type="hidden" name="userId" value="${userId}" />
+					</fieldset>
 			
 					<table class="form-table">
 						<colgroup>
@@ -97,7 +100,7 @@
 							<tr>
 								<td colspan="2">
 									<div class="btn-group">
-										<a href="/" class="btn btn-solid btn-half">취소하기</a>
+										<button type="button" class="btn btn-solid-point btn-half" id="joinFormCancel">취소하기</button>
 										<button type="button" class="btn btn-solid-point btn-half" id="joinFormConfirm">가입하기</button>
 									</div>
 								</td>
