@@ -77,10 +77,10 @@
 			   A.ADDR, 
 			   DECODE(A.STATUS,1,'판매중',2,'예약중','거래완료') STATUS, 
 			   B.UNQ,
-			   C.IMGS, 
+			   A.IMGS, 
 			   B.LIKER, 
 			   A.SELLER_NIK
-		FROM PRODUCT A, LIKE_PRODUCT B, PRO_IMG C 
+		FROM PRODUCT A, LIKE_PRODUCT B
 		WHERE B.LIKER = #{liker}
 	</select>
 	<delete id="deleteLikeList" parameterType="productVO">

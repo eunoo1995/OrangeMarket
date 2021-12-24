@@ -22,6 +22,10 @@
 		<div class="cont-inner clx" id="chatRefresh">
 			<div class="chat-list">
 				<!-- 채팅목록 시작 -->
+				<c:if test="${fn:length(list) == 0}">
+				<div style="font-size:14px; margin-top:220px; text-align:center; color:#ffb319;">
+				채팅을 이용하신 적이 없으시군요!<br>원하시는 물품의 판매자와 대화해보세요!</div>
+				</c:if>
 				<c:forEach var="channel" items="${list}">
 				<c:choose>
 				<c:when test="${channel.channel == vo.channel}"><c:set var="on" value="style='background:#FFFAFA;'"/></c:when>
