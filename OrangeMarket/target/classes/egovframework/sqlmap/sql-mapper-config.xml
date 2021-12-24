@@ -20,6 +20,7 @@
 		<typeAlias alias="pagingVO" type="orange.service.PagingVO"/>
 		<typeAlias alias="qnaVO" type="orange.service.QnaVO"/>
 		<typeAlias alias="myKeywordVO" type="orange.service.MyKeywordVO"/>
+		<typeAlias alias="adminVO" type="orange.service.AdminVO"/>
 		
 		<!-- 2 -->
 		<typeAlias alias="memberVO" type="orange.service.MemberVO"/>
@@ -29,7 +30,6 @@
 		<!-- 3 -->
 		<typeAlias alias="productSubVO" type="orange.service.ProductSubVO"/>
 		<typeAlias alias="productVO" type="orange.service.ProductVO"/>
-		<typeAlias alias="productSubVO" type="orange.service.ProductSubVO"/>
 		
     </typeAliases>
 </configuration>

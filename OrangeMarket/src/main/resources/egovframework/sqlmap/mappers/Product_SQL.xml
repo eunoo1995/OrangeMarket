@@ -18,7 +18,8 @@
 			content,
 			rdate,
 			udate,
-			seller_nik)
+			seller_nik,
+			imgs)
 		
      VALUES (PRODUCT_SEQ.NEXTVAL,
 			#{seller},
@@ -30,7 +31,8 @@
 			#{content},
 			sysdate,
 			sysdate,
-			#{sellerNik})
+			#{sellerNik},
+			#{imgs})
 	
 	</insert>
 	
@@ -63,7 +65,8 @@
 			pro_code,
 			title,
 			price,
-			addr
+			addr,
+			imgs
 		FROM 
 			product
 	</select>
@@ -87,7 +90,8 @@
 			refund,
 			nego,
 			seller_nik,
-			nvl(buyer_nik, '0') as buyer_nik
+			nvl(buyer_nik, '0') as buyer_nik,
+			imgs
 			
 		FROM 
 			product
@@ -109,7 +113,8 @@
 			content,
 			rdate,
 			udate,
-			seller_nik
+			seller_nik,
+			imgs
 			
 		FROM
 			product
