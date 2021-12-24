@@ -55,42 +55,46 @@ public class ProductController {
 	@ResponseBody
 	public String insertProduct(ProductVO vo, ProductSubVO svo, MultipartFile[] uploadProfile, HttpServletRequest request) throws Exception {
 		
-		String msg = "fail";
+		String msg = "ok";
+		
+		 // 한글 인식
 		
 		 String title = new String(vo.getTitle().getBytes("8859_1"), "UTF-8");
+		 String keyword = new String(vo.getKeyword().getBytes("8859_1"), "UTF-8");
+		 String addr = new String(vo.getAddr().getBytes("8859_1"), "UTF-8");
+		 String content = new String(vo.getContent().getBytes("8859_1"), "UTF-8");
+		 String sellerNik = new String(vo.getSellerNik().getBytes("8859_1"), "UTF-8");
+		
+		 // 데이터 입력
 		 vo.setTitle(title);
+		 vo.setKeyword(keyword);
+		 vo.setAddr(addr);
+		 vo.setContent(content);
+		 vo.setSellerNik(sellerNik);
 		
-		int save_result = productService.insertProduct(vo);
+		 // 저장경로
+		 String path = request.getServletContext().getRealPath("/images/products");
+		 // 기존 프로필 사진 삭제
+		 File delFile = new File(path + svo.getImgs());
+		 if(delFile.exists()) delFile.delete();
+		 // 새로 저장시킬 파일
+		 String imgs = "test_goods07.jpeg";
+		 int proCode = vo.getProCode();
+		 
+		 for(MultipartFile multipartFile : uploadProfile) {
+			 // 확장자 구하기
+			 String realName = multipartFile.getOriginalFilename();
+			 String ext = realName.substring(realName.lastIndexOf(".")); 
+			 // userId + 확장자로 파일 저장
+			 imgs += proCode+ext;
+			 File saveFile = new File(path, imgs);
+			 multipartFile.transferTo(saveFile);
+		 }
 		
-		if(save_result == 1) {
-//			// 저장 경로
-//			String path = request.getServletContext().getRealPath("/images/products");
-//			
-//			// 저장
-//			String productImg = "";
-//			int proCode = vo.getProCode();
-//			for(MultipartFile multipartFile : uploadProfile) {
-//				System.out.println("멀티파트파일 들어옴");
-//				// 확장자 구하기
-//				String realName = multipartFile.getOriginalFilename();
-//				String ext = realName.substring(realName.lastIndexOf(".")); 
-//				// userId + 확장자로 파일 저장
-//				productImg += proCode+ext;
-//				File saveFile = new File(path, productImg);
-//				multipartFile.transferTo(saveFile);
-//			}
-//			// 이미지 정보 저장
-//			System.out.println(productImg);
-//			svo.setImgs(productImg);
-//			int img_result = productService.insertProImg(svo);
-//			
-//			if(img_result == 1) msg = "ok";
-//			else msg = "img_fail";
-			msg="ok";
-		}
-	
-		System.out.println("msg : " + msg);
-		
+		 // 이미지 세팅 및 저장
+		 vo.setImgs(imgs);
+		 productService.insertProduct(vo);
+			
 		return msg;
 	}
 	
