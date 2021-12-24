@@ -21,11 +21,10 @@
 		</header>
 		
 		<script type="text/javascript">
-			
 				$(function(){
 					//작성 저장 ajax
 					$("#pro-btn-save").click(function(){
-							var img = $("#imgs").val();
+							/* var img = $("#imgs").val();
 							var title = $("#title").val();
 							var proCategoryCode = $("#proCategoryCode").val();
 							var addr = $("#addr").val();
@@ -42,8 +41,7 @@
 								+ "   가격 : " + price + "\n"
 								+ "   설명 : " + content + "\n"
 								+ "가격협의 : " + nego
-							);
-							
+							); */
 					  	/* 	if($("#title").val() == "" ) {
 					  			alert("제목을 입력해주세요.");
 					  			$("#title").focus();
@@ -54,9 +52,7 @@
 					  			$("#content").focus();
 					  			return false;
 					  		} */
-					  		
 					  		var formdata = new FormData(document.getElementById("frm-product"));
-							
 					  		$.ajax({
 					  			type : "post",
 					  			url  : "product-write-save",
@@ -68,8 +64,6 @@
 					  				if(data == "ok") {
 					  					alert("저장 성공");
 					  					location='product-list';
-					  				} else if(data == "img_fail"){
-					  					alert("이미지 저장 실패");
 					  				} else {
 					  					alert("저장 실패");
 					  				}
@@ -95,13 +89,10 @@
 					  			    }else { //Unknow Error
 					  			        errorMsg += "\n관리자에게 문의해주세요.";
 					  			    }
-					  			   
 					  			    alert(errorMsg);
-
 					  			}
 					  		});
 					  	});
-					
 					 //프로필 사진 미리보기 설정
 				      $("#imgs").click(function(){
 				         $("#product-img-file").click();
@@ -109,9 +100,7 @@
 				      $("#product-img-file").on('change', function(){
 				          readURL(this);
 				      });
-					
 				});
-				
 				//프로필 사진 미리보기 설정
 				function readURL(input) {
 				       if (input.files && input.files[0]) {
@@ -123,7 +112,6 @@
 				          var URL = "productWrite.jsp?data=" + input.files[0];
 				       }
 				   }
-		
 		</script>
 		
 		<div class="product-write-content">
@@ -148,7 +136,7 @@
 							<td class="product-write-table-td2">
 									<img class="btn-image" id="imgs" name="imgs" src="/images/icons/add.png">
 				                <!-- <button type="button" class="btn-image" id="product-img-btn">+</button> -->
-				                <input type="file" id="product-img-file" style="display: none;">
+				                <input type="file" id="product-img-file" name="uploadProductImg" style="display: none;">
 							</td>
 						</tr>
 

@@ -53,18 +53,16 @@ public class ProductController {
 	//제품 등록 기능 및 저장
 	@RequestMapping(value="/product-write-save")
 	@ResponseBody
-	public String insertProduct(ProductVO vo, ProductSubVO svo, MultipartFile[] uploadProfile, HttpServletRequest request) throws Exception {
+	public String insertProduct(ProductVO vo, ProductSubVO svo, MultipartFile[] uploadProductImg, HttpServletRequest request) throws Exception {
 		
 		String msg = "ok";
-		
 		 // 한글 인식
-		
 		 String title = new String(vo.getTitle().getBytes("8859_1"), "UTF-8");
 		 String keyword = new String(vo.getKeyword().getBytes("8859_1"), "UTF-8");
 		 String addr = new String(vo.getAddr().getBytes("8859_1"), "UTF-8");
 		 String content = new String(vo.getContent().getBytes("8859_1"), "UTF-8");
 		 String sellerNik = new String(vo.getSellerNik().getBytes("8859_1"), "UTF-8");
-		
+		 
 		 // 데이터 입력
 		 vo.setTitle(title);
 		 vo.setKeyword(keyword);
@@ -75,13 +73,13 @@ public class ProductController {
 		 // 저장경로
 		 String path = request.getServletContext().getRealPath("/images/products");
 		 // 기존 프로필 사진 삭제
-		 File delFile = new File(path + svo.getImgs());
-		 if(delFile.exists()) delFile.delete();
+		 //File delFile = new File(path + svo.getImgs());
+		 //if(delFile.exists()) delFile.delete();
 		 // 새로 저장시킬 파일
-		 String imgs = "test_goods07.jpeg";
+		 String imgs = "";
 		 int proCode = vo.getProCode();
 		 
-		 for(MultipartFile multipartFile : uploadProfile) {
+		 for(MultipartFile multipartFile : uploadProductImg) {
 			 // 확장자 구하기
 			 String realName = multipartFile.getOriginalFilename();
 			 String ext = realName.substring(realName.lastIndexOf(".")); 

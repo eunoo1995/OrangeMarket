@@ -98,7 +98,7 @@ public class BoardController {
 		return "board/reportList";
 	}
 	// 신고하기 상세보기
-	@RequestMapping(value = "/report-detail")
+	@RequestMapping(value = "report-detail")
 	public String reportDetail(ReportVO vo, Model model) throws Exception {
 		
 		vo = reportService.selectReportDetail(vo);
@@ -108,13 +108,13 @@ public class BoardController {
 		return "board/reportDetail";
 	}
 	// 신고하기 작성화면
-	@RequestMapping(value = "/report-write")
+	@RequestMapping(value = "report-write")
 	public String reportWrite() throws Exception {
 		
 		return "board/reportWrite";
 	}
 	// 신고하기 작성 저장
-	@RequestMapping(value = "/report-write-save")
+	@RequestMapping(value = "report-write-save")
 	@ResponseBody
 	public String reportWriteSave(ReportVO vo) throws Exception {
 		
