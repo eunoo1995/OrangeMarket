@@ -1,5 +1,8 @@
 package orange.web;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import orange.service.EmailVerifVO;
 import orange.service.MemberService;
 import orange.service.MemberVO;
+import orange.service.TermsAgreeVO;
 
 @Controller
 public class MemberController {
@@ -40,9 +44,21 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "join-form")
-	public String joinWrite(String l, Model model) {
+	public String joinWrite(String l, Model model) throws Exception {
 
+		System.out.println(l);
+		
+		int userId = memberService.selectUserId();
+		
+		
+		if(l != null && l.equals("false")) {
+			l = "N";
+		} else if(l != null && l.equals("true")) {
+			l = "Y";
+		}
+		
 		model.addAttribute("agreeLoc", l);
+		model.addAttribute("userId", userId);
 
 		return "member/joinForm";
 	}
@@ -175,17 +191,33 @@ public class MemberController {
 
 	@RequestMapping(value = "insert-member")
 	@ResponseBody
-	public String insertMember(MemberVO memVo, EmailVerifVO emailVo) throws Exception {
+	public String insertMember(MemberVO memVo, EmailVerifVO emailVo, TermsAgreeVO agreeVo) throws Exception {
 
 		String msg = "";
-
-		System.out.println("VO====> : " + memVo.getEmail() + ", " + memVo.getUserName() + ", " + memVo.getUserPhone() + ", "
-				+ memVo.getNikName() + ", " + memVo.getUserPw() + ", " + memVo.getAddr() + ", " + memVo.getAddrPass());
-
-		System.out.println("emailVo ==>>>>> " + emailVo.getEmailCode() + ", " + emailVo.getEmail() );
+		
+		List<Map<String, Object>> insertList = new ArrayList<>();
+		Map<String, Object> agreeMap = new HashMap<String, Object>();
+	
+		for(int i = 0; i < 3; i++){
+			agreeMap = new HashMap<String, Object>();
+			
+			if(i!=2) {
+				agreeMap.put("agree", 'Y');
+			} else {
+				agreeMap.put("agree", agreeVo.getAgree());
+			}
+			
+			agreeMap.put("userId", memVo.getUserId());
+			agreeMap.put("termCode", i+1);
+			
+			insertList.add(agreeMap);
+		}
+		
+		memberService.updateUseEmailCode(emailVo);
+		memberService.insertAgreeTerms(insertList);
+		memberService.insertMemberStatus(memVo.getUserId());
 		
 		int result = memberService.insertNewMember(memVo);
-		memberService.updateUseEmailCode(emailVo);
 		
 		if (result == 1) {
 			msg = "ok";

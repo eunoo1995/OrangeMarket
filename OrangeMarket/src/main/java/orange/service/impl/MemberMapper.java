@@ -1,8 +1,12 @@
 package orange.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 import orange.service.EmailVerifVO;
 import orange.service.MemberVO;
+import orange.service.TermsAgreeVO;
 
 @Mapper("memberMapper") 
 public interface MemberMapper {
@@ -23,6 +27,12 @@ public interface MemberMapper {
 	int updateUseEmailCode(MemberVO vo);
 
 	int updateUseEmailCode(EmailVerifVO vo);
+
+	int insertAgreeTerms(List<Map<String, Object>> insertList);
+
+	int selectUserId();
+
+	int insertMemberStatus(int userId);
 	
 
 }
