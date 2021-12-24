@@ -44,7 +44,7 @@
 								+ "가격협의 : " + nego
 							);
 							
-					  		if($("#title").val() == "" ) {
+					  	/* 	if($("#title").val() == "" ) {
 					  			alert("제목을 입력해주세요.");
 					  			$("#title").focus();
 					  			return false;
@@ -53,10 +53,10 @@
 					  			alert("내용을 입력해주세요.");
 					  			$("#content").focus();
 					  			return false;
-					  		}
+					  		} */
 					  		
-					  	    var formdata = new FormData(document.getElementById("frm"));
-					  		
+					  		var formdata = new FormData(document.getElementById("frm-product"));
+							
 					  		$.ajax({
 					  			type : "post",
 					  			url  : "product-write-save",
@@ -132,7 +132,7 @@
 			</div>
 
 			<div class="product-write-content__detail">
-				<form id="frm" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+				<form id="frm-product" name="frm-product" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 					
 					<input type="hidden" name="seller" id="seller" value="10">
 					<input type="hidden" name="sellerNik" id="sellerNik" value="판매자 닉네임">

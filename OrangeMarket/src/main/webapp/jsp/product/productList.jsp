@@ -37,7 +37,7 @@
 							<a href="#"> <!-- 상품 이미지 -->
 								<figure class="pro-thumb">
 									<span class="pro-thumb-img"><img
-										src="<c:url value='/images/product/org_goods/test_goods01.jpeg'/>"></span>
+										src="<c:url value='/images/product/org_goods/${product.imgs}'/>"></span>
 									<span class="pro-detail-grade trust">신뢰</span>
 									<!-- 
 		                            	안전 등급은 

@@ -18,6 +18,15 @@ public class ProductVO extends ProductSubVO {
 	private int nego;
 	private String sellerNik;
 	private String buyerNik;
+	private String imgs;
+	
+	public String getImgs() {
+		return imgs;
+	}
+
+	public void setImgs(String imgs) {
+		this.imgs = imgs;
+	}
 
 	public int getProCode() {
 		return proCode;
