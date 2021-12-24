@@ -18,6 +18,33 @@
 				<h2 class="sub-page-title">Category</h2>
 			</div>
 		</header>
+		
+		<script>
+		$(function(){
+			
+			$("#chat").click(function(){
+			  	
+				var formdata = $("#frm").serialize();
+					
+			  		$.ajax({
+			  			type : "post",
+			  			url  : "chat",
+			  			data : formdata,
+			  			processData : false,
+			  			contentType : false,
+			  			datatype : "text",
+			  			success : function(data) {
+		  					location='chat';
+			  			},
+			  			error : function (request, status, error){
+							alert("전송 실패");
+			  			}
+			  		});
+			
+			});
+			
+		});
+		</script>
 
 		<!-- 상세 정보 화면 -->
 		<article class="pro-detail-wrap">
@@ -29,6 +56,7 @@
 					<button class="btn btn-solid" onclick="location='product-delete?proCode=${product.proCode }'">삭제</button>
 				</div>
 	
+			<form name="frm" id="frm">
 				<!-- 상품 내용 및 상세 내용 -->
 				<div class="pro-detail-top">
 					
@@ -93,9 +121,9 @@
 						</div>
 	
 						<div class="info-btn-wrap">
-							<button type="button" class="btn btn-solid-point">관심</button>
-							<button type="button" class="btn btn-solid">채팅</button>
-							<button type="button" class="btn">시세조회</button>
+							<button type="button" class="btn btn-solid-point" name="like" id="like">관심</button>
+							<button type="button" class="btn btn-solid" name="chat" id="chat">채팅</button>
+							<button type="button" class="btn" name="avg-search" id="avg-search">시세조회</button>
 	
 						</div>
 	
@@ -111,7 +139,7 @@
 						${product.content }
 					</div>
 				</div>
-	
+			</form>
 	
 				<!-- 연관 상품 -->
 				<div class="related-listView">
