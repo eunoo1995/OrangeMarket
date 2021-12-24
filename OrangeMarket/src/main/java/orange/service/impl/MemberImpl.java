@@ -1,5 +1,8 @@
 package orange.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.EmailVerifVO;
 import orange.service.MemberService;
 import orange.service.MemberVO;
+import orange.service.TermsAgreeVO;
 
 @Service("memberService")
 public class MemberImpl extends EgovAbstractServiceImpl implements MemberService {
@@ -50,5 +54,22 @@ public class MemberImpl extends EgovAbstractServiceImpl implements MemberService
 	public int updateUseEmailCode(EmailVerifVO vo) throws Exception {
 		return memberDAO.updateUseEmailCode(vo);
 	}
+
+
+	@Override
+	public int insertAgreeTerms(List<Map<String, Object>> insertList) throws Exception {
+		return memberDAO.insertAgreeTerms(insertList);
+	}
+
+	@Override
+	public int selectUserId() throws Exception {
+		return memberDAO.selectUserId();
+	}
+
+	@Override
+	public int insertMemberStatus(int userId) throws Exception {
+		return memberDAO.insertMemberStatus(userId);
+	}
+
 
 }

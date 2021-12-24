@@ -44,6 +44,11 @@ if (joinForm) {
 	var btnConfirmEmail = frm.querySelector('#btnConfirmEmail');
 	var btnCheckArea = frm.querySelector('#btnCheckArea');
 	var btnConfirmArea = frm.querySelector('#btnConfirmArea');
+	
+	var joinFormCancel= document.getElementById('joinFormCancel');
+	joinFormCancel.addEventListener('click', function() {
+		location.replace = 'login';
+	});
 
 	/* 이름 검사 */
 	frm.userName.addEventListener('blur', function() {
@@ -130,12 +135,12 @@ if (joinForm) {
 
 				if (frm.areaFlag.value === 'N') {
 					if (!confirm('동네인증 없이 진행하시겠습니까?')) {
-						console.log('ddddddd');
 						return false;
 					};
 				}
 
 				var formData = {
+					'userId': frm.userId.value,
 					'userName': frm.userName.value,
 					'userPhone': frm.tel.value,
 					'nikName': frm.nickname.value,
@@ -143,10 +148,9 @@ if (joinForm) {
 					'email': frm.email.value,
 					'addr': frm.addr.value,
 					'addrPass': frm.areaFlag.value.toUpperCase(),
-					'emailCode': frm.confirmEmail.value
+					'emailCode': frm.confirmEmail.value,
+					'agree': frm.agreeLocation.value
 				};
-
-				console.log(formData);
 
 				$.ajax({
 					type: 'POST',
@@ -155,7 +159,8 @@ if (joinForm) {
 					dataType: 'text',
 					success: function(data) {
 						if (data == 'ok') {
-							location.replace='login'
+							console.log(data);
+							location.replace('/login');
 						} else if (data == 'err') {
 							alert('다시 시도해주세요')
 						}
@@ -534,8 +539,6 @@ function chkEmailVerif($target) {
 		'emailCode': inputTxt
 	};
 
-	console.log(formData);
-
 	$.ajax({
 		type: 'POST',
 		url: 'check-verifcode',
@@ -574,8 +577,6 @@ var getWriteAddr = function($target, $area) {
 			return response.json();
 		})
 		.then(function(data) {
-			console.log(data.documents[0].address);
-
 			enterAreaInfo = {
 				'allInfo': data.documents[0].address,
 				'srchAreaCode': data.documents[0].address.b_code,
@@ -587,7 +588,9 @@ var getWriteAddr = function($target, $area) {
 		.then(function() {
 			frm.addr.value = enterAreaInfo.myAreaTo3Depth;
 		})
-		.catch(error => console.log(error));
+		.catch(function(error) {
+			return console.log(error);
+		});
 }
 
 function srchArea($target) {
@@ -665,12 +668,9 @@ function chkAreaVerif($target) {
 	var input = frm.addrArea;
 	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
 
-	console.log(frm.agreeLocation.value);
-	console.log(frm.agreeLocation.value == 'false');
-
-	if (frm.agreeLocation.value === 'false') {
+	if (frm.agreeLocation.value === 'N') {
 		if (confirm('위치정보 제공 약관의 동의가 필요합니다.\n동의하시겠습니까?')) {
-			frm.agreeLocation.value = 'true';
+			frm.agreeLocation.value = 'Y';
 		} else {
 			return false;
 		}
