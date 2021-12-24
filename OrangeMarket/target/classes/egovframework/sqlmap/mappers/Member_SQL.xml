@@ -2,19 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="orange.service.impl.MemberMapper">
 
-	<select id="isMemberTel" resultType="java.lang.Integer">
-		SELECT count(*) FROM member 
-		WHERE user_phone = #{tel} 
+	<select id="isMemberTel" resultType="int">
+		SELECT COUNT(*)
+		FROM member m
+			INNER JOIN mem_status s ON m.user_id = s.user_id
+				WHERE m.user_phone = #{tel}
+		      		AND s.mem_state_code != 5
 	</select>
 	
 	<select id="isMemberNikname" resultType="java.lang.Integer">
-		SELECT count(*) FROM member 
-		WHERE nik_name = #{nickname} 
+		SELECT COUNT(*)
+		FROM member m
+			INNER JOIN mem_status s ON m.user_id = s.user_id
+				WHERE m.nik_name = #{nickname}
+		      		AND s.mem_state_code != 5
 	</select>
 	
 	<select id="isMemberEmail" resultType="java.lang.Integer">
-		SELECT count(*) from member
-		WHERE email = #{email}
+		SELECT COUNT(*)
+		FROM member m
+			INNER JOIN mem_status s ON m.user_id = s.user_id
+				WHERE m.email = #{email}
+		      		AND s.mem_state_code != 5
 	</select>
 	
 	<select id="selectEmailVerif" resultType="java.lang.Integer">

@@ -65,11 +65,13 @@ public class MemberController {
 
 	@RequestMapping(value = "check-usertel")
 	@ResponseBody
-	public String checkJoinTel(String tel) throws Exception {
+	public String checkJoinTel(MemberVO vo) throws Exception {
 
 		String msg = "";
-		int result = memberService.isMemberTel(tel);
+		int result = memberService.isMemberTel(vo.getUserPhone());
 
+		System.out.println("result" + result);
+		
 		if (result > 0) {
 			msg = "exist";
 		} else if (result == 0) {
