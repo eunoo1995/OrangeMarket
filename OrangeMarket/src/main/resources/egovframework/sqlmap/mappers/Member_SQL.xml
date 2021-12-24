@@ -45,14 +45,57 @@
 			, email_code
 			, use
 			, rdate
+			, udate
 			, expired_time
 		) VALUES(
 			#{email}
 			, #{emailCode}
 			, 'N'
 			, TO_CHAR(sysdate,'YYYY-MM-DD HH24:MI')
+			, sysdate
 			, TO_CHAR(sysdate + 2/(24*60),'YYYY-MM-DD HH24:MI')
 		)
 	</insert>
+	
+	<insert id="insertNewMember" parameterType="memberVO">
+		INSERT INTO member(
+			user_id
+			, email
+			, user_name
+			, user_phone
+			, nik_name
+			, user_pw
+			, addr
+			, addr_pass
+			, rdate
+			, udate
+		) VALUES(
+			(
+		        SELECT to_char(sysdate, 'yymmdd') || lpad((
+		            SELECT COUNT(*)
+		            FROM member
+		            WHERE user_id LIKE to_char(sysdate, 'yymmdd') || '%'
+		        ) + 1, 4, '0')
+		        FROM dual
+		    )
+			, #{email}
+			, #{userName}
+			, #{userPhone}
+			, #{nikName}
+			, #{userPw}
+			, #{addr}
+			, #{addrPass}
+			, sysdate
+			, sysdate
+		)
+	</insert>
+	
+	<update id="updateUseEmailCode">
+		UPDATE email_verify
+			SET USE = 'Y'
+			, udate = sysdate
+			WHERE email_code = #{emailCode}
+				AND email=#{email}
+	</update>
 
 </mapper>

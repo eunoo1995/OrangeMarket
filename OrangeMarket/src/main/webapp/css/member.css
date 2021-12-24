@@ -41,7 +41,8 @@
 	margin-right: -10px;
 }
 
-.form-table input[type="text"], .form-table input[type="password"], .form-table select {
+.form-table input[type="text"], .form-table input[type="password"],
+	.form-table select {
 	width: 100%;
 }
 
@@ -51,20 +52,21 @@
 	margin-bottom: 4px;
 }
 
-.form-table label>input[type="radio"],
-.form-table label>input[type="checkbox"] {
+.form-table label>input[type="radio"], .form-table label>input[type="checkbox"]
+	{
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
-.form-table label>input[type="radio"]+span,
-.form-table label>input[type="checkbox"]+span {
+.form-table label>input[type="radio"]+span, .form-table label>input[type="checkbox"]+span
+	{
 	display: inline-block;
 	vertical-align: middle;
 }
 
-.form-table input[type="text"], .form-table input[type="password"], .form-table select, .form-table .with-input,
-	.form-table input.with-btn-2 {
+.form-table input[type="text"], .form-table input[type="password"],
+	.form-table select, .form-table .with-input, .form-table input.with-btn-2
+	{
 	height: 50px;
 }
 
@@ -117,7 +119,6 @@
 }
 
 /* 회원가입 */
-
 .join-form {
 	margin: 0 auto;
 }
@@ -176,11 +177,11 @@
 }
 
 /* 로그인 */
-.pg-join .cont-inner,
-.login .cont-inner {
-	width: 600px; 
+.pg-join .cont-inner, .login .cont-inner {
+	width: 600px;
 	margin: 0 auto;
 }
+
 .login .btn-wrap {
 	margin-top: 40px;
 }
@@ -204,13 +205,11 @@
 	font-weight: 500;
 }
 
-
 /* 가입 완료 */
 .pg-join-result .btn-goto-main {
 	display: inline-block;
 	margin-top: 50px;
 }
-
 
 /* common */
 .notice-box {
@@ -230,4 +229,19 @@
 
 .notice-box .btn {
 	margin-top: 40px;
+}
+
+.form-notice-box {
+	margin-top: 20px;
+	padding: 20px;
+	font-size: 12px;
+	background-color: #fbf6f0;
+	border-radius: 5px;
+	line-height: 1.5;
+}
+
+.form-notice-box .notice-box-tit {
+	font-weight: 600;
+	font-size: 14px;
+	margin-bottom: 5px;
 }

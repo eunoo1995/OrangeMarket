@@ -47,71 +47,139 @@ if (joinForm) {
 
 	/* 이름 검사 */
 	frm.userName.addEventListener('blur', function() {
-		chkName(frm)
+		chkName(frm);
 	});
 
 	/* 연락처 검사 */
 	frm.tel.addEventListener('blur', function() {
-		chkTel(frm)
+		chkTel(frm);
 	});
 
 	/* 닉네임 검사 */
 	frm.nickname.addEventListener('blur', function() {
-		chkNik(frm)
+		chkNik(frm);
 	});
 
 	/* 비밀번호 검사 */
 	frm.password.addEventListener('blur', function() {
-		chkPw1(frm)
+		chkPw1(frm);
 	});
 
 	/* 비밀번호 일치 검사 */
 	frm.rePassword.addEventListener('blur', function() {
-		chkPw2(frm)
+		chkPw2(frm);
 	});
 
-	/* 이메일 형식 */
+	/* 이메일 형식 검사 */
 	frm.email.addEventListener('blur', function() {
-		chkEmail(frm)
+		chkEmail(frm);
+	});
+
+	/* 이메일 항목 초기화 */
+	frm.email.addEventListener('input', function() {
+		if (frm.emailFlag.value === 'Y') {
+			resetEmailChk(frm);
+			btnConfirmEmail.innerText = '인증번호 받기';
+		}
 	});
 
 	/* 이메일 인증번호 */
-	btnConfirmEmail.addEventListener('click', function() {
-		chkEmailCode(frm)
+	btnConfirmEmail.addEventListener('click', function(e) {
+		sendEmailCode(frm);
+		btnConfirmEmail.innerText = '재요청';
+	});
+
+	btnConfirmEmail.addEventListener('keypress', function(e) {
+		if (e.key == 'Enter') {
+			sendEmailCode(frm);
+			btnConfirmEmail.innerText = '재요청';
+		}
 	});
 
 	/* 이메일 인증번호 검사 */
 	frm.confirmEmail.addEventListener('blur', function() {
-		chkEmailVerif(frm)
+		chkEmailVerif(frm);
 	});
 
 	/* 주소 검색 */
 	frm.addrArea.addEventListener('click', function() {
-		srchArea(frm)
+		srchArea(frm);
+	});
+
+	frm.addrArea.addEventListener('blur', function() {
+		chkArea(frm);
 	});
 
 	btnConfirmArea.addEventListener('click', function() {
 		chkAreaVerif(frm);
-	})
+	});
 
 
 	/* 가입하기 버튼 누른 경우 */
 	if (btnJoinConfirm) {
-		btnJoinConfirm.addEventListener('click', chkJoinForm);
+		btnJoinConfirm.addEventListener('click', function() {
+
+			if (frm.nikFlag.value !== 'N' && frm.telFlag.value !== 'N'
+				&& frm.pwFlag.value !== 'N' && frm.emailFlag.value !== 'N') {
+
+				if (frm.addrArea.value == '') {
+					chkArea(frm);
+
+					return false;
+				}
+
+				if (frm.areaFlag.value === 'N') {
+					if (!confirm('동네인증 없이 진행하시겠습니까?')) {
+						console.log('ddddddd');
+						return false;
+					};
+				}
+
+				var formData = {
+					'userName': frm.userName.value,
+					'userPhone': frm.tel.value,
+					'nikName': frm.nickname.value,
+					'userPw': frm.password.value,
+					'email': frm.email.value,
+					'addr': frm.addr.value,
+					'addrPass': frm.areaFlag.value.toUpperCase(),
+					'emailCode': frm.confirmEmail.value
+				};
+
+				console.log(formData);
+
+				$.ajax({
+					type: 'POST',
+					url: 'insert-member',
+					data: formData,
+					dataType: 'text',
+					success: function(data) {
+						if (data == 'ok') {
+							location.replace='login'
+						} else if (data == 'err') {
+							alert('다시 시도해주세요')
+						}
+					},
+					error: function() {
+					}
+				});
+			} else {
+
+				chkName(frm);
+				chkTel(frm);
+				chkNik(frm);
+				chkPw1(frm);
+				chkPw2(frm);
+				chkEmail(frm);
+	
+				if (frm.email.value !== '' && frm.emailFlag.value === 'N') {
+					chkEmailVerif(frm);
+				}
+	
+				chkArea(frm);
+			}
+		});
 	}
-
-
-
-	function chkJoinForm() {
-		chkName(frm);
-		chkTel(frm);
-		chkNik(frm);
-		chkPw1(frm);
-		chkPw2(frm);
-		chkEmail(frm);
-	}
-
-
 }
 
 function chkName($target) {
@@ -120,7 +188,7 @@ function chkName($target) {
 	var inputTxt = input.value;
 	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
 
-	var regName = /^[가-힣]{2,}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+	var regName = /^[가-힣a-zA-Z]+$/;
 
 	if (input.value === '') {
 		var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
@@ -135,6 +203,9 @@ function chkName($target) {
 
 		return false;
 	}
+
+	hideFormErr(areaErrMsg);
+
 }
 
 function chkTel($target) {
@@ -163,7 +234,7 @@ function chkTel($target) {
 	}
 
 	if (regPhone.test(inputTxt) === false) {
-		showFormErr(areaErrMsg, '연락처를 형식을 확인해주세요');
+		showFormErr(areaErrMsg, '연락처 형식을 확인해주세요');
 
 		return false;
 	}
@@ -180,10 +251,9 @@ function chkTel($target) {
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
-			console.log(data);
 			if (data == 'exist') {
 				showFormErr(areaErrMsg, '이미 존재하는 연락처입니다.');
-
+				frm.telFlag.value = 'N';
 				return false;
 			} else if (data == 'ok') {
 				frm.telFlag.value = 'Y';
@@ -255,7 +325,7 @@ function chkNik($target) {
 	}
 
 	var formData = {
-		nickname: inputTxt
+		nikName: inputTxt
 	};
 	nikFlag = false;
 	$.ajax({
@@ -264,7 +334,6 @@ function chkNik($target) {
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
-			console.log(data);
 			if (data == 'exist') {
 				showFormErr(areaErrMsg, '이미 존재하는 닉네임입니다.');
 
@@ -297,15 +366,15 @@ function chkPw1($target) {
 	}
 
 	var formData = {
-		password: inputTxt
+		userPw: inputTxt
 	};
+
 	$.ajax({
 		type: 'POST',
 		url: 'check-password',
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
-			console.log(data);
 			if (data == 'err') {
 				showFormErr(areaErrMsg, '문자, 숫자, 기호  3종류 조합으로 해주세요 (8-20 글자)');
 
@@ -340,14 +409,16 @@ function chkPw2($target) {
 		return false;
 	}
 
-	var formData = 'password=' + inputTxt;
+	var formData = {
+		userPw: inputTxt
+	};
+
 	$.ajax({
 		type: 'POST',
 		url: 'check-password',
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
-			console.log(data);
 			if (data == 'err') {
 				showFormErr(areaErrMsg, '문자, 숫자, 기호  3종류 조합으로 해주세요 (8-20 글자)');
 
@@ -388,7 +459,6 @@ function chkEmail($target) {
 		return false;
 	}
 
-
 	var formData = 'email=' + frm.email.value;
 	$.ajax({
 		type: 'POST',
@@ -411,15 +481,14 @@ function chkEmail($target) {
 	hideFormErr(areaErrMsg);
 }
 
-function chkEmailCode($target) {
+function sendEmailCode($target) {
 
 	var frm = $target;
-
-	console.log('chkEmailCode frm : ' + frm);
-	console.log('chkEmailCode frm.email.value : ' + frm.email.value);
-
+	var input = frm.confirmEmail;
 	var formData = 'email=' + frm.email.value;
-	frm.confirmEmail.readOnly = false;
+
+	input.readOnly = false;
+	input.style.display = 'block';
 
 	$.ajax({
 		type: 'POST',
@@ -427,13 +496,22 @@ function chkEmailCode($target) {
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
-			console.log(data);
+			if (data == 'err') {
+				showFormErr(areaErrMsg, '다시 시도해주세요');
+			}
 		},
 		error: function() {
 			showFormErr(areaErrMsg, '다시 시도해주세요');
 			input.value = '';
 		}
 	});
+}
+
+function resetEmailChk($target) {
+	var frm = $target;
+	frm.emailFlag.value = 'N';
+	frm.confirmEmail.value = '';
+	frm.confirmEmail.style.display = 'block';
 }
 
 function chkEmailVerif($target) {
@@ -455,6 +533,9 @@ function chkEmailVerif($target) {
 		'email': frm.email.value,
 		'emailCode': inputTxt
 	};
+
+	console.log(formData);
+
 	$.ajax({
 		type: 'POST',
 		url: 'check-verifcode',
@@ -477,11 +558,47 @@ function chkEmailVerif($target) {
 	hideFormErr(areaErrMsg);
 }
 
+
+var getWriteAddr = function($target, $area) {
+	// 입력한 주소의 정보 가져오기
+	var frm = $target;
+	var options = {
+		method: 'GET',
+		headers: {
+			Authorization: 'KakaoAK 78ca57b17929b0d8592c839763406d9a'
+		}
+	}
+
+	fetch('https://dapi.kakao.com/v2/local/search/address.json?query=' + $area, options)
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(data) {
+			console.log(data.documents[0].address);
+
+			enterAreaInfo = {
+				'allInfo': data.documents[0].address,
+				'srchAreaCode': data.documents[0].address.b_code,
+				'myAreaTo3Depth': data.documents[0].address.region_1depth_name + ' ' + data.documents[0].address.region_2depth_name + ' ' + data.documents[0].address.region_3depth_name
+			}
+
+			return enterAreaInfo;
+		})
+		.then(function() {
+			frm.addr.value = enterAreaInfo.myAreaTo3Depth;
+		})
+		.catch(error => console.log(error));
+}
+
 function srchArea($target) {
 
 	var frm = $target;
 	var input = frm.addrArea;
 	var inputTxt = input.value;
+	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
+
+	input.disabled = true;
+	frm.querySelector('#btnConfirmArea').style.display = 'block';
 
 	var width = 500; //팝업의 너비
 	var height = 600; //팝업의 높이
@@ -502,8 +619,19 @@ function srchArea($target) {
 				input.value = jibunAddr;
 			}
 
-			console.log("input.value" + input.value);
+			input.disabled = false;
 
+			/* 전체 도로명 주소 적용하기 */
+			getWriteAddr(frm, input.value);
+
+			frm.querySelector('#btnConfirmArea').disabled = false;
+			hideFormErr(areaErrMsg);
+
+		},
+		onclose: function(state) {
+			if (state === 'FORCE_CLOSE') {
+				input.disabled = false;
+			}
 		}
 	}).open({
 		popupKey: 'srchAddrArea',
@@ -514,12 +642,39 @@ function srchArea($target) {
 
 }
 
+function chkArea($target) {
+
+	var frm = $target;
+	var input = frm.addrArea;
+	var inputTxt = input.value;
+	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
+
+	if (inputTxt == '') {
+		showFormErr(areaErrMsg, '주소를 입력해주세요');
+
+		return false;
+	}
+
+	hideFormErr(areaErrMsg);
+}
+
 function chkAreaVerif($target) {
 
 	var frm = $target;
 	var srchAreaCode = '';
+	var input = frm.addrArea;
+	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
 
-	console.log(frm.addrArea.value);
+	console.log(frm.agreeLocation.value);
+	console.log(frm.agreeLocation.value == 'false');
+
+	if (frm.agreeLocation.value === 'false') {
+		if (confirm('위치정보 제공 약관의 동의가 필요합니다.\n동의하시겠습니까?')) {
+			frm.agreeLocation.value = 'true';
+		} else {
+			return false;
+		}
+	}
 
 	// 입력한 주소의 정보 가져오기
 	$.ajax({
@@ -528,21 +683,50 @@ function chkAreaVerif($target) {
 			'Authorization': 'KakaoAK 78ca57b17929b0d8592c839763406d9a'
 		},
 		type: 'GET',
-		success: function(srchData) {
-			console.log("key data" + JSON.stringify(srchData.documents[0].address.b_code));
-			srchAreaCode = srchData.documents[0].address.b_code;
+		success: function(data) {
+			srchAreaCode = data.documents[0].address.b_code;
+			console.log('입력한 위치==> ' + JSON.stringify(data.documents[0].address));
+			getCurrLocation();
 		},
 		error: function(e) {
 			console.log(e);
 		}
 	});
-	
-	console.log('srchAreaCode ==> ' + srchAreaCode);
 
-	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-	if (navigator.geolocation) {
-		// GeoLocation을 이용해서 접속 위치를 얻어옵니다
-		navigator.geolocation.getCurrentPosition(function(position) {
+	function getCurrLocation() {
+		// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+		var options = {
+			// 가능한 경우, 높은 정확도의 위치(예를 들어, GPS 등) 를 읽어오려면 true로 설정
+			// 그러나 이 기능은 배터리 지속 시간에 영향을 미친다. 
+			enableHighAccuracy: true, // 대략적인 값이라도 상관 없음: 기본값
+
+			// 위치 정보를 강제로 재확인하기 위해 사용하기도 하는 이 값의 기본 값은 0이다.
+			maximumAge: 30000,
+
+			// 위치 정보를 받기 위해 얼마나 오랫동안 대기할 것인가?
+			// 기본값은 Infinity이므로 getCurrentPosition()은 무한정 대기한다.
+			timeout: 15000
+		}
+
+		if (navigator.geolocation) {
+			// GeoLocation을 이용해서 접속 위치를 얻어옵니다
+			navigator.geolocation.getCurrentPosition(success, error, options);
+		} else { // HTML5의 GeoLocation을 사용할 수 없을때 
+			var myPosition = new kakao.maps.LatLng(37.566826, 126.9786567)
+			alert('현재 위치를 찾을 수 없습니다!');
+		}
+
+		// geolocation 요청이 실패하면 이 함수를 호출한다.
+		function error(e) {
+			// 1 : 사용자가 위치 정보를 공유 권한을 제공하지 않음
+			// 2 : 브라우저가 위치를 가져올 수 없음
+			// 3 : 타임아웃이 발생됨
+
+			console.log('Geolocation 오류 ' + e.code + ' : ' + e.message);
+		};
+
+		// geolocation 요청이 성공하면 이 함수가 호출된다.
+		function success(position) {
 			var lat = position.coords.latitude, // 위도
 				lon = position.coords.longitude; // 경도
 
@@ -556,32 +740,28 @@ function chkAreaVerif($target) {
 					'Authorization': 'KakaoAK 78ca57b17929b0d8592c839763406d9a'
 				},
 				type: 'GET',
-				success: function(currData) {
-					console.log("key data" + JSON.stringify(currData.documents[0]));
-					myAreaCode = currData.documents[0].code;
-					
-					console.log('srchAreaCode ==> ' + srchAreaCode + ', myAreaCode ==> ' + myAreaCode)
+				success: function(data) {
+					console.log('현재위치==> ' + JSON.stringify(data.documents[0]));
+					myAreaCode = data.documents[0].code;
 
-					if (srchAreaCode == myAreaCode) {
-						alert('일치');
+					if (srchAreaCode != myAreaCode) {
+						showFormErr(areaErrMsg, '입력하신 주소와 맞지 않습니다.');
+						frm.querySelector('#form-notice-box').style.display = 'block';
 					} else {
-						showFormErr(areaErrMsg, '현재위치와 일치하지 않습니다');
+						frm.areaFlag.value = 'Y';
+						hideFormErr(areaErrMsg);
+						frm.addr.value = data.documents[0].address_name;
+						frm.querySelector('#btnConfirmArea').style.display = 'none';
+						frm.querySelector('#form-notice-box').style.display = 'none';
 					}
 				},
 				error: function(e) {
 					console.log(e);
 				}
 			});
-
-
-		});
-	} else { // HTML5의 GeoLocation을 사용할 수 없을때 
-		var myPosition = new kakao.maps.LatLng(37.566826, 126.9786567)
-		alert('현재 위치를 찾을 수 없습니다!');
+		}
 	}
-
 }
-
 
 
 function showFormErr($obj, msg) {
@@ -590,4 +770,4 @@ function showFormErr($obj, msg) {
 
 function hideFormErr($obj) {
 	$obj.innerText = '';
-}
+};

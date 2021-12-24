@@ -6,6 +6,7 @@ public interface ProductService {
 
 	// 제품 등록 기능
 	int insertProduct(ProductVO vo) throws Exception;
+	int insertProImg(ProductSubVO svo);
 
 	// 등록된 제품 리스트 표시
 	 List<?> selectProductList(ProductVO vo) throws Exception;
@@ -15,5 +16,7 @@ public interface ProductService {
 
 	// 판매 제품 정보 수정위한 데이터 표시
 	ProductVO selectProductModify(ProductVO vo);
+
 	
+
 }

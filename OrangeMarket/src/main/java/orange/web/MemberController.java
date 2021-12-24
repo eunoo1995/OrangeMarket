@@ -56,9 +56,7 @@ public class MemberController {
 
 		if (result > 0) {
 			msg = "exist";
-		}
-
-		if (result == 0) {
+		} else if (result == 0) {
 			msg = "ok";
 		}
 
@@ -75,12 +73,9 @@ public class MemberController {
 
 		if (result > 0) {
 			msg = "exist";
-		}
-
-		if (result == 0) {
+		} else if (result == 0) {
 			msg = "ok";
 		}
-		/* System.out.println("nikname: " + msg); */
 
 		return msg;
 	}
@@ -103,34 +98,31 @@ public class MemberController {
 
 		return msg;
 	}
-	
-	@RequestMapping("check-email")
+
+	@RequestMapping(value = "check-email")
 	@ResponseBody
 	public String checkEmail(MemberVO vo) throws Exception {
-		
+
 		String msg = "";
-		
+
 		int result = memberService.isMemberEmail(vo.getEmail());
 
 		if (result > 0) {
 			msg = "exist";
-		}
-
-		if (result == 0) {
+		} else if (result == 0) {
 			msg = "ok";
 		}
 
 		return msg;
 	}
-	
 
-	@RequestMapping("send-verif-email")
+	@RequestMapping(value = "send-verif-email")
 	@ResponseBody
 	public String SendVerifEmail(EmailVerifVO vo) throws Exception {
 
-		String code = Integer.toString( ((int) ((Math.random() * (999999 - 100000 + 1)) + 100000)) );
+		String code = Integer.toString(((int) ((Math.random() * (999999 - 100000 + 1)) + 100000)));
 		String msg = "";
-		
+
 		String emailTo = vo.getEmail();
 		String emailFrom = "project.e.dev@gmail.com";
 		String title = "회원가입시 필요한 인증번호 입니다.";
@@ -144,13 +136,13 @@ public class MemberController {
 			messageHelper.setTo(emailTo);
 			messageHelper.setSubject(title);
 			messageHelper.setText(content);
-			
+
 			vo.setEmailCode(code);
-			
+
 			int result = memberService.insertEmailVerif(vo);
-			if(result == 1) {
-				System.out.println("email====> " + emailTo );
-				System.out.println("code====> " + vo.getEmailCode() );
+			if (result == 1) {
+				System.out.println("email====> " + emailTo);
+				System.out.println("code====> " + vo.getEmailCode());
 //				mailSender.send(message);
 			}
 
@@ -159,24 +151,47 @@ public class MemberController {
 		} catch (Exception e) {
 			msg = "err";
 		}
-		
+
 		return msg;
 	}
-	
-	@RequestMapping("check-verifcode")
+
+	@RequestMapping(value = "check-verifcode")
 	@ResponseBody
 	public String checkEmailCode(EmailVerifVO vo) throws Exception {
-		
+
 		String msg = "";
 		int result = memberService.selectEmailVerif(vo);
-	
-		if(result == 1) {
+
+		if (result == 1) {
 			msg = "ok";
-		} else if(result != 1) {
+		} else if (result != 1) {
 			msg = "err";
-		} 
-	
+		}
+
 		System.out.println("msg check!! ==>" + msg);
+
+		return msg;
+	}
+
+	@RequestMapping(value = "insert-member")
+	@ResponseBody
+	public String insertMember(MemberVO memVo, EmailVerifVO emailVo) throws Exception {
+
+		String msg = "";
+
+		System.out.println("VO====> : " + memVo.getEmail() + ", " + memVo.getUserName() + ", " + memVo.getUserPhone() + ", "
+				+ memVo.getNikName() + ", " + memVo.getUserPw() + ", " + memVo.getAddr() + ", " + memVo.getAddrPass());
+
+		System.out.println("emailVo ==>>>>> " + emailVo.getEmailCode() + ", " + emailVo.getEmail() );
+		
+		int result = memberService.insertNewMember(memVo);
+		memberService.updateUseEmailCode(emailVo);
+		
+		if (result == 1) {
+			msg = "ok";
+		} else if (result != 1) {
+			msg = "err";
+		}
 		
 		return msg;
 	}
