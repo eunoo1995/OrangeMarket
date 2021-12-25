@@ -63,7 +63,7 @@
 					<div class="product-img-wrap">
 						<!-- 제품 이미지 -->
 						<img class="product-img"
-							src="<c:url value='/images/product/org_goods/${product.imgs}'/>">
+							src="<c:url value='/images/products/${product.imgs}'/>">
 					</div>
 	
 					<!-- 제품 정보 -->

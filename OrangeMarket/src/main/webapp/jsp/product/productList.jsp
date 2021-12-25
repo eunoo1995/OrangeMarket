@@ -8,10 +8,9 @@
 	<jsp:param name="cssName" value="product" />
 </jsp:include>
 <!-- 헤더 -->
-
+<c:set var="sessionId" value="${vo.userId}"/>
 <!-- 페이지 wraper -->
 <article class="pg-wrap">
-		<button class="btn_menu" onclick="location='product-write'">+</button>
 
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
@@ -20,16 +19,29 @@
 			</div>
 		</header>
 		
+		<script>
+			$(function() {
+				$("#pro-write").click(function(){
+					if(${sessionId} == null) {
+						alert("로그인 해주세요.");
+					} else {
+						location="product-write";
+					}
+					
+				});
+			});
+		</script>
+		
+		<button class="btn_menu" name="pro-write" id="pro-write">+</button>
 		<!-- 기본 정의 화면 -->
 		<article>
 			<!-- container -->
 			<div class="cont-inner">
-				<p class="list-total">
+		<!-- 		<p class="list-total">
 					총 <strong class="list-total__num">10</strong>개의 물품이 검색되었습니다.
-				</p>
+				</p> -->
 				<!-- 리스트 화면 -->
 				<ul class="pro-list">
-	
 					<!-- 상품 리스트 -->
 					<c:forEach var="product" items="${list}">
  						<li class="list-item"
