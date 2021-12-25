@@ -1,20 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 헤더 -->
 <jsp:include page="/include/admin_header.jsp" flush="false"/>
 <jsp:include page="/include/admin_nav.jsp" flush="false">
 	<jsp:param name="jsName" value="admin" />
 </jsp:include>
 <!-- 헤더 -->
+<script>
+$(function(){
+	$("#searchMember").click(function(){
+		if($("#word").val().trim() == "") {
+			alert("검색하실 닉네임을 입력하세요.");
+			$("#word").val("");
+			$("#word").focus();
+			return false;
+		}
+		var word = $("#word").val();
+		location = "admin-memberlist?word="+word;		 
+	});
+	$("#suspendBtn").click(function() {
+		if(confirm("해당 회원을 정지시키겠습니까?")) {
+			var userId = $("#userId").val();
+			location = "member-suspend?userId="+userId;	
+		}
+	});
+	
+});
+</script>
 <body>
     <section id="section">
     	<div class="section-inner">
     		<div class="section-title">회원정보목록</div>
     		<div class="section-content">
     			<div class="section-search">
-		    		<input type="text" name="" value="" placeholder="검색하실 '닉네임'을 입력하세요!">
-		    		<button type="submit" onclick=""><img src="/images/admin/search_w.png"></button>
+		    		<input type="text" name="word" id="word" value="${page.word}" placeholder="검색하실 '닉네임'을 입력하세요!">
+		    		<button id="searchMember"><img src="/images/admin/search_w.png"></button>
     			</div>
 				<div class="section-main">
 					<table>
@@ -32,23 +53,52 @@
 							<th>가입일</th>
 							<th>상세</th>
 						</tr>
-						<!-- 반복문 사용 예정 -->
+						<c:set var="rownum" value="${page.rownum }"/>
+						<c:forEach var="list" items="${list}">
 						<tr>
-							<td style="font-weight:bold;">4</td>
-							<td>123@123.com</td>
-							<td>홍길동</td>
-							<td>2021-01-01</td>
+							<td style="font-weight:bold;">${rownum}</td>
+							<td>${list.email}</td>
+							<td>${list.nikName}</td>
+							<td>${list.rdate}</td>
 							<td><img class="detail-btn" src="/images/admin/icon_down.png"></td>
 						</tr>
 						<tr style="display:none; font-size:14px;">
-							<td></td>
-							<td><div class="detail">주소</div><br>서울특별시 강남구</td>
-							<td><div class="detail">연락처</div><br>010-0000-0000</td>
-							<td><div class="detail">최근접속일</div><br>2021-01-01</td>
-							<td><br><button type="button" class="section-btn">계정정지</button></td>
+							<td class="liner"></td>
+							<td class="liner"><div class="detail">주소</div><br>${list.addr}</td>
+							<td class="liner"><div class="detail">연락처</div><br>${list.userPhone}</td>
+							<td class="liner"><div class="detail">최근접속일</div><br>${list.udate}</td>
+							<td class="liner">
+							<input type="hidden" id="userId" value="${list.userId}"><br>
+							<button type="button" id="suspendBtn" class="section-btn">계정정지</button>
+							</td>
 						</tr>
+						<c:set var="rownum" value="${rownum-1 }"/>
+						</c:forEach>
 					</table>
-					<div style="width:1000px; margin-top:50px; text-align:center;">《 1 2 3 4 5 》</div>
+					<div style="width:1000px; margin-top:50px; text-align:center;">
+					<article class="pager-wrap">
+						<ul class="pager">
+							<c:set var="before" value="${page.startPage-1}"/>
+							<c:set var="next" value="${page.endPage+1}"/>
+							<c:if test="${page.startPage != 1 }">
+							<li><a href="admin-memberlist?pageNo=${before}">&lt;</a></li>
+							</c:if>	
+								<c:forEach var="pageNo" begin="${page.startPage}" end="${page.endPage}">
+									<c:choose>
+									<c:when  test="${pageNo == page.pageNo }">
+										<li class="on"><a href="admin-memberlist?pageNo=${pageNo}&word=${page.word}">${pageNo}</a></li>
+									</c:when>
+									<c:when test="${pageNo != page.pageNo }">
+										<li><a href="admin-memberlist?pageNo=${pageNo}&word=${page.word}">${pageNo}</a></li>
+									</c:when>
+									</c:choose>
+								</c:forEach>
+							<c:if test="${page.endPage != page.totalPage }">
+							<li><a href="admin-memberlist?pageNo=${next}">&gt;</a></li>
+							</c:if>		
+						</ul>
+					</article>
+					</div>
 				</div>    		
     		</div>
     	</div>

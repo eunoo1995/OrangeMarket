@@ -10,5 +10,38 @@
 		SELECT COUNT(*) FROM ADMIN_MEMBER 
 			WHERE ADMIN_PASS = #{adminPass}
 	</select>
-
+	
+	<select id="selectMemberList" parameterType="pagingVO" resultType="egovMap">
+		SELECT D.* FROM (
+			SELECT ROWNUM RN, C.* FROM (
+				SELECT  A.USER_ID,
+						A.EMAIL,
+						A.NIK_NAME,
+						A.ADDR,
+						A.USER_PHONE,
+						TO_CHAR(A.RDATE,'YYYY-MM-DD') RDATE,
+						TO_CHAR(A.UDATE,'YYYY-MM-DD') UDATE
+				FROM MEMBER A, MEM_STATUS B
+				WHERE A.user_id = b.user_id
+				AND	B.MEM_STATE_CODE = 1 
+				<if test="word != null">
+				AND A.NIK_NAME LIKE '%${word}%'
+				</if>
+				ORDER BY RDATE DESC
+				) C ) D 
+		WHERE RN BETWEEN #{startIndex} AND #{endIndex}
+	</select>
+	<select id="totalMemberList" parameterType="pagingVO" resultType="int">
+		SELECT COUNT(*) FROM MEMBER A, MEM_STATUS B 
+		WHERE A.user_id = b.user_id
+		AND	B.MEM_STATE_CODE = 1 
+		<if test="word != null">
+		AND A.NIK_NAME LIKE '%${word}%'
+		</if>
+	</select>
+	
+	<update id="updateMemberState">
+		UPDATE MEM_STATUS SET MEM_STATE_CODE = 2 
+			WHERE USER_ID = #{userId}
+	</update>
 </mapper>

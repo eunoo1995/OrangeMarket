@@ -1,14 +1,18 @@
 package orange.web;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import orange.service.AdminService;
 import orange.service.AdminVO;
+import orange.service.PagingVO;
 
 @Controller
 public class AdminController {
@@ -43,10 +47,28 @@ public class AdminController {
 	
 	// 회원 목록화면 출력 -----------------------------------------
 	@RequestMapping(value = "admin-memberlist")
-	public String adminMemberList() throws Exception {
+	public String adminMemberList(PagingVO vo, Model model) throws Exception {
+		String word = vo.getWord();
+		int total = adminService.totalMemberList(vo);
+		int pageNo = vo.getPageNo();
+		vo = new PagingVO(total, pageNo, 5);
+		vo.setWord(word);
 		
+		List<?> list = adminService.selectMemberList(vo);
+		model.addAttribute("page",vo);
+		model.addAttribute("list",list);
 		return "admin/memberList";
 	}
+	
+	@RequestMapping(value = "member-suspend")
+	public String suspendMember(int userId) throws Exception {
+		System.out.println(userId);
+		adminService.updateMemberState(userId);
+		return "redirect:admin-memberlist";
+	}
+	
+	
+	
 	
 	// 문의하기 목록화면 출력 --------------------------------------
 	@RequestMapping(value = "admin-inquirylist")
