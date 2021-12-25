@@ -187,6 +187,13 @@ if (joinForm) {
 	}
 }
 
+/* 로그인 */
+
+
+/*  */
+
+
+/* 폼태그 유효성 검사 s */
 function chkName($target) {
 	var frm = $target;
 	var input = frm.userName;
@@ -248,7 +255,7 @@ function chkTel($target) {
 		input.value = inputTxt;
 	}
 
-	var formData = 'tel=' + inputTxt;
+	var formData = 'userPhone=' + inputTxt;
 
 	$.ajax({
 		type: 'POST',
@@ -257,6 +264,7 @@ function chkTel($target) {
 		dataType: 'text',
 		success: function(data) {
 			if (data == 'exist') {
+				console.log(data);
 				showFormErr(areaErrMsg, '이미 존재하는 연락처입니다.');
 				frm.telFlag.value = 'N';
 				return false;
@@ -762,7 +770,7 @@ function chkAreaVerif($target) {
 		}
 	}
 }
-
+/* 폼태그 유효성 검사 e */
 
 function showFormErr($obj, msg) {
 	$obj.innerText = msg;
