@@ -74,7 +74,7 @@
 			<div class="product-write-content__detail">
 				<form id="frm-product" name="frm-product" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 					
-					<input type="hidden" name="seller" id="seller" value="${userId }">
+					<input type="hidden" name="seller" id="seller" value="${userId}">
 										
 					<table class="product-write-table">
 						<!-- 1. 상품 이미지 -->

@@ -8,7 +8,7 @@
 	<jsp:param name="cssName" value="product" />
 </jsp:include>
 <!-- 헤더 -->
-<c:set var="sessionId" value="${vo.userId}"/>
+
 <!-- 페이지 wraper -->
 <article class="pg-wrap">
 
@@ -20,12 +20,12 @@
 		</header>
 		
 		<script>
-			$(function() {
-				$("#pro-write").click(function(){
-					if(${sessionId} == null) {
-						alert("로그인 해주세요.");
+			$(function(){
+				$("#pro-write").click(function() {
+					if($("#seller").val() == "") {
+						alert("로그인이 필요한 기능입니다.");
 					} else {
-						location="product-write";
+						location = "product-write";						
 					}
 					
 				});
@@ -40,6 +40,7 @@
 		<!-- 		<p class="list-total">
 					총 <strong class="list-total__num">10</strong>개의 물품이 검색되었습니다.
 				</p> -->
+				<input type="hidden" name="seller" id="seller" value="${userId}">
 				<!-- 리스트 화면 -->
 				<ul class="pro-list">
 					<!-- 상품 리스트 -->

@@ -30,20 +30,23 @@ public class ProductController {
 
 	// 제품 리스트 표시 및 상세 보기 기능
 	@RequestMapping(value="/product-list")
-	public String productList(ProductVO vo, MemberVO mvo, Model model, HttpSession session) throws Exception {
+	public String productList(ProductVO vo, Model model, HttpSession session) throws Exception {
 		// 세션값이 없으면 로그인 화면으로 리턴
-		if(session.getAttribute("sessionId") == null) return "redirect:login";
-		int sessionId = (int) session.getAttribute("sessionId");
-		
-		// 회원 정보 가져오기
-		vo.setUserId(sessionId);
-		
-		//등록된 판매 제품 목록 리스트
-		List<?> list = productService.selectProductList(vo);
-		
-		model.addAttribute("list", list);
-		model.addAttribute("vo", vo);
-		
+		if(session.getAttribute("sessionId") == null) {
+			//등록된 판매 제품 목록 리스트
+			List<?> list = productService.selectProductList(vo);
+			model.addAttribute("list", list);
+			System.out.println("세션 없음");
+		} else {
+			int sessionId = (int) session.getAttribute("sessionId");
+			model.addAttribute("userId", sessionId);
+			
+			//등록된 판매 제품 목록 리스트
+			List<?> list = productService.selectProductList(vo);
+			model.addAttribute("list", list);
+			System.out.println("sessionId : " + sessionId);
+		}
+
 		return "product/productList";
 	}
 	
@@ -80,9 +83,6 @@ public class ProductController {
 		 String addr = new String(vo.getAddr().getBytes("8859_1"), "UTF-8");
 		 String content = new String(vo.getContent().getBytes("8859_1"), "UTF-8");
 		
-		 // 게시글 번호
-		 int proCode = vo.getProCode();
-		 
 		 // 데이터 입력
 		 vo.setTitle(title);
 		 vo.setKeyword(keyword);
@@ -95,14 +95,14 @@ public class ProductController {
 		 //File delFile = new File(path + svo.getImgs());
 		 //if(delFile.exists()) delFile.delete();
 		 // 새로 저장시킬 파일
-		 String imgs = "1";
+		 String imgs = "";
 		 
 		 for(MultipartFile multipartFile : uploadProductImg) {
 			 // 확장자 구하기
-			 String realName = multipartFile.getOriginalFilename();
+			 String realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
 			 String ext = realName.substring(realName.lastIndexOf(".")); 
 			 // userId + 확장자로 파일 저장
-			 imgs += proCode+ext;
+			 imgs += ext;
 			 File saveFile = new File(path, imgs);
 			 multipartFile.transferTo(saveFile);
 		 }
