@@ -79,7 +79,7 @@
 			   B.UNQ,
 			   A.IMGS, 
 			   B.LIKER, 
-			   A.SELLER_NIK
+			   (select nik_name from member where user_id=a.seller) SELLER_NIK
 		FROM PRODUCT A, LIKE_PRODUCT B
 		WHERE B.LIKER = #{liker}
 	</select>

@@ -191,7 +191,7 @@
 							</div>
 	
 						</div>
-	
+						
 						<div class="info-btn-wrap">
 							<button type="button" class="btn btn-solid-point" name="like" id="like">관심</button>
 							<button type="button" class="btn btn-solid" name="chat" id="chat">채팅</button>
