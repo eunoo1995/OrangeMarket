@@ -113,12 +113,12 @@
 	padding: 15px 10px;
 }
 
-/* 로그인 */
-.pg-member .sub-page-head {
-	text-align: center;
+/* 회원가입 */
+.pg-join .cont-inner {
+	width: 600px;
+	margin: 0 auto;
 }
 
-/* 회원가입 */
 .join-form {
 	margin: 0 auto;
 }
@@ -177,8 +177,13 @@
 }
 
 /* 로그인 */
-.pg-join .cont-inner, .login .cont-inner {
-	width: 600px;
+.pg-login .sub-page-head,
+.pg-member .sub-page-head {
+	text-align: center;
+}
+
+.login .login-wrap {
+	width: 500px;
 	margin: 0 auto;
 }
 

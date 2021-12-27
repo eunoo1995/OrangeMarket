@@ -44,11 +44,6 @@ if (joinForm) {
 	var btnConfirmEmail = frm.querySelector('#btnConfirmEmail');
 	var btnCheckArea = frm.querySelector('#btnCheckArea');
 	var btnConfirmArea = frm.querySelector('#btnConfirmArea');
-	
-	var joinFormCancel= document.getElementById('joinFormCancel');
-	joinFormCancel.addEventListener('click', function() {
-		location.replace = 'login';
-	});
 
 	/* 이름 검사 */
 	frm.userName.addEventListener('blur', function() {
@@ -70,6 +65,12 @@ if (joinForm) {
 		chkPw1(frm);
 	});
 
+	frm.password.addEventListener('input', function() {
+		if (frm.pwFlag.value === 'Y') {
+			frm.pwFlag.value = 'N';
+		}
+	});
+
 	/* 비밀번호 일치 검사 */
 	frm.rePassword.addEventListener('blur', function() {
 		chkPw2(frm);
@@ -89,7 +90,7 @@ if (joinForm) {
 	});
 
 	/* 이메일 인증번호 */
-	btnConfirmEmail.addEventListener('click', function(e) {
+	btnConfirmEmail.addEventListener('click', function() {
 		sendEmailCode(frm);
 		btnConfirmEmail.innerText = '재요청';
 	});
@@ -176,11 +177,11 @@ if (joinForm) {
 				chkPw1(frm);
 				chkPw2(frm);
 				chkEmail(frm);
-	
+
 				if (frm.email.value !== '' && frm.emailFlag.value === 'N') {
 					chkEmailVerif(frm);
 				}
-	
+
 				chkArea(frm);
 			}
 		});
@@ -188,12 +189,75 @@ if (joinForm) {
 }
 
 /* 로그인 */
+var loginForm = document.getElementById('loginForm');
 
+
+if (loginForm) {
+	var frm = loginForm;
+	var confirmBtn = document.getElementById('confirmLoginBtn');
+	var email = frm.email;
+	var password = frm.password;
+
+	/* 이메일 입력 검사 */
+	email.addEventListener('blur', function() {
+		var emailFlag = chkInputNull(email, '이메일을 입력해주세요');
+	});
+
+	/* 비밀번호 입력 검사 */
+	password.addEventListener('blur', function() {
+		var pwFlag = chkInputNull(password, '비밀번호를 입력해주세요');
+	});
+
+	confirmBtn.addEventListener('click', function() {
+		var emailFlag = chkInputNull(email, '이메일을 입력해주세요');
+		var pwFlag = chkInputNull(password, '비밀번호를 입력해주세요');
+
+		if (emailFlag != false && pwFlag != false ) {
+			var formData = {
+				'userPw': password.value,
+				'email': email.value,
+				'remEmail': frm.remEmail.checked
+			};
+
+			$.ajax({
+				type: 'POST',
+				url: 'login-confirm',
+				data: formData,
+				dataType: 'text',
+				success: function(data) {
+					if (data == 'err') {
+						alert('이메일 혹은 비밀번호가 일치하지 않습니다.');
+					} else if (data == 'ok') {
+						location.replace('/main');
+					}
+				},
+				error: function() {
+				}
+			});
+		};
+
+
+	});
+}
 
 /*  */
 
 
 /* 폼태그 유효성 검사 s */
+function chkInputNull($target, errMsg) {
+	var areaErrMsg = $target.closest('td').querySelector('.form-err-msg');
+
+	if ($target.value === '') {
+		showFormErr(areaErrMsg, errMsg);
+
+		return false;
+	}
+
+	hideFormErr(areaErrMsg);
+
+	return true;
+}
+
 function chkName($target) {
 	var frm = $target;
 	var input = frm.userName;
@@ -365,8 +429,6 @@ function chkNik($target) {
 
 function chkPw1($target) {
 	var frm = $target;
-
-	frm.pwFlag.value = 'N';
 
 	var input = frm.password;
 	var inputTxt = input.value;

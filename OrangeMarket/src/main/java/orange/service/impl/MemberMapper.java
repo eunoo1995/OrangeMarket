@@ -30,9 +30,13 @@ public interface MemberMapper {
 
 	int insertAgreeTerms(List<Map<String, Object>> insertList);
 
-	int selectUserId();
+	int selectNewUserId();
 
 	int insertMemberStatus(int userId);
+
+	int checkMemberLogin(MemberVO vo);
+
+	Object selectMemberInfo(MemberVO vo);
 	
 
 }
