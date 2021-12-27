@@ -123,7 +123,7 @@
 					</div>
 				</c:if>
 				
-				<form name="frm" id="frm" method="post">
+				
 				
 				<!-- 상품 내용 및 상세 내용 -->
 				<div class="pro-detail-top">
@@ -133,7 +133,6 @@
 						<img class="product-img" name="imgs" id="imgs"
 							src="<c:url value='/images/products/${product.imgs}'/>">
 					</div>
-					
 					
 					
 					
@@ -192,6 +191,17 @@
 	
 						</div>
 						
+<<<<<<< HEAD
+=======
+						<form name="frm" id="frm" method="post">
+							<input type="hidden" name="title" id="title" value="${product.title }">
+							<input type="hidden" name="proCode" id="proCode" value="${product.proCode }">
+							<input type="hidden" name="price" id="price" value="${product.price }">
+							<input type="hidden" name="seller" id="seller" value="${product.seller }">
+							<input type="hidden" name="proCode" id="proCode" value="${product.sellerNik }">
+						</form>
+						
+>>>>>>> a3aed40a44373d4ab272b13ca0c634029336b15d
 						<div class="info-btn-wrap">
 							<button type="button" class="btn btn-solid-point" name="like" id="like">관심</button>
 							<button type="button" class="btn btn-solid" name="chat" id="chat">채팅</button>
@@ -212,7 +222,7 @@
 					</div>
 				</div>
 			
-				</form>
+				
 	
 				<!-- 연관 상품 -->
 				<div class="related-listView">
