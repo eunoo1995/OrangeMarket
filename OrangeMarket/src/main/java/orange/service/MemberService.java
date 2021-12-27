@@ -21,8 +21,12 @@ public interface MemberService {
 
 	int insertAgreeTerms(List<Map<String, Object>> insertList) throws Exception;
 
-	int selectUserId() throws Exception;
+	int selectNewUserId() throws Exception;
 
 	int insertMemberStatus(int userId) throws Exception;
+
+	int checkMemberLogin(MemberVO vo) throws Exception;
+
+	MemberVO selectMemberInfo(MemberVO vo) throws Exception;
 
 }

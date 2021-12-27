@@ -7,7 +7,7 @@ public class ProductVO extends ProductSubVO {
 	private String title;
 	private String keyword;
 	private String addr;
-	private int price;
+	private String price;
 	private String content;
 	private String rdate;
 	private String udate;
@@ -76,11 +76,11 @@ public class ProductVO extends ProductSubVO {
 		this.addr = addr;
 	}
 
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 

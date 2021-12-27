@@ -100,7 +100,7 @@
 							<tr>
 								<td colspan="2">
 									<div class="btn-group">
-										<button type="button" class="btn btn-solid-point btn-half" id="joinFormCancel">취소하기</button>
+										<a href="/" class="btn btn-solid btn-half">취소하기</a>
 										<button type="button" class="btn btn-solid-point btn-half" id="joinFormConfirm">가입하기</button>
 									</div>
 								</td>

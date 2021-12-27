@@ -7,7 +7,7 @@
 	<jsp:param name="cssName" value="product" />
 </jsp:include>
 <!-- 헤더 -->
-<c:set var="sessionId" value="${vo.userId}"/>
+
 <!-- 페이지 wraper -->
 <article class="pg-wrap pg-pro-detail">
 	<!-- container -->
@@ -74,7 +74,7 @@
 			<div class="product-write-content__detail">
 				<form id="frm-product" name="frm-product" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 					
-					<input type="hidden" name="seller" id="seller" value="${userId}">
+					<input type="hidden" name="seller" id="seller" value="${seller}">
 										
 					<table class="product-write-table">
 						<!-- 1. 상품 이미지 -->
@@ -112,8 +112,8 @@
 							<td class="product-write-table-td2">
 								<select name="proCategoryCode" id="proCategoryCode" class="product-write-category">
 									<option value="">카테고리를 선택해주세요.</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
+									<option value="1">여성의류</option>
+									<option value="2">남성의류</option>
 								</select>
 
 								<div class="keyword-wrap">
@@ -131,7 +131,7 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-								<input type="text" name="addr" id="addr" value="서울시 강남구" readonly class="product-write-text">
+								<input type="text" name="addr" id="addr" value="${addr}" readonly class="product-write-text">
 							</td>
 						</tr>
 

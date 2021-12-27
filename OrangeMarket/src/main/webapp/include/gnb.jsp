@@ -12,8 +12,8 @@
 		</p>
 		<ul class="gnb-ul">
 			<!-- 반복문 사용 예정 -->
-			<li><a href="#">여성의류</a></li>
-			<li><a href="#">남성의류</a></li>
+			<li><a href="product-list?proCategoryCode=1">여성의류</a></li>
+			<li><a href="product-list?proCategoryCode=2">남성의류</a></li>
 			<li><a href="#">기타</a></li>
 			<li><a href="#">등등</a></li>
 			<li><a href="#">이것저것</a></li>

@@ -15,7 +15,7 @@
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
 			<div class="cont-inner">
-				<h2 class="sub-page-title">Category</h2>
+				<h2 class="sub-page-title">${category}</h2>
 			</div>
 		</header>
 		
@@ -25,7 +25,7 @@
 					if($("#seller").val() == "") {
 						alert("로그인이 필요한 기능입니다.");
 					} else {
-						location = "product-write";						
+						location = "product-write?seller=${userId}";				
 					}
 					
 				});
@@ -40,7 +40,10 @@
 		<!-- 		<p class="list-total">
 					총 <strong class="list-total__num">10</strong>개의 물품이 검색되었습니다.
 				</p> -->
-				<input type="hidden" name="seller" id="seller" value="${userId}">
+				<form name="frm" id="frm" method="post">
+					<input type="hidden" name="seller" id="seller" value="${userId}">
+					<input type="hidden" name="addr" id="addr" value="${addr}">
+				</form>
 				<!-- 리스트 화면 -->
 				<ul class="pro-list">
 					<!-- 상품 리스트 -->
@@ -59,7 +62,7 @@
 								</figure> <!-- 상품 이미지 --> <!-- 상품 내용 및 상세 내용 -->
 								<div class="pro-detail">
 									<p class="pro-detail-tit">${product.title}</p>
-									<p class="pro-detail-price">${product.price}</p>
+									<p class="pro-detail-price">${product.price} 원</p>
 									<p class="pro-detail-area">${product.addr}</p>
 								</div> <!-- 상품 내용 및 상세 내용 -->
 						</a>
