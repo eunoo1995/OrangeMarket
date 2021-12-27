@@ -31,31 +31,55 @@ public class ProductController {
 	// 제품 리스트 표시 및 상세 보기 기능
 	@RequestMapping(value="/product-list")
 	public String productList(ProductVO vo, Model model, HttpSession session) throws Exception {
-		// 세션값이 없으면 로그인 화면으로 리턴
-		if(session.getAttribute("sessionId") == null) {
-			//등록된 판매 제품 목록 리스트
-			List<?> list = productService.selectProductList(vo);
-			model.addAttribute("list", list);
-			System.out.println("세션 없음");
+		
+		if(vo.getProCategoryCode() == 0) { 
+			// 세션값이 없으면 로그인 화면으로 리턴
+			if(session.getAttribute("sessionId") == null) {
+				List<?> list = productService.selectProductList(vo);
+				model.addAttribute("list", list);
+				System.out.println("세션 없음");
+			} else {
+				int sessionId = (int) session.getAttribute("sessionId");
+				model.addAttribute("userId", sessionId);
+				
+				//등록된 판매 제품 목록 리스트
+				List<?> list = productService.selectProductList(vo);
+				model.addAttribute("list", list);
+				System.out.println("sessionId : " + sessionId);
+			}
 		} else {
-			int sessionId = (int) session.getAttribute("sessionId");
-			model.addAttribute("userId", sessionId);
-			
-			//등록된 판매 제품 목록 리스트
-			List<?> list = productService.selectProductList(vo);
-			model.addAttribute("list", list);
-			System.out.println("sessionId : " + sessionId);
+			if(session.getAttribute("sessionId") == null) {
+				//등록된 판매 제품 목록 리스트
+				List<?> list = productService.selectProductCategoryList(vo);
+				model.addAttribute("list", list);
+				System.out.println("세션 없음");
+			} else {
+				int sessionId = (int) session.getAttribute("sessionId");
+				model.addAttribute("userId", sessionId);
+				
+				//등록된 판매 제품 목록 리스트
+				List<?> list = productService.selectProductCategoryList(vo);
+				model.addAttribute("list", list);
+				System.out.println("sessionId : " + sessionId);
+			}
 		}
-
+		
 		return "product/productList";
 	}
 	
 	@RequestMapping(value="/product-list-detail")
 	public String selectProductDetail(ProductVO vo, Model model, HttpSession session) throws Exception {
-		int sessionId = (int) session.getAttribute("sessionId");
-		
-		vo = productService.selectProductDetail(vo);
-		model.addAttribute("product", vo);
+		// 세션값이 없으면 로그인 화면으로 리턴
+		if(session.getAttribute("sessionId") == null) {
+			vo = productService.selectProductDetail(vo);
+			model.addAttribute("product", vo);
+		} else {
+			int sessionId = (int) session.getAttribute("sessionId");
+			model.addAttribute("userId", sessionId);
+			
+			vo = productService.selectProductDetail(vo);
+			model.addAttribute("product", vo);
+		}
 		
 		return "product/productDetail";
 	}

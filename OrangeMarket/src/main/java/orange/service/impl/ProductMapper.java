@@ -19,6 +19,6 @@ public interface ProductMapper {
 
 	ProductVO selectProductModify(ProductVO vo);
 
-	
+	List<?> selectProductCategoryList(ProductVO vo);
 
 }

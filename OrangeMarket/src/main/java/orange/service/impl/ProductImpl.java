@@ -35,9 +35,15 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		// TODO Auto-generated method stub
 		return productDAO.selectProductList(vo);
 	}
+	
+	@Override
+	public List<?> selectProductCategoryList(ProductVO vo) {
+		// TODO Auto-generated method stub
+		return productDAO.selectProductCategoryList(vo);
+	}
 
 	@Override
-	public ProductVO selectProductDetail(ProductVO vo) { // 판매 제품 리스트 -> 상세정보 출력
+	public ProductVO selectProductDetail(ProductVO vo)  { // 판매 제품 리스트 -> 상세정보 출력
 		// TODO Auto-generated method stub
 		return productDAO.selectProductDetail(vo);
 	}
@@ -47,5 +53,8 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		// TODO Auto-generated method stub
 		return productDAO.selectProductModify(vo);
 	}
+
+
+
 
 }
