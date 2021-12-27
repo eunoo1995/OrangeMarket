@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/mypage.css'/>"/>
 </head>
+<script src="/js/mypage.js"></script>
 <body>
 <div class="withdrawal-main">
 	<div class="withdrawal-title">
@@ -22,7 +23,7 @@
 	</div>
 	<p class="withdrawal-li">· 탈퇴사유</p>
 	<div>
-		<select id="" class="withdrawal-select">
+		<select id="reason" class="withdrawal-select">
 			<option value="이용빈도 낮음">이용빈도 낮음</option>
 			<option value="개인정보 유출 우려">개인정보 유출 우려</option>
 			<option value="사이트 이용 불편">사이트 이용 불편</option>
@@ -38,20 +39,20 @@
 			</colgroup>
 			<tr>
 				<th>이메일</th>
-				<td>fsadnfjsadn@asndf.com</td>
+				<td>${vo.email}</td>
 			</tr>
 			<tr>
-				<th>비밀번호</th>
-				<td><input type="password" class="" value="" placeholder="비밀번호를 입력하세요."></td>
+				<th>비밀번호 확인</th>
+				<td><input type="password" id="userPw" placeholder="비밀번호를 입력하세요."></td>
 			</tr>
 		</table>
 	</div>
 	<div class="withdrawal-div1">
-	<input class="withdrawal-checkbox" type="checkbox">
+	<input class="withdrawal-checkbox" type="checkbox" id="agreeChk">
 	<span class="withdrawal-chk">해당 내용을 모두 확인했으며, 회원 탈퇴를 동의합니다.</span>
 	</div>
 	<div class="withdrawal-div2">
-		<input type="button" class="withdrawal-submit-btn" value="회원탈퇴">
+		<input type="button" class="withdrawal-submit-btn" id="withdrawalBtn" value="회원탈퇴">
 	</div>
 </div>
 </body>

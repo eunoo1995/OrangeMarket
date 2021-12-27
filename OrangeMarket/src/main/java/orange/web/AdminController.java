@@ -90,6 +90,30 @@ public class AdminController {
 		return "redirect:admin-suspendlist";
 	}
 	
+	// 탈퇴회원 목록화면 출력 --------------------------------------
+	@RequestMapping(value = "admin-withdrawallist")
+	public String withdrawalList(PagingVO vo, Model model) throws Exception {
+		String word = vo.getWord();
+		int total = adminService.totalWithdrawal(vo);
+		int pageNo = vo.getPageNo();
+		vo = new PagingVO(total, pageNo, 5);
+		vo.setWord(word);
+		
+		List<?> list = adminService.selectWithdrawal(vo);
+		model.addAttribute("page",vo);
+		model.addAttribute("list",list);
+		
+		return "admin/withdrawalList";
+	}
+	
+	@RequestMapping(value = "member-restore")
+	public String restoreMember(int userId) throws Exception {
+		adminService.updateRestore(userId);
+		return "redirect:admin-withdrawallist";
+	}
+	
+	
+	
 	
 	
 	// 문의하기 목록화면 출력 --------------------------------------

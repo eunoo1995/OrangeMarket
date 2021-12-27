@@ -31,4 +31,11 @@ public interface MyPageService {
 	// 관심게시글 삭제
 	int deleteLikeList(ProductVO vo) throws Exception;
 	
+	// 탈퇴 신청 회원 암호확인
+	int selectPassChk(MemberVO vo) throws Exception;
+	
+	// 회원 상태 탈퇴처리
+	int updateWithdrawal(MemberVO vo) throws Exception;
+	int withdrawalDate(MemberVO vo) throws Exception;
+	
 }

@@ -21,4 +21,9 @@ public interface AdminService {
 	// 회원 정지 해제
 	int updateUnlock(int userId) throws Exception;
 	
+	// 탈퇴 회원 리스트 출력
+	int totalWithdrawal(PagingVO vo) throws Exception;
+	List<?> selectWithdrawal(PagingVO vo) throws Exception;
+	// 탈퇴 회원 복구
+	int updateRestore(int userId) throws Exception;
 }

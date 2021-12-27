@@ -87,4 +87,20 @@
 		DELETE FROM LIKE_PRODUCT WHERE UNQ = #{unq}
 	</delete>
 	
+	
+	
+	<update id="updateWithdrawal" parameterType="memberVO">
+		UPDATE MEM_STATUS 
+			SET MEM_STATE_CODE = 5,
+			REASON = #{reason} 
+		WHERE USER_ID = #{userId}	
+	</update>
+	<update id="withdrawalDate" parameterType="memberVO">
+		UPDATE MEMBER SET UDATE = SYSDATE WHERE USER_ID = #{userId}	
+	</update>
+	<select id="selectPassChk" parameterType="memberVO" resultType="int">
+		SELECT COUNT(*) FROM MEMBER
+			WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
+	</select>
+	
 </mapper>
