@@ -7,12 +7,12 @@
 	<jsp:param name="cssName" value="product" />
 </jsp:include>
 <!-- 헤더 -->
-
+<c:set var="sessionId" value="${vo.userId}"/>
 <!-- 페이지 wraper -->
 <article class="pg-wrap pg-pro-detail">
 	<!-- container -->
 	<div class="cont-inner">
-	
+		
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
 			<div class="cont-inner">
@@ -24,34 +24,6 @@
 				$(function(){
 					//작성 저장 ajax
 					$("#pro-btn-save").click(function(){
-							/* var img = $("#imgs").val();
-							var title = $("#title").val();
-							var proCategoryCode = $("#proCategoryCode").val();
-							var addr = $("#addr").val();
-							var refund = $("#refund").val();
-							var price = $("#price").val();
-							var content = $("#content").val();
-							var nego = $("#nego").val();
-							
-							alert("  이미지 : " + img + "\n"
-								+ "   제목 : " + title + "\n" 
-								+ "카테고리 : " + proCategoryCode + "\n"
-								+ "거래지역 : " + addr + "\n"
-								+ "환불여부 : " + refund + "\n"
-								+ "   가격 : " + price + "\n"
-								+ "   설명 : " + content + "\n"
-								+ "가격협의 : " + nego
-							); */
-					  	/* 	if($("#title").val() == "" ) {
-					  			alert("제목을 입력해주세요.");
-					  			$("#title").focus();
-					  			return false;
-					  		}
-					  		if($("#content").val() == "" ) {
-					  			alert("내용을 입력해주세요.");
-					  			$("#content").focus();
-					  			return false;
-					  		} */
 					  		var formdata = new FormData(document.getElementById("frm-product"));
 					  		$.ajax({
 					  			type : "post",
@@ -68,28 +40,8 @@
 					  					alert("저장 실패");
 					  				}
 					  			},
-					  			error : function (request, status, error){
-					                
-					  			    var errorMsg = "요청 도중 오류가 발생하였습니다. \n";
-					  			   
-					  			    if(request.status == 0){ //offline
-					  			        errorMsg += "네트워크 연결을 확인해주십시오.";
-					  			    }else if(request.status==401){//Unauthorized
-					  			        errorMsg += "권한이 없습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(request.status==403){//Forbidden
-					  			        errorMsg += "접근이 거부되었습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(request.status==404){//Not Found
-					  			        errorMsg += "요청한 페이지를 찾을 수 없습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(request.status==500){ //Internel Server Error
-					  			        errorMsg += "서버 내 오류가 발생하였습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(status=='parsererror'){ //Error.nParsing JSON Request failed.
-					  			        errorMsg += "응답 본문을 정상적으로 가져올 수 없습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(status=='timeout'){ //Request Time out.
-					  			        errorMsg += "응답 제한 시간을 초과하였습니다. 다시 조회해주세요.";
-					  			    }else { //Unknow Error
-					  			        errorMsg += "\n관리자에게 문의해주세요.";
-					  			    }
-					  			    alert(errorMsg);
+					  			error : function (){
+					              alert("error");
 					  			}
 					  		});
 					  	});
@@ -122,11 +74,9 @@
 			<div class="product-write-content__detail">
 				<form id="frm-product" name="frm-product" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 					
-					<input type="hidden" name="seller" id="seller" value="10">
-					<input type="hidden" name="sellerNik" id="sellerNik" value="판매자 닉네임">
-				
+					<input type="hidden" name="seller" id="seller" value="${userId}">
+										
 					<table class="product-write-table">
-
 						<!-- 1. 상품 이미지 -->
 						<tr class="product-table-tr">
 							<th>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import orange.service.MemberService;
+import orange.service.MemberVO;
 import orange.service.ProductService;
 import orange.service.ProductSubVO;
 import orange.service.ProductVO;
@@ -21,22 +24,34 @@ public class ProductController {
 	
 	@Resource(name="productService")
 	private ProductService productService;
+	
+	@Resource(name="memberService")
+	private MemberService memberService;
 
 	// 제품 리스트 표시 및 상세 보기 기능
 	@RequestMapping(value="/product-list")
-	public String productList(ProductVO vo, Model model) throws Exception {
-		
-		//등록된 판매 제품 목록 리스트
-		List<?> list = productService.selectProductList(vo);
-		
-		
-		model.addAttribute("list", list);
-		
+	public String productList(ProductVO vo, Model model, HttpSession session) throws Exception {
+		// 세션값이 없으면 로그인 화면으로 리턴
+		if(session.getAttribute("sessionId") == null) {
+			//등록된 판매 제품 목록 리스트
+			List<?> list = productService.selectProductList(vo);
+			model.addAttribute("list", list);
+			System.out.println("세션 없음");
+		} else {
+			int sessionId = (int) session.getAttribute("sessionId");
+			model.addAttribute("userId", sessionId);
+			
+			//등록된 판매 제품 목록 리스트
+			List<?> list = productService.selectProductList(vo);
+			model.addAttribute("list", list);
+			System.out.println("sessionId : " + sessionId);
+		}
+
 		return "product/productList";
 	}
 	
 	@RequestMapping(value="/product-list-detail")
-	public String selectProductDetail(ProductVO vo, Model model) throws Exception {
+	public String selectProductDetail(ProductVO vo, Model model, HttpSession session) throws Exception {
 		vo = productService.selectProductDetail(vo);
 		model.addAttribute("product", vo);
 		
@@ -44,7 +59,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/product-write")
-	public String productWrite() throws Exception {
+	public String productWrite(Model model, HttpSession session) throws Exception {
+		// 세션값이 없으면 로그인 화면으로 리턴
+		if(session.getAttribute("sessionId") == null) return "redirect:login";
+		int sessionId = (int) session.getAttribute("sessionId");
+		
+		model.addAttribute("userId", sessionId);
 		
 		return "product/productWrite";
 	}
@@ -53,22 +73,21 @@ public class ProductController {
 	//제품 등록 기능 및 저장
 	@RequestMapping(value="/product-write-save")
 	@ResponseBody
-	public String insertProduct(ProductVO vo, ProductSubVO svo, MultipartFile[] uploadProductImg, HttpServletRequest request) throws Exception {
+	public String insertProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpServletRequest request) throws Exception {
 		
 		String msg = "ok";
+		
 		 // 한글 인식
 		 String title = new String(vo.getTitle().getBytes("8859_1"), "UTF-8");
 		 String keyword = new String(vo.getKeyword().getBytes("8859_1"), "UTF-8");
 		 String addr = new String(vo.getAddr().getBytes("8859_1"), "UTF-8");
 		 String content = new String(vo.getContent().getBytes("8859_1"), "UTF-8");
-		 String sellerNik = new String(vo.getSellerNik().getBytes("8859_1"), "UTF-8");
-		 
+		
 		 // 데이터 입력
 		 vo.setTitle(title);
 		 vo.setKeyword(keyword);
 		 vo.setAddr(addr);
 		 vo.setContent(content);
-		 vo.setSellerNik(sellerNik);
 		
 		 // 저장경로
 		 String path = request.getServletContext().getRealPath("/images/products");
@@ -77,14 +96,13 @@ public class ProductController {
 		 //if(delFile.exists()) delFile.delete();
 		 // 새로 저장시킬 파일
 		 String imgs = "";
-		 int proCode = vo.getProCode();
 		 
 		 for(MultipartFile multipartFile : uploadProductImg) {
 			 // 확장자 구하기
-			 String realName = multipartFile.getOriginalFilename();
+			 String realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
 			 String ext = realName.substring(realName.lastIndexOf(".")); 
 			 // userId + 확장자로 파일 저장
-			 imgs += proCode+ext;
+			 imgs += ext;
 			 File saveFile = new File(path, imgs);
 			 multipartFile.transferTo(saveFile);
 		 }
@@ -99,7 +117,7 @@ public class ProductController {
 	
 	// 제품 정보 수정 및 저장
 	@RequestMapping(value="/product-modify")
-	public String selectproductModify(ProductVO vo, Model model) throws Exception{
+	public String selectproductModify(ProductVO vo, Model model, HttpSession session) throws Exception{
 		
 		vo = productService.selectProductModify(vo);
 		model.addAttribute("product", vo);

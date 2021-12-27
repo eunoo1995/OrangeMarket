@@ -21,14 +21,78 @@
 		
 		<script>
 		$(function(){
+			//관심 기능
+			$("#like").click(function(){
+				var formdata = $("#frm").serialize();
+				alert("like");
+			/* 					
+			  		$.ajax({
+			  			type : "post",
+			  			url  : "like-product",
+			  			data : formdata,
+			  			processData : false,
+			  			contentType : false,
+			  			datatype : "text",
+			  			success : function(data) {
+		  					location='chat';
+			  			},
+			  			error : function (request, status, error){
+							alert("전송 실패");
+			  			}
+			  		});
+			 */
+			});
 			
+			// 채팅 기능
 			$("#chat").click(function(){
-			  	
 				var formdata = $("#frm").serialize();
 					
 			  		$.ajax({
 			  			type : "post",
-			  			url  : "chat",
+			  			url  : "create-chat",
+			  			data : formdata,
+			  			datatype : "text",
+			  			success : function(data) {
+		  					alert("발송 완료")
+			  			},
+			  			error: function(request, status, error){
+			  				alert("code : " + request.status + "\n" 
+			  				    + "message : " + request.responseText + "\n" 
+			  				    + "error : " + error);
+			  		    }
+			  		});
+			
+			});
+			
+			//시세 조회 기능
+			$("#avg-search").click(function(){
+				var formdata = $("#frm").serialize();
+				alert("avg-search");
+			/* 					
+			  		$.ajax({
+			  			type : "post",
+			  			url  : "like-product",
+			  			data : formdata,
+			  			processData : false,
+			  			contentType : false,
+			  			datatype : "text",
+			  			success : function(data) {
+		  					location='chat';
+			  			},
+			  			error : function (request, status, error){
+							alert("전송 실패");
+			  			}
+			  		});
+			 */
+			});		
+			
+			//신고 기능
+			/* $("#like").click(function(){
+				var formdata = $("#frm").serialize();
+					
+			  		$.ajax({
+			  			type : "post",
+			  			url  : "report-write",
 			  			data : formdata,
 			  			processData : false,
 			  			contentType : false,
@@ -42,7 +106,7 @@
 			  		});
 			
 			});
-			
+			 */
 		});
 		</script>
 
@@ -56,22 +120,24 @@
 					<button class="btn btn-solid" onclick="location='product-delete?proCode=${product.proCode }'">삭제</button>
 				</div>
 	
-			<form name="frm" id="frm">
+
 				<!-- 상품 내용 및 상세 내용 -->
 				<div class="pro-detail-top">
 					
 					<div class="product-img-wrap">
 						<!-- 제품 이미지 -->
-						<img class="product-img"
-							src="<c:url value='/images/product/org_goods/${product.imgs}'/>">
+						<img class="product-img" name="imgs" id="imgs"
+							src="<c:url value='/images/products/${product.imgs}'/>">
 					</div>
-	
+					
+					<form name="frm" id="frm">
+					
 					<!-- 제품 정보 -->
 					<div class="product-info">
 						<div class="product-head">
-							<h3 class="product-title">${product.title}</h3>
-							<p class="product-price">${product.price}</p>
-							<p class="product-grade">평가점수</p>
+							<h3 class="product-title" name="title" id="title">${product.title}</h3>
+							<p class="product-price" name="price" id="price">${product.price}</p>
+							<p class="product-grade" name="grade" id="grade">신뢰</p>
 						</div>
 	
 	
@@ -81,7 +147,7 @@
 							<div class="mini-div"> 
 								<!-- 닉네임 클릭 시 마이 페이지 이동 : 판매 내역 통한 다른 제품 판매 확인 -->
 								<span class="user-nickname" style="font-size: 24px; float: right;">
-									<a href="">${product.sellerNik }</a>
+									<a href="" name="sellerNik" id="sellerNik">${product.sellerNik }</a>
 								</span>
 							</div>					
 	
@@ -139,7 +205,8 @@
 						${product.content }
 					</div>
 				</div>
-			</form>
+			
+				</form>
 	
 				<!-- 연관 상품 -->
 				<div class="related-listView">

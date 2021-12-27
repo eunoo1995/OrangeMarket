@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import orange.service.ChatService;
 import orange.service.ChatSubVO;
 import orange.service.ChatVO;
+import orange.service.ProductVO;
 
 @Controller
 public class ChatController {
@@ -31,6 +32,7 @@ public class ChatController {
 	
 	// 게시글 상세보기 채팅버튼 누를 시 넘어오는 값을 받아 신규 채팅채널 추가
 	@RequestMapping(value = "create-chat")
+	@ResponseBody
 	public String createChat() throws Exception {
 		
 		// 게시글, 판매자, 구매자의 정보를 select로 받아온다.

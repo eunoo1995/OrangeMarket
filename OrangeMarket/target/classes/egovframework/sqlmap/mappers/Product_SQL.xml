@@ -18,7 +18,6 @@
 			content,
 			rdate,
 			udate,
-			seller_nik,
 			imgs)
 		
      VALUES (PRODUCT_SEQ.NEXTVAL,
@@ -31,7 +30,6 @@
 			#{content},
 			sysdate,
 			sysdate,
-			#{sellerNik},
 			#{imgs})
 	
 	</insert>
@@ -89,12 +87,12 @@
 			nvl(buyer, '0') as buyer,
 			refund,
 			nego,
-			seller_nik,
+			( select nik_name from member where user_id = p.seller) seller_nik,
 			nvl(buyer_nik, '0') as buyer_nik,
 			imgs
 			
 		FROM 
-			product
+			product p
 			
 		WHERE
 			pro_code = ${proCode}
