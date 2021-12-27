@@ -3,6 +3,7 @@ package orange.service.impl;
 import java.util.List;
 
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
+import orange.service.MemberVO;
 import orange.service.ProductSubVO;
 import orange.service.ProductVO;
 
@@ -10,7 +11,7 @@ import orange.service.ProductVO;
 public interface ProductMapper {
 
 	int insertProduct(ProductVO vo);
-	int insertProImg(ProductSubVO svo);
+	ProductVO selectProductAddr(ProductVO vo);
 	
 	List<?> selectProductList(ProductVO vo);
 

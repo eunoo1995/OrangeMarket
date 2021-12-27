@@ -66,7 +66,9 @@
 			addr,
 			imgs
 		FROM 
-			product
+			product	
+		ORDER BY
+			rdate DESC
 	</select>
 	
 	<!-- 제품 상세보기 -->
@@ -96,6 +98,7 @@
 			
 		WHERE
 			pro_code = ${proCode}
+
 	</select>
 	
 	<!-- 수정 위한 제품 데이터 보기 -->
@@ -119,6 +122,18 @@
 			
 		WHERE
 			pro_code = ${proCode}
+	</select>
+	
+	<select id="selectProductAddr" resultType="productVO">
+		SELECT
+			user_id,
+			addr
+			
+		FROM
+			member
+		
+		WHERE
+			user_id = ${seller}
 	</select>
 	
 	<!-- select end -->

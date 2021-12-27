@@ -7,12 +7,12 @@
 	<jsp:param name="cssName" value="product" />
 </jsp:include>
 <!-- 헤더 -->
-
+<c:set var="sessionId" value="${vo.userId}"/>
 <!-- 페이지 wraper -->
 <article class="pg-wrap pg-pro-detail">
 	<!-- container -->
 	<div class="cont-inner">
-	
+		
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
 			<div class="cont-inner">
@@ -21,84 +21,49 @@
 		</header>
 		
 		<script type="text/javascript">
-			
-			$(function(){
+				$(function(){
 					//작성 저장 ajax
 					$("#pro-btn-save").click(function(){
-						
-							var title = $("#title").val();
-							var proCategoryCode = $("#proCategoryCode").val();
-							var addr = $("#addr").val();
-							var refund = $("#refund").val();
-							var price = $("#price").val();
-							var content = $("#content").val();
-							var nego = $("#nego").val();
-							
-							alert("   제목 : " + title + "\n" 
-								+ "카테고리 : " + proCategoryCode + "\n"
-								+ "거래지역 : " + addr + "\n"
-								+ "환불여부 : " + refund + "\n"
-								+ "   가격 : " + price + "\n"
-								+ "   설명 : " + content + "\n"
-								+ "가격협의 : " + nego
-							);
-							
-					  		if($("#title").val() == "" ) {
-					  			alert("제목을 입력해주세요.");
-					  			$("#title").focus();
-					  			return false;
-					  		}
-					  		if($("#content").val() == "" ) {
-					  			alert("내용을 입력해주세요.");
-					  			$("#content").focus();
-					  			return false;
-					  		}
-					  		
-					  		var formdata = $("#frm").serialize();
-					  		
+					  		var formdata = new FormData(document.getElementById("frm-product"));
 					  		$.ajax({
 					  			type : "post",
-					  			url  : "product-modify-save",
+					  			url  : "product-write-save",
 					  			data : formdata,
+					  			processData : false,
+					  			contentType : false,
 					  			datatype : "text", //성공여부(ok)
 					  			success : function(data) {
 					  				if(data == "ok") {
-					  					alert("수정성공");
+					  					alert("저장 성공");
+					  					location='product-list';
 					  				} else {
-					  					alert("수정실패");
+					  					alert("저장 실패");
 					  				}
 					  			},
-					  			error : function (request, status, error){
-					                
-					  			    var errorMsg = "요청 도중 오류가 발생하였습니다. \n";
-					  			   
-					  			    if(request.status == 0){ //offline
-					  			        errorMsg += "네트워크 연결을 확인해주십시오.";
-					  			    }else if(request.status==401){//Unauthorized
-					  			        errorMsg += "권한이 없습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(request.status==403){//Forbidden
-					  			        errorMsg += "접근이 거부되었습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(request.status==404){//Not Found
-					  			        errorMsg += "요청한 페이지를 찾을 수 없습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(request.status==500){ //Internel Server Error
-					  			        errorMsg += "서버 내 오류가 발생하였습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(status=='parsererror'){ //Error.nParsing JSON Request failed.
-					  			        errorMsg += "응답 본문을 정상적으로 가져올 수 없습니다. \n관리자에게 문의해주세요.";
-					  			    }else if(status=='timeout'){ //Request Time out.
-					  			        errorMsg += "응답 제한 시간을 초과하였습니다. 다시 조회해주세요.";
-					  			    }else { //Unknow Error
-					  			        errorMsg += "\n관리자에게 문의해주세요.";
-					  			    }
-					  			   
-					  			    alert(errorMsg);
-
+					  			error : function (){
+					              alert("error");
 					  			}
 					  		});
 					  	});
-					
+					 //프로필 사진 미리보기 설정
+				      $("#imgs").click(function(){
+				         $("#product-img-file").click();
+				      });
+				      $("#product-img-file").on('change', function(){
+				          readURL(this);
+				      });
 				});
-		
-		
+				//프로필 사진 미리보기 설정
+				function readURL(input) {
+				       if (input.files && input.files[0]) {
+				          var reader = new FileReader();
+				          reader.onload = function (e) {
+				             $('#imgs').attr('src', e.target.result);
+				          }
+				          reader.readAsDataURL(input.files[0]);
+				          var URL = "productWrite.jsp?data=" + input.files[0];
+				       }
+				   }
 		</script>
 		
 		<div class="product-write-content">
@@ -107,13 +72,11 @@
 			</div>
 
 			<div class="product-write-content__detail">
-				<form name="frm" id="frm">
+				<form id="frm-product" name="frm-product" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 					
-					<input type="hidden" name="seller" id="seller" value="${product.seller }">
-					<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
-				
+					<input type="hidden" name="seller" id="seller" value="${userId}">
+										
 					<table class="product-write-table">
-
 						<!-- 1. 상품 이미지 -->
 						<tr class="product-table-tr">
 							<th>
@@ -121,13 +84,9 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-
-								<div class="button">
-									<label class="img-label" for="chooseFile">
-										<button class="btn-image">+</button>
-									</label>
-								</div>
-
+									<img class="btn-image" id="imgs" name="imgs" src="/images/icons/add.png">
+				                <!-- <button type="button" class="btn-image" id="product-img-btn">+</button> -->
+				                <input type="file" id="product-img-file" name="uploadProductImg" style="display: none;">
 							</td>
 						</tr>
 
@@ -139,7 +98,7 @@
 								<span class="orange-star">*</span>
 							</th>
 								<td class="product-write-table-td2">
-								<input type="text" name="title" id="title" maxlength="40" class="product-write-text" value="${product.title }">
+								<input type="text" name="title" id="title" maxlength="40" class="product-write-text">
 							</td>
 						</tr>
 
@@ -151,7 +110,6 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-								<c:set var="proCategoryCode" value="${product.proCategoryCode}" ></c:set>
 								<select name="proCategoryCode" id="proCategoryCode" class="product-write-category">
 									<option value="">카테고리를 선택해주세요.</option>
 									<option value="1">1</option>
@@ -159,7 +117,7 @@
 								</select>
 
 								<div class="keyword-wrap">
-									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." value="${product.keyword }"
+									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." 
 									onfocus="this.placeholder=''" onblur="this.placeholder='연관단어를 입력해주세요.'" class="product-write-keyword">
 								</div>
 							</td>
@@ -173,7 +131,7 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-								<input type="text" name="addr" id="addr" value="${product.addr }" readonly class="product-write-text">
+								<input type="text" name="addr" id="addr" value="서울시 강남구" readonly class="product-write-text">
 							</td>
 						</tr>
 
@@ -221,7 +179,7 @@
 							<th>가격<span
 								class="orange-star">*</span></th>
 							<td class="product-write-table-td2">
-								<input type="text" name="price" id="price" maxlength="11" value="${product.price }" onkeyup="inputNumberFormat(this)" placeholder="가격을 입력해주세요."
+								<input type="text" name="price" id="price" maxlength="11" onkeyup="inputNumberFormat(this)" placeholder="가격을 입력해주세요."
 								onfocus="this.placeholder=''" onblur="this.placeholder='가격을 입력해주세요.'" class="product-write-price-txt">
 								<font style="margin-right: 10px; font-size: 16px;">원</font>
 								
@@ -244,7 +202,8 @@
 						<tr class="product-table-tr">
 							<th>설명</th>
 							<td class="product-write-table-content">
-								<textarea name="content" id="content" class="product-write-content1">${product.content }</textarea>
+								<textarea name="content" id="content" class="product-write-content1" 
+								style="border: 1px solid #eee; border-radius: 2px; width: 900px; height: 250px; padding-left: 5px; resize: none;"></textarea>
 							</td>
 						</tr>
 

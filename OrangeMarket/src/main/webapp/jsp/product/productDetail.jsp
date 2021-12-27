@@ -87,10 +87,10 @@
 			});		
 			
 			//신고 기능
-			/* $("#like").click(function(){
+			$("#report").click(function(){
 				var formdata = $("#frm").serialize();
-					
-			  		$.ajax({
+				alert("avg-report");
+/* 			  		$.ajax({
 			  			type : "post",
 			  			url  : "report-write",
 			  			data : formdata,
@@ -103,10 +103,10 @@
 			  			error : function (request, status, error){
 							alert("전송 실패");
 			  			}
-			  		});
+			  		}); */
 			
 			});
-			 */
+			
 		});
 		</script>
 
@@ -137,7 +137,8 @@
 						<div class="product-head">
 							<h3 class="product-title" name="title" id="title">${product.title}</h3>
 							<p class="product-price" name="price" id="price">${product.price}</p>
-							<p class="product-grade" name="grade" id="grade">신뢰</p>
+							<span class="product-grade" name="grade" id="grade">신뢰</span>
+							<span style="float: right; color:#999;" name="report" id="report">신고</span>
 						</div>
 	
 	

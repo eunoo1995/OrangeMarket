@@ -6,7 +6,9 @@ public interface ProductService {
 
 	// 제품 등록 기능
 	int insertProduct(ProductVO vo) throws Exception;
-	int insertProImg(ProductSubVO svo);
+
+	// 제품 등록용 사용자 저장된 주소 가져오기
+	ProductVO selectProductAddr(ProductVO vo) throws Exception;
 
 	// 등록된 제품 리스트 표시
 	 List<?> selectProductList(ProductVO vo) throws Exception;

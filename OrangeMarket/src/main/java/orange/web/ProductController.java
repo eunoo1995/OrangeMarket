@@ -59,12 +59,17 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/product-write")
-	public String productWrite(Model model, HttpSession session) throws Exception {
-		// 세션값이 없으면 로그인 화면으로 리턴
-		if(session.getAttribute("sessionId") == null) return "redirect:login";
-		int sessionId = (int) session.getAttribute("sessionId");
+	public String productWrite(ProductVO vo, Model model, HttpSession session) throws Exception {
+		int seller = (int) session.getAttribute("sessionId");
 		
-		model.addAttribute("userId", sessionId);
+		vo = productService.selectProductAddr(vo);
+		String addr = vo.getAddr();
+		
+		System.out.println(seller);
+		System.out.println(addr);
+		
+		model.addAttribute("seller", seller);
+		model.addAttribute("addr", addr);
 		
 		return "product/productWrite";
 	}

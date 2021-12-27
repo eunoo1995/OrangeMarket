@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.InquiryService;
+import orange.service.MemberVO;
 import orange.service.ProductService;
 import orange.service.ProductSubVO;
 import orange.service.ProductVO;
@@ -24,11 +25,11 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	}
 	
 	@Override
-	public int insertProImg(ProductSubVO svo) { // 판매 제품 이미지 저장
+	public ProductVO selectProductAddr(ProductVO vo) throws Exception {
 		// TODO Auto-generated method stub
-		return productDAO.insertProImg(svo);
+		return productDAO.selectProductAddr(vo);
 	}
-
+	
 	@Override
 	public List<?> selectProductList(ProductVO vo) throws Exception { // 판매제품 리스트 출력
 		// TODO Auto-generated method stub
@@ -47,7 +48,4 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectProductModify(vo);
 	}
 
-	
-	
-	
 }
