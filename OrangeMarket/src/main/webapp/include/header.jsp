@@ -64,10 +64,17 @@
 		<%@ include file="/include/gnb.jsp"%>
 		<!-- 네비게이션 -->
 
-		<div class="log-menu clx">
-			<ul>
-				<li><a href="#">SIGNUP</a></li>
-				<li><a href="#">LOGIN</a></li>
+		<div class="log-menu">
+			<ul class="clx">
+			<c:choose> 
+				<c:when test="${sessionId == null}">
+					<li><a href="join">SIGNUP</a></li>
+					<li><a href="login">LOGIN</a></li>
+				</c:when>
+				<c:when test="${sessionId != null}">
+					<li><a href="logout">LOGOUT</a></li>
+				</c:when>
+			 </c:choose>
 			</ul>
 		</div>
 		<div class="util-menu">

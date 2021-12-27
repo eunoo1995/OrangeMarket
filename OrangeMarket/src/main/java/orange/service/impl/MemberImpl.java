@@ -62,13 +62,23 @@ public class MemberImpl extends EgovAbstractServiceImpl implements MemberService
 	}
 
 	@Override
-	public int selectUserId() throws Exception {
-		return memberDAO.selectUserId();
+	public int selectNewUserId() throws Exception {
+		return memberDAO.selectNewUserId();
 	}
 
 	@Override
 	public int insertMemberStatus(int userId) throws Exception {
 		return memberDAO.insertMemberStatus(userId);
+	}
+
+	@Override
+	public int checkMemberLogin(MemberVO vo) throws Exception {
+		return memberDAO.checkMemberLogin(vo);
+	}
+
+	@Override
+	public MemberVO selectMemberInfo(MemberVO vo) throws Exception {
+		return (MemberVO) memberDAO.selectMemberInfo(vo);
 	}
 
 

@@ -47,7 +47,7 @@
 			WHERE email_code = #{emailCode}
 	</select>
 	
-	<select id="selectUserId" resultType="java.lang.Integer">
+	<select id="selectNewUserId" resultType="java.lang.Integer">
        SELECT to_char(sysdate, 'yymmdd') || lpad((
            SELECT COUNT(*)
            FROM member
@@ -56,6 +56,21 @@
        FROM dual
 	</select>
 	
+	<select id="checkMemberLogin" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM member
+		WHERE email = #{email}
+      		AND user_pw = #{userPw}
+	</select>
+	
+	<select id="selectMemberInfo" parameterType="memberVO" resultType="memberVO">
+		SELECT user_id
+		, nik_name
+		, email
+		, profile_img
+		FROM member
+		WHERE email=#{email}
+	</select>
 	
 	<insert id="insertEmailVerif" parameterType="emailVO">
 		INSERT INTO EMAIL_VERIFY(
