@@ -73,7 +73,7 @@
 			
 	</select>
 	
-		<!-- 카테고리별 제품 리스트 표시 -->
+	<!-- 카테고리별 제품 리스트 표시 -->
 	<select id="selectProductCategoryList" resultType="egovMap">
 		SELECT
 			pro_code,
@@ -89,6 +89,17 @@
 			
 		ORDER BY
 			rdate DESC
+			
+	</select>
+	
+	<!-- 카테고리명 표시 -->
+	<select id="selectProCategory" resultType="string">
+		SELECT
+		    category
+		FROM
+		    pro_category
+		WHERE
+		    pro_category_code = ${proCategoryCode}
 			
 	</select>
 	

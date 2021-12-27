@@ -15,7 +15,7 @@
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
 			<div class="cont-inner">
-				<h2 class="sub-page-title">Category</h2>
+				<h2 class="sub-page-title">${category}</h2>
 			</div>
 		</header>
 		

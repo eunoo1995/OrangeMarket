@@ -112,8 +112,8 @@
 							<td class="product-write-table-td2">
 								<select name="proCategoryCode" id="proCategoryCode" class="product-write-category">
 									<option value="">카테고리를 선택해주세요.</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
+									<option value="1">여성의류</option>
+									<option value="2">남성의류</option>
 								</select>
 
 								<div class="keyword-wrap">

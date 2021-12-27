@@ -14,11 +14,14 @@ public interface ProductMapper {
 	ProductVO selectProductAddr(ProductVO vo);
 	
 	List<?> selectProductList(ProductVO vo);
+	List<?> selectProductCategoryList(ProductVO vo);
+	String selectProCategory(ProductVO vo);
 
 	ProductVO selectProductDetail(ProductVO vo);
 
 	ProductVO selectProductModify(ProductVO vo);
+	
 
-	List<?> selectProductCategoryList(ProductVO vo);
+	
 
 }
