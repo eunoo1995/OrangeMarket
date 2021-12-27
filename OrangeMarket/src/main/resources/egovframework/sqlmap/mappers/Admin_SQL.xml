@@ -85,4 +85,43 @@
 		UPDATE MEM_STATUS SET MEM_STATE_CODE = 1, REASON = ''
 			WHERE USER_ID = #{userId}
 	</update>
+	
+	
+	<select id="selectWithdrawal" parameterType="pagingVO" resultType="egovMap">
+		SELECT D.* FROM (
+			SELECT ROWNUM RN, C.* FROM (
+				SELECT  A.USER_ID,
+						A.EMAIL,
+						A.NIK_NAME,
+						A.ADDR,
+						A.USER_PHONE,
+						B.REASON,
+						B.MEM_STATE_CODE,
+						TO_CHAR(A.RDATE,'YYYY-MM-DD') RDATE,
+						TO_CHAR(A.UDATE,'YYYY-MM-DD') UDATE,
+						TO_CHAR(sysdate-3,'YYYY-MM-DD') threeago
+				FROM MEMBER A, MEM_STATUS B
+				WHERE A.user_id = b.user_id
+				AND	B.MEM_STATE_CODE = 5  
+				<if test="word != null">
+				AND A.NIK_NAME LIKE '%${word}%'
+				</if>
+				ORDER BY A.UDATE DESC
+				) C ) D 
+		WHERE RN BETWEEN #{startIndex} AND #{endIndex}
+	</select>
+	<select id="totalWithdrawal" parameterType="pagingVO" resultType="int">
+		SELECT COUNT(*) FROM MEMBER A, MEM_STATUS B 
+		WHERE A.user_id = b.user_id
+		AND	B.MEM_STATE_CODE = 5  
+		<if test="word != null">
+		AND A.NIK_NAME LIKE '%${word}%'
+		</if>
+	</select>
+	<update id="updateRestore">
+		UPDATE MEM_STATUS SET MEM_STATE_CODE = 1, REASON = ''
+			WHERE USER_ID = #{userId}
+	</update>
+	
+	
 </mapper>

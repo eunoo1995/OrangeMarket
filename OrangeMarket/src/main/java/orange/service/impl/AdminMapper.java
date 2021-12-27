@@ -22,4 +22,9 @@ public interface AdminMapper {
 	List<?> selectSuspendList(PagingVO vo);
 	
 	int updateUnlock(int userId);
+	
+	int totalWithdrawal(PagingVO vo);
+	List<?> selectWithdrawal(PagingVO vo);
+	
+	int updateRestore(int userId);
 }

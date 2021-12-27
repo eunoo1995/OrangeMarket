@@ -34,25 +34,6 @@
 	
 	</insert>
 	
-	<insert id="insertProImg" parameterType="productSubVO">
-		INSERT INTO pro_img (
-			pro_code,
-			user_id,
-			pro_category_code,
-			imgs,
-			rdate,
-			udate
-		)
-		VALUES (
-			${proCode},
-			${userId},
-			${proCategoryCode},
-			${imgs},
-			sysdate,
-			sysdate
-		)
-	</insert>
-	
 	
 	
 	<!-- select -->

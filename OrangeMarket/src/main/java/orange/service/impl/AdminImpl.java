@@ -61,6 +61,21 @@ public class AdminImpl extends EgovAbstractServiceImpl implements AdminService {
 	public int updateUnlock(int userId) throws Exception {
 		return adminDAO.updateUnlock(userId);
 	}
+
+	@Override
+	public int totalWithdrawal(PagingVO vo) throws Exception {
+		return adminDAO.totalWithdrawal(vo);
+	}
+
+	@Override
+	public List<?> selectWithdrawal(PagingVO vo) throws Exception {
+		return adminDAO.selectWithdrawal(vo);
+	}
+
+	@Override
+	public int updateRestore(int userId) throws Exception {
+		return adminDAO.updateRestore(userId);
+	}
 	
 	
 }

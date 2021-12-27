@@ -73,6 +73,21 @@ public class MyPageImpl extends EgovAbstractServiceImpl implements MyPageService
 	public int deleteLikeList(ProductVO vo) throws Exception {
 		return myPageDAO.deleteLikeList(vo);
 	}
+
+	@Override
+	public int updateWithdrawal(MemberVO vo) throws Exception {
+		return myPageDAO.updateWithdrawal(vo);
+	}
+
+	@Override
+	public int selectPassChk(MemberVO vo) throws Exception {
+		return myPageDAO.selectPassChk(vo);
+	}
+
+	@Override
+	public int withdrawalDate(MemberVO vo) throws Exception {
+		return myPageDAO.withdrawalDate(vo);
+	}
 	
 	
 }

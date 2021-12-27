@@ -69,4 +69,55 @@ $(function(){
             $("#addMyKeyword").click();
         }
     });
+	$("#withdrawalBtn").click(function(){
+		if($("#userPw").val().trim() == "") {
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+		if($("#userPw").val().trim() != "") {
+			var userPw = $("#userPw").val();
+			$.ajax({
+				type : "post",
+				data : "userPw="+userPw,
+				url  : "withdrawal-pwcheck",
+				datatype : "text",
+				success : function(data) {
+	  				if(data == "1") {
+		
+					} else {
+						alert("입력하신 비밀번호를 확인하세요.");
+						return false;
+					}
+	  			},
+	  			error : function() {
+	  					alert("오류발생");
+				}
+			});
+		}
+		if(!$("#agreeChk").is(":checked")) {
+			alert("탈퇴동의를 체크하지 않으셨습니다.");
+			return false;
+		}
+		if(confirm("정말 탈퇴하시겠습니까?")) {
+			var reason = $("#reason").val();
+			$.ajax({
+				type : "post",
+				data : "reason="+reason,
+				url  : "update-withdrawal",
+				datatype : "text",
+				success : function(data) {
+	  				if(data == "1") {
+	  					alert("지금까지 오렌지마켓을 이용해주셔서 감사합니다.");
+	  					self.close();
+	  					opener.location.href = "main";
+	  				} else {
+	  					alert("탈퇴실패");
+	  				}
+	  			},
+	  			error : function() {
+	  					alert("오류발생");
+	  			}
+			});
+		}
 	});
+});

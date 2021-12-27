@@ -3,7 +3,6 @@ package orange.web;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import orange.service.ChatService;
 import orange.service.ChatSubVO;
 import orange.service.ChatVO;
-import orange.service.ProductVO;
 
 @Controller
 public class ChatController {
@@ -22,13 +20,6 @@ public class ChatController {
 	@Resource(name="chatService")
 	private ChatService chatService;
 	
-	
-	@RequestMapping(value="testLogin")
-	public String sessionTest(HttpSession session) throws Exception {
-		int userId = 2112240001;
-		session.setAttribute("sessionId", userId);
-		return "redirect:main";
-	}
 	
 	// 게시글 상세보기 채팅버튼 누를 시 넘어오는 값을 받아 신규 채팅채널 추가
 	@RequestMapping(value = "create-chat")

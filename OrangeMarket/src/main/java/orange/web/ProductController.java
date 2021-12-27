@@ -97,7 +97,7 @@ public class ProductController {
 	@RequestMapping(value="/product-write")
 	public String productWrite(ProductVO vo, Model model, HttpSession session) throws Exception {
 		int seller = (int) session.getAttribute("sessionId");
-		
+		vo.setSeller(seller);
 		vo = productService.selectProductAddr(vo);
 		
 		String addr = vo.getAddr();

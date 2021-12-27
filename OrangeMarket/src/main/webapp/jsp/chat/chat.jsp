@@ -8,9 +8,6 @@
 	<jsp:param name="cssName" value="chat" />
 </jsp:include>
 <!-- 헤더 -->
-<script>
-
-</script>
 <!-- 현재시간 가져오기 -->
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />

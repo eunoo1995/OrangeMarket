@@ -32,4 +32,10 @@ public interface MyPageMapper {
 	List<?> selectLikeProduct(ProductVO pvo);
 	
 	int deleteLikeList(ProductVO vo);
+	
+	int updateWithdrawal(MemberVO vo);
+	
+	int selectPassChk(MemberVO vo);
+	
+	int withdrawalDate(MemberVO vo);
 }
