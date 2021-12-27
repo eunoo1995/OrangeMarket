@@ -42,7 +42,7 @@
 		SELECT
 				channel,
 				title,
-				to_char(price,'999,999,999,999') price,
+				price,
 				seller,
 				buyer
 		FROM CHAT

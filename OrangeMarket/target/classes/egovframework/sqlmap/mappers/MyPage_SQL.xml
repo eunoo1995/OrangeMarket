@@ -73,7 +73,7 @@
 	<select id="selectLikeProduct" parameterType="productVO" resultType="egovMap">
 		SELECT A.PRO_CODE, 
 			   A.TITLE, 
-			   TO_CHAR(A.PRICE,'999,999,999,999') PRICE, 
+			   A.PRICE, 
 			   A.ADDR, 
 			   DECODE(A.STATUS,1,'판매중',2,'예약중','거래완료') STATUS, 
 			   B.UNQ,
