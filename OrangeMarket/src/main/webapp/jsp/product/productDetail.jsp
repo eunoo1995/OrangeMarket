@@ -191,8 +191,6 @@
 	
 						</div>
 						
-<<<<<<< HEAD
-=======
 						<form name="frm" id="frm" method="post">
 							<input type="hidden" name="title" id="title" value="${product.title }">
 							<input type="hidden" name="proCode" id="proCode" value="${product.proCode }">
@@ -201,7 +199,6 @@
 							<input type="hidden" name="proCode" id="proCode" value="${product.sellerNik }">
 						</form>
 						
->>>>>>> a3aed40a44373d4ab272b13ca0c634029336b15d
 						<div class="info-btn-wrap">
 							<button type="button" class="btn btn-solid-point" name="like" id="like">관심</button>
 							<button type="button" class="btn btn-solid" name="chat" id="chat">채팅</button>
