@@ -41,6 +41,26 @@ public class AdminImpl extends EgovAbstractServiceImpl implements AdminService {
 	public int updateMemberState(int userId) throws Exception {
 		return adminDAO.updateMemberState(userId);
 	}
+
+	@Override
+	public int updateMemberDate(int userId) throws Exception {
+		return adminDAO.updateMemberDate(userId);
+	}
+
+	@Override
+	public int totalSuspendList(PagingVO vo) throws Exception {
+		return adminDAO.totalSuspendList(vo);
+	}
+
+	@Override
+	public List<?> selectSuspendList(PagingVO vo) throws Exception {
+		return adminDAO.selectSuspendList(vo);
+	}
+
+	@Override
+	public int updateUnlock(int userId) throws Exception {
+		return adminDAO.updateUnlock(userId);
+	}
 	
 	
 }

@@ -16,4 +16,10 @@ public interface AdminMapper {
 	List<?> selectMemberList(PagingVO vo);
 	
 	int updateMemberState(int userId);
+	int updateMemberDate(int userId);
+	
+	int totalSuspendList(PagingVO vo);
+	List<?> selectSuspendList(PagingVO vo);
+	
+	int updateUnlock(int userId);
 }

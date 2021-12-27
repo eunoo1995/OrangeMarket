@@ -62,11 +62,33 @@ public class AdminController {
 	
 	@RequestMapping(value = "member-suspend")
 	public String suspendMember(int userId) throws Exception {
-		System.out.println(userId);
+		// 회원 상태 정지로 변경
 		adminService.updateMemberState(userId);
+		// 회원 상태 변경일 저장
+		adminService.updateMemberDate(userId);
 		return "redirect:admin-memberlist";
 	}
 	
+	// 정지회원 목록화면 출력 --------------------------------------
+	@RequestMapping(value = "admin-suspendlist")
+	public String suspendMemberList(PagingVO vo, Model model) throws Exception {
+		String word = vo.getWord();
+		int total = adminService.totalSuspendList(vo);
+		int pageNo = vo.getPageNo();
+		vo = new PagingVO(total, pageNo, 5);
+		vo.setWord(word);
+		
+		List<?> list = adminService.selectSuspendList(vo);
+		model.addAttribute("page",vo);
+		model.addAttribute("list",list);
+		return "admin/suspendList";
+	}
+	
+	@RequestMapping(value = "member-unlock")
+	public String unlockMember(int userId) throws Exception {
+		adminService.updateUnlock(userId);
+		return "redirect:admin-suspendlist";
+	}
 	
 	
 	
@@ -84,4 +106,10 @@ public class AdminController {
 		return "admin/reportList";
 	}
 	
+	// 카테고리 목록편집 화면 출력 -----------------------------------
+	@RequestMapping(value = "category-modify")
+	public String editCategory() throws Exception {
+		
+		return "admin/categoryModify";
+	}
 }

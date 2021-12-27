@@ -27,7 +27,7 @@
 				<if test="word != null">
 				AND A.NIK_NAME LIKE '%${word}%'
 				</if>
-				ORDER BY RDATE DESC
+				ORDER BY A.RDATE DESC
 				) C ) D 
 		WHERE RN BETWEEN #{startIndex} AND #{endIndex}
 	</select>
@@ -41,7 +41,48 @@
 	</select>
 	
 	<update id="updateMemberState">
-		UPDATE MEM_STATUS SET MEM_STATE_CODE = 2 
+		UPDATE MEM_STATUS SET MEM_STATE_CODE = 2, REASON = '운영정책으로 인한 이용 정지'
+			WHERE USER_ID = #{userId}
+	</update>
+	<update id="updateMemberDate">
+		UPDATE MEMBER SET UDATE = SYSDATE 
+			WHERE USER_ID = #{userId}
+	</update>
+	
+	
+	
+	<select id="selectSuspendList" parameterType="pagingVO" resultType="egovMap">
+		SELECT D.* FROM (
+			SELECT ROWNUM RN, C.* FROM (
+				SELECT  A.USER_ID,
+						A.EMAIL,
+						A.NIK_NAME,
+						A.ADDR,
+						A.USER_PHONE,
+						B.REASON,
+						B.MEM_STATE_CODE,
+						TO_CHAR(A.RDATE,'YYYY-MM-DD') RDATE,
+						TO_CHAR(A.UDATE,'YYYY-MM-DD') UDATE
+				FROM MEMBER A, MEM_STATUS B
+				WHERE A.user_id = b.user_id
+				AND	B.MEM_STATE_CODE IN (2, 3) 
+				<if test="word != null">
+				AND A.NIK_NAME LIKE '%${word}%'
+				</if>
+				ORDER BY A.UDATE DESC
+				) C ) D 
+		WHERE RN BETWEEN #{startIndex} AND #{endIndex}
+	</select>
+	<select id="totalSuspendList" parameterType="pagingVO" resultType="int">
+		SELECT COUNT(*) FROM MEMBER A, MEM_STATUS B 
+		WHERE A.user_id = b.user_id
+		AND	B.MEM_STATE_CODE IN (2, 3)  
+		<if test="word != null">
+		AND A.NIK_NAME LIKE '%${word}%'
+		</if>
+	</select>
+	<update id="updateUnlock">
+		UPDATE MEM_STATUS SET MEM_STATE_CODE = 1, REASON = ''
 			WHERE USER_ID = #{userId}
 	</update>
 </mapper>

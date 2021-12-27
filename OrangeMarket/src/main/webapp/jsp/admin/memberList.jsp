@@ -1,33 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- 헤더 -->
 <jsp:include page="/include/admin_header.jsp" flush="false"/>
 <jsp:include page="/include/admin_nav.jsp" flush="false">
 	<jsp:param name="jsName" value="admin" />
 </jsp:include>
 <!-- 헤더 -->
-<script>
-$(function(){
-	$("#searchMember").click(function(){
-		if($("#word").val().trim() == "") {
-			alert("검색하실 닉네임을 입력하세요.");
-			$("#word").val("");
-			$("#word").focus();
-			return false;
-		}
-		var word = $("#word").val();
-		location = "admin-memberlist?word="+word;		 
-	});
-	$("#suspendBtn").click(function() {
-		if(confirm("해당 회원을 정지시키겠습니까?")) {
-			var userId = $("#userId").val();
-			location = "member-suspend?userId="+userId;	
-		}
-	});
-	
-});
-</script>
 <body>
     <section id="section">
     	<div class="section-inner">
@@ -54,6 +34,9 @@ $(function(){
 							<th>상세</th>
 						</tr>
 						<c:set var="rownum" value="${page.rownum }"/>
+						<c:if test="${fn:length(list) == 0 }">
+						<tr><td colspan="5">목록이 없습니다.</td></tr>
+						</c:if>
 						<c:forEach var="list" items="${list}">
 						<tr>
 							<td style="font-weight:bold;">${rownum}</td>
@@ -69,7 +52,7 @@ $(function(){
 							<td class="liner"><div class="detail">최근접속일</div><br>${list.udate}</td>
 							<td class="liner">
 							<input type="hidden" id="userId" value="${list.userId}"><br>
-							<button type="button" id="suspendBtn" class="section-btn">계정정지</button>
+							<button type="button" id="suspendBtn" class="suspend-btn">계정정지</button>
 							</td>
 						</tr>
 						<c:set var="rownum" value="${rownum-1 }"/>
@@ -81,7 +64,7 @@ $(function(){
 							<c:set var="before" value="${page.startPage-1}"/>
 							<c:set var="next" value="${page.endPage+1}"/>
 							<c:if test="${page.startPage != 1 }">
-							<li><a href="admin-memberlist?pageNo=${before}">&lt;</a></li>
+							<li><a href="admin-memberlist?pageNo=${before}&word=${page.word}">&lt;</a></li>
 							</c:if>	
 								<c:forEach var="pageNo" begin="${page.startPage}" end="${page.endPage}">
 									<c:choose>
@@ -94,7 +77,7 @@ $(function(){
 									</c:choose>
 								</c:forEach>
 							<c:if test="${page.endPage != page.totalPage }">
-							<li><a href="admin-memberlist?pageNo=${next}">&gt;</a></li>
+							<li><a href="admin-memberlist?pageNo=${next}&word=${page.word}">&gt;</a></li>
 							</c:if>		
 						</ul>
 					</article>

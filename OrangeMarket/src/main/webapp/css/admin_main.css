@@ -235,7 +235,21 @@
 		.section-main .liner {
 			border-bottom:1px solid #ffda77;
 		}
-		.section-btn {
+		.suspend-btn {
+			color:#fff;
+			border:1px solid #ffb319;
+			background:#ffb319;
+			cursor:pointer;
+			border-radius:5px;
+		}
+		.unlock-btn {
+			color:#fff;
+			border:1px solid #ffb319;
+			background:#ffb319;
+			cursor:pointer;
+			border-radius:5px;
+		}
+		.restore-btn {
 			color:#fff;
 			border:1px solid #ffb319;
 			background:#ffb319;
