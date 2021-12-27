@@ -31,40 +31,81 @@ public class ProductController {
 	// 제품 리스트 표시 및 상세 보기 기능
 	@RequestMapping(value="/product-list")
 	public String productList(ProductVO vo, Model model, HttpSession session) throws Exception {
-		// 세션값이 없으면 로그인 화면으로 리턴
-		if(session.getAttribute("sessionId") == null) {
-			//등록된 판매 제품 목록 리스트
-			List<?> list = productService.selectProductList(vo);
-			model.addAttribute("list", list);
-			System.out.println("세션 없음");
-		} else {
-			int sessionId = (int) session.getAttribute("sessionId");
-			model.addAttribute("userId", sessionId);
+		String category = "전체 목록";
+		
+		if(vo.getProCategoryCode() == 0) { 
+			model.addAttribute("category", category);
 			
-			//등록된 판매 제품 목록 리스트
-			List<?> list = productService.selectProductList(vo);
-			model.addAttribute("list", list);
-			System.out.println("sessionId : " + sessionId);
-		}
+			if(session.getAttribute("sessionId") == null) {
+				//등록된 판매 제품 목록 리스트
+				List<?> list = productService.selectProductList(vo);
+				model.addAttribute("list", list);
+				
+				System.out.println("세션 없음");
+			} else {
+				int sessionId = (int) session.getAttribute("sessionId");
+				model.addAttribute("userId", sessionId);
+				
+				//등록된 판매 제품 목록 리스트
+				List<?> list = productService.selectProductList(vo);
+				model.addAttribute("list", list);
 
+				System.out.println("sessionId : " + sessionId);
+			}
+		} else {
+			category = productService.selectProCategory(vo);
+			model.addAttribute("category", category);
+			
+			if(session.getAttribute("sessionId") == null) {
+				//등록된 판매 제품 목록 리스트
+				List<?> list = productService.selectProductCategoryList(vo);
+				model.addAttribute("list", list);
+				
+				System.out.println("세션 없음");
+			} else {
+				int sessionId = (int) session.getAttribute("sessionId");
+				model.addAttribute("userId", sessionId);
+				
+				//등록된 판매 제품 목록 리스트
+				List<?> list = productService.selectProductCategoryList(vo);
+				model.addAttribute("list", list);
+
+				System.out.println("sessionId : " + sessionId);
+			}
+		}
+		
 		return "product/productList";
 	}
 	
 	@RequestMapping(value="/product-list-detail")
 	public String selectProductDetail(ProductVO vo, Model model, HttpSession session) throws Exception {
-		vo = productService.selectProductDetail(vo);
-		model.addAttribute("product", vo);
+		// 세션값이 없으면 로그인 화면으로 리턴
+		if(session.getAttribute("sessionId") == null) {
+			vo = productService.selectProductDetail(vo);
+			model.addAttribute("product", vo);
+		} else {
+			int sessionId = (int) session.getAttribute("sessionId");
+			model.addAttribute("userId", sessionId);
+			
+			vo = productService.selectProductDetail(vo);
+			model.addAttribute("product", vo);
+		}
 		
 		return "product/productDetail";
 	}
 	
 	@RequestMapping(value="/product-write")
-	public String productWrite(Model model, HttpSession session) throws Exception {
-		// 세션값이 없으면 로그인 화면으로 리턴
-		if(session.getAttribute("sessionId") == null) return "redirect:login";
-		int sessionId = (int) session.getAttribute("sessionId");
+	public String productWrite(ProductVO vo, Model model, HttpSession session) throws Exception {
+		int seller = (int) session.getAttribute("sessionId");
 		
-		model.addAttribute("userId", sessionId);
+		vo = productService.selectProductAddr(vo);
+		String addr = vo.getAddr();
+		
+		System.out.println(seller);
+		System.out.println(addr);
+		
+		model.addAttribute("seller", seller);
+		model.addAttribute("addr", addr);
 		
 		return "product/productWrite";
 	}
@@ -94,7 +135,9 @@ public class ProductController {
 		 // 기존 프로필 사진 삭제
 		 //File delFile = new File(path + svo.getImgs());
 		 //if(delFile.exists()) delFile.delete();
+		 
 		 // 새로 저장시킬 파일
+		 int seller = vo.getSeller();
 		 String imgs = "";
 		 
 		 for(MultipartFile multipartFile : uploadProductImg) {
@@ -102,7 +145,7 @@ public class ProductController {
 			 String realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
 			 String ext = realName.substring(realName.lastIndexOf(".")); 
 			 // userId + 확장자로 파일 저장
-			 imgs += ext;
+			 imgs += seller+ext;
 			 File saveFile = new File(path, imgs);
 			 multipartFile.transferTo(saveFile);
 		 }
@@ -110,6 +153,9 @@ public class ProductController {
 		 // 이미지 세팅 및 저장
 		 vo.setImgs(imgs);
 		 productService.insertProduct(vo);
+		 
+		 System.out.println(path);
+		 System.out.println(imgs);
 			
 		return msg;
 	}

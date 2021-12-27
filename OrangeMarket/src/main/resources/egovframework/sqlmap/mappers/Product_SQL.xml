@@ -67,6 +67,40 @@
 			imgs
 		FROM 
 			product
+			
+		ORDER BY
+			rdate DESC
+			
+	</select>
+	
+	<!-- 카테고리별 제품 리스트 표시 -->
+	<select id="selectProductCategoryList" resultType="egovMap">
+		SELECT
+			pro_code,
+			title,
+			price,
+			addr,
+			imgs
+		FROM 
+			product
+			
+		WHERE
+			pro_category_code = ${proCategoryCode}
+			
+		ORDER BY
+			rdate DESC
+			
+	</select>
+	
+	<!-- 카테고리명 표시 -->
+	<select id="selectProCategory" resultType="string">
+		SELECT
+		    category
+		FROM
+		    pro_category
+		WHERE
+		    pro_category_code = ${proCategoryCode}
+			
 	</select>
 	
 	<!-- 제품 상세보기 -->
@@ -96,6 +130,7 @@
 			
 		WHERE
 			pro_code = ${proCode}
+
 	</select>
 	
 	<!-- 수정 위한 제품 데이터 보기 -->
@@ -119,6 +154,19 @@
 			
 		WHERE
 			pro_code = ${proCode}
+	</select>
+	
+	<!-- 글 작서 시 자동완성 될 주소 받아오기 -->
+	<select id="selectProductAddr" resultType="productVO">
+		SELECT
+			user_id,
+			addr
+			
+		FROM
+			member
+		
+		WHERE
+			user_id = ${seller}
 	</select>
 	
 	<!-- select end -->

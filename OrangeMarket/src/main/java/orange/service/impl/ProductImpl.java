@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.InquiryService;
+import orange.service.MemberVO;
 import orange.service.ProductService;
 import orange.service.ProductSubVO;
 import orange.service.ProductVO;
@@ -24,19 +25,31 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	}
 	
 	@Override
-	public int insertProImg(ProductSubVO svo) { // 판매 제품 이미지 저장
+	public ProductVO selectProductAddr(ProductVO vo) throws Exception {
 		// TODO Auto-generated method stub
-		return productDAO.insertProImg(svo);
+		return productDAO.selectProductAddr(vo);
 	}
-
+	
 	@Override
 	public List<?> selectProductList(ProductVO vo) throws Exception { // 판매제품 리스트 출력
 		// TODO Auto-generated method stub
 		return productDAO.selectProductList(vo);
 	}
+	
+	@Override
+	public List<?> selectProductCategoryList(ProductVO vo) {
+		// TODO Auto-generated method stub
+		return productDAO.selectProductCategoryList(vo);
+	}
+	
+	@Override
+	public String selectProCategory(ProductVO vo) {
+		// TODO Auto-generated method stub
+		return productDAO.selectProCategory(vo);
+	}
 
 	@Override
-	public ProductVO selectProductDetail(ProductVO vo) { // 판매 제품 리스트 -> 상세정보 출력
+	public ProductVO selectProductDetail(ProductVO vo)  { // 판매 제품 리스트 -> 상세정보 출력
 		// TODO Auto-generated method stub
 		return productDAO.selectProductDetail(vo);
 	}
@@ -47,7 +60,5 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectProductModify(vo);
 	}
 
-	
-	
-	
+
 }

@@ -232,11 +232,29 @@
 			border-top:1px solid #eee;
 			border-bottom:1px solid #eee;
 		}
-		.section-btn {
+		.section-main .liner {
+			border-bottom:1px solid #ffda77;
+		}
+		.suspend-btn {
 			color:#fff;
 			border:1px solid #ffb319;
 			background:#ffb319;
-			
+			cursor:pointer;
+			border-radius:5px;
+		}
+		.unlock-btn {
+			color:#fff;
+			border:1px solid #ffb319;
+			background:#ffb319;
+			cursor:pointer;
+			border-radius:5px;
+		}
+		.restore-btn {
+			color:#fff;
+			border:1px solid #ffb319;
+			background:#ffb319;
+			cursor:pointer;
+			border-radius:5px;
 		}
 		.section-btn:active {
 			background:#ffda77;
@@ -607,6 +625,46 @@
         	font-weight:1;
         }
         
-        
+        /*pager*/
+        .pager-wrap {
+	
+		}
+		
+		.pager {
+			font-size: 0;
+			text-align: center;
+			margin-top: 50px;
+		}
+		
+		.pager a {
+			display: block;
+		}
+		
+		.pager>li {
+			display: inline-block;
+			vertical-align: top;
+			margin: 0 2px;
+		}
+		
+		.pager>li>a {
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+			border-radius: 50%;
+			boder: 1px solid #666;
+			color: #111;
+			font-size: 12px;
+			text-align: center;
+		}
+		
+		.pager>li>a:hover {
+			background-color: #eee;
+		}
+		
+		.pager>li.on>a {
+			border-color: #ffda77;
+			background-color: #ffda77;
+			color: #fff;
+		}
         
         
