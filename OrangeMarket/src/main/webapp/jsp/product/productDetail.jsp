@@ -7,7 +7,7 @@
 	<jsp:param name="cssName" value="product" />
 </jsp:include>
 <!-- 헤더 -->
-
+<c:set var="sessionId" value="${sessionId }"/>
 <!-- 페이지 wraper -->
 <article class="pg-wrap pg-pro-detail">
 
@@ -114,13 +114,17 @@
 		<article class="pro-detail-wrap">
 			<!-- container -->
 			<div class="cont-inner">
-				<!-- 작성자에게 보이는 수정 및 삭제 버튼 -->
-				<div class="btn-wrap txt-r user-btn-wrap">
-					<button class="btn btn-solid-point" onclick="location='product-modify?proCode=${product.proCode }'">수정</button>
-					<button class="btn btn-solid" onclick="location='product-delete?proCode=${product.proCode }'">삭제</button>
-				</div>
-	
-
+				<input type="hidden" name="seller" id="seller" value="${product.seller}">
+				<c:if test="${product.seller == sessionId}">
+					<!-- 작성자에게 보이는 수정 및 삭제 버튼 -->
+					<div class="btn-wrap txt-r user-btn-wrap">
+						<button class="btn btn-solid-point" onclick="location='product-modify?proCode=${product.proCode }'">수정</button>
+						<button class="btn btn-solid" onclick="location='product-delete?proCode=${product.proCode }'">삭제</button>
+					</div>
+				</c:if>
+				
+				<form name="frm" id="frm" method="post">
+				
 				<!-- 상품 내용 및 상세 내용 -->
 				<div class="pro-detail-top">
 					
@@ -130,7 +134,8 @@
 							src="<c:url value='/images/products/${product.imgs}'/>">
 					</div>
 					
-					<form name="frm" id="frm">
+					
+					
 					
 					<!-- 제품 정보 -->
 					<div class="product-info">

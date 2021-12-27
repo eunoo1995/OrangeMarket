@@ -52,6 +52,8 @@ public class ProductController {
 	
 	@RequestMapping(value="/product-list-detail")
 	public String selectProductDetail(ProductVO vo, Model model, HttpSession session) throws Exception {
+		int sessionId = (int) session.getAttribute("sessionId");
+		
 		vo = productService.selectProductDetail(vo);
 		model.addAttribute("product", vo);
 		
@@ -99,7 +101,9 @@ public class ProductController {
 		 // 기존 프로필 사진 삭제
 		 //File delFile = new File(path + svo.getImgs());
 		 //if(delFile.exists()) delFile.delete();
+		 
 		 // 새로 저장시킬 파일
+		 int seller = vo.getSeller();
 		 String imgs = "";
 		 
 		 for(MultipartFile multipartFile : uploadProductImg) {
@@ -107,7 +111,7 @@ public class ProductController {
 			 String realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
 			 String ext = realName.substring(realName.lastIndexOf(".")); 
 			 // userId + 확장자로 파일 저장
-			 imgs += ext;
+			 imgs += seller+ext;
 			 File saveFile = new File(path, imgs);
 			 multipartFile.transferTo(saveFile);
 		 }
@@ -115,6 +119,9 @@ public class ProductController {
 		 // 이미지 세팅 및 저장
 		 vo.setImgs(imgs);
 		 productService.insertProduct(vo);
+		 
+		 System.out.println(path);
+		 System.out.println(imgs);
 			
 		return msg;
 	}
