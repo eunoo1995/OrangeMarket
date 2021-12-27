@@ -25,7 +25,7 @@ public class ChatController {
 	
 	@RequestMapping(value="testLogin")
 	public String sessionTest(HttpSession session) throws Exception {
-		int userId = 2112250001;
+		int userId = 2112240001;
 		session.setAttribute("sessionId", userId);
 		return "redirect:main";
 	}
