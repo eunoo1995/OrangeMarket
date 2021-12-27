@@ -62,7 +62,7 @@
 								</figure> <!-- 상품 이미지 --> <!-- 상품 내용 및 상세 내용 -->
 								<div class="pro-detail">
 									<p class="pro-detail-tit">${product.title}</p>
-									<p class="pro-detail-price">${product.price}</p>
+									<p class="pro-detail-price">${product.price} 원</p>
 									<p class="pro-detail-area">${product.addr}</p>
 								</div> <!-- 상품 내용 및 상세 내용 -->
 						</a>

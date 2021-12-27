@@ -99,6 +99,7 @@ public class ProductController {
 		int seller = (int) session.getAttribute("sessionId");
 		
 		vo = productService.selectProductAddr(vo);
+		
 		String addr = vo.getAddr();
 		
 		System.out.println(seller);
@@ -129,7 +130,7 @@ public class ProductController {
 		 vo.setKeyword(keyword);
 		 vo.setAddr(addr);
 		 vo.setContent(content);
-		
+		 
 		 // 저장경로
 		 String path = request.getServletContext().getRealPath("/images/products");
 		 // 기존 프로필 사진 삭제
