@@ -53,7 +53,7 @@
 			  			data : formdata,
 			  			datatype : "text",
 			  			success : function(data) {
-		  					alert("발송 완료")
+		  					location="chat?channel"+data;
 			  			},
 			  			error: function(request, status, error){
 			  				alert("code : " + request.status + "\n" 
