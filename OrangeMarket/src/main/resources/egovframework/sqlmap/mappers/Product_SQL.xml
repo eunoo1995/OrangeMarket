@@ -213,6 +213,17 @@
 			user_id = ${seller}
 	</select>
 	
+	<select id="selectLikeCount" resultType="int">
+		SELECT 
+		    count(*)
+		FROM 
+		    like_product
+		WHERE
+		    liker = ${userId}
+		    and
+		    pro_code = ${proCode}
+	</select>
+	
 	<!-- select end -->
 	
 	<!-- update start -->

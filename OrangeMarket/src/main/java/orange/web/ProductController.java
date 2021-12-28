@@ -189,10 +189,18 @@ public class ProductController {
 	@RequestMapping(value="/like-product-save")
 	@ResponseBody
 	public String insertLikeProduct(ProductVO vo) throws Exception {
+		String msg = "ok"; 
 		
-		productService.insertLikeProduct(vo);
+		int likeCnt = productService.selectLikeCount(vo);
+	
+		if(likeCnt >= 1) {
+			msg = "already";
+		} else {
+			// 관심 제품 등록		
+			productService.insertLikeProduct(vo);
+		}
 		
-		return "";
+		return msg;
 	}
 	
 	

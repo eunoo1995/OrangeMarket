@@ -32,5 +32,7 @@ public interface ProductService {
 
 	// 관심 상품 등록
 	int insertLikeProduct(ProductVO vo);
+	// 관심 상품 중복 등록 방지
+	int selectLikeCount(ProductVO vo);
 
 }

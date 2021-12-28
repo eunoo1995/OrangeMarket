@@ -26,5 +26,7 @@ public interface ProductMapper {
 	int selectChatCount(ProductVO vo);
 	
 	int insertLikeProduct(ProductVO vo);
+	
+	int selectLikeCount(ProductVO vo);
 
 }

@@ -85,4 +85,10 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.insertLikeProduct(vo);
 	}
 
+	@Override
+	public int selectLikeCount(ProductVO vo) { // 관심 상품 중복 등록 방지
+		// TODO Auto-generated method stub
+		return productDAO.selectLikeCount(vo);
+	}
+
 }

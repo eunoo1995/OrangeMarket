@@ -38,7 +38,8 @@
 				  			data : formdata,
 				  			datatype : "text",
 			  				success : function(data) {
-			  					alert("등록 완료");
+			  					if(data == "ok") alert("등록 완료");
+			  					else if (data == "already") { alert("이미 등록하신 게시글 입니다."); return false; }
 				  			},
 				  			error : function (request, status, error){
 								alert("전송 실패");
