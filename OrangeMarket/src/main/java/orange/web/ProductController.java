@@ -99,6 +99,10 @@ public class ProductController {
 			int sessionId = (int) session.getAttribute("sessionId");
 			model.addAttribute("userId", sessionId);
 			
+			vo.setUserId(sessionId);
+			int likeCnt = productService.selectLikeCount(vo);
+			model.addAttribute("likeCnt", likeCnt);
+			
 			vo = productService.selectProductDetail(vo);
 			vo.setChatCnt(chatCnt);
 			vo.setLikeAllCnt(likeAllCnt);

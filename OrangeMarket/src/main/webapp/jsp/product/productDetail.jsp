@@ -173,8 +173,8 @@
 								<!-- 관심수 -->
 								<li><img class="first-icon"
 									<c:choose>
-										<c:when test="${product.likeCnt eq '0'}">src="<c:url value='/images/icons/favorite.png'/>"</c:when>
-										<c:when test="${product.likeCnt eq '1'}">src="<c:url value='/images/icons/favorite_color.png'/>"</c:when>
+										<c:when test="${likeCnt == 0}">src="<c:url value='/images/icons/favorite.png'/>"</c:when>
+										<c:when test="${likeCnt == 1}">src="<c:url value='/images/icons/favorite_color.png'/>"</c:when>
 									</c:choose>
 									> 
 									<span
