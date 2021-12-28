@@ -33,11 +33,11 @@
 
 
 				</table>
-					<input type="hidden" name="title" id="title" value="아이폰 싸게 팔아요오~~ㅎㅎ">
-					<input type="hidden" name="writer" id="writer" value=20202020>
-					<input type="hidden" name="writerNik" id="writerNik" value="홍길동">
-					<input type="hidden" name="seller" id="seller" value=20201111>
-					<input type="hidden" name="sellerNik" id="sellerNik" value="사기꾼">
+					<input type="hidden" name="title" id="title" value="${vo.title}">
+					<input type="hidden" name="writer" id="writer" value="${sessionId}">
+					<input type="hidden" name="writerNik" id="writerNik" value="${vo.writerNik}">
+					<input type="hidden" name="seller" id="seller" value="${vo.seller}">
+					<input type="hidden" name="sellerNik" id="sellerNik" value="${vo.sellerNik}">
 			</form>
 			<div class="btn-div">
 				<button class="btn" onclick="history.back();">취소</button>

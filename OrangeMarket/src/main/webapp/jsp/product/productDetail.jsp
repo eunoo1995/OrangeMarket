@@ -44,23 +44,33 @@
 			
 			// 채팅 기능
 			$("#chat").click(function(){
+				if($("#userId").val() == "") {
+					alert("로그인 후 이용해주세요.");
+					return false;
+				}
+				if($("#userId").val() == $("#seller").val()) {
+					alert("본인과의 채팅은 불가능합니다.");
+					return false;
+				}
 				var formdata = $("#frm").serialize();
-					
-			  		$.ajax({
-			  			type : "post",
-			  			url  : "create-chat",
-			  			data : formdata,
-			  			datatype : "text",
-			  			success : function(data) {
-		  					location="chat?channel"+data;
-			  			},
-			  			error: function(request, status, error){
-			  				alert("code : " + request.status + "\n" 
-			  				    + "message : " + request.responseText + "\n" 
-			  				    + "error : " + error);
-			  		    }
-			  		});
-			
+		  		$.ajax({
+		  			type : "post",
+		  			url  : "create-chat",
+		  			data : formdata,
+		  			datatype : "text",
+		  			success : function(data) {
+		  				if(data == "exist") {
+		  					alert("채팅이 이미 존재합니다.");
+		  					return false;
+		  				}
+	  					location="chat?channel="+data;
+		  			},
+		  			error: function(request, status, error){
+		  				alert("code : " + request.status + "\n" 
+		  				    + "message : " + request.responseText + "\n" 
+		  				    + "error : " + error);
+		  		    }
+		  		});
 			});
 			
 			//시세 조회 기능
@@ -94,7 +104,8 @@
 					alert("작성하신 글은 신고할 수 없습니다.");
 					return false;
 				}
-				location="report-write?proCode=${product.proCode}";
+				var proCode = $("#proCode").val();
+				location="report-write?proCode="+proCode;
 			});
 			
 		});
@@ -129,7 +140,7 @@
 							<h3 class="product-title" name="title" id="title">${product.title}</h3>
 							<p class="product-price" name="price" id="price">${product.price} 원</p>
 							<span class="product-grade" name="grade" id="grade">신뢰</span>
-							<a style="float: right; color:#999; text-decoration: underline;" name="report" id="report">신고</a>
+							<a style="float: right; color:#999; text-decoration: underline; cursor:pointer;" name="report" id="report">신고</a>
 						</div>
 	
 	
@@ -187,14 +198,13 @@
 							</div>
 	
 						</div>
-						
 						<form name="frm" id="frm" method="post">
 							<input type="hidden" name="title" id="title" value="${product.title }">
 							<input type="hidden" name="proCode" id="proCode" value="${product.proCode }">
 							<input type="hidden" name="price" id="price" value="${product.price }">
 							<input type="hidden" name="seller" id="seller" value="${product.seller }">
 							<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
-							<input type="hidden" name="userId" id="userId" value="${userId }">
+							<input type="hidden" name="userId" id="userId" value="${sessionId}">
 						</form>
 						
 						<div class="info-btn-wrap">

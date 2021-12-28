@@ -33,8 +33,18 @@ public class ReportImpl extends EgovAbstractServiceImpl implements ReportService
 	}
 
 	@Override
-	public int selectReportTotal() throws Exception {
-		return reportDAO.selectReportTotal();
+	public int selectReportTotal(PagingVO vo) throws Exception {
+		return reportDAO.selectReportTotal(vo);
+	}
+
+	@Override
+	public ReportVO selectReportInfo(ReportVO vo) throws Exception {
+		return reportDAO.selectReportInfo(vo);
+	}
+
+	@Override
+	public String selectWriterNik(int userId) throws Exception {
+		return reportDAO.selectWriterNik(userId);
 	}
 	
 	

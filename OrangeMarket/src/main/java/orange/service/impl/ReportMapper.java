@@ -15,5 +15,9 @@ public interface ReportMapper {
 	
 	int insertReport(ReportVO vo);
 	
-	int selectReportTotal();
+	int selectReportTotal(PagingVO vo);
+	
+	ReportVO selectReportInfo(ReportVO vo);
+	
+	String selectWriterNik(int userId);
 }
