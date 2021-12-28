@@ -13,7 +13,16 @@ public class ProductSubVO {
 	private String imgs;
 	private int liker;
 	private String userLevel;
+	private int chatCnt;
 	
+	public int getChatCnt() {
+		return chatCnt;
+	}
+
+	public void setChatCnt(int chatCnt) {
+		this.chatCnt = chatCnt;
+	}
+
 	public String getUserLevel() {
 		return userLevel;
 	}

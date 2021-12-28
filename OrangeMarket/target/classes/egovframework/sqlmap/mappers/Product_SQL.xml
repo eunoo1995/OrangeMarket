@@ -38,6 +38,23 @@
 	
 	</insert>
 	
+	<insert id="insertLikeProduct" parameterType="productVO">
+		INSERT INTO like_product (
+				unq,
+				liker,
+				pro_code,
+				seller,
+				pro_category_code,
+				rdate)
+		
+		VALUES (LIKE_PRODUCT_SEQ.NEXTVAL,
+				${userId},
+				${proCode},
+				${seller},
+				${proCategoryCode},
+				sysdate)
+	</insert>
+	
 	<!-- select -->
 	
 	<!-- 제품 리스트 표시 -->
@@ -111,6 +128,16 @@
 		    pro_category_code = ${proCategoryCode}
 			
 	</select>
+	
+	<!-- 채팅방 개수 세기 -->
+	<select id="selectChatCount" resultType="int">
+		SELECT 
+			count(*) as chat_cnt
+		FROM 
+			chat 
+		WHERE 
+			pro_code = ${proCode}
+	</select>	
 	
 	<!-- 제품 상세보기 -->
 	<select id="selectProductDetail" resultType="productVO">

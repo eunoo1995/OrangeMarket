@@ -80,20 +80,24 @@ public class ProductController {
 	// 제품 정보 상세보기
 	@RequestMapping(value="/product-list-detail")
 	public String selectProductDetail(ProductVO vo, Model model, HttpSession session) throws Exception {
-		
+		int chatCnt = productService.selectChatCount(vo);
 		// 세션값이 없으면 로그인 화면으로 리턴
 		if(session.getAttribute("sessionId") == null) {
 			productService.updateProductHits(vo);
 			model.addAttribute("userId", null);
 			
 			vo = productService.selectProductDetail(vo);
+			vo.setChatCnt(chatCnt);
 			model.addAttribute("product", vo);
+			
 		} else {
 			productService.updateProductHits(vo);
 			int sessionId = (int) session.getAttribute("sessionId");
 			model.addAttribute("userId", sessionId);
 			
 			vo = productService.selectProductDetail(vo);
+			vo.setChatCnt(chatCnt);
+			
 			model.addAttribute("product", vo);
 		}
 		
@@ -180,5 +184,22 @@ public class ProductController {
 		
 		return "product/productModify";
 	}
+	
+	// 관심 상품 등록 기능
+	@RequestMapping(value="/like-product-save")
+	@ResponseBody
+	public String insertLikeProduct(ProductVO vo) throws Exception {
+		String msg = "ok";
+		
+		productService.insertLikeProduct(vo);
+		
+		System.out.println(vo.getUserId());
+		System.out.println(vo.getProCode());
+		System.out.println(vo.getProCategoryCode());		
+		System.out.println(vo.getSeller());
+		
+		return msg;
+	}
+	
 	
 }

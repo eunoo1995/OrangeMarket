@@ -73,4 +73,16 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectProductModify(vo);
 	}
 
+	@Override
+	public int selectChatCount(ProductVO vo) { // 채팅방 개수 세기
+		// TODO Auto-generated method stub
+		return productDAO.selectChatCount(vo);
+	}
+
+	@Override
+	public int insertLikeProduct(ProductVO vo) { // 관심 상품 등록
+		// TODO Auto-generated method stub
+		return productDAO.insertLikeProduct(vo);
+	}
+
 }

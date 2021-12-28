@@ -81,7 +81,10 @@
 			   B.LIKER, 
 			   (select nik_name from member where user_id=a.seller) SELLER_NIK
 		FROM PRODUCT A, LIKE_PRODUCT B
-		WHERE B.LIKER = #{liker}
+		WHERE 
+			B.LIKER = #{liker}
+		AND
+		    B.PRO_CODE = A.PRO_CODE
 	</select>
 	<delete id="deleteLikeList" parameterType="productVO">
 		DELETE FROM LIKE_PRODUCT WHERE UNQ = #{unq}

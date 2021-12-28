@@ -22,25 +22,30 @@
 		$(function(){
 			//관심 기능
 			$("#like").click(function(){
+				if($("#userId").val() == "") {
+					alert("로그인 후 이용해주세요.");
+					return false;
+				}
+				if($("#userId").val() == $("#seller").val()) {
+					alert("작성한 글은 관심 등록할 수 없습니다.");
+					return false;
+				} else {
 				var formdata = $("#frm").serialize();
-				alert("like");
-			/* 					
-			  		$.ajax({
-			  			type : "post",
-			  			url  : "like-product",
-			  			data : formdata,
-			  			processData : false,
-			  			contentType : false,
-			  			datatype : "text",
-			  			success : function(data) {
-		  					location='chat';
-			  			},
-			  			error : function (request, status, error){
-							alert("전송 실패");
-			  			}
-			  		});
-			 */
-			});
+	
+					$.ajax({
+							type : "post",
+				  			url  : "like-product-save",
+				  			data : formdata,
+				  			datatype : "text",
+			  				success : function(data) {
+			  					alert("등록 완료");
+				  			},
+				  			error : function (request, status, error){
+								alert("전송 실패");
+				  			}
+				  		});
+					}
+				});
 			
 			// 채팅 기능
 			$("#chat").click(function(){
@@ -101,7 +106,7 @@
 					alert("로그인이 필요한 기능입니다.");
 					return false;
 				} else if($ ("#userId").val() == $("#seller").val() ) {
-					alert("작성하신 글은 신고할 수 없습니다.");
+					alert("작성한 글은 신고할 수 없습니다.");
 					return false;
 				}
 				var proCode = $("#proCode").val();
@@ -123,7 +128,15 @@
 					</div>
 				</c:if>
 				
-				
+				<form name="frm" id="frm" method="post">
+					<input type="hidden" name="title" id="title" value="${product.title }">
+					<input type="hidden" name="proCode" id="proCode" value="${product.proCode }">
+					<input type="hidden" name="proCategoryCode" id="proCategoryCode" value="${product.proCategoryCode }">
+					<input type="hidden" name="price" id="price" value="${product.price }">
+					<input type="hidden" name="seller" id="seller" value="${product.seller }">
+					<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
+					<input type="hidden" name="userId" id="userId" value="${sessionId}">
+				</form>
 				
 				<!-- 상품 내용 및 상세 내용 -->
 				<div class="pro-detail-top">
@@ -164,7 +177,7 @@
 								<!-- 채팅수 -->
 								<li><img class="other-icon"
 									src="<c:url value='/images/icons/comment.png'/>"> <span
-									class="count">0</span></li>
+									class="count">${product.chatCnt }</span></li>
 	
 								<!-- 조회수 -->
 								<li><img class="other-icon"
@@ -198,14 +211,6 @@
 							</div>
 	
 						</div>
-						<form name="frm" id="frm" method="post">
-							<input type="hidden" name="title" id="title" value="${product.title }">
-							<input type="hidden" name="proCode" id="proCode" value="${product.proCode }">
-							<input type="hidden" name="price" id="price" value="${product.price }">
-							<input type="hidden" name="seller" id="seller" value="${product.seller }">
-							<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
-							<input type="hidden" name="userId" id="userId" value="${sessionId}">
-						</form>
 						
 						<div class="info-btn-wrap">
 							<button type="button" class="btn btn-solid-point" name="like" id="like">관심</button>
