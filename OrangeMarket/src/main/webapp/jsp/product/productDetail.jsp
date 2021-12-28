@@ -38,7 +38,7 @@
 				  			data : formdata,
 				  			datatype : "text",
 			  				success : function(data) {
-			  					if(data == "ok") alert("등록 완료");
+			  					if(data == "ok") { alert("등록 완료"); location.reload(); }
 			  					else if (data == "already") { alert("이미 등록하신 게시글 입니다."); return false; }
 				  			},
 				  			error : function (request, status, error){
@@ -172,8 +172,13 @@
 								<!-- 999 이상 시 999+ 표시 -->
 								<!-- 관심수 -->
 								<li><img class="first-icon"
-									src="<c:url value='/images/icons/favorite.png'/>"> <span
-									class="count">0</span></li>
+									<c:choose>
+										<c:when test="${product.likeCnt eq '0'}">src="<c:url value='/images/icons/favorite.png'/>"</c:when>
+										<c:when test="${product.likeCnt eq '1'}">src="<c:url value='/images/icons/favorite_color.png'/>"</c:when>
+									</c:choose>
+									> 
+									<span
+									class="count">${product.likeAllCnt }</span></li>
 	
 								<!-- 채팅수 -->
 								<li><img class="other-icon"

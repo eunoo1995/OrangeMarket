@@ -81,6 +81,8 @@ public class ProductController {
 	@RequestMapping(value="/product-list-detail")
 	public String selectProductDetail(ProductVO vo, Model model, HttpSession session) throws Exception {
 		int chatCnt = productService.selectChatCount(vo);
+		int likeAllCnt = productService.selectLikeAllCount(vo);
+	
 		// 세션값이 없으면 로그인 화면으로 리턴
 		if(session.getAttribute("sessionId") == null) {
 			productService.updateProductHits(vo);
@@ -88,6 +90,8 @@ public class ProductController {
 			
 			vo = productService.selectProductDetail(vo);
 			vo.setChatCnt(chatCnt);
+			vo.setLikeAllCnt(likeAllCnt);
+			
 			model.addAttribute("product", vo);
 			
 		} else {
@@ -97,6 +101,7 @@ public class ProductController {
 			
 			vo = productService.selectProductDetail(vo);
 			vo.setChatCnt(chatCnt);
+			vo.setLikeAllCnt(likeAllCnt);
 			
 			model.addAttribute("product", vo);
 		}

@@ -220,7 +220,16 @@
 		    like_product
 		WHERE
 		    liker = ${userId}
-		    and
+		    AND
+		    pro_code = ${proCode}
+	</select>
+	
+	<select id="selectLikeAllCount" resultType="int">
+		SELECT 
+		    count(*)
+		FROM 
+		    like_product
+		WHERE
 		    pro_code = ${proCode}
 	</select>
 	

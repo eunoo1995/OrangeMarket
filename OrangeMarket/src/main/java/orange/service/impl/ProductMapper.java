@@ -28,5 +28,7 @@ public interface ProductMapper {
 	int insertLikeProduct(ProductVO vo);
 	
 	int selectLikeCount(ProductVO vo);
+	
+	int selectLikeAllCount(ProductVO vo);
 
 }

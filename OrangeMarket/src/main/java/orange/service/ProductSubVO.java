@@ -14,7 +14,25 @@ public class ProductSubVO {
 	private int liker;
 	private String userLevel;
 	private int chatCnt;
-	
+	private int likeAllCnt;
+	private int likeCnt;
+
+	public int getLikeAllCnt() {
+		return likeAllCnt;
+	}
+
+	public void setLikeAllCnt(int likeAllCnt) {
+		this.likeAllCnt = likeAllCnt;
+	}
+
+	public int getLikeCnt() {
+		return likeCnt;
+	}
+
+	public void setLikeCnt(int likeCnt) {
+		this.likeCnt = likeCnt;
+	}
+
 	public int getChatCnt() {
 		return chatCnt;
 	}

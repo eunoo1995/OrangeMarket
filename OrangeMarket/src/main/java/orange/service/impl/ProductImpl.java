@@ -91,4 +91,10 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectLikeCount(vo);
 	}
 
+	@Override
+	public int selectLikeAllCount(ProductVO vo) {
+		// TODO Auto-generated method stub
+		return productDAO.selectLikeAllCount(vo);
+	}
+
 }
