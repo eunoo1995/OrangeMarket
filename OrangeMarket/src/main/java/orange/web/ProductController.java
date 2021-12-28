@@ -189,16 +189,10 @@ public class ProductController {
 	@RequestMapping(value="/like-product-save")
 	@ResponseBody
 	public String insertLikeProduct(ProductVO vo) throws Exception {
-		String msg = "ok";
 		
 		productService.insertLikeProduct(vo);
 		
-		System.out.println(vo.getUserId());
-		System.out.println(vo.getProCode());
-		System.out.println(vo.getProCategoryCode());		
-		System.out.println(vo.getSeller());
-		
-		return msg;
+		return "";
 	}
 	
 	
