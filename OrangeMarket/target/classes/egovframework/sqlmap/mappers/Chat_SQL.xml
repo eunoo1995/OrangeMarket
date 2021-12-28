@@ -73,6 +73,48 @@
 							STATUS = 'Y'
 				WHERE CHANNEL = #{channel}
 				AND   RECEIVER = #{receiver}			
-	
 	</update>
+	
+	
+	<select id="selectBuyerInfo" parameterType="chatVO" resultType="memberVO">
+		SELECT NIK_NAME,
+			   PROFILE_IMG	
+		FROM MEMBER WHERE USER_ID = #{buyer}
+	</select>
+	<select id="selectSellerInfo" parameterType="chatVO" resultType="String">
+		SELECT PROFILE_IMG SELLER_PROFILE
+		FROM MEMBER WHERE USER_ID = #{seller}
+	</select>
+	<select id="checkedChat" parameterType="chatVO" resultType="int">
+		SELECT COUNT(*) FROM CHAT
+		WHERE PRO_CODE = #{proCode} AND SELLER = #{seller} AND BUYER = #{buyer}	
+	</select>
+	<insert id="insertNewChat" parameterType="chatVO">
+		INSERT INTO CHAT ( CHANNEL,
+							TITLE,
+							PRICE,
+							SELLER,
+							BUYER,
+							RDATE,
+							SELLER_NIK,
+							BUYER_NIK,
+							BUYER_PROFILE,
+							SELLER_PROFILE,
+							PRO_CODE )
+					VALUES (CHAT_SEQ.NEXTVAL,
+							#{title},
+							#{price},
+							#{seller},
+							#{buyer},
+							SYSDATE,
+							#{sellerNik},
+							#{buyerNik},
+							#{buyerProfile},
+							#{sellerProfile},
+							#{proCode} )			
+	</insert>
+	<select id="getNewChannel" parameterType="chatVO" resultType="int">
+		SELECT CHANNEL FROM CHAT
+		WHERE PRO_CODE = #{proCode} AND SELLER = #{seller} AND BUYER = #{buyer}	
+	</select>
 </mapper>

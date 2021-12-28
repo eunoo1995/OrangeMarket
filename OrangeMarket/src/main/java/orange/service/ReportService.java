@@ -14,5 +14,9 @@ public interface ReportService {
 	int insertReport(ReportVO vo) throws Exception;
 	
 	// 전체 게시글 수 출력
-	int selectReportTotal() throws Exception;
+	int selectReportTotal(PagingVO vo) throws Exception;
+	
+	// 신고 게시글 정보 가져오기
+	ReportVO selectReportInfo(ReportVO vo) throws Exception;
+	String selectWriterNik(int userId) throws Exception;
 }

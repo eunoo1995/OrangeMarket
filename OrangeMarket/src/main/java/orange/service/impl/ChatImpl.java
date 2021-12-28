@@ -10,6 +10,7 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.ChatService;
 import orange.service.ChatSubVO;
 import orange.service.ChatVO;
+import orange.service.MemberVO;
 
 @Service("chatService")
 public class ChatImpl extends EgovAbstractServiceImpl implements ChatService {
@@ -45,6 +46,31 @@ public class ChatImpl extends EgovAbstractServiceImpl implements ChatService {
 	@Override
 	public int updateChatStatus(ChatSubVO subVo) throws Exception {
 		return chatDAO.updateChatStatus(subVo);
+	}
+
+	@Override
+	public int insertNewChat(ChatVO vo) throws Exception {
+		return chatDAO.insertNewChat(vo);
+	}
+
+	@Override
+	public MemberVO selectBuyerInfo(ChatVO vo) throws Exception {
+		return chatDAO.selectBuyerInfo(vo);
+	}
+
+	@Override
+	public String selectSellerInfo(ChatVO vo) throws Exception {
+		return chatDAO.selectSellerInfo(vo);
+	}
+
+	@Override
+	public int checkedChat(ChatVO vo) throws Exception {
+		return chatDAO.checkedChat(vo);
+	}
+
+	@Override
+	public int getNewChannel(ChatVO vo) throws Exception {
+		return chatDAO.getNewChannel(vo);
 	}
 	
 
