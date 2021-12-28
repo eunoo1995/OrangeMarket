@@ -27,7 +27,18 @@ public class ProductController {
 	
 	@Resource(name="memberService")
 	private MemberService memberService;
-
+	
+	// 카테고리명 리스트 출력
+	@RequestMapping(value="/gnb")
+	public String selectCategoryList(ProductVO vo, Model model) throws Exception {
+		
+		List<?> list = productService.selectCategoryList(vo);
+		
+		model.addAttribute("list", list);
+		
+		return "redirect:gnb";
+	}
+	
 	// 제품 리스트 표시 및 상세 보기 기능
 	@RequestMapping(value="/product-list")
 	public String productList(ProductVO vo, Model model, HttpSession session) throws Exception {
@@ -106,14 +117,13 @@ public class ProductController {
 		int seller = (int) session.getAttribute("sessionId");
 		vo.setSeller(seller);
 		vo = productService.selectProductAddr(vo);
-		
 		String addr = vo.getAddr();
 		
-		System.out.println(seller);
-		System.out.println(addr);
+		List<?> list = productService.selectCategoryList(vo);
 		
 		model.addAttribute("seller", seller);
 		model.addAttribute("addr", addr);
+		model.addAttribute("list", list);
 		
 		return "product/productWrite";
 	}

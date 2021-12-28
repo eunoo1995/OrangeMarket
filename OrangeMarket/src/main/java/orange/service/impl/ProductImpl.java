@@ -48,8 +48,15 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectProCategory(vo);
 	}
 	
+
 	@Override
-	public int updateProductHits(ProductVO vo) {
+	public List<?> selectCategoryList(ProductVO vo) throws Exception {  // 카테고리명 리스트 출력
+		// TODO Auto-generated method stub
+		return productDAO.selectCategoryList(vo);
+	}
+	
+	@Override
+	public int updateProductHits(ProductVO vo) { // 조회수 증가
 		// TODO Auto-generated method stub
 		return productDAO.updateProductHits(vo);
 	}
