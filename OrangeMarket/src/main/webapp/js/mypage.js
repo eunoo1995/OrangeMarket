@@ -1,8 +1,4 @@
 $(function(){
-		// 관심버튼 클릭시 빈하트 이벤트
-		$(".ex").click(function(){
-			$(".ex").attr("src","/images/icons/favorite.png");
-		});
 		//회원탈퇴 확인 팝업창	
 		$("#myPage-withdrawal-btn").click(function(){
 			window.open("withdrawal","회원탈퇴 확인","width=600, height=500, left=450, top=150");

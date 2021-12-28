@@ -111,13 +111,14 @@
 								<col width="70%">
 								<col width="15%">
 							</colgroup>
-							<!-- 반복문 사용예정 -->
 							<c:forEach var="likeList" items="${likeList}">
 							<tr>
-								<th><img src="/images/icons/lock.png"></th>
+								<th><img class="likesList-img" src="/images/products/${likeList.imgs}"></th>
 								<td>
-									<p class="likesList-title">${likeList.title}</p>
-									<p class="likesList-loc">${likeList.addr} · ${likeList.sellerNik}</p>
+									<div class="likesList-state">${likeList.status}</div>
+									<p class="likesList-title">
+									<a href="product-list-detail?proCode=${likeList.proCode}">${likeList.title}</a></p>
+									<p class="likesList-loc">${likeList.sellerNik} · ${likeList.addr}</p>
 									<p class="likesList-price">${likeList.price}원</p>
 								</td>
 								<th>
@@ -127,7 +128,6 @@
 								</th>
 							</tr>
 							</c:forEach>
-							<!-- 반복문 사용예정 -->
 						</table>
 					</div>
 				</div>

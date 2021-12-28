@@ -40,7 +40,6 @@ public class MyPageController {
 		// 회원 관심게시글 목록 가져오기
 		pvo.setLiker(sessionId);
 		List<?> likeList = myPageService.selectLikeProduct(pvo);
-		
 		model.addAttribute("vo",vo);
 		model.addAttribute("keywordList",keywordList);
 		model.addAttribute("likeList",likeList);

@@ -85,6 +85,7 @@
 			B.LIKER = #{liker}
 		AND
 		    B.PRO_CODE = A.PRO_CODE
+		ORDER BY B.RDATE DESC    
 	</select>
 	<delete id="deleteLikeList" parameterType="productVO">
 		DELETE FROM LIKE_PRODUCT WHERE UNQ = #{unq}
