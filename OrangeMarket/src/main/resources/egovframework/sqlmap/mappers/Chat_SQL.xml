@@ -41,6 +41,7 @@
 	<select id="selectChatInfo" parameterType="chatVO" resultType="chatVO">
 		SELECT
 				channel,
+				pro_code,
 				title,
 				price,
 				seller,
