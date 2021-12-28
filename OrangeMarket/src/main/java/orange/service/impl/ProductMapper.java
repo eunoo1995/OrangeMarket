@@ -16,10 +16,12 @@ public interface ProductMapper {
 	List<?> selectProductList(ProductVO vo);
 	List<?> selectProductCategoryList(ProductVO vo);
 	String selectProCategory(ProductVO vo);
+	int updateProductHits(ProductVO vo);
 
 	ProductVO selectProductDetail(ProductVO vo);
 
 	ProductVO selectProductModify(ProductVO vo);
+
 	
 
 	

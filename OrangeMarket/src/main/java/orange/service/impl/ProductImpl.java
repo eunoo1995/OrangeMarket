@@ -25,7 +25,7 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	}
 	
 	@Override
-	public ProductVO selectProductAddr(ProductVO vo) throws Exception {
+	public ProductVO selectProductAddr(ProductVO vo) throws Exception { // 주소 가져오기
 		// TODO Auto-generated method stub
 		return productDAO.selectProductAddr(vo);
 	}
@@ -37,15 +37,21 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	}
 	
 	@Override
-	public List<?> selectProductCategoryList(ProductVO vo) {
+	public List<?> selectProductCategoryList(ProductVO vo) { // 카테고리 분류 리스트 표시
 		// TODO Auto-generated method stub
 		return productDAO.selectProductCategoryList(vo);
 	}
 	
 	@Override
-	public String selectProCategory(ProductVO vo) {
+	public String selectProCategory(ProductVO vo) { // 리스트 화면에서 카테고리 명 출력
 		// TODO Auto-generated method stub
 		return productDAO.selectProCategory(vo);
+	}
+	
+	@Override
+	public int updateProductHits(ProductVO vo) {
+		// TODO Auto-generated method stub
+		return productDAO.updateProductHits(vo);
 	}
 
 	@Override
@@ -59,6 +65,5 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		// TODO Auto-generated method stub
 		return productDAO.selectProductModify(vo);
 	}
-
 
 }

@@ -15,7 +15,7 @@
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
 			<div class="cont-inner">
-				<h2 class="sub-page-title">Category</h2>
+				<h2 class="sub-page-title">상세 화면</h2>
 			</div>
 		</header>
 		
@@ -176,12 +176,22 @@
 							
 							<!-- 환불 여부 -->
 							<div class="mini-div">
-								<span class="mini-title">·환불여부</span> <span class="mini-content">${product.refund}</span>
+								<span class="mini-title">·환불여부</span> <span class="mini-content">
+								<c:choose>
+									<c:when test="${product.refund eq '1'}">가능</c:when>
+									<c:when test="${product.refund eq '2'}">불가능</c:when>
+								</c:choose>
+								</span>
 							</div>
 	
 							<!-- 배송 여부 -->
 							<div class="mini-div">
-								<span class="mini-title">·가격협의</span> <span class="mini-content">${product.nego }</span>
+								<span class="mini-title">·가격협의</span> <span class="mini-content">
+								<c:choose>
+									<c:when test="${product.nego eq '1'}">가능</c:when>
+									<c:when test="${product.nego eq '2'}">불가능</c:when>
+								</c:choose>
+								</span>
 							</div>
 	
 							<!-- 거래 지역 -->
