@@ -123,8 +123,6 @@
 							src="<c:url value='/images/products/${product.imgs}'/>">
 					</div>
 					
-					
-					
 					<!-- 제품 정보 -->
 					<div class="product-info">
 						<div class="product-head">
