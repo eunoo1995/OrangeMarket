@@ -7,7 +7,6 @@
 	<jsp:param name="cssName" value="product" />
 </jsp:include>
 <!-- 헤더 -->
-<c:set var="sessionId" value="${sessionId }"/>
 <!-- 페이지 wraper -->
 <article class="pg-wrap pg-pro-detail">
 
@@ -88,23 +87,14 @@
 			
 			//신고 기능
 			$("#report").click(function(){
-				var formdata = $("#frm").serialize();
-				alert("avg-report");
-/* 			  		$.ajax({
-			  			type : "post",
-			  			url  : "report-write",
-			  			data : formdata,
-			  			processData : false,
-			  			contentType : false,
-			  			datatype : "text",
-			  			success : function(data) {
-		  					location='chat';
-			  			},
-			  			error : function (request, status, error){
-							alert("전송 실패");
-			  			}
-			  		}); */
-			
+				if( $("#userId").val() == "" || $("#userId").val() == null ) {
+					alert("로그인이 필요한 기능입니다.");
+					return false;
+				} else if($ ("#userId").val() == $("#seller").val() ) {
+					alert("작성하신 글은 신고할 수 없습니다.");
+					return false;
+				}
+				location="report-write?proCode=${product.proCode}";
 			});
 			
 		});
@@ -114,7 +104,6 @@
 		<article class="pro-detail-wrap">
 			<!-- container -->
 			<div class="cont-inner">
-				<input type="hidden" name="seller" id="seller" value="${product.seller}">
 				<c:if test="${product.seller == sessionId}">
 					<!-- 작성자에게 보이는 수정 및 삭제 버튼 -->
 					<div class="btn-wrap txt-r user-btn-wrap">
@@ -142,7 +131,7 @@
 							<h3 class="product-title" name="title" id="title">${product.title}</h3>
 							<p class="product-price" name="price" id="price">${product.price} 원</p>
 							<span class="product-grade" name="grade" id="grade">신뢰</span>
-							<span style="float: right; color:#999;" name="report" id="report">신고</span>
+							<a style="float: right; color:#999; text-decoration: underline;" name="report" id="report">신고</a>
 						</div>
 	
 	
@@ -206,7 +195,8 @@
 							<input type="hidden" name="proCode" id="proCode" value="${product.proCode }">
 							<input type="hidden" name="price" id="price" value="${product.price }">
 							<input type="hidden" name="seller" id="seller" value="${product.seller }">
-							<input type="hidden" name="proCode" id="proCode" value="${product.sellerNik }">
+							<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
+							<input type="hidden" name="userId" id="userId" value="${userId }">
 						</form>
 						
 						<div class="info-btn-wrap">

@@ -84,6 +84,8 @@ public class ProductController {
 		// 세션값이 없으면 로그인 화면으로 리턴
 		if(session.getAttribute("sessionId") == null) {
 			productService.updateProductHits(vo);
+			model.addAttribute("userId", null);
+			
 			vo = productService.selectProductDetail(vo);
 			model.addAttribute("product", vo);
 		} else {
