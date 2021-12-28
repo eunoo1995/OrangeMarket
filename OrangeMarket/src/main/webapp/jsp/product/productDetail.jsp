@@ -14,7 +14,7 @@
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
 			<div class="cont-inner">
-				<h2 class="sub-page-title">상세 화면</h2>
+				<h2 class="sub-page-title">${product.status }</h2>
 			</div>
 		</header>
 		
