@@ -112,8 +112,11 @@
 							<td class="product-write-table-td2">
 								<select name="proCategoryCode" id="proCategoryCode" class="product-write-category">
 									<option value="">카테고리를 선택해주세요.</option>
-									<option value="1">여성의류</option>
-									<option value="2">남성의류</option>
+									<c:forEach var="c" items="${list }">
+										<c:if test="${c.cateStatus == 'Y'}">
+											<option value="${c.proCategoryCode }">${c.category }</option>
+										</c:if>
+									</c:forEach>
 								</select>
 
 								<div class="keyword-wrap">
