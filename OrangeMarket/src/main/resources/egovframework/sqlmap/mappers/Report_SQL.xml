@@ -12,7 +12,7 @@
 						to_char(rdate,'yyyy-mm-dd') rdate,
 						decode(status,'N','답변대기','답변완료') status,
 						writer_nik,
-						seller_nik 
+						seller_nik
 				FROM REPORT_BOARD 
 				WHERE WRITER=#{writer} 
 				ORDER BY unq DESC ) a ) b 

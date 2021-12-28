@@ -26,4 +26,5 @@ public interface AdminService {
 	List<?> selectWithdrawal(PagingVO vo) throws Exception;
 	// 탈퇴 회원 복구
 	int updateRestore(int userId) throws Exception;
+	
 }
