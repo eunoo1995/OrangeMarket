@@ -1,8 +1,9 @@
 package orange.service;
 
-public class ChatVO{
+public class ChatVO {
 	
 	private int channel;
+	private int proCode;
 	private String title;
 	private String price;
 	private int seller;
@@ -94,5 +95,10 @@ public class ChatVO{
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+	public int getProCode() {
+		return proCode;
+	}
+	public void setProCode(int proCode) {
+		this.proCode = proCode;
+	}
 }

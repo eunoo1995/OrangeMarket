@@ -196,7 +196,7 @@
 							<input type="hidden" name="proCode" id="proCode" value="${product.proCode }">
 							<input type="hidden" name="price" id="price" value="${product.price }">
 							<input type="hidden" name="seller" id="seller" value="${product.seller }">
-							<input type="hidden" name="proCode" id="proCode" value="${product.sellerNik }">
+							<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
 						</form>
 						
 						<div class="info-btn-wrap">
