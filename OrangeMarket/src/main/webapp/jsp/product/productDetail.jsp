@@ -7,7 +7,6 @@
 	<jsp:param name="cssName" value="product" />
 </jsp:include>
 <!-- 헤더 -->
-<c:set var="sessionId" value="${sessionId }"/>
 <!-- 페이지 wraper -->
 <article class="pg-wrap pg-pro-detail">
 
@@ -15,7 +14,7 @@
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
 			<div class="cont-inner">
-				<h2 class="sub-page-title">Category</h2>
+				<h2 class="sub-page-title">상세 화면</h2>
 			</div>
 		</header>
 		
@@ -53,7 +52,7 @@
 			  			data : formdata,
 			  			datatype : "text",
 			  			success : function(data) {
-		  					alert("발송 완료")
+		  					location="chat?channel"+data;
 			  			},
 			  			error: function(request, status, error){
 			  				alert("code : " + request.status + "\n" 
@@ -88,23 +87,14 @@
 			
 			//신고 기능
 			$("#report").click(function(){
-				var formdata = $("#frm").serialize();
-				alert("avg-report");
-/* 			  		$.ajax({
-			  			type : "post",
-			  			url  : "report-write",
-			  			data : formdata,
-			  			processData : false,
-			  			contentType : false,
-			  			datatype : "text",
-			  			success : function(data) {
-		  					location='chat';
-			  			},
-			  			error : function (request, status, error){
-							alert("전송 실패");
-			  			}
-			  		}); */
-			
+				if( $("#userId").val() == "" || $("#userId").val() == null ) {
+					alert("로그인이 필요한 기능입니다.");
+					return false;
+				} else if($ ("#userId").val() == $("#seller").val() ) {
+					alert("작성하신 글은 신고할 수 없습니다.");
+					return false;
+				}
+				location="report-write?proCode=${product.proCode}";
 			});
 			
 		});
@@ -114,7 +104,6 @@
 		<article class="pro-detail-wrap">
 			<!-- container -->
 			<div class="cont-inner">
-				<input type="hidden" name="seller" id="seller" value="${product.seller}">
 				<c:if test="${product.seller == sessionId}">
 					<!-- 작성자에게 보이는 수정 및 삭제 버튼 -->
 					<div class="btn-wrap txt-r user-btn-wrap">
@@ -134,15 +123,13 @@
 							src="<c:url value='/images/products/${product.imgs}'/>">
 					</div>
 					
-					
-					
 					<!-- 제품 정보 -->
 					<div class="product-info">
 						<div class="product-head">
 							<h3 class="product-title" name="title" id="title">${product.title}</h3>
 							<p class="product-price" name="price" id="price">${product.price} 원</p>
 							<span class="product-grade" name="grade" id="grade">신뢰</span>
-							<span style="float: right; color:#999;" name="report" id="report">신고</span>
+							<a style="float: right; color:#999; text-decoration: underline;" name="report" id="report">신고</a>
 						</div>
 	
 	
@@ -176,12 +163,22 @@
 							
 							<!-- 환불 여부 -->
 							<div class="mini-div">
-								<span class="mini-title">·환불여부</span> <span class="mini-content">${product.refund}</span>
+								<span class="mini-title">·환불여부</span> <span class="mini-content">
+								<c:choose>
+									<c:when test="${product.refund eq '1'}">가능</c:when>
+									<c:when test="${product.refund eq '2'}">불가능</c:when>
+								</c:choose>
+								</span>
 							</div>
 	
 							<!-- 배송 여부 -->
 							<div class="mini-div">
-								<span class="mini-title">·가격협의</span> <span class="mini-content">${product.nego }</span>
+								<span class="mini-title">·가격협의</span> <span class="mini-content">
+								<c:choose>
+									<c:when test="${product.nego eq '1'}">가능</c:when>
+									<c:when test="${product.nego eq '2'}">불가능</c:when>
+								</c:choose>
+								</span>
 							</div>
 	
 							<!-- 거래 지역 -->
@@ -197,6 +194,7 @@
 							<input type="hidden" name="price" id="price" value="${product.price }">
 							<input type="hidden" name="seller" id="seller" value="${product.seller }">
 							<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
+							<input type="hidden" name="userId" id="userId" value="${userId }">
 						</form>
 						
 						<div class="info-btn-wrap">

@@ -40,7 +40,7 @@
 					<input type="hidden" name="sellerNik" id="sellerNik" value="사기꾼">
 			</form>
 			<div class="btn-div">
-				<button class="btn" onclick="location='product-detail'">취소</button>
+				<button class="btn" onclick="history.back();">취소</button>
 				<button class="btn btn-solid" id="reportWrite">등록</button>
 			</div>
 

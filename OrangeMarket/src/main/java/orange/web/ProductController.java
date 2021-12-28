@@ -77,13 +77,19 @@ public class ProductController {
 		return "product/productList";
 	}
 	
+	// 제품 정보 상세보기
 	@RequestMapping(value="/product-list-detail")
 	public String selectProductDetail(ProductVO vo, Model model, HttpSession session) throws Exception {
+		
 		// 세션값이 없으면 로그인 화면으로 리턴
 		if(session.getAttribute("sessionId") == null) {
+			productService.updateProductHits(vo);
+			model.addAttribute("userId", null);
+			
 			vo = productService.selectProductDetail(vo);
 			model.addAttribute("product", vo);
 		} else {
+			productService.updateProductHits(vo);
 			int sessionId = (int) session.getAttribute("sessionId");
 			model.addAttribute("userId", sessionId);
 			
@@ -94,6 +100,7 @@ public class ProductController {
 		return "product/productDetail";
 	}
 	
+	// 제품 등록
 	@RequestMapping(value="/product-write")
 	public String productWrite(ProductVO vo, Model model, HttpSession session) throws Exception {
 		int seller = (int) session.getAttribute("sessionId");
@@ -118,6 +125,9 @@ public class ProductController {
 	public String insertProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpServletRequest request) throws Exception {
 		
 		String msg = "ok";
+		
+		System.out.println(vo.getRefund());
+		System.out.println(vo.getNego());
 		
 		 // 한글 인식
 		 String title = new String(vo.getTitle().getBytes("8859_1"), "UTF-8");

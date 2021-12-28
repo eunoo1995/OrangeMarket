@@ -14,6 +14,8 @@
 			title,
 			keyword,
 			addr,
+			refund,
+			nego,
 			price,
 			content,
 			rdate,
@@ -26,6 +28,8 @@
 			#{title},
 			#{keyword},
 			#{addr},
+			#{refund},
+			#{nego},
 			#{price},
 			#{content},
 			sysdate,
@@ -33,8 +37,6 @@
 			#{imgs})
 	
 	</insert>
-	
-	
 	
 	<!-- select -->
 	
@@ -152,6 +154,15 @@
 	
 	<!-- select end -->
 	
+	<!-- update start -->
+		
+	<update id="updateProductHits">
+		UPDATE product
+			SET hits = hits + 1
+		WHERE pro_code = ${proCode}
+	</update>
+		
+	<!-- update end -->
 
 
 </mapper>
