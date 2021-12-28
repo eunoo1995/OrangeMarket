@@ -54,7 +54,7 @@
 								<figure class="pro-thumb">
 									<span class="pro-thumb-img"><img
 										src="<c:url value='/images/products/${product.imgs}'/>"></span>
-									<span class="pro-detail-grade trust">신뢰</span>
+									<span class="pro-detail-grade trust">${product.userLevel}</span>
 									<!-- 
 		                            	안전 등급은 
 		                            	<span class="pro-detail-grade">안전</span>

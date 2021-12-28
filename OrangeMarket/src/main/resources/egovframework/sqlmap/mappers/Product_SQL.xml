@@ -47,9 +47,17 @@
 			title,
 			price,
 			addr,
-			imgs
+			imgs,
+			(select 
+                CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
+                WHEN USER_LEVEL >= 40 THEN '일반회원' 
+                ELSE '주의회원' END
+             FROM
+                member
+            WHERE
+                user_id = p.seller) as user_level
 		FROM 
-			product
+			product p
 			
 		ORDER BY
 			rdate DESC
@@ -63,9 +71,17 @@
 			title,
 			price,
 			addr,
-			imgs
+			imgs,
+			(select 
+                CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
+                WHEN USER_LEVEL >= 40 THEN '일반회원' 
+                ELSE '주의회원' END
+             FROM
+                member
+            WHERE
+                user_id = p.seller) as user_level
 		FROM 
-			product
+			product p
 			
 		WHERE
 			pro_category_code = ${proCategoryCode}
@@ -116,7 +132,15 @@
 			nego,
 			( select nik_name from member where user_id = p.seller) seller_nik,
 			nvl(buyer_nik, '0') as buyer_nik,
-			imgs
+			imgs,
+			(select 
+                CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
+                WHEN USER_LEVEL >= 40 THEN '일반회원' 
+                ELSE '주의회원' END
+             FROM
+                member
+            WHERE
+                user_id = p.seller) as user_level
 			
 		FROM 
 			product p

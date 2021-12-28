@@ -139,7 +139,7 @@
 						<div class="product-head">
 							<h3 class="product-title" name="title" id="title">${product.title}</h3>
 							<p class="product-price" name="price" id="price">${product.price} 원</p>
-							<span class="product-grade" name="grade" id="grade">신뢰</span>
+							<span class="product-grade" name="grade" id="grade">${product.userLevel}</span>
 							<a style="float: right; color:#999; text-decoration: underline; cursor:pointer;" name="report" id="report">신고</a>
 						</div>
 	

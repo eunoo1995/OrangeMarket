@@ -12,6 +12,15 @@ public class ProductSubVO {
 	private int userId;
 	private String imgs;
 	private int liker;
+	private String userLevel;
+	
+	public String getUserLevel() {
+		return userLevel;
+	}
+
+	public void setUserLevel(String userLevel) {
+		this.userLevel = userLevel;
+	}
 
 	public int getProCode() {
 		return proCode;
