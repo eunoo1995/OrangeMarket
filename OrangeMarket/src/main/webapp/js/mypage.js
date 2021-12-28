@@ -74,35 +74,16 @@ $(function(){
 			alert("비밀번호를 입력해주세요.");
 			return false;
 		}
-		if($("#userPw").val().trim() != "") {
-			var userPw = $("#userPw").val();
-			$.ajax({
-				type : "post",
-				data : "userPw="+userPw,
-				url  : "withdrawal-pwcheck",
-				datatype : "text",
-				success : function(data) {
-	  				if(data == "1") {
-		
-					} else {
-						alert("입력하신 비밀번호를 확인하세요.");
-						return false;
-					}
-	  			},
-	  			error : function() {
-	  					alert("오류발생");
-				}
-			});
-		}
 		if(!$("#agreeChk").is(":checked")) {
 			alert("탈퇴동의를 체크하지 않으셨습니다.");
 			return false;
 		}
 		if(confirm("정말 탈퇴하시겠습니까?")) {
 			var reason = $("#reason").val();
+			var userPw = $("#userPw").val();
 			$.ajax({
 				type : "post",
-				data : "reason="+reason,
+				data : "reason="+reason +"&userPw="+userPw,
 				url  : "update-withdrawal",
 				datatype : "text",
 				success : function(data) {
@@ -111,7 +92,8 @@ $(function(){
 	  					self.close();
 	  					opener.location.href = "main";
 	  				} else {
-	  					alert("탈퇴실패");
+	  					alert("입력하신 비밀번호를 확인하세요.");
+						return false;
 	  				}
 	  			},
 	  			error : function() {

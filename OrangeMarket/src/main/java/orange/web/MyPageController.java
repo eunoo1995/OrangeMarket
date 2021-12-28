@@ -117,24 +117,19 @@ public class MyPageController {
 		model.addAttribute("vo",vo);
 		return "mypage/withdrawal";
 	}
-	// 비밀번호 확인
-	@RequestMapping(value="withdrawal-pwcheck")
-	@ResponseBody
-	public String checkedPassword(MemberVO vo,HttpSession session) throws Exception {
-		vo.setUserId((int)session.getAttribute("sessionId"));
-		int result = myPageService.selectPassChk(vo);
-		return result+"";
-	}
-	
 	
 	// 회원 탈퇴 처리
 	@RequestMapping(value="update-withdrawal")
 	@ResponseBody
 	public String updateWithdrawal(MemberVO vo, HttpSession session) throws Exception {
 		vo.setUserId((int)session.getAttribute("sessionId"));
-		int result = myPageService.updateWithdrawal(vo);
-		myPageService.withdrawalDate(vo);
-		session.removeAttribute("sessionId");
+		int chk = myPageService.selectPassChk(vo);
+		int result = 0;
+		if( chk == 1) {
+			result = myPageService.updateWithdrawal(vo);
+			myPageService.withdrawalDate(vo);
+			session.removeAttribute("sessionId");
+		}
 		return result+"";
 	}
 	

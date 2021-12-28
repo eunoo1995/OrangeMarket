@@ -31,7 +31,7 @@ public class ChatController {
 		// vo를 이용한 신규 채팅채널 insert 실행
 		
 		//로케이션 - 채팅 화면으로 이동시킨다.
-		return "redirect:chat";
+		return "3";
 	}
 	
 	@RequestMapping(value = "chat")
