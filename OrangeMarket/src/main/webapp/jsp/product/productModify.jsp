@@ -35,23 +35,22 @@
 					  			success : function(data) {
 					  				if(data == "ok") {
 					  					alert("저장 성공");
-					  					location='product-list';
 					  				} else {
 					  					alert("저장 실패");
 					  				}
 					  			},
-					  			error : function (){
-					              alert("error");
+					  			error : function (request,status,error){
+					  		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					  			}
 					  		});
 					  	});
-					 //프로필 사진 미리보기 설정
-				      $("#imgs").click(function(){
-				         $("#product-img-file").click();
-				      });
-				      $("#product-img-file").on('change', function(){
-				          readURL(this);
-				      });
+				 //프로필 사진 미리보기 설정
+			      $("#imgs").click(function(){
+			         $("#product-img-file").click();
+			      });
+			      $("#product-img-file").on('change', function(){
+			          readURL(this);
+			      });
 				});
 				//프로필 사진 미리보기 설정
 				function readURL(input) {
@@ -72,9 +71,10 @@
 			</div>
 
 			<div class="product-write-content__detail">
+				
 				<form id="frm-product" name="frm-product" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 					
-					<input type="hidden" name="seller" id="seller" value="${userId}">
+					<input type="hidden" name="seller" id="seller" value="${product.seller}">
 										
 					<table class="product-write-table">
 						<!-- 1. 상품 이미지 -->
@@ -192,10 +192,7 @@
 										<option value="2" <c:if test="${product.nego eq 2}">selected</c:if>>불가능</option>
 									</select>
 								</div>
-<!-- 								<div class="price-chk">
-									<input type="checkbox" name="nego" value="0" id="nego">
-									<label class="chk" for="nego">가격협의 가능</label>
-								</div> -->
+
 							</td>
 						</tr>
 

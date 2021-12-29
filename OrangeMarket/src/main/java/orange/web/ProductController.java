@@ -189,6 +189,9 @@ public class ProductController {
 	// 제품 정보 수정 및 저장
 	@RequestMapping(value="/product-modify")
 	public String selectproductModify(ProductVO vo, Model model, HttpSession session) throws Exception{
+		if(session.getAttribute("sessionId") == null) return "redirect:login";
+		int seller = (int) session.getAttribute("sessionId");
+		vo.setSeller(seller);
 		
 		vo = productService.selectProductModify(vo);
 		List<?> list = productService.selectCategoryList(vo);
@@ -198,8 +201,17 @@ public class ProductController {
 		return "product/productModify";
 	}
 	
+	//제품 등록 기능 및 저장
+	@RequestMapping(value="/product-modify-save")
+	@ResponseBody
+	public String updateProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpServletRequest request) throws Exception {
+		String msg = "ok";
+		return msg;
+	}
+	
+	
 	// 등록 제품 삭제
-	@RequestMapping(value="product-delete")
+	@RequestMapping(value="/product-delete")
 	public String deleteProduct(ProductVO vo) throws Exception {
 		
 		int result = productService.deleteProduct(vo);
@@ -231,7 +243,7 @@ public class ProductController {
 		return msg;
 	}
 	
-	@RequestMapping(value="trade-history")
+	@RequestMapping(value="/trade-history")
 	public String selectTradeHistory() throws Exception {
 		return "mypage/tradeHistory";
 	}
