@@ -19,7 +19,7 @@
     <article class="main-article">
         <div class="cont-inner">
 
-            <h2 class="main-cont-tit">최근 등록 상품</h2>
+            <h2 class="main-cont-tit" onclick="location='product-list'">최근 등록 상품</h2>
 
             <ul class="main-pro-list">
                 <li class="list-item">
