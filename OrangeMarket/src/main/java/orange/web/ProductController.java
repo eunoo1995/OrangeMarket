@@ -189,7 +189,9 @@ public class ProductController {
 	public String selectproductModify(ProductVO vo, Model model, HttpSession session) throws Exception{
 		
 		vo = productService.selectProductModify(vo);
+		List<?> list = productService.selectCategoryList(vo);
 		model.addAttribute("product", vo);
+		model.addAttribute("list", list);
 		
 		return "product/productModify";
 	}

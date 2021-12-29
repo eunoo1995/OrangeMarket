@@ -184,6 +184,7 @@
 	<select id="selectProductModify" resultType="productVO">
 		SELECT
 			pro_code,
+			decode(status,1,'판매중',2,'예약중','거래완료') status,
 			seller,
 			pro_category_code,
 			title,
@@ -193,11 +194,25 @@
 			content,
 			rdate,
 			udate,
-			seller_nik,
-			imgs
+			status,
+			hits,
+			nvl(buyer, '0') as buyer,
+			refund,
+			nego,
+			( select nik_name from member where user_id = p.seller) seller_nik,
+			nvl(buyer_nik, '0') as buyer_nik,
+			imgs,
+			(select 
+                CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
+                WHEN USER_LEVEL >= 40 THEN '일반회원' 
+                ELSE '주의회원' END
+             FROM
+                member
+            WHERE
+                user_id = p.seller) as user_level
 			
-		FROM
-			product
+		FROM 
+			product p
 			
 		WHERE
 			pro_code = ${proCode}

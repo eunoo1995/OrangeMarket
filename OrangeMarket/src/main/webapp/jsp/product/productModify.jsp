@@ -84,7 +84,7 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-									<img class="btn-image" id="imgs" name="imgs" src="/images/icons/add.png">
+									<img class="btn-image" id="imgs" name="imgs" src="/images/products/${product.imgs}">
 				                <!-- <button type="button" class="btn-image" id="product-img-btn">+</button> -->
 				                <input type="file" id="product-img-file" name="uploadProductImg" style="display: none;">
 							</td>
@@ -98,7 +98,7 @@
 								<span class="orange-star">*</span>
 							</th>
 								<td class="product-write-table-td2">
-								<input type="text" name="title" id="title" maxlength="40" class="product-write-text">
+								<input type="text" name="title" id="title" maxlength="40" class="product-write-text" value="${product.title }">
 							</td>
 						</tr>
 
@@ -111,13 +111,15 @@
 							</th>
 							<td class="product-write-table-td2">
 								<select name="proCategoryCode" id="proCategoryCode" class="product-write-category">
-									<option value="">카테고리를 선택해주세요.</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
+									<c:forEach var="c" items="${list }">
+										<c:if test="${c.cateStatus == 'Y'}">
+											<option value="${c.proCategoryCode }" <c:if test="${c.proCategoryCode == product.proCategoryCode}">selected</c:if>>${c.category }</option>
+										</c:if>
+									</c:forEach>
 								</select>
 
 								<div class="keyword-wrap">
-									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." 
+									<input type="text" name="keyword" id="keyword" maxlength="40" placeholder="연관단어를 입력해주세요." value="${product.keyword }"
 									onfocus="this.placeholder=''" onblur="this.placeholder='연관단어를 입력해주세요.'" class="product-write-keyword">
 								</div>
 							</td>
@@ -131,7 +133,7 @@
 								<span class="orange-star">*</span>
 							</th>
 							<td class="product-write-table-td2">
-								<input type="text" name="addr" id="addr" value="서울시 강남구" readonly class="product-write-text">
+								<input type="text" name="addr" id="addr" value="${product.addr }" readonly class="product-write-text">
 							</td>
 						</tr>
 
@@ -161,8 +163,8 @@
 								<div class="refund">
 									<select name="refund" id="refund" class="product-write-category">
 										<option value="">환불 여부를 선택해주세요.</option>
-										<option value="1">가능</option>
-										<option value="2">불가능</option>
+										<option value="1" <c:if test="${product.refund eq 1}">selected</c:if>>가능</option>
+										<option value="2" <c:if test="${product.refund eq 2}">selected</c:if>>불가능</option>
 									</select>
 									<!-- <input type="radio" name="refund" id="refund" value="0" checked>
 									<label class="role" for="0" style="margin-right: 40px;">환불불가</label>
@@ -180,14 +182,14 @@
 								class="orange-star">*</span></th>
 							<td class="product-write-table-td2">
 								<input type="text" name="price" id="price" maxlength="11" onkeyup="inputNumberFormat(this)" placeholder="가격을 입력해주세요."
-								onfocus="this.placeholder=''" onblur="this.placeholder='가격을 입력해주세요.'" class="product-write-price-txt">
+								onfocus="this.placeholder=''" onblur="this.placeholder='가격을 입력해주세요.'" class="product-write-price-txt"  value="${product.price }">
 								<font style="margin-right: 10px; font-size: 16px;">원</font>
 								
 								<div class="keyword-wrap">
 									<select name="nego" id="nego" class="product-write-category">
 										<option value="">가격협상 여부를 선택해주세요.</option>
-										<option value="1">가능</option>
-										<option value="2">불가능</option>
+										<option value="1" <c:if test="${product.nego eq 1}">selected</c:if>>가능</option>
+										<option value="2" <c:if test="${product.nego eq 2}">selected</c:if>>불가능</option>
 									</select>
 								</div>
 <!-- 								<div class="price-chk">
@@ -203,7 +205,7 @@
 							<th>설명</th>
 							<td class="product-write-table-content">
 								<textarea name="content" id="content" class="product-write-content1" 
-								style="border: 1px solid #eee; border-radius: 2px; width: 900px; height: 250px; padding-left: 5px; resize: none;"></textarea>
+								style="border: 1px solid #eee; border-radius: 2px; width: 900px; height: 250px; padding-left: 5px; resize: none;">${product.content }</textarea>
 							</td>
 						</tr>
 
