@@ -35,6 +35,12 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		// TODO Auto-generated method stub
 		return productDAO.selectProductAddr(vo);
 	}
+
+	@Override
+	public int selectSellerCount(ProductVO vo) throws Exception { // 이미지 번호 부여용
+		// TODO Auto-generated method stub
+		return productDAO.selectSellerCount(vo);
+	}
 	
 	@Override
 	public List<?> selectProductList(ProductVO vo) throws Exception { // 판매제품 리스트 출력

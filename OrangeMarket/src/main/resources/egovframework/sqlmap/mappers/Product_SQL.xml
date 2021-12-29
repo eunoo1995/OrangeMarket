@@ -218,6 +218,16 @@
 			pro_code = ${proCode}
 	</select>
 	
+	<!-- 글 작성 시 이미지 파일명에 적용할 숫자. 판매자가 등록한 게시글 카운트 후 증가하여 이미지 뒤에 붙이기 -->
+	<select id="selectSellerCount" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			product
+		WHERE
+			seller = ${seller}
+	</select>
+	
 	<!-- 글 작서 시 자동완성 될 주소 받아오기 -->
 	<select id="selectProductAddr" resultType="productVO">
 		SELECT

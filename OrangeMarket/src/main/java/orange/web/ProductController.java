@@ -138,9 +138,6 @@ public class ProductController {
 		
 		String msg = "ok";
 		
-		System.out.println(vo.getRefund());
-		System.out.println(vo.getNego());
-		
 		 // 한글 인식
 		 String title = new String(vo.getTitle().getBytes("8859_1"), "UTF-8");
 		 String keyword = new String(vo.getKeyword().getBytes("8859_1"), "UTF-8");
@@ -163,12 +160,20 @@ public class ProductController {
 		 int seller = vo.getSeller();
 		 String imgs = "";
 		 
+		 // 이미지 뒤 붙일 번호
+		 int seller_cnt = productService.selectSellerCount(vo);
+		 if(seller_cnt == 0) {
+			 seller_cnt = 1;
+		 } else {
+			 seller_cnt += 1;
+		 }
+		 
 		 for(MultipartFile multipartFile : uploadProductImg) {
 			 // 확장자 구하기
 			 String realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
 			 String ext = realName.substring(realName.lastIndexOf(".")); 
 			 // userId + 확장자로 파일 저장
-			 imgs += seller+ext;
+			 imgs += seller + seller_cnt + ext;
 			 File saveFile = new File(path, imgs);
 			 multipartFile.transferTo(saveFile);
 		 }
@@ -176,9 +181,6 @@ public class ProductController {
 		 // 이미지 세팅 및 저장
 		 vo.setImgs(imgs);
 		 productService.insertProduct(vo);
-		 
-		 System.out.println(path);
-		 System.out.println(imgs);
 			
 		return msg;
 	}
