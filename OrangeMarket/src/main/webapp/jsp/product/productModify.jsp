@@ -27,7 +27,7 @@
 					  		var formdata = new FormData(document.getElementById("frm-product"));
 					  		$.ajax({
 					  			type : "post",
-					  			url  : "product-write-save",
+					  			url  : "product-modify-save",
 					  			data : formdata,
 					  			processData : false,
 					  			contentType : false,

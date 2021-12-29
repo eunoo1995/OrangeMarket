@@ -6,7 +6,10 @@ public interface ProductService {
 
 	// 제품 등록 기능
 	int insertProduct(ProductVO vo) throws Exception;
-
+	
+	// 등록 제품 삭제
+	int deleteProduct(ProductVO vo) throws Exception;
+	
 	// 제품 등록용 사용자 저장된 주소 가져오기
 	ProductVO selectProductAddr(ProductVO vo) throws Exception;
 

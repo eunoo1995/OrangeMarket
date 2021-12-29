@@ -262,6 +262,16 @@
 	</update>
 		
 	<!-- update end -->
+	
+	<!-- delete start -->
+	
+	<delete id="deleteProduct" parameterType="productVO">
+		DELETE FROM product
+		WHERE
+			pro_code = ${proCode}
+	</delete>
+	
+	<!-- delete end -->
 
 
 </mapper>

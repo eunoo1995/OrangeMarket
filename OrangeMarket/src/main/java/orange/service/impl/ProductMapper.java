@@ -11,6 +11,7 @@ import orange.service.ProductVO;
 public interface ProductMapper {
 
 	int insertProduct(ProductVO vo);
+	int deleteProduct(ProductVO vo);
 	ProductVO selectProductAddr(ProductVO vo);
 	
 	List<?> selectProductList(ProductVO vo);
@@ -30,5 +31,6 @@ public interface ProductMapper {
 	int selectLikeCount(ProductVO vo);
 	
 	int selectLikeAllCount(ProductVO vo);
+	
 
 }

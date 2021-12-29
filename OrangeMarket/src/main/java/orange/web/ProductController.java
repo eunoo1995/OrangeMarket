@@ -196,6 +196,21 @@ public class ProductController {
 		return "product/productModify";
 	}
 	
+	// 등록 제품 삭제
+	@RequestMapping(value="product-delete")
+	public String deleteProduct(ProductVO vo) throws Exception {
+		
+		int result = productService.deleteProduct(vo);
+		
+		if(result == 1) {
+			System.out.println("삭제 성공");
+		} else {
+			System.out.println("삭제 실패");
+		}
+		
+		return "redirect:product-list";
+	}
+	
 	// 관심 상품 등록 기능
 	@RequestMapping(value="/like-product-save")
 	@ResponseBody
@@ -212,6 +227,11 @@ public class ProductController {
 		}
 		
 		return msg;
+	}
+	
+	@RequestMapping(value="trade-history")
+	public String selectTradeHistory() throws Exception {
+		return "mypage/tradeHistory";
 	}
 	
 	
