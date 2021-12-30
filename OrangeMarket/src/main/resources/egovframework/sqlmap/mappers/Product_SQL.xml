@@ -271,6 +271,23 @@
 		WHERE pro_code = ${proCode}
 	</update>
 		
+	<!-- 제품 정보 수정 저장 -->
+	<update id="updateProduct">
+		UPDATE product
+			SET
+				pro_category_code = '${proCategoryCode}',
+				title = '${title}',
+				keyword = '${keyword}',
+				addr = '${addr}',
+				refund = '${refund}',
+				nego = '${nego}',
+				price = '${price}',
+				content = '${content}',
+				udate = sysdate,
+				imgs = '${imgs}'
+		WHERE pro_code = ${proCode}
+	</update>
+	
 	<!-- update end -->
 	
 	<!-- delete start -->

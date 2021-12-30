@@ -32,6 +32,7 @@ public interface ProductService {
 
 	// 판매 제품 정보 수정위한 데이터 표시
 	ProductVO selectProductModify(ProductVO vo);
+	int updateProduct(ProductVO vo);
 	
 	// 채팅방 갯수 세기
 	int selectChatCount(ProductVO vo);
