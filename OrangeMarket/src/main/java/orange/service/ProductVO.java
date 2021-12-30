@@ -19,7 +19,7 @@ public class ProductVO extends ProductSubVO {
 	private String sellerNik;
 	private String buyerNik;
 	private String imgs;
-	
+
 	public String getImgs() {
 		return imgs;
 	}

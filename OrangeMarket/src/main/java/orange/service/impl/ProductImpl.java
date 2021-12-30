@@ -23,11 +23,23 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	public int insertProduct(ProductVO vo) throws Exception { // 판매 제품 정보 저장
 		return productDAO.insertProduct(vo);
 	}
+
+	@Override
+	public int deleteProduct(ProductVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return productDAO.deleteProduct(vo);
+	}
 	
 	@Override
 	public ProductVO selectProductAddr(ProductVO vo) throws Exception { // 주소 가져오기
 		// TODO Auto-generated method stub
 		return productDAO.selectProductAddr(vo);
+	}
+
+	@Override
+	public int selectSellerCount(ProductVO vo) throws Exception { // 이미지 번호 부여용
+		// TODO Auto-generated method stub
+		return productDAO.selectSellerCount(vo);
 	}
 	
 	@Override

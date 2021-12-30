@@ -131,6 +131,6 @@ public class MyPageController {
 		}
 		return result+"";
 	}
-	
+
 	
 }

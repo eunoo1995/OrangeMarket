@@ -61,6 +61,7 @@
 	<select id="selectProductList" resultType="egovMap">
 		SELECT
 			pro_code,
+			decode(status,1,'판매중',2,'예약중','거래완료') status,
 			title,
 			price,
 			addr,
@@ -85,6 +86,7 @@
 	<select id="selectProductCategoryList" resultType="egovMap">
 		SELECT
 			pro_code,
+			decode(status,1,'판매중',2,'예약중','거래완료') status,
 			title,
 			price,
 			addr,
@@ -143,6 +145,7 @@
 	<select id="selectProductDetail" resultType="productVO">
 		SELECT
 			pro_code,
+			decode(status,1,'판매중',2,'예약중','거래완료') status,
 			seller,
 			pro_category_code,
 			title,
@@ -181,6 +184,7 @@
 	<select id="selectProductModify" resultType="productVO">
 		SELECT
 			pro_code,
+			decode(status,1,'판매중',2,'예약중','거래완료') status,
 			seller,
 			pro_category_code,
 			title,
@@ -190,14 +194,38 @@
 			content,
 			rdate,
 			udate,
-			seller_nik,
-			imgs
+			status,
+			hits,
+			nvl(buyer, '0') as buyer,
+			refund,
+			nego,
+			( select nik_name from member where user_id = p.seller) seller_nik,
+			nvl(buyer_nik, '0') as buyer_nik,
+			imgs,
+			(select 
+                CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
+                WHEN USER_LEVEL >= 40 THEN '일반회원' 
+                ELSE '주의회원' END
+             FROM
+                member
+            WHERE
+                user_id = p.seller) as user_level
 			
-		FROM
-			product
+		FROM 
+			product p
 			
 		WHERE
 			pro_code = ${proCode}
+	</select>
+	
+	<!-- 글 작성 시 이미지 파일명에 적용할 숫자. 판매자가 등록한 게시글 카운트 후 증가하여 이미지 뒤에 붙이기 -->
+	<select id="selectSellerCount" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			product
+		WHERE
+			seller = ${seller}
 	</select>
 	
 	<!-- 글 작서 시 자동완성 될 주소 받아오기 -->
@@ -244,6 +272,16 @@
 	</update>
 		
 	<!-- update end -->
+	
+	<!-- delete start -->
+	
+	<delete id="deleteProduct" parameterType="productVO">
+		DELETE FROM product
+		WHERE
+			pro_code = ${proCode}
+	</delete>
+	
+	<!-- delete end -->
 
 
 </mapper>
