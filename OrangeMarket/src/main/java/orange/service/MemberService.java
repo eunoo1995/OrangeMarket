@@ -27,6 +27,10 @@ public interface MemberService {
 
 	int checkMemberLogin(MemberVO vo) throws Exception;
 
-	MemberVO selectMemberInfo(MemberVO vo) throws Exception;
+	MemberVO selectMemberLogin(MemberVO vo) throws Exception;
+	
+	int selectFindPw(MemberVO vo) throws Exception;
+
+	int updateUserPw(MemberVO vo) throws Exception;
 
 }

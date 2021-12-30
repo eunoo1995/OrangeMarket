@@ -36,7 +36,11 @@ public interface MemberMapper {
 
 	int checkMemberLogin(MemberVO vo);
 
-	Object selectMemberInfo(MemberVO vo);
-	
+	MemberVO selectMemberLogin(MemberVO vo);
+
+	int selectFindPw(MemberVO vo);
+
+	int updateUserPw(MemberVO vo);
+
 
 }

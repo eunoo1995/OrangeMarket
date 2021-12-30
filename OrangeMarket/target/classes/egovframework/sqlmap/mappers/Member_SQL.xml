@@ -63,13 +63,22 @@
       		AND user_pw = #{userPw}
 	</select>
 	
-	<select id="selectMemberInfo" parameterType="memberVO" resultType="memberVO">
+	<select id="selectMemberLogin" parameterType="memberVO" resultType="memberVO">
 		SELECT user_id
 		, nik_name
 		, email
 		, profile_img
 		FROM member
 		WHERE email=#{email}
+	</select>
+	
+	<select id="selectFindPw" parameterType="memberVO" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM member m
+			INNER JOIN mem_status s 
+			ON m.user_id = s.user_id
+				WHERE m.email=#{email} AND user_phone=#{userPhone} 
+					AND user_name=#{userName} AND s.mem_state_code != 5
 	</select>
 	
 	<insert id="insertEmailVerif" parameterType="emailVO">
@@ -148,6 +157,11 @@
 			, udate = sysdate
 			WHERE email_code = #{emailCode}
 				AND email=#{email}
+	</update>
+	
+	<update id="updateUserPw" parameterType="memberVO">
+		UPDATE member SET user_pw=#{userPW}
+			WHERE email=#{email}
 	</update>
 
 </mapper>
