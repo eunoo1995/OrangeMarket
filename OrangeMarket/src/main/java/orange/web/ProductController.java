@@ -202,12 +202,10 @@ public class ProductController {
 	//제품 등록 기능 및 저장
 	@RequestMapping(value="/product-modify-save")
 	@ResponseBody
-	public String updateProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpSession session, HttpServletRequest request, String preImgs) throws Exception {
-		String msg = "ok";
-		
+	public String updateProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpServletRequest request, String preImgs) throws Exception {
+		int proCode = vo.getProCode();
 		// 이미지
 		MultipartFile multipartFile = uploadProductImg[0];
-		String realName = "";
 		String imgs = preImgs;
 		
 		// 한글 인식
@@ -235,6 +233,7 @@ public class ProductController {
 			if(delFile.exists()) delFile.delete();
 
 //			// 이미지명 세팅
+//			String realName = "";
 //			// 유저 아이디값 가져오기
 //			int seller = vo.getSeller();	
 //			// 이미지 뒤 붙일 번호
@@ -263,7 +262,7 @@ public class ProductController {
 		// 업데이트 구문 작성
 		
 		
-		return msg;
+		return proCode+"";
 	}
 	
 	
