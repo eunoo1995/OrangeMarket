@@ -18,7 +18,7 @@
 			</h3>
 
 			<div class="btn-group">
-				<a href="login.html" class="btn btn-solid-point btn-f">로그인하러 가기</a>
+				<a href="/login" class="btn btn-solid-point btn-f">로그인하러 가기</a>
 			</div>
 
 		</div>

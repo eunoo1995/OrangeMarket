@@ -160,7 +160,7 @@
 	</update>
 	
 	<update id="updateUserPw" parameterType="memberVO">
-		UPDATE member SET user_pw=#{userPW}
+		UPDATE member SET user_pw=#{userPw}
 			WHERE email=#{email}
 	</update>
 
