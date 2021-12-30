@@ -198,7 +198,7 @@
 }
 
 /* 계정찾기 */
-.pg-wrap .find-account-wrap {
+.pg-find-info .cont-inner {
 	width: 600px;
 	margin-left: auto;
 	margin-right: auto;

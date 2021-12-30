@@ -190,8 +190,6 @@ if (joinForm) {
 
 /* 로그인 */
 var loginForm = document.getElementById('loginForm');
-
-
 if (loginForm) {
 	var frm = loginForm;
 	var confirmBtn = document.getElementById('confirmLoginBtn');
@@ -212,7 +210,7 @@ if (loginForm) {
 		var emailFlag = chkInputNull(email, '이메일을 입력해주세요');
 		var pwFlag = chkInputNull(password, '비밀번호를 입력해주세요');
 
-		if (emailFlag != false && pwFlag != false ) {
+		if (emailFlag != false && pwFlag != false) {
 			var formData = {
 				'userPw': password.value,
 				'email': email.value,
@@ -240,7 +238,152 @@ if (loginForm) {
 	});
 }
 
-/*  */
+/* 비밀번호 */
+var pwForm = document.getElementById('pwForm');
+if (pwForm) {
+	var frm = pwForm;
+	var btnFormConfirm = frm.querySelector('#pwFormConfirm');
+	var btnConfirmEmail = frm.querySelector('#btnConfirmEmail');
+
+	/* 이름 검사 */
+	frm.userName.addEventListener('blur', function() {
+		chkName(frm);
+	});
+
+	/* 연락처 검사 */
+	frm.tel.addEventListener('blur', function() {
+		chkTelFormat(frm)
+	});
+
+	/* 이메일 형식 검사 */
+	frm.email.addEventListener('blur', function() {
+		chkEmailFormat(frm);
+	});
+
+	/* 이메일 항목 초기화 */
+	frm.email.addEventListener('input', function() {
+		if (frm.emailFlag.value === 'Y') {
+			resetEmailChk(frm);
+			btnConfirmEmail.innerText = '인증번호 받기';
+		}
+	});
+
+	/* 이메일 인증번호 */
+	btnConfirmEmail.addEventListener('click', function() {
+		sendEmailCode(frm);
+		btnConfirmEmail.innerText = '재요청';
+	});
+
+	btnConfirmEmail.addEventListener('keypress', function(e) {
+		if (e.key == 'Enter') {
+			sendEmailCode(frm);
+			btnConfirmEmail.innerText = '재요청';
+		}
+	});
+
+	/* 이메일 인증번호 검사 */
+	frm.confirmEmail.addEventListener('blur', function() {
+		chkEmailVerif(frm);
+	});
+
+	/* 확인 버튼 누른 경우 */
+	btnFormConfirm.addEventListener('click', function() {
+
+		if (frm.telFlag.value !== 'N' && frm.emailFlag.value !== 'N') {
+			var formData = {
+				'userName': frm.userName.value,
+				'userPhone': frm.tel.value,
+				'email': frm.email.value,
+				'emailCode': frm.confirmEmail.value,
+			};
+
+			$.ajax({
+				type: 'POST',
+				url: 'find-pw-confirm',
+				data: formData,
+				dataType: 'text',
+				success: function(data) {
+					if (data == 'ok') {
+						console.log(data);
+						location.replace('/pw-reset?email='+ formData.email);
+					} else if (data == 'err') {
+						alert('입력정보를 확인해주세요')
+					}
+				},
+				error: function() {
+				}
+			});
+		} else {
+
+			chkName(frm);
+			chkTelFormat(frm);
+			chkEmailFormat(frm);
+
+			if (frm.email.value !== '' && frm.emailFlag.value === 'N') {
+				chkEmailVerif(frm);
+			}
+
+		}
+	});
+}
+
+/* 비밀번호 재설정*/
+var pwResetForm = document.getElementById('pwResetForm');
+if (pwResetForm) {
+	var frm = pwResetForm;
+	var btnFormConfirm = frm.querySelector('#pwFormConfirm');
+	var btnConfirmEmail = frm.querySelector('#btnConfirmEmail');
+	
+	/* 비밀번호 검사 */
+	frm.password.addEventListener('blur', function() {
+		chkPw1(frm);
+	});
+
+	frm.password.addEventListener('input', function() {
+		if (frm.pwFlag.value === 'Y') {
+			frm.pwFlag.value = 'N';
+		}
+	});
+
+	/* 비밀번호 일치 검사 */
+	frm.rePassword.addEventListener('blur', function() {
+		chkPw2(frm);
+	});
+
+	/* 확인 버튼 누른 경우 */
+	btnFormConfirm.addEventListener('click', function() {
+
+		if (frm.pwFlag.value !== 'N') {
+			var formData = {
+				'email': frm.email.value,
+				'userPw': frm.password.value,
+			};
+	
+			$.ajax({
+				type: 'POST',
+				url: 'pw-reset-confrim',
+				data: formData,
+				dataType: 'text',
+				success: function(data) {
+					if (data == 'ok') {
+						location.replace('/pw-result');
+					} else if (data == 'err') {
+						alert('입력정보를 확인해주세요')
+					}
+				},
+				error: function() {
+				}
+			});
+		} else {
+
+			chkPw1(frm);
+			chkPw2(frm);
+
+		}
+	});
+}
+
+/* 회원찾기 */
 
 
 /* 폼태그 유효성 검사 s */
@@ -282,6 +425,47 @@ function chkName($target) {
 
 	hideFormErr(areaErrMsg);
 
+}
+
+function chkTelFormat($target) {
+	var frm = $target;
+	frm.telFlag.value = 'N';
+
+	var input = frm.tel;
+	var inputTxt = input.value;
+	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
+
+	if (inputTxt === '') {
+		showFormErr(areaErrMsg, '연락처를 입력해주세요');
+
+		return false;
+	}
+
+	var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\']/gi;
+	var regPhone = /^((01[1|6|7|8|9])[1-9][0-9]{6,7})$|(010[1-9][0-9]{7})$/;
+
+	inputTxt = inputTxt.replace(regExp, '');
+
+	if (inputTxt.substring(0, 2) != '01') {
+		showFormErr(areaErrMsg, '연락처는 핸드폰 번호만 가능합니다.');
+
+		return false;
+	}
+
+	if (regPhone.test(inputTxt) === false) {
+		showFormErr(areaErrMsg, '연락처 형식을 확인해주세요');
+
+		return false;
+	}
+
+	if (regPhone.test(inputTxt) === true) {
+		input.value = inputTxt;
+	}
+
+	frm.telFlag.value = 'Y';
+	hideFormErr(areaErrMsg);
+
+	return true;
 }
 
 function chkTel($target) {
@@ -404,7 +588,9 @@ function chkNik($target) {
 	var formData = {
 		nikName: inputTxt
 	};
+
 	nikFlag = false;
+
 	$.ajax({
 		type: 'POST',
 		url: 'check-nikname',
@@ -509,6 +695,35 @@ function chkPw2($target) {
 	});
 
 	hideFormErr(areaErrMsg);
+}
+
+function chkEmailFormat($target) {
+
+	var frm = $target;
+	var input = frm.email;
+	var inputTxt = input.value;
+	var areaErrMsg = input.closest('td').querySelector('.form-err-msg');
+
+	btnConfirmEmail.disabled = true;
+
+	var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+	if (inputTxt == '') {
+		showFormErr(areaErrMsg, '이메일을 입력해주세요');
+
+		return false;
+	}
+
+	if (regEmail.test(inputTxt) === false) {
+		showFormErr(areaErrMsg, '이메일 형식을 확인해주세요');
+
+		return false;
+	}
+
+	btnConfirmEmail.disabled = false;
+	hideFormErr(areaErrMsg);
+
+	return true;
 }
 
 function chkEmail($target) {

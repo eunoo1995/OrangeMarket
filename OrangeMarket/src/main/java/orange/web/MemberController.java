@@ -38,22 +38,25 @@ public class MemberController {
 
 	@RequestMapping(value = "login")
 	public String login(HttpSession session, Model model,
-			@CookieValue(value = "COOKIE_REMEBER_EMAIL", required = false) Cookie remEmailCookie) {
+			@CookieValue(value = "COOKIE_REMEBER_EMAIL", required = false) Cookie remEmailCookie) throws Exception {
 
 		String isRemChcked = "";
+		String cookieVal = remEmailCookie.getValue();
 
-		if (remEmailCookie != null) {
-			isRemChcked = remEmailCookie.getValue();
+		// 쿠키가 저장된 경우
+		if (cookieVal != null) {
+			isRemChcked = "checked";
 		}
 
 		model.addAttribute("remEmail", isRemChcked);
+		model.addAttribute("userEmail", cookieVal);
 
 		return "member/login";
 	}
 
 	@RequestMapping(value = "login-confirm")
 	@ResponseBody
-	public String loginConfirm(HttpSession session, MemberVO vo, HttpServletResponse response,
+	public String loginConfirm(HttpSession session, HttpServletResponse response, MemberVO vo,
 			@RequestParam(value = "remEmail") String remEmail) throws Exception {
 
 		String msg = "";
@@ -65,10 +68,22 @@ public class MemberController {
 
 			return msg;
 		} else {
-			vo = memberService.selectMemberInfo(vo);
+			vo = memberService.selectMemberLogin(vo);
+			
+			// 이메일 저장이 체크된 경우
+			if(remEmail.equals("true")) {
+				Cookie remEmailCookie = new Cookie("COOKIE_REMEBER_EMAIL" ,  vo.getEmail());
+				remEmailCookie.setMaxAge(60*60*24*7); // 유지시간 설정(7일)
+				remEmailCookie.setPath("/login");
+				
+                // 쿠키를 적용해 준다.
+				response.addCookie(remEmailCookie);
+			}
+			
+			// 세션 생성
 			session.setAttribute("sessionId", vo.getUserId());
 			session.setMaxInactiveInterval(600); // 세션 유지시간 설정 (10분: 60*10)
-
+			
 			msg = "ok";
 		}
 
@@ -76,10 +91,9 @@ public class MemberController {
 	}
 
 	@RequestMapping("logout")
-	@ResponseBody
 	public String logout(HttpSession session) {
 		session.removeAttribute("sessionId");
-		return "redirect:main";
+		return "redirect:/main";
 	}
 
 	@RequestMapping(value = "join")
@@ -282,4 +296,75 @@ public class MemberController {
 
 		return msg;
 	}
+	
+	
+	@RequestMapping(value = "find-pw")
+	public String viewFindPw() {
+		
+		return "member/findPw";
+	}
+	
+	@RequestMapping(value = "find-pw-confirm")
+	@ResponseBody
+	public String FindPwConfirm(MemberVO memVo, EmailVerifVO emailVo) throws Exception {
+		
+		String msg = "";
+		
+		// 이메일 인증코드 사용여부 업데이트
+		memberService.updateUseEmailCode(emailVo);
+		
+		int result = memberService.selectFindPw(memVo);
+		
+		if (result == 1) {
+			// 조회 성공
+			msg = "ok";
+		} else if (result != 1) {
+			// 조회 실패
+			msg = "err";
+		}
+		
+		return msg;
+	}
+	
+	@RequestMapping(value = "pw-reset")
+	public String ResetPw(MemberVO vo, Model model) throws Exception {
+		
+		model.addAttribute("email", vo.getEmail());
+		
+		return "member/findPwReset";
+	}
+	
+	@RequestMapping(value = "pw-reset-confrim")
+	@ResponseBody
+	public String ResetPwConfirm(MemberVO vo) throws Exception {
+		
+		
+		String msg ="";
+		
+		// 비밀번호 변경
+		int result = memberService.updateUserPw(vo);
+		
+		if (result == 1) {
+			// 변경 성공
+			msg = "ok";
+		} else if (result != 1) {
+			// 변경 실패
+			msg = "err";
+		}
+		
+		return msg;
+	}
+	
+	@RequestMapping(value = "pw-result")
+	public String ResultPw() {
+		
+		return "member/findPwResult";
+	}
+	
+	@RequestMapping(value = "find-user")
+	public String findUser() {
+		
+		return "member/findUser";
+	}
+	
 }
