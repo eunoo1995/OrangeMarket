@@ -22,7 +22,6 @@
 	<select id="selectInquiryTotal" parameterType="pagingVO" resultType="int">
 		SELECT count(*) FROM INQUIRY_BOARD 
 						WHERE WRITER=#{writer}
-	
 	</select>
 	
 	<select id="selectInquiryDetail" parameterType="inquiryVO" resultType="inquiryVO">
