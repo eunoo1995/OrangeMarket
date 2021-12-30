@@ -11,22 +11,20 @@
 	<article class="cont-article">
 		<div class="cont-inner">
 
-			<article class="find-account-wrap">
-				<header class="sub-page-head">
-					<div class="cont-inner">
-						<h2 class="sub-page-title">마켓계정 찾기</h2>
-					</div>
-				</header>
-
-				<h3 class="find-result-tit txt-c">
-					회원님의 계정은<br /> ___***@gmail.com 입니다.
-				</h3>
-
-				<div class="btn-group">
-					<a href="login.html" class="btn btn-solid-point btn-f">로그인하러 가기</a>
-					<a href="find_pw.html" class="btn btn-solid btn-f">비밀번호 찾기</a>
+			<header class="sub-page-head">
+				<div class="cont-inner">
+					<h2 class="sub-page-title">마켓계정 찾기</h2>
 				</div>
-			</article>
+			</header>
+
+			<h3 class="find-result-tit txt-c">
+				회원님의 계정은<br /> ___***@gmail.com 입니다.
+			</h3>
+
+			<div class="btn-group">
+				<a href="login" class="btn btn-solid-point btn-f">로그인하러 가기</a>
+				<a href="find-pw" class="btn btn-solid btn-f">비밀번호 찾기</a>
+			</div>
 
 		</div>
 	</article>

@@ -187,7 +187,6 @@ public class ProductController {
 	// 제품 정보 수정 및 저장
 	@RequestMapping(value="/product-modify")
 	public String selectproductModify(ProductVO vo, Model model, HttpSession session) throws Exception{
-		if(session.getAttribute("sessionId") == null) return "redirect:login";
 		int seller = (int) session.getAttribute("sessionId");
 		vo.setSeller(seller);
 		
@@ -232,22 +231,14 @@ public class ProductController {
 			File delFile = new File(path + vo.getImgs());
 			if(delFile.exists()) delFile.delete();
 
-//			// 이미지명 세팅
-//			String realName = "";
-//			// 유저 아이디값 가져오기
-//			int seller = vo.getSeller();	
-//			// 이미지 뒤 붙일 번호
-//			int seller_cnt = productService.selectSellerCount(vo);
-//			
-//			if(seller_cnt == 0) seller_cnt = 1;
-//			else seller_cnt += 1;
-//			
-//			// 실제 이미지명 가져오기
-//			realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
-//			// 실제 이미지명 확장자 가져오기
-//			String ext = realName.substring(realName.lastIndexOf("."));
-//			// 등록할 이미지명
-//			imgs = seller + "" +seller_cnt + ext;
+			// 이미지명 세팅 (저장되어 있는 사진)
+			String ext = preImgs.substring(preImgs.lastIndexOf("."));
+			String imgName = preImgs.replace(ext, "");
+			// 이미지명 가져오기 (저장할 사진)
+			String realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
+			String extOrg = realName.substring(realName.lastIndexOf(".")); 
+			
+			imgs = imgName + extOrg;
 			
 			// 이미지 파일 저장
 			File saveFile = new File(path, imgs);
@@ -256,11 +247,8 @@ public class ProductController {
 			vo.setImgs(imgs);
 			System.out.println(path + imgs);
 		}
-		
-		System.out.println(vo.getImgs());
-		
 		// 업데이트 구문 작성
-		
+		productService.updateProduct(vo);
 		
 		return proCode+"";
 	}

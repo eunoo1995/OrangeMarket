@@ -13,16 +13,14 @@
 	<article class="cont-article">
 		<div class="cont-inner">
 
-			<article class="find-account-wrap">
-				<h3 class="find-result-tit">
-					비밀번호 변경을<br /> 완료하였습니다
-				</h3>
+			<h3 class="find-result-tit">
+				비밀번호 변경을<br /> 완료하였습니다
+			</h3>
 
-				<div class="btn-group">
-					<a href="login.html" class="btn btn-solid-point btn-f">로그인하러 가기</a>
-				</div>
-			</article>
-			
+			<div class="btn-group">
+				<a href="/login" class="btn btn-solid-point btn-f">로그인하러 가기</a>
+			</div>
+
 		</div>
 	</article>
 </article>
