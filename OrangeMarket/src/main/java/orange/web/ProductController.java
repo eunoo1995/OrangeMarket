@@ -162,11 +162,9 @@ public class ProductController {
 		 
 		 // 이미지 뒤 붙일 번호
 		 int seller_cnt = productService.selectSellerCount(vo);
-		 if(seller_cnt == 0) {
-			 seller_cnt = 1;
-		 } else {
-			 seller_cnt += 1;
-		 }
+		 
+		 if(seller_cnt == 0) seller_cnt = 1;
+		 else seller_cnt += 1;
 		 
 		 for(MultipartFile multipartFile : uploadProductImg) {
 			 // 확장자 구하기
@@ -204,8 +202,67 @@ public class ProductController {
 	//제품 등록 기능 및 저장
 	@RequestMapping(value="/product-modify-save")
 	@ResponseBody
-	public String updateProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpServletRequest request) throws Exception {
+	public String updateProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpSession session, HttpServletRequest request, String preImgs) throws Exception {
 		String msg = "ok";
+		
+		// 이미지
+		MultipartFile multipartFile = uploadProductImg[0];
+		String realName = "";
+		String imgs = preImgs;
+		
+		// 한글 인식
+		String title = new String(vo.getTitle().getBytes("8859_1"), "UTF-8");
+		String keyword = new String(vo.getKeyword().getBytes("8859_1"), "UTF-8");
+		String addr = new String(vo.getAddr().getBytes("8859_1"), "UTF-8");
+		String content = new String(vo.getContent().getBytes("8859_1"), "UTF-8");
+		
+		 // 데이터 입력
+		 vo.setTitle(title);
+		 vo.setKeyword(keyword);
+		 vo.setAddr(addr);
+		 vo.setContent(content);
+		
+		// 이미지 유무 확인
+		if(multipartFile.isEmpty()) { // 이미지 교체하지 않고 본문만 수정할 경우
+			System.out.println("데이터 없음" + "\n" + "기존 이미지 : " + imgs);
+			vo.setImgs(imgs);
+		} else { // 이미지 파일을 새로 넣을 경우
+			// 저장할 위치
+			String path = request.getServletContext().getRealPath("/images/products");
+			
+			// 이미지 파일이 존재할 경우 제거
+			File delFile = new File(path + vo.getImgs());
+			if(delFile.exists()) delFile.delete();
+
+//			// 이미지명 세팅
+//			// 유저 아이디값 가져오기
+//			int seller = vo.getSeller();	
+//			// 이미지 뒤 붙일 번호
+//			int seller_cnt = productService.selectSellerCount(vo);
+//			
+//			if(seller_cnt == 0) seller_cnt = 1;
+//			else seller_cnt += 1;
+//			
+//			// 실제 이미지명 가져오기
+//			realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
+//			// 실제 이미지명 확장자 가져오기
+//			String ext = realName.substring(realName.lastIndexOf("."));
+//			// 등록할 이미지명
+//			imgs = seller + "" +seller_cnt + ext;
+			
+			// 이미지 파일 저장
+			File saveFile = new File(path, imgs);
+			multipartFile.transferTo(saveFile);
+			
+			vo.setImgs(imgs);
+			System.out.println(path + imgs);
+		}
+		
+		System.out.println(vo.getImgs());
+		
+		// 업데이트 구문 작성
+		
+		
 		return msg;
 	}
 	

@@ -75,6 +75,7 @@
 				<form id="frm-product" name="frm-product" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 					
 					<input type="hidden" name="seller" id="seller" value="${product.seller}">
+					<input type="hidden" name="preImgs" id="preImgs" value="${product.imgs}">
 										
 					<table class="product-write-table">
 						<!-- 1. 상품 이미지 -->
