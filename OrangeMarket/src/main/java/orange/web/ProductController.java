@@ -27,7 +27,7 @@ public class ProductController {
 	
 	@Resource(name="memberService")
 	private MemberService memberService;
-
+	
 	// 제품 리스트 표시 및 상세 보기 기능
 	@RequestMapping(value="/product-list")
 	public String productList(ProductVO vo, Model model, HttpSession session) throws Exception {
@@ -77,35 +77,55 @@ public class ProductController {
 		return "product/productList";
 	}
 	
+	// 제품 정보 상세보기
 	@RequestMapping(value="/product-list-detail")
 	public String selectProductDetail(ProductVO vo, Model model, HttpSession session) throws Exception {
+		int chatCnt = productService.selectChatCount(vo);
+		int likeAllCnt = productService.selectLikeAllCount(vo);
+	
 		// 세션값이 없으면 로그인 화면으로 리턴
 		if(session.getAttribute("sessionId") == null) {
+			productService.updateProductHits(vo);
+			model.addAttribute("userId", null);
+			
 			vo = productService.selectProductDetail(vo);
+			vo.setChatCnt(chatCnt);
+			vo.setLikeAllCnt(likeAllCnt);
+			
 			model.addAttribute("product", vo);
+			
 		} else {
+			productService.updateProductHits(vo);
 			int sessionId = (int) session.getAttribute("sessionId");
 			model.addAttribute("userId", sessionId);
 			
+			vo.setUserId(sessionId);
+			int likeCnt = productService.selectLikeCount(vo);
+			model.addAttribute("likeCnt", likeCnt);
+			
 			vo = productService.selectProductDetail(vo);
+			vo.setChatCnt(chatCnt);
+			vo.setLikeAllCnt(likeAllCnt);
+			
 			model.addAttribute("product", vo);
 		}
 		
 		return "product/productDetail";
 	}
 	
+	// 제품 등록
 	@RequestMapping(value="/product-write")
 	public String productWrite(ProductVO vo, Model model, HttpSession session) throws Exception {
 		int seller = (int) session.getAttribute("sessionId");
-		
+		vo.setSeller(seller);
 		vo = productService.selectProductAddr(vo);
 		String addr = vo.getAddr();
 		
-		System.out.println(seller);
-		System.out.println(addr);
+		List<?> list = productService.selectCategoryList(vo);
 		
 		model.addAttribute("seller", seller);
 		model.addAttribute("addr", addr);
+		model.addAttribute("list", list);
 		
 		return "product/productWrite";
 	}
@@ -129,7 +149,7 @@ public class ProductController {
 		 vo.setKeyword(keyword);
 		 vo.setAddr(addr);
 		 vo.setContent(content);
-		
+		 
 		 // 저장경로
 		 String path = request.getServletContext().getRealPath("/images/products");
 		 // 기존 프로필 사진 삭제
@@ -140,12 +160,18 @@ public class ProductController {
 		 int seller = vo.getSeller();
 		 String imgs = "";
 		 
+		 // 이미지 뒤 붙일 번호
+		 int seller_cnt = productService.selectSellerCount(vo);
+		 
+		 if(seller_cnt == 0) seller_cnt = 1;
+		 else seller_cnt += 1;
+		 
 		 for(MultipartFile multipartFile : uploadProductImg) {
 			 // 확장자 구하기
 			 String realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
 			 String ext = realName.substring(realName.lastIndexOf(".")); 
 			 // userId + 확장자로 파일 저장
-			 imgs += seller+ext;
+			 imgs += seller + "" +seller_cnt + ext;
 			 File saveFile = new File(path, imgs);
 			 multipartFile.transferTo(saveFile);
 		 }
@@ -153,9 +179,6 @@ public class ProductController {
 		 // 이미지 세팅 및 저장
 		 vo.setImgs(imgs);
 		 productService.insertProduct(vo);
-		 
-		 System.out.println(path);
-		 System.out.println(imgs);
 			
 		return msg;
 	}
@@ -164,11 +187,123 @@ public class ProductController {
 	// 제품 정보 수정 및 저장
 	@RequestMapping(value="/product-modify")
 	public String selectproductModify(ProductVO vo, Model model, HttpSession session) throws Exception{
+		if(session.getAttribute("sessionId") == null) return "redirect:login";
+		int seller = (int) session.getAttribute("sessionId");
+		vo.setSeller(seller);
 		
 		vo = productService.selectProductModify(vo);
+		List<?> list = productService.selectCategoryList(vo);
 		model.addAttribute("product", vo);
+		model.addAttribute("list", list);
 		
 		return "product/productModify";
 	}
+	
+	//제품 등록 기능 및 저장
+	@RequestMapping(value="/product-modify-save")
+	@ResponseBody
+	public String updateProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpSession session, HttpServletRequest request, String preImgs) throws Exception {
+		String msg = "ok";
+		
+		// 이미지
+		MultipartFile multipartFile = uploadProductImg[0];
+		String realName = "";
+		String imgs = preImgs;
+		
+		// 한글 인식
+		String title = new String(vo.getTitle().getBytes("8859_1"), "UTF-8");
+		String keyword = new String(vo.getKeyword().getBytes("8859_1"), "UTF-8");
+		String addr = new String(vo.getAddr().getBytes("8859_1"), "UTF-8");
+		String content = new String(vo.getContent().getBytes("8859_1"), "UTF-8");
+		
+		 // 데이터 입력
+		 vo.setTitle(title);
+		 vo.setKeyword(keyword);
+		 vo.setAddr(addr);
+		 vo.setContent(content);
+		
+		// 이미지 유무 확인
+		if(multipartFile.isEmpty()) { // 이미지 교체하지 않고 본문만 수정할 경우
+			System.out.println("데이터 없음" + "\n" + "기존 이미지 : " + imgs);
+			vo.setImgs(imgs);
+		} else { // 이미지 파일을 새로 넣을 경우
+			// 저장할 위치
+			String path = request.getServletContext().getRealPath("/images/products");
+			
+			// 이미지 파일이 존재할 경우 제거
+			File delFile = new File(path + vo.getImgs());
+			if(delFile.exists()) delFile.delete();
+
+//			// 이미지명 세팅
+//			// 유저 아이디값 가져오기
+//			int seller = vo.getSeller();	
+//			// 이미지 뒤 붙일 번호
+//			int seller_cnt = productService.selectSellerCount(vo);
+//			
+//			if(seller_cnt == 0) seller_cnt = 1;
+//			else seller_cnt += 1;
+//			
+//			// 실제 이미지명 가져오기
+//			realName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
+//			// 실제 이미지명 확장자 가져오기
+//			String ext = realName.substring(realName.lastIndexOf("."));
+//			// 등록할 이미지명
+//			imgs = seller + "" +seller_cnt + ext;
+			
+			// 이미지 파일 저장
+			File saveFile = new File(path, imgs);
+			multipartFile.transferTo(saveFile);
+			
+			vo.setImgs(imgs);
+			System.out.println(path + imgs);
+		}
+		
+		System.out.println(vo.getImgs());
+		
+		// 업데이트 구문 작성
+		
+		
+		return msg;
+	}
+	
+	
+	// 등록 제품 삭제
+	@RequestMapping(value="/product-delete")
+	public String deleteProduct(ProductVO vo) throws Exception {
+		
+		int result = productService.deleteProduct(vo);
+		
+		if(result == 1) {
+			System.out.println("삭제 성공");
+		} else {
+			System.out.println("삭제 실패");
+		}
+		
+		return "redirect:product-list";
+	}
+	
+	// 관심 상품 등록 기능
+	@RequestMapping(value="/like-product-save")
+	@ResponseBody
+	public String insertLikeProduct(ProductVO vo) throws Exception {
+		String msg = "ok"; 
+		
+		int likeCnt = productService.selectLikeCount(vo);
+	
+		if(likeCnt >= 1) {
+			msg = "already";
+		} else {
+			// 관심 제품 등록		
+			productService.insertLikeProduct(vo);
+		}
+		
+		return msg;
+	}
+	
+	@RequestMapping(value="/trade-history")
+	public String selectTradeHistory() throws Exception {
+		return "mypage/tradeHistory";
+	}
+	
 	
 }

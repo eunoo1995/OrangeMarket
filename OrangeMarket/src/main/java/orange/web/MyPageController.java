@@ -40,7 +40,6 @@ public class MyPageController {
 		// 회원 관심게시글 목록 가져오기
 		pvo.setLiker(sessionId);
 		List<?> likeList = myPageService.selectLikeProduct(pvo);
-		
 		model.addAttribute("vo",vo);
 		model.addAttribute("keywordList",keywordList);
 		model.addAttribute("likeList",likeList);
@@ -109,13 +108,29 @@ public class MyPageController {
 	}
 	
 	// 회원 탈퇴 팝업
-	@RequestMapping(value="/withdrawal")
-	public String withdrawalPop(HttpSession session) throws Exception {
+	@RequestMapping(value="withdrawal")
+	public String withdrawalPop(MemberVO vo,HttpSession session, Model model) throws Exception {
+		vo.setUserId((int)session.getAttribute("sessionId"));
+		vo = myPageService.selectMemberInfo(vo);
+		
+		model.addAttribute("vo",vo);
 		return "mypage/withdrawal";
 	}
 	
-	
-	
-	
+	// 회원 탈퇴 처리
+	@RequestMapping(value="update-withdrawal")
+	@ResponseBody
+	public String updateWithdrawal(MemberVO vo, HttpSession session) throws Exception {
+		vo.setUserId((int)session.getAttribute("sessionId"));
+		int chk = myPageService.selectPassChk(vo);
+		int result = 0;
+		if( chk == 1) {
+			result = myPageService.updateWithdrawal(vo);
+			myPageService.withdrawalDate(vo);
+			session.removeAttribute("sessionId");
+		}
+		return result+"";
+	}
+
 	
 }

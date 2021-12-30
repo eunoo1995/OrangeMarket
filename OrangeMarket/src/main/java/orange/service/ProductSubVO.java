@@ -12,6 +12,42 @@ public class ProductSubVO {
 	private int userId;
 	private String imgs;
 	private int liker;
+	private String userLevel;
+	private int chatCnt;
+	private int likeAllCnt;
+	private int likeCnt;
+
+	public int getLikeAllCnt() {
+		return likeAllCnt;
+	}
+
+	public void setLikeAllCnt(int likeAllCnt) {
+		this.likeAllCnt = likeAllCnt;
+	}
+
+	public int getLikeCnt() {
+		return likeCnt;
+	}
+
+	public void setLikeCnt(int likeCnt) {
+		this.likeCnt = likeCnt;
+	}
+
+	public int getChatCnt() {
+		return chatCnt;
+	}
+
+	public void setChatCnt(int chatCnt) {
+		this.chatCnt = chatCnt;
+	}
+
+	public String getUserLevel() {
+		return userLevel;
+	}
+
+	public void setUserLevel(String userLevel) {
+		this.userLevel = userLevel;
+	}
 
 	public int getProCode() {
 		return proCode;

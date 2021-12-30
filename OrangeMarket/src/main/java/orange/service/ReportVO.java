@@ -13,6 +13,7 @@ public class ReportVO {
 	private int seller;
 	private String sellerNik;
 	private String reContent;
+	private int proCode; 
 	
 	
 	public int getUnq() {
@@ -81,6 +82,12 @@ public class ReportVO {
 	}
 	public void setReContent(String reContent) {
 		this.reContent = reContent;
+	}
+	public int getProCode() {
+		return proCode;
+	}
+	public void setProCode(int proCode) {
+		this.proCode = proCode;
 	}
 	
 }

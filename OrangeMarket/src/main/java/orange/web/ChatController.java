@@ -3,7 +3,6 @@ package orange.web;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import orange.service.ChatService;
 import orange.service.ChatSubVO;
 import orange.service.ChatVO;
-import orange.service.ProductVO;
+import orange.service.MemberVO;
 
 @Controller
 public class ChatController {
@@ -23,24 +22,22 @@ public class ChatController {
 	private ChatService chatService;
 	
 	
-	@RequestMapping(value="testLogin")
-	public String sessionTest(HttpSession session) throws Exception {
-		int userId = 2112240001;
-		session.setAttribute("sessionId", userId);
-		return "redirect:main";
-	}
-	
 	// 게시글 상세보기 채팅버튼 누를 시 넘어오는 값을 받아 신규 채팅채널 추가
 	@RequestMapping(value = "create-chat")
 	@ResponseBody
-	public String createChat() throws Exception {
-		
-		// 게시글, 판매자, 구매자의 정보를 select로 받아온다.
-		// 받아온 값들을 ChatVO vo에 세팅한다.
-		// vo를 이용한 신규 채팅채널 insert 실행
-		
-		//로케이션 - 채팅 화면으로 이동시킨다.
-		return "redirect:chat";
+	public String createChat(ChatVO vo, MemberVO mvo, HttpSession session) throws Exception {
+		int buyer = (int)session.getAttribute("sessionId");
+		vo.setBuyer(buyer);
+		mvo = chatService.selectBuyerInfo(vo);
+		String sellerProfile = chatService.selectSellerInfo(vo);
+		vo.setBuyerNik(mvo.getNikName());
+		vo.setBuyerProfile(mvo.getProfileImg());
+		vo.setSellerProfile(sellerProfile);
+		int checked = chatService.checkedChat(vo);
+		if(checked == 1) return "exist";
+		chatService.insertNewChat(vo);
+		int channel = chatService.getNewChannel(vo);
+		return channel + "";
 	}
 	
 	@RequestMapping(value = "chat")

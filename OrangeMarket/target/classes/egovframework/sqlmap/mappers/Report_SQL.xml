@@ -12,13 +12,15 @@
 						to_char(rdate,'yyyy-mm-dd') rdate,
 						decode(status,'N','답변대기','답변완료') status,
 						writer_nik,
-						seller_nik 
+						seller_nik
 				FROM REPORT_BOARD 
+				WHERE WRITER=#{writer} 
 				ORDER BY unq DESC ) a ) b 
 		WHERE rn BETWEEN #{startIndex} AND #{endIndex}	
 	</select>
 	<select id="selectReportTotal" resultType="int">
 		SELECT COUNT(*) FROM REPORT_BOARD
+						WHERE WRITER=#{writer} 
 	</select>
 	<select id="selectReportDetail" parameterType="reportVO" resultType="reportVO">
 		SELECT 
@@ -60,4 +62,15 @@
 						   		   #{seller},
 						   		   #{sellerNik})
 	</insert>
+	
+	<select id="selectReportInfo" parameterType="reportVO" resultType="reportVO">
+		SELECT 	TITLE, 
+				SELLER,
+				(SELECT NIK_NAME FROM MEMBER WHERE USER_ID=SELLER) SELLER_NIK
+		FROM PRODUCT
+		WHERE PRO_CODE = #{proCode}		
+	</select>
+	<select id="selectWriterNik" parameterType="int" resultType="String">
+		SELECT NIK_NAME FROM MEMBER WHERE USER_ID = #{userId}
+	</select> 
 </mapper>

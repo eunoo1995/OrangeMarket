@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.AdminService;
 import orange.service.AdminVO;
+import orange.service.InquiryVO;
 import orange.service.PagingVO;
 
 @Service("adminService")
@@ -60,6 +61,41 @@ public class AdminImpl extends EgovAbstractServiceImpl implements AdminService {
 	@Override
 	public int updateUnlock(int userId) throws Exception {
 		return adminDAO.updateUnlock(userId);
+	}
+
+	@Override
+	public int totalWithdrawal(PagingVO vo) throws Exception {
+		return adminDAO.totalWithdrawal(vo);
+	}
+
+	@Override
+	public List<?> selectWithdrawal(PagingVO vo) throws Exception {
+		return adminDAO.selectWithdrawal(vo);
+	}
+
+	@Override
+	public int updateRestore(int userId) throws Exception {
+		return adminDAO.updateRestore(userId);
+	}
+
+	@Override
+	public int totalAdminInquiry(PagingVO vo) throws Exception {
+		return adminDAO.totalAdminInquiry(vo);
+	}
+
+	@Override
+	public List<?> selectAdminInquiry(PagingVO vo) throws Exception {
+		return adminDAO.selectAdminInquiry(vo);
+	}
+
+	@Override
+	public InquiryVO adminInquiryInfo(InquiryVO vo) throws Exception {
+		return adminDAO.adminInquiryInfo(vo);
+	}
+
+	@Override
+	public int responseInquiry(InquiryVO vo) throws Exception {
+		return adminDAO.responseInquiry(vo);
 	}
 	
 	

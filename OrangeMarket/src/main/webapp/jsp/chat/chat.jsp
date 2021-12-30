@@ -8,9 +8,6 @@
 	<jsp:param name="cssName" value="chat" />
 </jsp:include>
 <!-- 헤더 -->
-<script>
-
-</script>
 <!-- 현재시간 가져오기 -->
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
@@ -46,7 +43,7 @@
 						</div>
 						<!-- 얻어온 현재시간과 db에서 불러온 udate를 비교하여 오늘이면 시간, 지난 날짜면 연월일 출력 -->
 						<fmt:parseDate var="timeFmt" pattern="yyyy-mm-dd HH:mm:ss.SSS" value="${channel.udate}"/>
-						<fmt:formatDate var="times" pattern="a hh:mm" value="${timeFmt}"/>
+						<fmt:formatDate var="times" pattern="a h:mm" value="${timeFmt}"/>
 						<c:choose>
 							<c:when test="${fn:substring(channel.udate,0,10) == today}">
 								<div class="item-right">
@@ -111,7 +108,7 @@
 							<p class="bar-price"></p>
 						</c:when>
 						<c:when test="${vo.channel ne null }">
-							<p class="bar-title">${vo.title }</p>
+							<p class="bar-title"><a href="product-list-detail?proCode=${vo.proCode}">${vo.title }</a></p>
 							<p class="bar-price">${vo.price}원</p>
 						</c:when>
 					</c:choose>

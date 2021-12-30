@@ -52,17 +52,17 @@
 							onclick="location='product-list-detail?proCode=${product.proCode}'">
 							<a href="#"> <!-- 상품 이미지 -->
 								<figure class="pro-thumb">
-									<span class="pro-thumb-img"><img
-										src="<c:url value='/images/products/${product.imgs}'/>"></span>
-									<span class="pro-detail-grade trust">신뢰</span>
-									<!-- 
-		                            	안전 등급은 
-		                            	<span class="pro-detail-grade">안전</span>
-		                             -->
-								</figure> <!-- 상품 이미지 --> <!-- 상품 내용 및 상세 내용 -->
+									<span class="pro-thumb-img">
+										<img src="<c:url value='/images/products/${product.imgs}'/>">
+									</span>
+									<span class="pro-detail-grade trust">${product.userLevel}</span>
+								</figure> <!-- 상품 이미지 --> 
+								
+								<!-- 상품 내용 및 상세 내용 -->
 								<div class="pro-detail">
-									<p class="pro-detail-tit">${product.title}</p>
-									<p class="pro-detail-price">${product.price}</p>
+									<input type="hidden" name="proCode" id="proCode" value="${product.proCode}">
+ 									<p class="pro-detail-tit">${product.title}</p>
+									<p class="pro-detail-price">${product.price} 원</p>
 									<p class="pro-detail-area">${product.addr}</p>
 								</div> <!-- 상품 내용 및 상세 내용 -->
 						</a>

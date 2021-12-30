@@ -85,12 +85,15 @@ public class BoardController {
 	//--------------------------------------------------------------
 	// 신고하기 리스트 출력
 	@RequestMapping(value = "/report-list")
-	public String reportList(PagingVO vo, Model model) throws Exception {
-		//페이징 처리
-		int total = reportService.selectReportTotal();
+	public String reportList(PagingVO vo,HttpSession session, Model model) throws Exception {
+		if(session.getAttribute("sessionId") == null) return "redirect:login";
+		int sessionId = (int) session.getAttribute("sessionId");
+		vo.setWriter(sessionId);
+		int total = reportService.selectReportTotal(vo);
 		int pageNo = vo.getPageNo();
 		int pageUnit = 5;
 		vo = new PagingVO(total,pageNo,pageUnit);
+		vo.setWriter(sessionId);
 		
 		List<ReportVO> list = reportService.selectReportList(vo);
 		model.addAttribute("list",list);
@@ -109,8 +112,13 @@ public class BoardController {
 	}
 	// 신고하기 작성화면
 	@RequestMapping(value = "report-write")
-	public String reportWrite() throws Exception {
+	public String reportWrite(ReportVO vo, HttpSession session, Model model) throws Exception {
+		int userId = (int) session.getAttribute("sessionId");
+		vo = reportService.selectReportInfo(vo);
+		String writerNik = reportService.selectWriterNik(userId);
+		vo.setWriterNik(writerNik);
 		
+		model.addAttribute("vo",vo);
 		return "board/reportWrite";
 	}
 	// 신고하기 작성 저장

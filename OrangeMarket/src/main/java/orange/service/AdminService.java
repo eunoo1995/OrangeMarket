@@ -21,4 +21,20 @@ public interface AdminService {
 	// 회원 정지 해제
 	int updateUnlock(int userId) throws Exception;
 	
+	// 탈퇴 회원 리스트 출력
+	int totalWithdrawal(PagingVO vo) throws Exception;
+	List<?> selectWithdrawal(PagingVO vo) throws Exception;
+	// 탈퇴 회원 복구
+	int updateRestore(int userId) throws Exception;
+	
+	// 문의 목록 가져오기
+	int totalAdminInquiry(PagingVO vo) throws Exception;
+	List<?> selectAdminInquiry(PagingVO vo) throws Exception;
+	
+	// 문의 상세 정보 가져오기
+	InquiryVO adminInquiryInfo(InquiryVO vo) throws Exception;
+	
+	// 문의하기 답변 저장
+	int responseInquiry(InquiryVO vo) throws Exception;
+	
 }
