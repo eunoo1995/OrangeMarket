@@ -12,10 +12,10 @@ $(function(){
 		}
 	});
 });
-// 신고 문의 답변 팝업창
-function inquiry_detail() {
-	window.open('inquiryDetail.jsp','','width=450, height=400, left=540, top=150');		
+function inquiry_detail(unq) {
+	window.open('admin-inquirydetail?unq='+unq,'','width=450, height=400, left=540, top=150');		
 }
+// 신고 문의 답변 팝업창
 function report_detail() {
 	window.open('reportDetail.jsp','','width=450, height=400, left=540, top=150');		
 }
@@ -101,6 +101,41 @@ $(function(){
 		if(confirm("정지를 해제하시겠습니까?")) {
 			var userId = $(this).prev().prev().val();
 			location = "member-unlock?userId="+userId;	
+		}
+	});
+	// 문의목록 셀렉트상자
+	$("#field").change(function(){
+		var field = $("#field").val();
+		if(field == "") {
+			location = "admin-inquirylist"; 
+			return false;
+		}
+		location = "admin-inquirylist?field="+field;
+	});
+	// 문의 답변 팝업등록
+	$("#inquiryResponseBtn").click(function(){
+		if($("#reContent").val().trim() == "") {
+			alert("답변을 입력해주세요.");
+		}
+		var formdata = $("#frm-inquiry").serialize();
+		if(confirm("작성하신 답변은 수정하실 수 없습니다.\n답변을 등록하시겠습니까?")) {
+			$.ajax({
+				type : "post",
+				data : formdata,
+				url  : "response-inquiry",
+				datatype : "text",
+				success : function(data) {
+					if(data == "1") {
+						self.close();
+						opener.location.href = "admin-inquirylist";
+					} else {
+						return false;
+					}
+				},
+				error : function() {
+  					alert("오류발생");
+  				}
+			});
 		}
 	});
 });

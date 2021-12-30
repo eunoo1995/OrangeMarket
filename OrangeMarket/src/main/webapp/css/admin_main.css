@@ -183,6 +183,15 @@
 			padding-right:50px;
 			padding-left:812px;
 		}
+		.section-search-field {
+			width:82px;
+			height:30px;
+			border:2px solid #ffb319;
+			border-radius:5px;
+			margin-left:176px;
+			outline:none;
+			float:left;
+		}
 		.section-search input {
 			width:220px;
 			height:30px;
@@ -575,6 +584,7 @@
         	height:117px;
         	float:left;
         	border:1px solid #eee;
+        	padding:20px;
         }
         .inquiry-textarea:focus {
         	outline:none;

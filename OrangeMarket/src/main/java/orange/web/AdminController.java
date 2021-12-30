@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import orange.service.AdminService;
 import orange.service.AdminVO;
+import orange.service.InquiryVO;
 import orange.service.PagingVO;
 
 @Controller
@@ -118,9 +119,31 @@ public class AdminController {
 	
 	// 문의하기 목록화면 출력 --------------------------------------
 	@RequestMapping(value = "admin-inquirylist")
-	public String adminInquiryList() throws Exception {
-		
+	public String adminInquiryList(PagingVO vo, Model model) throws Exception {
+		String field = vo.getField();
+		int total = adminService.totalAdminInquiry(vo);
+		int pageNo = vo.getPageNo();
+		vo = new PagingVO(total,pageNo, 5);
+		vo.setField(field);
+		List<?> list = adminService.selectAdminInquiry(vo);
+		model.addAttribute("list",list);
+		model.addAttribute("page",vo);
 		return "admin/inquiryList";
+	}
+	// 문의하기 상세 및 답글달기 화면
+	@RequestMapping(value = "admin-inquirydetail")
+	public String adminInquiryDetail(InquiryVO vo, Model model) throws Exception{
+		vo = adminService.adminInquiryInfo(vo);
+		model.addAttribute("vo",vo);
+		return "admin/inquiryDetail";
+	}
+	// 문의하기 답변 등록
+	@RequestMapping(value = "response-inquiry")
+	@ResponseBody
+	public String responseInquiry(InquiryVO vo) throws Exception {
+		int result = adminService.responseInquiry(vo);
+		
+		return result+"";
 	}
 	
 	// 신고하기 목록화면 출력 --------------------------------------
