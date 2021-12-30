@@ -61,7 +61,7 @@
 	<select id="selectProductList" resultType="egovMap">
 		SELECT
 			pro_code,
-			decode(status,1,'판매중',2,'예약중','거래완료') status,
+			decode(status,1,'판매중',2,'예약중', 0, '거래완료') status,
 			title,
 			price,
 			addr,
@@ -86,7 +86,7 @@
 	<select id="selectProductCategoryList" resultType="egovMap">
 		SELECT
 			pro_code,
-			decode(status,1,'판매중',2,'예약중','거래완료') status,
+			decode(status,1,'판매중',2,'예약중', 0, '거래완료') status,
 			title,
 			price,
 			addr,
@@ -145,7 +145,7 @@
 	<select id="selectProductDetail" resultType="productVO">
 		SELECT
 			pro_code,
-			decode(status,1,'판매중',2,'예약중','거래완료') status,
+			decode(status,1,'판매중',2,'예약중', 0,'거래완료') status,
 			seller,
 			pro_category_code,
 			title,
@@ -161,7 +161,7 @@
 			refund,
 			nego,
 			( select nik_name from member where user_id = p.seller) seller_nik,
-			nvl(buyer_nik, '0') as buyer_nik,
+			nvl(buyer_nik, '없음') as buyer_nik,
 			imgs,
 			(select 
                 CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
@@ -180,11 +180,53 @@
 
 	</select>
 	
+	<!-- 사용자의 판매 제품 리스트  -->
+	<select id="selectSellProductList" resultType="productVO">
+		SELECT
+			pro_code,
+			seller,
+			buyer,
+			pro_category_code,
+			title,
+			price,
+			status,
+			( select nik_name from member where user_id = p.seller) seller_nik,
+			nvl(buyer_nik, '없음') as buyer_nik,
+			imgs
+			
+		FROM
+			product p
+			
+		WHERE
+			seller = ${seller}
+	</select>
+	
+		<!-- 사용자의 구매 제품 리스트  -->
+	<select id="selectBuyProductList" resultType="productVO">
+		SELECT
+			pro_code,
+			seller,
+			buyer,
+			pro_category_code,
+			title,
+			price,
+			status,
+			( select nik_name from member where user_id = p.seller) seller_nik,
+			nvl(buyer_nik, '없음') as buyer_nik,
+			imgs
+			
+		FROM
+			product p
+			
+		WHERE
+			buyer = ${buyer}
+	</select>
+	
 	<!-- 수정 위한 제품 데이터 보기 -->
 	<select id="selectProductModify" resultType="productVO">
 		SELECT
 			pro_code,
-			decode(status,1,'판매중',2,'예약중','거래완료') status,
+			decode(status,1,'판매중',2,'예약중', 0, '거래완료') status,
 			seller,
 			pro_category_code,
 			title,

@@ -66,6 +66,18 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		// TODO Auto-generated method stub
 		return productDAO.selectCategoryList(vo);
 	}
+
+	@Override
+	public List<?> selectSellProductList(ProductVO vo) { // 사용자의 판매 제품 리스트
+		// TODO Auto-generated method stub
+		return productDAO.selectSellProductList(vo);
+	}
+
+	@Override
+	public List<?> selectBuyProductList(ProductVO vo) { // 사용자의 구매 제품 리스트
+		// TODO Auto-generated method stub
+		return productDAO.selectBuyProductList(vo);
+	}
 	
 	@Override
 	public int updateProductHits(ProductVO vo) { // 조회수 증가
@@ -114,6 +126,5 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		// TODO Auto-generated method stub
 		return productDAO.selectLikeAllCount(vo);
 	}
-
 
 }
