@@ -33,11 +33,7 @@
 					  			contentType : false,
 					  			datatype : "text", //성공여부(ok)
 					  			success : function(data) {
-					  				if(data == "ok") {
-					  					alert("저장 성공");
-					  				} else {
-					  					alert("저장 실패");
-					  				}
+					  					location = "product-list-detail?proCode=" + data;
 					  			},
 					  			error : function (request,status,error){
 					  		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -76,6 +72,7 @@
 					
 					<input type="hidden" name="seller" id="seller" value="${product.seller}">
 					<input type="hidden" name="preImgs" id="preImgs" value="${product.imgs}">
+					<input type="hidden" name="proCode" id="proCode" value="${product.proCode}">
 										
 					<table class="product-write-table">
 						<!-- 1. 상품 이미지 -->
