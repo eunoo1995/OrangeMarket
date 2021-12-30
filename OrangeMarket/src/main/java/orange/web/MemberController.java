@@ -37,19 +37,22 @@ public class MemberController {
 	private MemberService memberService;
 
 	@RequestMapping(value = "login")
-	public String login(HttpSession session, Model model,
-			@CookieValue(value = "COOKIE_REMEBER_EMAIL", required = false) Cookie remEmailCookie) throws Exception {
+	//public String login(HttpSession session, Model model, @CookieValue(value = "COOKIE_REMEBER_EMAIL", required = false) Cookie remEmailCookie) throws Exception {
+	public String login(HttpSession session, Model model) throws Exception {
 
 		String isRemChcked = "";
+		/*
 		String cookieVal = remEmailCookie.getValue();
 
 		// 쿠키가 저장된 경우
 		if (cookieVal != null) {
 			isRemChcked = "checked";
 		}
-
-		model.addAttribute("remEmail", isRemChcked);
+		
 		model.addAttribute("userEmail", cookieVal);
+		*/
+		
+		model.addAttribute("remEmail", isRemChcked);
 
 		return "member/login";
 	}
