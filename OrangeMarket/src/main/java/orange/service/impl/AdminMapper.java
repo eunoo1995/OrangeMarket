@@ -6,6 +6,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 import orange.service.AdminVO;
 import orange.service.InquiryVO;
 import orange.service.PagingVO;
+import orange.service.ReportVO;
 
 @Mapper("adminMapper")
 public interface AdminMapper {
@@ -35,4 +36,16 @@ public interface AdminMapper {
 	InquiryVO adminInquiryInfo(InquiryVO vo);
 	
 	int responseInquiry(InquiryVO vo);
+	
+	int totalAdminReport(PagingVO vo);
+	List<?> selectAdminReport(PagingVO vo);
+	
+	ReportVO adminReportInfo(ReportVO vo);
+	
+	int updateReportCount(ReportVO vo);
+	int responseReport(ReportVO vo);
+	
+	int countReport(ReportVO vo);
+	
+	int overCountSuspend(ReportVO vo);
 }

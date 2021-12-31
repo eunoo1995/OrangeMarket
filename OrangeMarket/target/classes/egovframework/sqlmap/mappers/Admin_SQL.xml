@@ -168,4 +168,60 @@
 		UPDATE INQUIRY_BOARD SET RE_CONTENT = #{reContent}, UDATE = SYSDATE, STATUS = 'Y' 
 			WHERE UNQ = #{unq}
 	</update>
+	
+	<select id="totalAdminReport" parameterType="pagingVO" resultType="int">
+		SELECT count(*) FROM REPORT_BOARD 
+			WHERE 1 = 1
+			<if test="field != null">
+			 AND STATUS like '%${field}%'
+			</if>
+	</select>
+	<select id="selectAdminReport" parameterType="pagingVO" resultType="egovMap">
+		SELECT b.* FROM	
+			(SELECT ROWNUM rn, a.* FROM
+				(SELECT 
+						unq,
+						title,
+						content,
+						to_char(rdate,'yyyy-mm-dd') rdate,
+						decode(status,'N','답변대기','답변완료') status,
+						writer_nik,
+						seller_nik
+				FROM REPORT_BOARD 
+				WHERE 1 = 1
+				<if test="field != null">
+				AND STATUS like '%${field}%'
+				</if> 
+				ORDER BY unq DESC ) a ) b
+		WHERE rn BETWEEN #{startIndex} AND #{endIndex}		
+	</select>
+	<select id="adminReportInfo" parameterType="reportVO" resultType="reportVO">
+		SELECT	
+				unq,
+				title,
+				seller_nik,
+				seller,
+				content,
+				to_char(rdate,'yyyy-mm-dd') rdate,
+				to_char(rdate,'yyyy-mm-dd') udate,
+				writer_nik,
+				re_content 
+		FROM REPORT_BOARD 
+		WHERE unq = #{unq}
+	</select>
+	<update id="updateReportCount" parameterType="reportVO">
+		UPDATE MEMBER SET REPORT_COUNT = REPORT_COUNT + 1 
+			WHERE USER_ID = #{seller}
+	</update>
+	<update id="responseReport" parameterType="reportVO">
+		UPDATE REPORT_BOARD SET RE_CONTENT = #{reContent}, UDATE = SYSDATE, STATUS = 'Y' 
+			WHERE UNQ = #{unq}
+	</update>
+	<select id="countReport" parameterType="reportVO" resultType="int">
+		SELECT REPORT_COUNT FROM MEMBER WHERE USER_ID = #{seller}
+	</select>
+	<update id="overCountSuspend" parameterType="reportVO">
+		UPDATE MEM_STATUS SET MEM_STATE_CODE = 3, REASON='신고 누적으로 인한 영구정지'  
+			WHERE USER_ID = #{seller} 
+	</update>
 </mapper>
