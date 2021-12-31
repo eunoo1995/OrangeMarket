@@ -287,9 +287,20 @@ public class ProductController {
 		return msg;
 	}
 	
-	@RequestMapping(value="/trade-history")
-	public String selectTradeHistory() throws Exception {
-		return "mypage/tradeHistory";
+	@RequestMapping(value="/sell-history")
+	public String selectTradeHistory(ProductVO vo, Model model, HttpSession session) throws Exception {
+		if(session.getAttribute("sessionId") == null ) return "redirect:login";
+		int sessionId = (int) session.getAttribute("sessionId");
+		
+		vo.setSeller(sessionId);
+		
+		List<?> sell_list = productService.selectSellProductList(vo);
+		List<?> category_list = productService.selectCategoryList(vo);
+		
+		model.addAttribute("sell", sell_list);
+		model.addAttribute("category", category_list);
+		
+		return "mypage/sellHistory";
 	}
 	
 	

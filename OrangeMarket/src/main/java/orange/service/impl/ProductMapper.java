@@ -20,6 +20,9 @@ public interface ProductMapper {
 	String selectProCategory(ProductVO vo);
 	List<?> selectCategoryList(ProductVO vo);
 	int updateProductHits(ProductVO vo);
+	
+	List<?> selectSellProductList(ProductVO vo);
+	List<?> selectBuyProductList(ProductVO vo);
 
 	ProductVO selectProductDetail(ProductVO vo);
 
@@ -33,5 +36,6 @@ public interface ProductMapper {
 	int selectLikeCount(ProductVO vo);
 	
 	int selectLikeAllCount(ProductVO vo);
+	
 
 }
