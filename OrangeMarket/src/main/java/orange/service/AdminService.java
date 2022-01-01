@@ -37,4 +37,21 @@ public interface AdminService {
 	// 문의하기 답변 저장
 	int responseInquiry(InquiryVO vo) throws Exception;
 	
+	// 신고 목록 가져오기
+	int totalAdminReport(PagingVO vo) throws Exception;
+	List<?> selectAdminReport(PagingVO vo) throws Exception;
+	
+	// 신고 상세 정보 가져오기
+	ReportVO adminReportInfo(ReportVO vo) throws Exception;
+	
+	// 신고횟수 추가
+	int updateReportCount(ReportVO vo) throws Exception;
+	int responseReport(ReportVO vo) throws Exception;
+	
+	// 신고횟수 가져오기
+	int countReport(ReportVO vo) throws Exception;
+	
+	// 5회 신고누적 시 회원 영구정지
+	int overCountSuspend(ReportVO vo) throws Exception;
+	
 }

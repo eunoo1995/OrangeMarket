@@ -14,6 +14,7 @@ import orange.service.AdminService;
 import orange.service.AdminVO;
 import orange.service.InquiryVO;
 import orange.service.PagingVO;
+import orange.service.ReportVO;
 
 @Controller
 public class AdminController {
@@ -148,9 +149,43 @@ public class AdminController {
 	
 	// 신고하기 목록화면 출력 --------------------------------------
 	@RequestMapping(value = "admin-reportlist")
-	public String adminReportList() throws Exception {
+	public String adminReportList(PagingVO vo, Model model) throws Exception {
+		String field = vo.getField();
+		int total = adminService.totalAdminReport(vo);
+		int pageNo = vo.getPageNo();
+		vo = new PagingVO(total,pageNo, 5);
+		vo.setField(field);
+		List<?> list = adminService.selectAdminReport(vo);
+		model.addAttribute("list",list);
+		model.addAttribute("page",vo);
 		
 		return "admin/reportList";
+	}
+	// 신고하기 상세 및 답글달기 화면
+	@RequestMapping(value = "admin-reportdetail")
+	public String adminReportDetail(ReportVO vo, Model model) throws Exception{
+		vo = adminService.adminReportInfo(vo);
+		model.addAttribute("vo",vo);
+		return "admin/reportDetail";
+	}
+	
+	// 신고하기 답변 등록 및 신고횟수 추가
+	@RequestMapping(value = "response-report")
+	@ResponseBody
+	public String responseReport(ReportVO vo) throws Exception {
+		String result = "1";
+		String chk = vo.getSellerNik();
+		if(chk.equals("Y")) {
+			adminService.updateReportCount(vo);	
+			int count = adminService.countReport(vo);
+			if(count >= 5) {
+				adminService.overCountSuspend(vo);
+				result = "2";
+			}
+		}
+		adminService.responseReport(vo);
+		
+		return result;
 	}
 	
 	// 카테고리 목록편집 화면 출력 -----------------------------------

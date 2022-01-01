@@ -11,6 +11,7 @@ import orange.service.AdminService;
 import orange.service.AdminVO;
 import orange.service.InquiryVO;
 import orange.service.PagingVO;
+import orange.service.ReportVO;
 
 @Service("adminService")
 public class AdminImpl extends EgovAbstractServiceImpl implements AdminService {
@@ -96,6 +97,41 @@ public class AdminImpl extends EgovAbstractServiceImpl implements AdminService {
 	@Override
 	public int responseInquiry(InquiryVO vo) throws Exception {
 		return adminDAO.responseInquiry(vo);
+	}
+
+	@Override
+	public int totalAdminReport(PagingVO vo) throws Exception {
+		return adminDAO.totalAdminReport(vo);
+	}
+
+	@Override
+	public List<?> selectAdminReport(PagingVO vo) throws Exception {
+		return adminDAO.selectAdminReport(vo);
+	}
+
+	@Override
+	public ReportVO adminReportInfo(ReportVO vo) throws Exception {
+		return adminDAO.adminReportInfo(vo);
+	}
+
+	@Override
+	public int updateReportCount(ReportVO vo) throws Exception {
+		return adminDAO.updateReportCount(vo);
+	}
+
+	@Override
+	public int responseReport(ReportVO vo) throws Exception {
+		return adminDAO.responseReport(vo);
+	}
+
+	@Override
+	public int countReport(ReportVO vo) throws Exception {
+		return adminDAO.countReport(vo);
+	}
+
+	@Override
+	public int overCountSuspend(ReportVO vo) throws Exception {
+		return adminDAO.overCountSuspend(vo);
 	}
 	
 	

@@ -11,7 +11,7 @@
 <body>
     <section id="section">
     	<div class="section-inner">
-    		<div class="section-title">회원정보목록</div>
+    		<div class="section-title">회원정보관리</div>
     		<div class="section-content">
     			<div class="section-search">
 		    		<input type="text" name="word" id="word" value="${page.word}" placeholder="검색하실 '닉네임'을 입력하세요!">
