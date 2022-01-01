@@ -19,9 +19,33 @@
 			<h2 class="sub-page-title">판매/구매내역</h2>
 		</div>
 	</header>
+	
+	<script>
+		$(function(){
+			$("#status").on("change", function(){
+				var data = $("#status").val();
+				alert(data);
+				
+				var formdata = $("frm").serialize();
+				
+				$.ajax({
+					type : "post",
+		  			url  : "update-product-status",
+		  			data : formdata,
+		  			datatype : "text",
+	  				success : function(data) {
 
-
+	  				},
+		  			error : function (request, status, error){
+						alert("실패");
+		  			}
+				});
+			});
+		});
+	</script>
+	
 	<article class="board-wrap">
+		<form name="frm" id="frm" method="post">
 		<!-- container -->
 		<div class="cont-inner">
 			<nav class="board-menu-wrap">
@@ -49,11 +73,11 @@
 						<th>거래상태</th>
 					</tr>
 				</thead>
-				<tbody>
 
+				
+				<tbody>
 <%-- 			<c:choose>
 				<c:when test="${page.total ne 0}"> --%>
-				
 				<c:forEach var="sell" items="${sell}">
 					<tr>
 						<td>
@@ -67,14 +91,17 @@
 						<td class="board-writer">${sell.sellerNik}</td>
 						<td>${sell.price} 원</td>
 						<td class="board-answer">
+						
 							<c:if test="${sell.status eq 0}">거래완료</c:if>
 							<c:if test="${sell.status ne 0}">
-								<select>
+								<select name="status" id="status">
 									<option value="1" <c:if test="${sell.status eq 1}">selected</c:if>>판매중</option>
 									<option value="2" <c:if test="${sell.status eq 2}">selected</c:if>>예약중</option>
+									<option value="0">거래완료</option>
 								</select>
 							</c:if>
 						</td>
+						
 					</tr>
 				</c:forEach>	
 
@@ -86,6 +113,7 @@
 				</c:when>
 				</c:choose> --%>
 				</tbody>
+				
 			</table>
 
 <%-- 			<article class="pager-wrap">
@@ -93,25 +121,26 @@
 				<c:set var="before" value="${page.startPage-1}"/>
 				<c:set var="next" value="${page.endPage+1}"/>
 				<c:if test="${page.startPage != 1 }">
-				<li><a href="inquiry-list?pageNo=${before}">&lt;</a></li>
+				<li><a href="sell-history?pageNo=${before}">&lt;</a></li>
 				</c:if>	
 					<c:forEach var="pageNo" begin="${page.startPage}" end="${page.endPage}">
 						<c:choose>
 						<c:when  test="${pageNo == page.pageNo }">
-							<li class="on"><a href="inquiry-list?pageNo=${pageNo}">${pageNo}</a></li>
+							<li class="on"><a href="sell-history?pageNo=${pageNo}">${pageNo}</a></li>
 						</c:when>
 						<c:when test="${pageNo != page.pageNo }">
-							<li><a href="inquiry-list?pageNo=${pageNo}">${pageNo}</a></li>
+							<li><a href="sell-history?pageNo=${pageNo}">${pageNo}</a></li>
 						</c:when>
 						</c:choose>
 					</c:forEach>
 				<c:if test="${page.endPage != page.totalPage }">
-				<li><a href="inquiry-list?pageNo=${next}">&gt;</a></li>
+				<li><a href="sell-history?pageNo=${next}">&gt;</a></li>
 				</c:if>		
 				</ul>
 			</article> --%>
 
 		</div>
+		</form>
 		<!-- container end -->
 	</article>
 

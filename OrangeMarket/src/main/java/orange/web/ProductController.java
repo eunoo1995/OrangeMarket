@@ -256,11 +256,19 @@ public class ProductController {
 	
 	// 등록 제품 삭제
 	@RequestMapping(value="/product-delete")
-	public String deleteProduct(ProductVO vo) throws Exception {
+	public String deleteProduct(ProductVO vo, HttpServletRequest request) throws Exception {
+		
+		vo = productService.selectProductDetail(vo);
+		String imgs = vo.getImgs();
 		
 		int result = productService.deleteProduct(vo);
 		
 		if(result == 1) {
+			String path = request.getServletContext().getRealPath("/images/products/");
+			// 이미지 파일이 존재할 경우 제거
+			File delFile = new File(path + imgs);
+			if(delFile.exists()) delFile.delete();
+		
 			System.out.println("삭제 성공");
 		} else {
 			System.out.println("삭제 실패");
@@ -287,12 +295,17 @@ public class ProductController {
 		return msg;
 	}
 	
+	// 사용자의 제품 판매 리스트
 	@RequestMapping(value="/sell-history")
 	public String selectTradeHistory(ProductVO vo, Model model, HttpSession session) throws Exception {
 		if(session.getAttribute("sessionId") == null ) return "redirect:login";
 		int sessionId = (int) session.getAttribute("sessionId");
 		
 		vo.setSeller(sessionId);
+		
+		//리스트 총 갯수 카운트 구문 추가 작업
+		//페이징 추가 작업
+		
 		
 		List<?> sell_list = productService.selectSellProductList(vo);
 		List<?> category_list = productService.selectCategoryList(vo);
@@ -301,6 +314,17 @@ public class ProductController {
 		model.addAttribute("category", category_list);
 		
 		return "mypage/sellHistory";
+	}
+	
+	//셀렉 상자 상태 변경 시 디비값 변경 구문 추가 작업
+	@RequestMapping(value="update-product-status")
+	@ResponseBody
+	public String updateProductStatus(ProductVO vo) throws Exception {
+		
+		System.out.println("================================\n" + vo.getStatus() + "\n================================");
+//		productService.updateProductStatus(vo);
+		
+		return "";
 	}
 	
 	
