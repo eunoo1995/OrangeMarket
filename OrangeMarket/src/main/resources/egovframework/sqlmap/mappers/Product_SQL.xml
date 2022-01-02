@@ -330,6 +330,14 @@
 		WHERE pro_code = ${proCode}
 	</update>
 	
+	<!-- 거래 목록에서 제품 상태 변경 기능 -->
+	<update id="updateProductStatus">
+		UPDATE product
+			SET
+				status = ${status}
+		WHERE pro_code = ${proCode}
+	</update>
+	
 	<!-- update end -->
 	
 	<!-- delete start -->

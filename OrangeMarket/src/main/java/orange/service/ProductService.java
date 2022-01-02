@@ -49,6 +49,8 @@ public interface ProductService {
 	// 전체 관심 갯수
 	int selectLikeAllCount(ProductVO vo);
 
+	int updateProductStatus(ProductVO vo);
+
 	
 
 }

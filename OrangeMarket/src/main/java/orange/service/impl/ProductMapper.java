@@ -37,5 +37,6 @@ public interface ProductMapper {
 	
 	int selectLikeAllCount(ProductVO vo);
 	
-
+	int updateProductStatus(ProductVO vo);
+	
 }

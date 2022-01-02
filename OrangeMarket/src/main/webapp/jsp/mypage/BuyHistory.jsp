@@ -20,29 +20,14 @@
 		</div>
 	</header>
 	
-	<script>
-		function updateStatus(proCode) {
-			// 제품 코드, 상태 값
-			var proCode = proCode;
-			var selectStat = document.getElementById("status");
-			var selectValue = selectStat.options[selectStat.selectedIndex].value;
-			
-			location = "update-product-status?proCode=" + proCode + "&status=" + selectValue;
-		}
-	
-		$(function(){
-			
-		});
-	</script>
-	
 	<article class="board-wrap">
 		<form name="frm" id="frm" method="post">
 		<!-- container -->
 		<div class="cont-inner">
 			<nav class="board-menu-wrap">
 				<ul class="board-menu">
-					<li class="menu_li on"><a href="sell-history">판매내역</a></li>
-					<li class="menu_li"><a href="buy-history"><b>구매내역</b></a></li>
+					<li class="menu_li"><a href="sell-history">판매내역</a></li>
+					<li class="menu_li on"><a href="buy-history"><b>구매내역</b></a></li>
 				</ul>
 			</nav>
 
@@ -69,29 +54,19 @@
 				<tbody>
 <%-- 			<c:choose>
 				<c:when test="${page.total ne 0}"> --%>
-				<c:forEach var="sell" items="${sell}">
+				<c:forEach var="buy" items="${buy}">
 					<tr>
 						<td>
 							<c:forEach var="c" items="${category}">
-								<c:if test="${c.proCategoryCode == sell.proCategoryCode}">
+								<c:if test="${c.proCategoryCode == buy.proCategoryCode}">
 									${c.category}
 								</c:if>
 							</c:forEach>
 						</td>
-						<td class="board-tit"><a href="product-list-detail?proCode=${sell.proCode}">${sell.title}</a></td>
-						<td class="board-writer">${sell.sellerNik}</td>
-						<td>${sell.price} 원</td>
-						<td class="board-answer">
-						
-							<c:if test="${sell.status eq 0}">거래완료</c:if>
-							<c:if test="${sell.status ne 0}">
-								<select name="status" id="status" onchange="updateStatus(${sell.proCode}, );">
-									<option value="1" <c:if test="${sell.status eq 1}">selected</c:if>>판매중</option>
-									<option value="2" <c:if test="${sell.status eq 2}">selected</c:if>>예약중</option>
-									<option value="0">거래완료</option>
-								</select>
-							</c:if>
-						</td>
+						<td class="board-tit"><a href="product-list-detail?proCode=${buy.proCode}">${buy.title}</a></td>
+						<td class="board-writer">${buy.sellerNik}</td>
+						<td>${buy.price} 원</td>
+						<td class="board-answer">거래완료</td>
 						
 					</tr>
 				</c:forEach>	
@@ -112,20 +87,20 @@
 				<c:set var="before" value="${page.startPage-1}"/>
 				<c:set var="next" value="${page.endPage+1}"/>
 				<c:if test="${page.startPage != 1 }">
-				<li><a href="sell-history?pageNo=${before}">&lt;</a></li>
+				<li><a href="buy-history?pageNo=${before}">&lt;</a></li>
 				</c:if>	
 					<c:forEach var="pageNo" begin="${page.startPage}" end="${page.endPage}">
 						<c:choose>
 						<c:when  test="${pageNo == page.pageNo }">
-							<li class="on"><a href="sell-history?pageNo=${pageNo}">${pageNo}</a></li>
+							<li class="on"><a href="buy-history?pageNo=${pageNo}">${pageNo}</a></li>
 						</c:when>
 						<c:when test="${pageNo != page.pageNo }">
-							<li><a href="sell-history?pageNo=${pageNo}">${pageNo}</a></li>
+							<li><a href="buy-history?pageNo=${pageNo}">${pageNo}</a></li>
 						</c:when>
 						</c:choose>
 					</c:forEach>
 				<c:if test="${page.endPage != page.totalPage }">
-				<li><a href="sell-history?pageNo=${next}">&gt;</a></li>
+				<li><a href="buy-history?pageNo=${next}">&gt;</a></li>
 				</c:if>		
 				</ul>
 			</article> --%>

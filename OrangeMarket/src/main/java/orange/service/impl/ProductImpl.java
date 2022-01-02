@@ -122,9 +122,15 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	}
 
 	@Override
-	public int selectLikeAllCount(ProductVO vo) {
+	public int selectLikeAllCount(ProductVO vo) { // 좋아요 전체 갯수
 		// TODO Auto-generated method stub
 		return productDAO.selectLikeAllCount(vo);
+	}
+	
+	@Override
+	public int updateProductStatus(ProductVO vo) {
+		// TODO Auto-generated method stub
+		return productDAO.updateProductStatus(vo);
 	}
 
 }

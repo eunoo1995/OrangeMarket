@@ -297,7 +297,7 @@ public class ProductController {
 	
 	// 사용자의 제품 판매 리스트
 	@RequestMapping(value="/sell-history")
-	public String selectTradeHistory(ProductVO vo, Model model, HttpSession session) throws Exception {
+	public String selectSellHistory(ProductVO vo, Model model, HttpSession session) throws Exception {
 		if(session.getAttribute("sessionId") == null ) return "redirect:login";
 		int sessionId = (int) session.getAttribute("sessionId");
 		
@@ -316,16 +316,35 @@ public class ProductController {
 		return "mypage/sellHistory";
 	}
 	
-	//셀렉 상자 상태 변경 시 디비값 변경 구문 추가 작업
-	@RequestMapping(value="update-product-status")
-	@ResponseBody
-	public String updateProductStatus(ProductVO vo) throws Exception {
+	// 사용자의 제품 구매 리스트
+	@RequestMapping(value="/buy-history")
+	public String selectBuyHistory(ProductVO vo, Model model, HttpSession session) throws Exception {
+		if(session.getAttribute("sessionId") == null ) return "redirect:login";
+		int sessionId = (int) session.getAttribute("sessionId");
 		
-		System.out.println("================================\n" + vo.getStatus() + "\n================================");
-//		productService.updateProductStatus(vo);
+		vo.setSeller(sessionId);
 		
-		return "";
+		//리스트 총 갯수 카운트 구문 추가 작업
+		//페이징 추가 작업
+		
+		//현재 판매 목록 가져오고 있음, 추후에 구매자 확정 짓는걸 정하고 목록 가져오기
+		List<?> buy_list = productService.selectSellProductList(vo);
+		List<?> category_list = productService.selectCategoryList(vo);
+		
+		model.addAttribute("buy", buy_list);
+		model.addAttribute("category", category_list);
+		
+		return "mypage/BuyHistory";
 	}
 	
+	//셀렉 상자 상태 변경 시 디비값 변경 구문 추가 작업
+	@RequestMapping(value="update-product-status")
+	public String updateProductStatus(ProductVO vo) throws Exception {
+		if(vo.getStatus() != null) {
+			productService.updateProductStatus(vo);
+		}
+		
+		return "redirect:sell-history";
+	}
 	
 }
