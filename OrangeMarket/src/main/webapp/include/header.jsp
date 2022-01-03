@@ -72,6 +72,7 @@
 					<li><a href="login">LOGIN</a></li>
 				</c:when>
 				<c:when test="${sessionId != null}">
+					<li class="nik"><span class="nik_ellip">${USER_NIK}</span><span>님</span></li>
 					<li><a href="logout">LOGOUT</a></li>
 				</c:when>
 			 </c:choose>
