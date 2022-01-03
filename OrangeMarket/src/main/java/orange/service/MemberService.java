@@ -25,12 +25,18 @@ public interface MemberService {
 
 	int insertMemberStatus(int userId) throws Exception;
 
-	int checkMemberLogin(MemberVO vo) throws Exception;
+	int isMemberToLogin(MemberVO vo) throws Exception;
 
 	MemberVO selectMemberLogin(MemberVO vo) throws Exception;
 	
 	int selectFindPw(MemberVO vo) throws Exception;
 
 	int updateUserPw(MemberVO vo) throws Exception;
+
+	int selectFindUser(MemberVO vo) throws Exception;
+
+	String selectUserEmail(MemberVO vo) throws Exception;
+
+	MemberVO selectJoinMember(MemberVO vo) throws Exception;
 
 }

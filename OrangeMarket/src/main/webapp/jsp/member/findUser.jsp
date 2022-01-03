@@ -17,7 +17,8 @@
 				</div>
 			</header>
 
-			<form name="joinForm" action="" method="post" class="">
+			<form name="findUserForm" id="findUserForm" action="" method="post" class="">
+				<input type="hidden" name="telFlag" value="N" />
 				<table class="form-table">
 					<colgroup>
 						<col width="50%" />
@@ -27,13 +28,15 @@
 						<tr>
 							<td colspan="2">
 								<p class="form-tit required">이름</p> <input type="text"
-								name="name" required />
+								name="userName" required />
+								<p class="form-err-msg"></p>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
 								<p class="form-tit required">연락처</p> <input type="text"
 								name="tel" placeholder="- 없이 숫자만 입력해주세요" required />
+								<p class="form-err-msg"></p>
 							</td>
 						</tr>
 					</tbody>
@@ -41,7 +44,7 @@
 						<tr>
 							<td colspan="2">
 								<div class="btn-group">
-									<button type="button" class="btn btn-solid-point btn-f">확인</button>
+									<button type="button" id="FindUserConfirm" class="btn btn-solid-point btn-f">확인</button>
 								</div>
 							</td>
 						</tr>

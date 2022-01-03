@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!-- 헤더 -->
 <jsp:include page="/include/header.jsp" flush="false">
 	<jsp:param name="cssName" value="member" />
@@ -18,7 +20,7 @@
 			</header>
 
 			<h3 class="find-result-tit txt-c">
-				회원님의 계정은<br /> ___***@gmail.com 입니다.
+				회원님의 계정은<br /> ${userEmail} 입니다.
 			</h3>
 
 			<div class="btn-group">

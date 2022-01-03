@@ -37,20 +37,16 @@ public class MemberController {
 	private MemberService memberService;
 
 	@RequestMapping(value = "login")
-	//public String login(HttpSession session, Model model, @CookieValue(value = "COOKIE_REMEBER_EMAIL", required = false) Cookie remEmailCookie) throws Exception {
 	public String login(HttpSession session, Model model) throws Exception {
+		
+		if(session.getAttribute("sessionId") != null) return "redirect:/main";
 
 		String isRemChcked = "";
-		/*
-		String cookieVal = remEmailCookie.getValue();
-
-		// 쿠키가 저장된 경우
-		if (cookieVal != null) {
+		String remEmailVal = (String) session.getAttribute("REMEBER_USER_EMAIL");
+		
+		if (remEmailVal != null) {
 			isRemChcked = "checked";
 		}
-		
-		model.addAttribute("userEmail", cookieVal);
-		*/
 		
 		model.addAttribute("remEmail", isRemChcked);
 
@@ -65,7 +61,7 @@ public class MemberController {
 		String msg = "";
 
 		// 로그인 입력 정보 확인
-		int result = memberService.checkMemberLogin(vo);
+		int result = memberService.isMemberToLogin(vo);
 		if (result == 0) {
 			msg = "err";
 
@@ -75,17 +71,15 @@ public class MemberController {
 			
 			// 이메일 저장이 체크된 경우
 			if(remEmail.equals("true")) {
-				Cookie remEmailCookie = new Cookie("COOKIE_REMEBER_EMAIL" ,  vo.getEmail());
-				remEmailCookie.setMaxAge(60*60*24*7); // 유지시간 설정(7일)
-				remEmailCookie.setPath("/login");
-				
-                // 쿠키를 적용해 준다.
-				response.addCookie(remEmailCookie);
+				session.setAttribute("REMEBER_USER_EMAIL", vo.getEmail());
+				session.setMaxInactiveInterval(60*60*24*3); // 유지시간 설정(7일)
 			}
 			
 			// 세션 생성
 			session.setAttribute("sessionId", vo.getUserId());
 			session.setMaxInactiveInterval(600); // 세션 유지시간 설정 (10분: 60*10)
+			
+			session.setAttribute("USER_NIK", vo.getNikName());
 			
 			msg = "ok";
 		}
@@ -96,6 +90,8 @@ public class MemberController {
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("sessionId");
+		session.removeAttribute("USER_NIK");
+		
 		return "redirect:/main";
 	}
 
@@ -107,9 +103,7 @@ public class MemberController {
 
 	@RequestMapping(value = "join-form")
 	public String joinWrite(String l, Model model) throws Exception {
-
-		// 유저 아이디 생성
-		int userId = memberService.selectNewUserId();
+		
 
 		// 위치정보 동의 여부
 		if (l != null && l.equals("false")) {
@@ -117,9 +111,13 @@ public class MemberController {
 		} else if (l != null && l.equals("true")) {
 			l = "Y";
 		}
+		
+		
+		// 유저 아이디 생성
+		int userId = memberService.selectNewUserId();
 
 		model.addAttribute("agreeLoc", l);
-		model.addAttribute("userId", userId);
+//		model.addAttribute("userId", userId);
 
 		return "member/joinForm";
 	}
@@ -301,6 +299,17 @@ public class MemberController {
 	}
 	
 	
+	@RequestMapping(value = "join-result")
+	public String joinResult(MemberVO vo, Model model) throws Exception {
+		
+		vo = memberService.selectJoinMember(vo);
+		
+		model.addAttribute("vo", vo);
+		
+		return "member/joinResult";
+	}
+	
+	
 	@RequestMapping(value = "find-pw")
 	public String viewFindPw() {
 		
@@ -368,6 +377,50 @@ public class MemberController {
 	public String findUser() {
 		
 		return "member/findUser";
+	}
+	
+	@RequestMapping(value = "find-user-confrim")
+	@ResponseBody
+	public String findUserConfirm(MemberVO vo) throws Exception {
+		
+		String msg ="";
+		// 계정정보 확인
+		int result = memberService.selectFindUser(vo);
+		
+		
+		if (result == 1) {
+			// 조회 성공
+			msg = "ok";
+		} else if (result != 1) {
+			// 조회 실패
+			msg = "err";
+		}
+		
+		return msg;
+	}
+	
+	@RequestMapping(value = "find-result")
+	public String findUserResult(MemberVO vo, Model model) throws Exception {
+		
+		String email = memberService.selectUserEmail(vo);
+		
+		String emailId = email.split("@")[0];
+		String emailUrl = email.split("@")[1];
+		
+		// 이메일 아이디 *로 변환 (앞에 2글자는 보인다.)
+		String frontEmailId = emailId.substring(0,2);
+		String backEmailId = emailId.substring(2, emailId.length());
+		backEmailId = backEmailId.replaceAll(".", "*");
+		
+		System.out.println("frontEmailId" + frontEmailId);
+		System.out.println("backEmailId" + backEmailId);
+
+		
+		// 이메일 재조합
+		String findEmail = frontEmailId + backEmailId + "@" + emailUrl;
+		model.addAttribute("userEmail", findEmail);
+		
+		return "member/findUserResult";
 	}
 	
 }
