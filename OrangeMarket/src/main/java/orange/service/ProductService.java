@@ -48,8 +48,22 @@ public interface ProductService {
 	int selectLikeCount(ProductVO vo);
 	// 전체 관심 갯수
 	int selectLikeAllCount(ProductVO vo);
-
+	
+	// 제품 판매 상태 변경
 	int updateProductStatus(ProductVO vo);
+
+	// 제품 구매 후 판매자 평가 +1
+	int updateUserLevelGood(ProductVO vo);
+	// 제품 구매 후 판매자 평가 -1
+	int updateUserLevelBad(ProductVO vo);
+	// 제품 구매 후 판매자 평가 상태 변경
+	int updateRatingStatus(ProductVO vo);
+	//제품 구매 후 판매자 평가 +
+	int insertReviewGood(ProductVO vo);
+	//제품 구매 후 판매자 평가 -
+	int insertReviewBad(ProductVO vo);
+	// 제품 평가 갯수 카운트
+	int selectReviewCount(ProductVO vo);
 
 	
 

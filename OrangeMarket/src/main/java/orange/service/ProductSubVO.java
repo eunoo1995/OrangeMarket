@@ -16,6 +16,15 @@ public class ProductSubVO {
 	private int chatCnt;
 	private int likeAllCnt;
 	private int likeCnt;
+	private int reviewCnt;
+	
+	public int getReviewCnt() {
+		return reviewCnt;
+	}
+
+	public void setReviewCnt(int review_cnt) {
+		this.reviewCnt = review_cnt;
+	}
 
 	public int getLikeAllCnt() {
 		return likeAllCnt;

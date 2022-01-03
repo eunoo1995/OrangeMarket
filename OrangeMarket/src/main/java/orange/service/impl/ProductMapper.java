@@ -39,4 +39,10 @@ public interface ProductMapper {
 	
 	int updateProductStatus(ProductVO vo);
 	
+	int updateUserLevelGood(ProductVO vo);
+	int updateUserLevelBad(ProductVO vo);
+	int updateRatingStatus(ProductVO vo);
+	int insertReviewGood(ProductVO vo);
+	int insertReviewBad(ProductVO vo);
+	int selectReviewCount(ProductVO vo);
 }

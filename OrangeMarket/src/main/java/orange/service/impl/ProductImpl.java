@@ -128,9 +128,45 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	}
 	
 	@Override
-	public int updateProductStatus(ProductVO vo) {
+	public int updateProductStatus(ProductVO vo) { // 제품 판매 상태 변경
 		// TODO Auto-generated method stub
 		return productDAO.updateProductStatus(vo);
+	}
+
+	@Override
+	public int updateUserLevelGood(ProductVO vo) { // 제품 구매 후 판매자 평가 +1
+		// TODO Auto-generated method stub
+		return productDAO.updateUserLevelGood(vo);
+	}
+
+	@Override
+	public int updateUserLevelBad(ProductVO vo) { // 제품 구매 후 판매자 평가 -1
+		// TODO Auto-generated method stub
+		return productDAO.updateUserLevelBad(vo);
+	}
+	
+	@Override
+	public int updateRatingStatus(ProductVO vo) { // 제품 구매 후 판매자 평가 상태 변경
+		// TODO Auto-generated method stub
+		return productDAO.updateRatingStatus(vo);
+	}
+
+	@Override
+	public int insertReviewGood(ProductVO vo) { // 제품 구매 후 판매자 평가 등록
+		// TODO Auto-generated method stub
+		return productDAO.insertReviewGood(vo);
+	}
+	
+	@Override
+	public int insertReviewBad(ProductVO vo) { // 제품 구매 후 판매자 평가 등록
+		// TODO Auto-generated method stub
+		return productDAO.insertReviewBad(vo);
+	}
+
+	@Override
+	public int selectReviewCount(ProductVO vo) { // 제품 평가 갯수 카운트
+		// TODO Auto-generated method stub
+		return productDAO.selectReviewCount(vo);
 	}
 
 }
