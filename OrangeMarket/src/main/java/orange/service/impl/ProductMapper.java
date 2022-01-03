@@ -38,6 +38,7 @@ public interface ProductMapper {
 	int selectLikeAllCount(ProductVO vo);
 	
 	int updateProductStatus(ProductVO vo);
+	int updateProductStatAndBuyer(ProductVO vo);
 	
 	int updateUserLevelGood(ProductVO vo);
 	int updateUserLevelBad(ProductVO vo);
@@ -45,4 +46,5 @@ public interface ProductMapper {
 	int insertReviewGood(ProductVO vo);
 	int insertReviewBad(ProductVO vo);
 	int selectReviewCount(ProductVO vo);
+	
 }

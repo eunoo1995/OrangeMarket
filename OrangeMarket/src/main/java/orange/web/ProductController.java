@@ -338,7 +338,16 @@ public class ProductController {
 	//셀렉 상자 상태 변경 시 디비값 변경 구문 추가 작업
 	@RequestMapping(value="update-product-status")
 	public String updateProductStatus(ProductVO vo) throws Exception {
-		if(vo.getStatus() != null) {
+		String status = vo.getStatus();
+		System.out.println(status);
+		// 판매중으로 변경 시 구매자 관련 데이터 삭제
+		if(status.equals("1")) { 
+			System.out.println("판매중");
+			productService.updateProductStatus(vo);
+			productService.updateProductStatAndBuyer(vo);
+		}
+		else {
+			System.out.println("그 외");
 			productService.updateProductStatus(vo);
 		}
 		

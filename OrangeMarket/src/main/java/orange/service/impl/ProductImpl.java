@@ -132,6 +132,12 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		// TODO Auto-generated method stub
 		return productDAO.updateProductStatus(vo);
 	}
+	
+	@Override
+	public int updateProductStatAndBuyer(ProductVO vo) { // 제품 판매 상태 '판매중'으로 변경 시 구매자 정보 삭제
+		// TODO Auto-generated method stub
+		return productDAO.updateProductStatAndBuyer(vo);
+	}
 
 	@Override
 	public int updateUserLevelGood(ProductVO vo) { // 제품 구매 후 판매자 평가 +1

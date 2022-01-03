@@ -51,6 +51,8 @@ public interface ProductService {
 	
 	// 제품 판매 상태 변경
 	int updateProductStatus(ProductVO vo);
+	//제품 판매 상태 '판매중'으로 변경 시 구매자 정보 삭제
+	int updateProductStatAndBuyer(ProductVO vo);
 
 	// 제품 구매 후 판매자 평가 +1
 	int updateUserLevelGood(ProductVO vo);
@@ -64,6 +66,8 @@ public interface ProductService {
 	int insertReviewBad(ProductVO vo);
 	// 제품 평가 갯수 카운트
 	int selectReviewCount(ProductVO vo);
+
+	
 
 	
 
