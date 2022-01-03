@@ -68,8 +68,11 @@
 		  				if(data == "exist") {
 		  					alert("채팅이 이미 존재합니다.");
 		  					return false;
+		  				} else if( data == "notAddr") {
+		  					alert("동네 인증 후 거래를 이용하실 수 있습니다.");
+		  					return false; 
 		  				}
-	  					location="chat?channel="+data;
+		  				location="chat?channel="+data;
 		  			},
 		  			error: function(request, status, error){
 		  				alert("code : " + request.status + "\n" 
