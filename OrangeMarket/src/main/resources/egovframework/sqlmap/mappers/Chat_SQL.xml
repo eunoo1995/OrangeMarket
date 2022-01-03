@@ -79,7 +79,8 @@
 	
 	<select id="selectBuyerInfo" parameterType="chatVO" resultType="memberVO">
 		SELECT NIK_NAME,
-			   PROFILE_IMG	
+			   PROFILE_IMG,
+			   ADDR_PASS	
 		FROM MEMBER WHERE USER_ID = #{buyer}
 	</select>
 	<select id="selectSellerInfo" parameterType="chatVO" resultType="String">

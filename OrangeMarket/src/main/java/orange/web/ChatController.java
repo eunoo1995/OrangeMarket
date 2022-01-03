@@ -29,6 +29,7 @@ public class ChatController {
 		int buyer = (int)session.getAttribute("sessionId");
 		vo.setBuyer(buyer);
 		mvo = chatService.selectBuyerInfo(vo);
+		if(mvo.getAddrPass().equals("N")) return "notAddr";
 		String sellerProfile = chatService.selectSellerInfo(vo);
 		vo.setBuyerNik(mvo.getNikName());
 		vo.setBuyerProfile(mvo.getProfileImg());
