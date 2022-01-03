@@ -13,7 +13,7 @@
 <body>
 	<div class="inquiry-main">
 		<div class="inquiry-title">
-			[이용관련]
+			[${vo.category}]
 		</div>
 		<div class="inquiry-content">
 			<table class="inquiry-table">
@@ -42,17 +42,17 @@
 		<div class="inquiry-response">
 		<form id="frm-inquiry">
 			<input type="hidden" name="unq" id="unq" value="${vo.unq}">
-		<c:choose>
-			<c:when test="${vo.reContent != null}">
-			<textarea class="inquiry-textarea" style="resize:none;" readonly>${vo.reContent}</textarea>
-			<button type="button" class="inquiry-response-btn">답변완료</button>
-			</c:when>
-			<c:when test="${vo.reContent == null}">
-			<textarea class="inquiry-textarea" name="reContent" id="reContent" style="resize:none;"></textarea>
-			<button type="button" id="inquiryResponseBtn" class="inquiry-response-btn">답변등록</button>
-			</c:when>
-		</c:choose>
-		</form>	
+			<c:choose>
+				<c:when test="${vo.reContent != null}">
+				<textarea class="inquiry-textarea" style="resize:none;" readonly>${vo.reContent}</textarea>
+				<button type="button" class="inquiry-response-btn">답변완료</button>
+				</c:when>
+				<c:when test="${vo.reContent == null}">
+				<textarea class="inquiry-textarea" name="reContent" id="reContent" style="resize:none;"></textarea>
+				<button type="button" id="inquiryResponseBtn" class="inquiry-response-btn">답변등록</button>
+				</c:when>
+			</c:choose>
+			</form>	
 		</div>
 	</div>
 </body>

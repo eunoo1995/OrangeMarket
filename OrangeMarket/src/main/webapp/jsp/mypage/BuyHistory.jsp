@@ -16,92 +16,97 @@
 	<!-- 타이틀 및 메뉴 -->
 	<header class="sub-page-head">
 		<div class="cont-inner">
-			<h2 class="sub-page-title">고객센터</h2>
+			<h2 class="sub-page-title">판매/구매내역</h2>
 		</div>
 	</header>
-
-
+	
 	<article class="board-wrap">
+		<form name="frm" id="frm" method="post">
 		<!-- container -->
 		<div class="cont-inner">
-		
 			<nav class="board-menu-wrap">
 				<ul class="board-menu">
-					<li class="menu_li"><a href="inquiry-list"><b>문의내역</b></a></li>
-					<li class="menu_li on"><a href="report-list">신고내역</a></li>
+					<li class="menu_li"><a href="sell-history">판매내역</a></li>
+					<li class="menu_li on"><a href="buy-history"><b>구매내역</b></a></li>
 				</ul>
 			</nav>
 
 			<table class="board-table">
 				<colgroup>
-					<col width="10%" />
-					<col width="15%" />
+					<col width="23%" />
 					<col width="*%" />
-					<col width="10%" />
-					<col width="15%" />
+					<col width="12%" />
+					<col width="18%" />
 					<col width="12%" />
 				</colgroup>
 
 				<thead>
 					<tr>
-						<th>번호</th>
-						<th>판매자</th>
+						<th>카테고리</th>
 						<th>제목</th>
-						<th>신고자</th>
-						<th>작성일</th>
-						<th>답변여부</th>
+						<th>판매자</th>
+						<th>가격</th>
+						<th>거래상태</th>
 					</tr>
 				</thead>
+
+				
 				<tbody>
-				<c:set var="rownum" value="${page.rownum }"/>
-				<c:choose>
-				<c:when test="${page.total ne 0}">
-				<c:forEach var="list" items="${list}">
+<%-- 			<c:choose>
+				<c:when test="${page.total ne 0}"> --%>
+				<c:forEach var="buy" items="${buy}">
 					<tr>
-						<td class="board-num">${rownum}</td>
-						<td>${list.sellerNik}</td>
-						<td class="board-tit"><a href="report-detail?unq=${list.unq}">${list.title}</a></td>
-						<td class="board-writer">${list.writerNik}</td>
-						<td>${list.rdate}</td>
-						<td class="board-answer">${list.status}</td>
+						<td>
+							<c:forEach var="c" items="${category}">
+								<c:if test="${c.proCategoryCode == buy.proCategoryCode}">
+									${c.category}
+								</c:if>
+							</c:forEach>
+						</td>
+						<td class="board-tit"><a href="product-list-detail?proCode=${buy.proCode}">${buy.title}</a></td>
+						<td class="board-writer">${buy.sellerNik}</td>
+						<td>${buy.price} 원</td>
+						<td class="board-answer">거래완료</td>
+						
 					</tr>
-				<c:set var="rownum" value="${rownum-1 }"/>
 				</c:forEach>	
-				</c:when>
+
+<%-- 				</c:when>
 				<c:when test="${page.total eq 0}">
 					<tr>
-						<th colspan="6">고객센터에 신고하신 내역이 없습니다.</th>
+						<th colspan="6">판매중인 제품이 없습니다.</th>
 					</tr>
 				</c:when>
-				</c:choose>
+				</c:choose> --%>
 				</tbody>
+				
 			</table>
 
-
-			<article class="pager-wrap">
+<%-- 			<article class="pager-wrap">
 				<ul class="pager">
 				<c:set var="before" value="${page.startPage-1}"/>
 				<c:set var="next" value="${page.endPage+1}"/>
 				<c:if test="${page.startPage != 1 }">
-				<li><a href="report-list?pageNo=${before}">&lt;</a></li>
+				<li><a href="buy-history?pageNo=${before}">&lt;</a></li>
 				</c:if>	
 					<c:forEach var="pageNo" begin="${page.startPage}" end="${page.endPage}">
 						<c:choose>
 						<c:when  test="${pageNo == page.pageNo }">
-							<li class="on"><a href="report-list?pageNo=${pageNo}">${pageNo}</a></li>
+							<li class="on"><a href="buy-history?pageNo=${pageNo}">${pageNo}</a></li>
 						</c:when>
 						<c:when test="${pageNo != page.pageNo }">
-							<li><a href="report-list?pageNo=${pageNo}">${pageNo}</a></li>
+							<li><a href="buy-history?pageNo=${pageNo}">${pageNo}</a></li>
 						</c:when>
 						</c:choose>
 					</c:forEach>
 				<c:if test="${page.endPage != page.totalPage }">
-				<li><a href="report-list?pageNo=${next}">&gt;</a></li>
+				<li><a href="buy-history?pageNo=${next}">&gt;</a></li>
 				</c:if>		
 				</ul>
-			</article>
+			</article> --%>
 
 		</div>
+		</form>
 		<!-- container end -->
 	</article>
 

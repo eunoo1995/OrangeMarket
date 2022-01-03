@@ -79,7 +79,7 @@
 			</ul>
 		</div>
 		<div class="util-menu">
-			<a href="trade-history"><img src="/images/icons/shop.png" /></a>
+			<a href="sell-history"><img src="/images/icons/shop.png" /></a>
 			<a href="chat"><img src="/images/icons/ico_chat.png" /></a> 
 			<a href="mypage"><img src="/images/icons/ico_user_line.png" /></a>
 		</div>

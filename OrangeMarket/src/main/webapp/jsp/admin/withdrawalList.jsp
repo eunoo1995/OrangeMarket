@@ -9,30 +9,10 @@
 	<jsp:param name="jsName" value="admin" />
 </jsp:include>
 <!-- 헤더 -->
-<script>
-$(function(){
-	$(".restore-btn").click(function() {
-		if(confirm("해당 회원을 복구하시겠습니까?")) {
-			var userId = $(this).prev().prev().val();
-			location = "member-restore?userId="+userId;	
-		}
-	});
-	$("#searchWith").click(function(){
-		if($("#word").val().trim() == "") {
-			alert("검색하실 닉네임을 입력하세요.");
-			$("#word").val("");
-			$("#word").focus();
-			return false;
-		}
-		var word = $("#word").val();
-		location = "admin-withdrawallist?word="+word;		 
-	});
-});
-</script>
 <body>
     <section id="section">
     	<div class="section-inner">
-    		<div class="section-title">탈퇴회원목록</div>
+    		<div class="section-title">탈퇴회원관리</div>
     		<div class="section-content">
     			<div class="section-search">
 		    		<input type="text" name="word" id="word" value="${page.word}" placeholder="검색하실 '닉네임'을 입력하세요!">
@@ -75,7 +55,7 @@ $(function(){
 							<input type="hidden" id="userId" value="${list.userId}"><br>
 							<c:choose>
 							<c:when test="${list.udate >= list.threeago}">
-							<button type="button" id="unlockBtn" class="restore-btn">탈퇴해제</button>
+							<button type="button" id="unlockBtn" class="restore-btn">계정복구</button>
 							</c:when>
 							<c:when test="${list.udate < list.threeago}">
 							<span style="color:brown; font-weight:bold;">영구탈퇴</span>

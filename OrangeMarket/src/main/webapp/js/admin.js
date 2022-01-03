@@ -16,8 +16,8 @@ function inquiry_detail(unq) {
 	window.open('admin-inquirydetail?unq='+unq,'','width=450, height=400, left=540, top=150');		
 }
 // 신고 문의 답변 팝업창
-function report_detail() {
-	window.open('reportDetail.jsp','','width=450, height=400, left=540, top=150');		
+function report_detail(unq) {
+	window.open('admin-reportdetail?unq='+unq,'','width=450, height=400, left=540, top=150');		
 }
 // 관리자 로그인 화면
 $(function(){
@@ -116,6 +116,7 @@ $(function(){
 	$("#inquiryResponseBtn").click(function(){
 		if($("#reContent").val().trim() == "") {
 			alert("답변을 입력해주세요.");
+			return false;
 		}
 		var formdata = $("#frm-inquiry").serialize();
 		if(confirm("작성하신 답변은 수정하실 수 없습니다.\n답변을 등록하시겠습니까?")) {
@@ -137,5 +138,31 @@ $(function(){
   				}
 			});
 		}
+	});
+	// 탈퇴회원 복구
+	$(".restore-btn").click(function() {
+		if(confirm("해당 회원을 복구하시겠습니까?")) {
+			var userId = $(this).prev().prev().val();
+			location = "member-restore?userId="+userId;	
+		}
+	});
+	$("#searchWith").click(function(){
+		if($("#word").val().trim() == "") {
+			alert("검색하실 닉네임을 입력하세요.");
+			$("#word").val("");
+			$("#word").focus();
+			return false;
+		}
+		var word = $("#word").val();
+		location = "admin-withdrawallist?word="+word;		 
+	});
+	// 신고하기 셀렉트 상자
+	$("#refield").change(function(){
+		var field = $("#refield").val();
+		if(field == "") {
+			location = "admin-reportlist"; 
+			return false;
+		}
+		location = "admin-reportlist?field="+field;
 	});
 });

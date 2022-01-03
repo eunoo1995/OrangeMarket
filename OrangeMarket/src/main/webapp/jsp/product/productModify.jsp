@@ -7,7 +7,6 @@
 	<jsp:param name="cssName" value="product" />
 </jsp:include>
 <!-- 헤더 -->
-<c:set var="sessionId" value="${vo.userId}"/>
 <!-- 페이지 wraper -->
 <article class="pg-wrap pg-pro-detail">
 	<!-- container -->

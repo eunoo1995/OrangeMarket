@@ -10,7 +10,7 @@
 <body>
     <section id="section">
     	<div class="section-inner">
-    		<div class="section-title">문의 리스트</div>
+    		<div class="section-title">문의내역 관리</div>
     		<div class="section-content">
     			<div class="section-search">
 		    		<select id="field" name="field" class="section-search-field">

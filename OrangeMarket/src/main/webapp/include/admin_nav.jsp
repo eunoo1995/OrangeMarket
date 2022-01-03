@@ -15,9 +15,9 @@
 	    <div class="nav-title">관리자 Menu</div>
 	    <p>- 회원관리</p>
 	    <ul>
-            <li><a href="admin-memberlist">회원정보목록</a></li>
-            <li><a href="admin-suspendlist">정지회원목록</a></li>
-            <li><a href="admin-withdrawallist">탈퇴회원목록</a></li>
+            <li><a href="admin-memberlist">회원정보관리</a></li>
+            <li><a href="admin-suspendlist">정지회원관리</a></li>
+            <li><a href="admin-withdrawallist">탈퇴회원관리</a></li>
         </ul>
         <p>- 카테고리</p>
 	    <ul>
@@ -26,8 +26,8 @@
         </ul>
         <p>- 고객센터</p>
 	    <ul>
-            <li><a href="admin-inquirylist">문의 리스트</a></li>
-            <li><a href="admin-reportlist">신고 리스트</a></li>
+            <li><a href="admin-inquirylist">문의내역 관리</a></li>
+            <li><a href="admin-reportlist">신고내역 관리</a></li>
         </ul>
         <!-- 
         <p>- 통계</p>

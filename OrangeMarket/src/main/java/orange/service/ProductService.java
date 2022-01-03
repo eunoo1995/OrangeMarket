@@ -27,6 +27,11 @@ public interface ProductService {
 	// 제품 조회수 증가
 	int updateProductHits(ProductVO vo);
 	
+	// 자신의 판매 제품 리스트
+	List<?> selectSellProductList(ProductVO vo);
+	// 구매 제품 리스트
+	List<?> selectBuyProductList(ProductVO vo);
+	
 	// 판매 제품 상세보기 기능
 	ProductVO selectProductDetail(ProductVO vo);
 
@@ -43,5 +48,9 @@ public interface ProductService {
 	int selectLikeCount(ProductVO vo);
 	// 전체 관심 갯수
 	int selectLikeAllCount(ProductVO vo);
+
+	int updateProductStatus(ProductVO vo);
+
+	
 
 }
