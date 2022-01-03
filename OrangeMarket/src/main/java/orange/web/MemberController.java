@@ -114,10 +114,10 @@ public class MemberController {
 		
 		
 		// 유저 아이디 생성
-		int userId = memberService.selectNewUserId();
+		String userId = Integer.toString(memberService.selectNewUserId());
 
 		model.addAttribute("agreeLoc", l);
-//		model.addAttribute("userId", userId);
+		model.addAttribute("userId", userId);
 
 		return "member/joinForm";
 	}
@@ -274,6 +274,8 @@ public class MemberController {
 
 			insertList.add(agreeMap);
 		}
+		
+		System.out.println("insertList" + insertList.toString());
 
 		// 이메일 인증코드 사용여부 업데이트
 		memberService.updateUseEmailCode(emailVo);

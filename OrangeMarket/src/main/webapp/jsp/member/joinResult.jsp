@@ -12,7 +12,9 @@
     
         <header class="sub-page-head">
             <div class="cont-inner">
-               <h3 class="join-result-tit">${vo.nikName} 님 안녕하세요!</h3>
+               <h3 class="join-result-tit">${vo.nikName}님<br/>
+               	<span>안녕하세요!</span>
+               </h3>
             </div>
         </header>
         
@@ -23,8 +25,8 @@
                     <img src="/images/profiles/${vo.profileImg}" class="profile-img" />
                     <!-- <a href="#" class="btn-profile-edit">편집</a> -->
                 </figure>
-
-				<c:if test="${vo.addrPass} != 'Y'">
+                
+				<c:if test="${vo.addrPass eq 'N'}">
 	                <div class="notice-box">
 	                    <p class="notice-box-tit">아직 동네인증을 하지 않으셨네요!</p>
 	                    <p>
@@ -32,11 +34,11 @@
 			                        인증하러 가시겠어요?
 	                    </p>
 	
-	                    <a href="#" class="btn btn-solid-point">인증하러 가기</a>
+	                    <a href="#" class="btn btn-solid-point">인증하기</a>
 	                </div>
                 </c:if>
 
-                <a href="index.html" class="btn-goto-main btn-txt">메인으로 가기</a>
+                <a href="login" class="btn-goto-main btn-txt">로그인하러 가기</a>
 
             </div>
         </article>
