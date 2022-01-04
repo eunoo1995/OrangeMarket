@@ -24,10 +24,19 @@ public interface ChatService {
 	// 채팅 관련 멤버 정보 가져오기
 	MemberVO selectBuyerInfo(ChatVO vo) throws Exception;
 	String selectSellerInfo(ChatVO vo) throws Exception;
+	
 	// 채팅방 존재 유무 확인
 	int checkedChat(ChatVO vo) throws Exception;
+	
 	// 채팅방 신규 생성
 	int insertNewChat(ChatVO vo) throws Exception;
+	
 	// 생성된 채팅방 채널 가져오기
 	int getNewChannel(ChatVO vo) throws Exception;
+	
+	// 구매자 유무 확인
+	int confirmBuyer(ChatVO vo) throws Exception;
+	
+	// 구매자 정보 게시글에 업데이트
+	int updateBuyerInfo(ChatVO vo) throws Exception;
 }

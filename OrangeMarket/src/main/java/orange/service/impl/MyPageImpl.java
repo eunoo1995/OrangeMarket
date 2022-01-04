@@ -88,6 +88,11 @@ public class MyPageImpl extends EgovAbstractServiceImpl implements MyPageService
 	public int withdrawalDate(MemberVO vo) throws Exception {
 		return myPageDAO.withdrawalDate(vo);
 	}
+
+	@Override
+	public int mypageAddrPass(int userId) throws Exception {
+		return myPageDAO.mypageAddrPass(userId);
+	}
 	
 	
 }
