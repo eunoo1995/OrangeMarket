@@ -390,7 +390,8 @@
 	<update id="updateProductStatAndBuyer">
 		UPDATE product
 			SET
-				buyer = null
+				buyer = null,
+				buyer_nik = null
 		WHERE pro_code = ${proCode}
 	</update>
 	
