@@ -69,5 +69,7 @@ public interface ProductService {
 	
 	// 사용자 주소 받아오기
 	String selectMemberAddr(ProductVO vo);
+	// 사용자 동네 인증 여부 받아오기	
+	MemberVO selectAddrPass(ProductVO vo);
 
 }

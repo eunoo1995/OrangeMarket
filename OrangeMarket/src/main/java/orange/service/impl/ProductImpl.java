@@ -181,4 +181,10 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectMemberAddr(vo);
 	}
 
+	@Override
+	public MemberVO selectAddrPass(ProductVO vo) { // 사용자 동네인증 여부 가져오기
+		// TODO Auto-generated method stub
+		return productDAO.selectAddrPass(vo);
+	}
+
 }

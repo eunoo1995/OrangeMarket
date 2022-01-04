@@ -48,5 +48,6 @@ public interface ProductMapper {
 	int selectReviewCount(ProductVO vo);
 	
 	String selectMemberAddr(ProductVO vo);
+	MemberVO selectAddrPass(ProductVO vo);
 	
 }

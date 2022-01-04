@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import orange.service.ChatService;
 import orange.service.MemberService;
 import orange.service.MemberVO;
 import orange.service.ProductService;
@@ -30,7 +31,7 @@ public class ProductController {
 	
 	// 제품 리스트 표시 및 상세 보기 기능
 	@RequestMapping(value="/product-list")
-	public String productList(ProductVO vo, Model model, HttpSession session) throws Exception {
+	public String productList(ProductVO vo, MemberVO mvo, Model model, HttpSession session) throws Exception {
 		String category = "전체 목록";
 		
 		// 카테고리 미선택 시
@@ -46,17 +47,21 @@ public class ProductController {
 			} else {
 				int sessionId = (int) session.getAttribute("sessionId");
 				vo.setUserId(sessionId);
-
+				
 				// 멤버 테이블에서 주소 가져오기
 				String addr = productService.selectMemberAddr(vo);
 				vo.setAddr(addr);
-				model.addAttribute("userId", sessionId);
 				
 				//등록된 판매 제품 목록 리스트
 				List<?> list = productService.selectProductList(vo);
+				
+				//동네 인증 여부 가져오기
+				mvo = productService.selectAddrPass(vo);
+				
 				model.addAttribute("list", list);
-
-				System.out.println("sessionId : " + sessionId);
+				model.addAttribute("userId", sessionId);
+				model.addAttribute("addrPass", mvo.getAddrPass());
+				
 			}
 		} else { // 카테고리 선택 시
 			category = productService.selectProCategory(vo);
@@ -75,13 +80,17 @@ public class ProductController {
 				// 멤버 테이블에서 주소 가져오기
 				String addr = productService.selectMemberAddr(vo);
 				vo.setAddr(addr);
-				model.addAttribute("userId", sessionId);
 				
 				//등록된 판매 제품 목록 리스트
 				List<?> list = productService.selectProductCategoryList(vo);
+				
+				//동네 인증 여부 가져오기
+				mvo = productService.selectAddrPass(vo);
+				
 				model.addAttribute("list", list);
-
-				System.out.println("sessionId : " + sessionId);
+				model.addAttribute("userId", sessionId);
+				model.addAttribute("addrPass", mvo.getAddrPass());
+				
 			}
 		}
 		

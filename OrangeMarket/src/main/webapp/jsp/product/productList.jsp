@@ -22,9 +22,8 @@
 		<script>
 			$(function(){
 				$("#pro-write").click(function() {
-					var seller = $("#seller").val();
-					if($("#seller").val() == "") {
-						alert("로그인이 필요한 기능입니다.");
+					if($("#addrPass").val() == "N") {
+						alert("동네인증 후 거래를 이용 하실 수 있습니다.");
 					} else {
 						location = "product-write";				
 					}
@@ -44,8 +43,7 @@
 					총 <strong class="list-total__num">10</strong>개의 물품이 검색되었습니다.
 				</p> -->
 				<form name="frm" id="frm" method="post">
-					<input type="hidden" name="seller" id="seller" value="${userId}">
-					<input type="hidden" name="addr" id="addr" value="${addr}">
+					<input type="hidden" name="addrPass" id="addrPass" value="${addrPass}">
 				</form>
 				<!-- 리스트 화면 -->
 				<ul class="pro-list">
