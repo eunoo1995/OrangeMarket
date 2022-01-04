@@ -123,7 +123,6 @@ public class ProductController {
 		
 		List<?> list = productService.selectCategoryList(vo);
 		
-		model.addAttribute("seller", seller);
 		model.addAttribute("addr", addr);
 		model.addAttribute("list", list);
 		
@@ -134,9 +133,12 @@ public class ProductController {
 	//제품 등록 기능 및 저장
 	@RequestMapping(value="/product-write-save")
 	@ResponseBody
-	public String insertProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpServletRequest request) throws Exception {
+	public String insertProduct(ProductVO vo, MultipartFile[] uploadProductImg, HttpServletRequest request, HttpSession session) throws Exception {
 		
 		String msg = "ok";
+		
+		int seller = (int) session.getAttribute("sessionId");
+		vo.setSeller(seller);
 		
 		 // 한글 인식
 		 String title = new String(vo.getTitle().getBytes("8859_1"), "UTF-8");
@@ -157,7 +159,6 @@ public class ProductController {
 		 //if(delFile.exists()) delFile.delete();
 		 
 		 // 새로 저장시킬 파일
-		 int seller = vo.getSeller();
 		 String imgs = "";
 		 
 		 // 이미지 뒤 붙일 번호

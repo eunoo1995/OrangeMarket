@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- 헤더 -->
 <jsp:include page="/include/header.jsp" flush="false">
@@ -11,11 +12,14 @@
 
 <article class="pg-wrap pg-main">
 
+	<c:if test="${sessionId != null }">
+		<button class="btn_menu" name="pro-write" id="pro-write">+</button>
+	</c:if>
     <article class="main-visual">
         <div class="main-visual-banner">
         </div>
     </article>
-
+	
     <article class="main-article">
         <div class="cont-inner">
 

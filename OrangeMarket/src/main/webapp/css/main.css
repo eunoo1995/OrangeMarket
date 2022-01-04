@@ -64,3 +64,25 @@
 .main-pro-list .pro-detail {
     padding: 20px;
 }
+
+
+/* 제품 등록 버튼 */
+.btn_menu {
+	position: fixed;
+	
+	top: 85%;
+	left: 88%;
+	right: 0;
+	
+	border: 2px solid #ffb319;
+	border-radius: 100px;
+	background-color: #ffb319;
+	font-weight: 600;
+	color: #fff;
+	padding: 10px;
+	width: 80px;
+	height: 80px;
+	text-align: center;
+	cursor: pointer;
+	font-size: 36px;
+}

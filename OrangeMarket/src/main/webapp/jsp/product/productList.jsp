@@ -22,17 +22,20 @@
 		<script>
 			$(function(){
 				$("#pro-write").click(function() {
+					var seller = $("#seller").val();
 					if($("#seller").val() == "") {
 						alert("로그인이 필요한 기능입니다.");
 					} else {
-						location = "product-write?seller=${userId}";				
+						location = "product-write";				
 					}
 					
 				});
 			});
 		</script>
 		
-		<button class="btn_menu" name="pro-write" id="pro-write">+</button>
+		<c:if test="${sessionId != null }">
+			<button class="btn_menu" name="pro-write" id="pro-write">+</button>
+		</c:if>
 		<!-- 기본 정의 화면 -->
 		<article>
 			<!-- container -->
