@@ -66,9 +66,8 @@ public interface ProductService {
 	int insertReviewBad(ProductVO vo);
 	// 제품 평가 갯수 카운트
 	int selectReviewCount(ProductVO vo);
-
 	
-
-	
+	// 사용자 주소 받아오기
+	String selectMemberAddr(ProductVO vo);
 
 }

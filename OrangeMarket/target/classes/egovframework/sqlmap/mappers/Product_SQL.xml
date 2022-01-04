@@ -94,6 +94,17 @@
 	<!-- select -->
 	
 	<!-- 제품 리스트 표시 -->
+	
+	<!-- 멤버 주소 가져오기 -->
+	<select id="selectMemberAddr" resultType="String">
+		SELECT 
+			SUBSTR(addr, 1, INSTR(addr, ' ', 5))
+		FROM 
+			member
+		WHERE
+			user_id = ${userId}
+	</select>
+	
 	<select id="selectProductList" resultType="egovMap">
 		SELECT
 			pro_code,
@@ -111,7 +122,16 @@
             WHERE
                 user_id = p.seller) as user_level
 		FROM 
-			product p
+			product p, mem_status m
+			
+		WHERE
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+            AND
+           		p.addr like '${addr}%'
+           	AND
+            	p.status != '0'
 			
 		ORDER BY
 			rdate DESC

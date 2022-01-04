@@ -33,6 +33,7 @@ public class ProductController {
 	public String productList(ProductVO vo, Model model, HttpSession session) throws Exception {
 		String category = "전체 목록";
 		
+		// 카테고리 미선택 시
 		if(vo.getProCategoryCode() == 0) { 
 			model.addAttribute("category", category);
 			
@@ -44,6 +45,11 @@ public class ProductController {
 				System.out.println("세션 없음");
 			} else {
 				int sessionId = (int) session.getAttribute("sessionId");
+				vo.setUserId(sessionId);
+
+				// 멤버 테이블에서 주소 가져오기
+				String addr = productService.selectMemberAddr(vo);
+				vo.setAddr(addr);
 				model.addAttribute("userId", sessionId);
 				
 				//등록된 판매 제품 목록 리스트
@@ -52,7 +58,7 @@ public class ProductController {
 
 				System.out.println("sessionId : " + sessionId);
 			}
-		} else {
+		} else { // 카테고리 선택 시
 			category = productService.selectProCategory(vo);
 			model.addAttribute("category", category);
 			
@@ -64,6 +70,11 @@ public class ProductController {
 				System.out.println("세션 없음");
 			} else {
 				int sessionId = (int) session.getAttribute("sessionId");
+				vo.setUserId(sessionId);
+				
+				// 멤버 테이블에서 주소 가져오기
+				String addr = productService.selectMemberAddr(vo);
+				vo.setAddr(addr);
 				model.addAttribute("userId", sessionId);
 				
 				//등록된 판매 제품 목록 리스트

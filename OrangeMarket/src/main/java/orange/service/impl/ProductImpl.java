@@ -175,4 +175,10 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectReviewCount(vo);
 	}
 
+	@Override
+	public String selectMemberAddr(ProductVO vo) { // 사용자 주소 가져오기
+		// TODO Auto-generated method stub
+		return productDAO.selectMemberAddr(vo);
+	}
+
 }
