@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="orange.service.impl.MemberMapper">
 
-	<select id="isMemberTel" resultType="int">
+	<select id="isMemberTel" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM member m
 			INNER JOIN mem_status s ON m.user_id = s.user_id
@@ -48,15 +48,15 @@
 	</select>
 	
 	<select id="selectNewUserId" resultType="java.lang.Integer">
-       SELECT to_char(sysdate, 'yymmdd') || lpad((
-           SELECT COUNT(*)
-           FROM member
-           WHERE user_id LIKE to_char(sysdate, 'yymmdd') || '%'
-       ) + 1, 4, '0') user_id
-       FROM dual
+      SELECT to_char(sysdate, 'yymmdd') || lpad((
+		    SELECT COUNT(*)
+		    FROM member
+		    WHERE user_id LIKE to_char(sysdate, 'yymmdd') || '%'
+		) + 1, 3, '0') user_id
+		FROM dual
 	</select>
 	
-	<select id="checkMemberLogin" resultType="java.lang.Integer">
+	<select id="isMemberToLogin" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM member
 		WHERE email = #{email}
@@ -79,6 +79,34 @@
 			ON m.user_id = s.user_id
 				WHERE m.email=#{email} AND user_phone=#{userPhone} 
 					AND user_name=#{userName} AND s.mem_state_code != 5
+	</select>
+	
+	<select id="selectFindUser" parameterType="memberVO" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM member m
+			INNER JOIN mem_status s 
+			ON m.user_id = s.user_id
+				WHERE user_phone=#{userPhone} AND user_name=#{userName} 
+					AND s.mem_state_code != 5
+	</select>
+	
+	<select id="selectUserEmail" resultType="java.lang.String">
+		SELECT m.email
+			FROM member m
+			INNER JOIN mem_status s 
+			ON m.user_id = s.user_id
+				WHERE user_phone=#{userPhone} AND user_name=#{userName} 
+					AND s.mem_state_code != 5
+	</select>
+	
+	<select id="selectJoinMember" parameterType="memberVO" resultType="memberVO">
+		SELECT user_id
+		, email
+		, nik_name
+		, profile_img
+		, addr_pass
+		FROM member
+		WHERE user_id=#{userId}
 	</select>
 	
 	<insert id="insertEmailVerif" parameterType="emailVO">

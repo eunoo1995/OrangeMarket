@@ -29,7 +29,7 @@
 							<tr>
 								<td colspan="2">
 									<p class="form-tit required">이메일</p>
-									<input type="text" name="email" placeholder="이메일을 입력해주세요" value="${userEmail}" required />
+									<input type="text" name="email" placeholder="이메일을 입력해주세요" value="${REMEBER_USER_EMAIL}" required autofocus />
 									<label class="label"><input type="checkbox" name="remEmail" ${remEmail}/> <span>이메일 저장</span></label>
 									<p class="form-err-msg"></p>
 								</td>

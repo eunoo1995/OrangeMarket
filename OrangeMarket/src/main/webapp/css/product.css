@@ -3,8 +3,9 @@
 
 .pg-wrap .btn_menu {
 	position: fixed;
-	top: 750px;
-	left: 1500px;
+	
+	top: 85%;
+	left: 88%;
 	right: 0;
 	
 	border: 2px solid #ffb319;

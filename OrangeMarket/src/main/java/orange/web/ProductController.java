@@ -322,13 +322,11 @@ public class ProductController {
 		if(session.getAttribute("sessionId") == null ) return "redirect:login";
 		int sessionId = (int) session.getAttribute("sessionId");
 		
-		vo.setSeller(sessionId);
+		vo.setBuyer(sessionId);
 		
 		//리스트 총 갯수 카운트 구문 추가 작업
 		//페이징 추가 작업
-		
-		//현재 판매 목록 가져오고 있음, 추후에 구매자 확정 짓는걸 정하고 목록 가져오기
-		List<?> buy_list = productService.selectSellProductList(vo);
+		List<?> buy_list = productService.selectBuyProductList(vo);
 		List<?> category_list = productService.selectCategoryList(vo);
 		
 		model.addAttribute("buy", buy_list);
@@ -340,11 +338,38 @@ public class ProductController {
 	//셀렉 상자 상태 변경 시 디비값 변경 구문 추가 작업
 	@RequestMapping(value="update-product-status")
 	public String updateProductStatus(ProductVO vo) throws Exception {
-		if(vo.getStatus() != null) {
+		String status = vo.getStatus();
+		System.out.println(status);
+		// 판매중으로 변경 시 구매자 관련 데이터 삭제
+		if(status.equals("1")) { 
+			System.out.println("판매중");
+			productService.updateProductStatus(vo);
+			productService.updateProductStatAndBuyer(vo);
+		}
+		else {
+			System.out.println("그 외");
 			productService.updateProductStatus(vo);
 		}
 		
 		return "redirect:sell-history";
+	}
+	
+	// 거래 후 판매자 평가
+	@RequestMapping(value="/update-user-level")
+	public String updateUserLevel(ProductVO vo, String stat) throws Exception {
+		vo = productService.selectProductDetail(vo);
+		
+		if(stat.equals("good") || stat == "good") {
+			//멤버 테이블 유저 레벨 +1 후, 리뷰 테이블에 기록
+			productService.updateUserLevelGood(vo);
+			productService.insertReviewGood(vo);
+		} else if(stat.equals("bad") || stat == "bad") {
+			//멤버 테이블 유저 레벨 -1 후, 리뷰 테이블에 기록
+			productService.updateUserLevelBad(vo);
+			productService.insertReviewBad(vo);
+		}
+		
+		return "redirect:buy-history";
 	}
 	
 }

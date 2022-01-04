@@ -20,6 +20,20 @@
 		</div>
 	</header>
 	
+	<script>
+		$(function() {
+			var proCode = $("#proCode").val();
+			
+			$("#good").click(function(){
+				location = "update-user-level?stat=good&proCode=" + proCode;
+			});
+			
+			$("#bad").click(function(){
+				location = "update-user-level?stat=bad&proCode=" + proCode;
+			});
+		});
+	</script>
+	
 	<article class="board-wrap">
 		<form name="frm" id="frm" method="post">
 		<!-- container -->
@@ -46,7 +60,7 @@
 						<th>제목</th>
 						<th>판매자</th>
 						<th>가격</th>
-						<th>거래상태</th>
+						<th>거래평가</th>
 					</tr>
 				</thead>
 
@@ -66,7 +80,16 @@
 						<td class="board-tit"><a href="product-list-detail?proCode=${buy.proCode}">${buy.title}</a></td>
 						<td class="board-writer">${buy.sellerNik}</td>
 						<td>${buy.price} 원</td>
-						<td class="board-answer">거래완료</td>
+						<td class="board-answer">
+							<c:if test="${buy.reviewCnt eq 0}">
+								<input type="button" name="good" id="good" value="좋아요">
+								<input type="button" name="bad" id="bad" value="싫어요">
+								<input type="hidden" name="seller" id="seller" value="${buy.seller}">
+								<input type="hidden" name="proCode" id="proCode" value="${buy.proCode}">
+							</c:if>
+							<c:if test="${buy.reviewCnt eq 1}">평가완료</c:if>
+							
+						</td>
 						
 					</tr>
 				</c:forEach>	

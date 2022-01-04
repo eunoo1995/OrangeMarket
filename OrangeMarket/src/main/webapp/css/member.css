@@ -114,6 +114,7 @@
 }
 
 /* 회원가입 */
+.pg-member .cont-inner,
 .pg-join .cont-inner {
 	width: 600px;
 	margin: 0 auto;
@@ -132,6 +133,11 @@
 	margin-bottom: 50px;
 	font-size: 38px;
 	font-weight: 500;
+}
+
+.join-result-tit span {
+	font-size: 50px;
+	font-weight: 600;
 }
 
 .pg-join-result .profile-thumb {
@@ -164,6 +170,7 @@
 }
 
 .pg-join-result .notice-box {
+	
 	margin-top: 80px;
 	margin-bottom: 40px;
 	padding: 30px 20px;
@@ -212,7 +219,7 @@
 
 /* 가입 완료 */
 .pg-join-result .btn-goto-main {
-	display: inline-block;
+	display: block;
 	margin-top: 50px;
 }
 

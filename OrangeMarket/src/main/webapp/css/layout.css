@@ -155,7 +155,19 @@ img {
 .log-menu li {
 	line-height: 60px;
 	float: left;
-	margin-right: 30px;
+	margin: 0 15px;
+}
+
+.log-menu .nik > span {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.log-menu .nik_ellip {
+	max-width: 90px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .util-menu {

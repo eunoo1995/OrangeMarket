@@ -55,6 +55,42 @@
 				sysdate)
 	</insert>
 	
+	<insert id="insertReviewGood" parameterType="productVO">
+		INSERT INTO review(
+				unq,
+				pro_code,
+				buyer,
+				pro_category_code,
+				seller,
+				good)
+					
+		VALUES (review_seq.nextval,
+				${proCode},
+				${buyer},
+				${proCategoryCode},
+				${seller},
+				'1')
+		
+	</insert>
+	
+	<insert id="insertReviewBad" parameterType="productVO">
+		INSERT INTO review(
+				unq,
+				pro_code,
+				buyer,
+				pro_category_code,
+				seller,
+				bad)
+					
+		VALUES (review_seq.nextval,
+				${proCode},
+				${buyer},
+				${proCategoryCode},
+				${seller},
+				'1')
+		
+	</insert>
+	
 	<!-- select -->
 	
 	<!-- 제품 리스트 표시 -->
@@ -211,15 +247,18 @@
 			title,
 			price,
 			status,
-			( select nik_name from member where user_id = p.seller) seller_nik,
-			nvl(buyer_nik, '없음') as buyer_nik,
-			imgs
+			( select nik_name from member where user_id = p.seller) as seller_nik,
+			nvl(( select nik_name from member where user_id = ${buyer}), '없음') as buyer_nik,
+			imgs,
+			(SELECT count(*) FROM review WHERE pro_code = p.pro_code ) as review_cnt
 			
 		FROM
 			product p
 			
 		WHERE
 			buyer = ${buyer}
+		AND
+			status = 0
 	</select>
 	
 	<!-- 수정 위한 제품 데이터 보기 -->
@@ -303,6 +342,15 @@
 		    pro_code = ${proCode}
 	</select>
 	
+	<select id="selectReviewCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			review
+		WHERE
+			pro_code = ${proCode}
+	</select>
+	
 	<!-- select end -->
 	
 	<!-- update start -->
@@ -336,6 +384,28 @@
 			SET
 				status = ${status}
 		WHERE pro_code = ${proCode}
+	</update>
+	
+	<!-- 제품 상태 '판매중'으로 변경 시 구매자 정보 삭제 -->
+	<update id="updateProductStatAndBuyer">
+		UPDATE product
+			SET
+				buyer = null
+		WHERE pro_code = ${proCode}
+	</update>
+	
+	<!-- 거래 후 판매자 평가 좋아요 -->
+	<update id="updateUserLevelGood">
+		UPDATE member
+			SET user_level = user_level + 1
+		WHERE user_id = ${seller}
+	</update>
+	
+	<!-- 거래 후 판매자 평가 싫어요 -->
+	<update id="updateUserLevelBad">
+		UPDATE member
+			SET user_level = user_level - 1
+		WHERE user_id = ${seller}
 	</update>
 	
 	<!-- update end -->

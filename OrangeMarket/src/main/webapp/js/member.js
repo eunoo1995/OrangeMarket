@@ -5,6 +5,17 @@ if (typeof String.trim == 'undefined') {
 	};
 }
 
+// base64 encoding
+String.prototype.b64encode = function() {
+	return btoa(unescape(encodeURIComponent(this)));
+};
+
+// base64 decoding
+String.prototype.b64decode = function() {
+	return decodeURIComponent(escape(atob(this)));
+};
+
+
 /* 약관 */
 var joinTermsForm = document.getElementById('formTerms');
 if (joinTermsForm) {
@@ -83,10 +94,8 @@ if (joinForm) {
 
 	/* 이메일 항목 초기화 */
 	frm.email.addEventListener('input', function() {
-		if (frm.emailFlag.value === 'Y') {
-			resetEmailChk(frm);
-			btnConfirmEmail.innerText = '인증번호 받기';
-		}
+		resetEmailChk(frm);
+		btnConfirmEmail.innerText = '인증번호 받기';
 	});
 
 	/* 이메일 인증번호 */
@@ -161,7 +170,7 @@ if (joinForm) {
 					success: function(data) {
 						if (data == 'ok') {
 							console.log(data);
-							location.replace('/login');
+							location.replace('/join-result?userId='+ frm.userId.value);
 						} else if (data == 'err') {
 							alert('다시 시도해주세요')
 						}
@@ -226,15 +235,19 @@ if (loginForm) {
 					if (data == 'err') {
 						alert('이메일 혹은 비밀번호가 일치하지 않습니다.');
 					} else if (data == 'ok') {
-						location.replace('/main');
+						//뒤로갈 히스토리가 있으면,
+						if (document.referrer && document.referrer.indexOf("localhost:8070") != -1) {
+							history.back();
+						} else {
+							// 히스토리가 없으면,
+							location.replace = "/main";
+						}
 					}
 				},
 				error: function() {
 				}
 			});
 		};
-
-
 	});
 }
 
@@ -262,10 +275,8 @@ if (pwForm) {
 
 	/* 이메일 항목 초기화 */
 	frm.email.addEventListener('input', function() {
-		if (frm.emailFlag.value === 'Y') {
-			resetEmailChk(frm);
-			btnConfirmEmail.innerText = '인증번호 받기';
-		}
+		resetEmailChk(frm);
+		btnConfirmEmail.innerText = '인증번호 받기';
 	});
 
 	/* 이메일 인증번호 */
@@ -305,9 +316,9 @@ if (pwForm) {
 				success: function(data) {
 					if (data == 'ok') {
 						console.log(data);
-						location.replace('/pw-reset?email='+ formData.email);
+						location.replace('/pw-reset?email=' + formData.email);
 					} else if (data == 'err') {
-						alert('입력정보를 확인해주세요')
+						alert('등록된 정보와 일치하지 않습니다.\n입력정보를 확인해주세요')
 					}
 				},
 				error: function() {
@@ -333,7 +344,7 @@ if (pwResetForm) {
 	var frm = pwResetForm;
 	var btnFormConfirm = frm.querySelector('#pwFormConfirm');
 	var btnConfirmEmail = frm.querySelector('#btnConfirmEmail');
-	
+
 	/* 비밀번호 검사 */
 	frm.password.addEventListener('blur', function() {
 		chkPw1(frm);
@@ -358,7 +369,7 @@ if (pwResetForm) {
 				'email': frm.email.value,
 				'userPw': frm.password.value,
 			};
-	
+
 			$.ajax({
 				type: 'POST',
 				url: 'pw-reset-confrim',
@@ -368,7 +379,7 @@ if (pwResetForm) {
 					if (data == 'ok') {
 						location.replace('/pw-result');
 					} else if (data == 'err') {
-						alert('입력정보를 확인해주세요')
+						alert('등록된 회원이 아닙니다.')
 					}
 				},
 				error: function() {
@@ -384,7 +395,53 @@ if (pwResetForm) {
 }
 
 /* 회원찾기 */
+var findUserForm = document.getElementById('findUserForm');
+if (findUserForm) {
+	var frm = findUserForm;
+	var btnFormConfirm = frm.querySelector('#FindUserConfirm');
 
+	/* 이름 검사 */
+	frm.userName.addEventListener('blur', function() {
+		chkName(frm);
+	});
+
+	/* 연락처 검사 */
+	frm.tel.addEventListener('blur', function() {
+		chkTelFormat(frm)
+	});
+
+	/* 확인 버튼 누른 경우 */
+	btnFormConfirm.addEventListener('click', function() {
+
+		if (frm.telFlag.value !== 'N') {
+			var formData = {
+				'userName': frm.userName.value,
+				'userPhone': frm.tel.value,
+			};
+
+			$.ajax({
+				type: 'POST',
+				url: 'find-user-confrim',
+				data: formData,
+				dataType: 'text',
+				success: function(data) {
+					if (data == 'ok') {
+						location.replace('/find-result?userName=' + frm.userName.value + "&userPhone=" + frm.tel.value);
+					} else if (data == 'err') {
+						alert('입력 정보를 확인해주세요')
+					}
+				},
+				error: function() {
+				}
+			});
+		} else {
+
+			chkPw1(frm);
+			chkPw2(frm);
+
+		}
+	});
+}
 
 /* 폼태그 유효성 검사 s */
 function chkInputNull($target, errMsg) {
