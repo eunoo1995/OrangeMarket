@@ -38,4 +38,6 @@ public interface MyPageMapper {
 	int selectPassChk(MemberVO vo);
 	
 	int withdrawalDate(MemberVO vo);
+	
+	int mypageAddrPass(int userId);
 }

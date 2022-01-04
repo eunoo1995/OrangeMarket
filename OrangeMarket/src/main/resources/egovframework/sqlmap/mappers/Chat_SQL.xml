@@ -45,7 +45,8 @@
 				title,
 				price,
 				seller,
-				buyer
+				buyer,
+				buyer_nik
 		FROM CHAT
 		WHERE channel=#{channel}
 	</select>
@@ -79,7 +80,8 @@
 	
 	<select id="selectBuyerInfo" parameterType="chatVO" resultType="memberVO">
 		SELECT NIK_NAME,
-			   PROFILE_IMG	
+			   PROFILE_IMG,
+			   ADDR_PASS	
 		FROM MEMBER WHERE USER_ID = #{buyer}
 	</select>
 	<select id="selectSellerInfo" parameterType="chatVO" resultType="String">
@@ -118,4 +120,14 @@
 		SELECT CHANNEL FROM CHAT
 		WHERE PRO_CODE = #{proCode} AND SELLER = #{seller} AND BUYER = #{buyer}	
 	</select>
+	
+	<select id="confirmBuyer" parameterType="chatVO" resultType="int">
+		SELECT nvl(BUYER,0) BUYER FROM PRODUCT
+			WHERE PRO_CODE = #{proCode}
+	</select>
+	
+	<update id="updateBuyerInfo">
+		UPDATE PRODUCT SET BUYER = #{buyer}, BUYER_NIK = #{buyerNik}, STATUS = 2
+			WHERE PRO_CODE = #{proCode}
+	</update>
 </mapper>

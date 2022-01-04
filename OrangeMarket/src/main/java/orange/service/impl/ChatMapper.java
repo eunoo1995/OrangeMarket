@@ -30,4 +30,8 @@ public interface ChatMapper {
 	int insertNewChat(ChatVO vo);
 	
 	int getNewChannel(ChatVO vo);
+	
+	int confirmBuyer(ChatVO vo);
+	
+	int updateBuyerInfo(ChatVO vo);
 }

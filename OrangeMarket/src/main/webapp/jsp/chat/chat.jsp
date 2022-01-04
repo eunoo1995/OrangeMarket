@@ -8,10 +8,34 @@
 	<jsp:param name="cssName" value="chat" />
 </jsp:include>
 <!-- 헤더 -->
+<script>
+$(function(){
+	$("#reserveProduct").click(function(){
+		if(confirm("예약을 진행하시겠습니까?")) {
+			var formdata = $("#reserve-frm").serialize();
+			$.ajax({
+				type : "post",
+				data : formdata,
+				url  : "reserve-product",
+				datatype : "text",
+				success : function(data) {
+					if(data == "exist") {
+						alert("이미 예약이 존재합니다.");
+					} else {
+						alert("거래가 예약 되었습니다.");
+					}
+				},
+				error : function() {
+						alert("오류발생");
+				}
+			});
+		}
+	});
+});
+</script>
 <!-- 현재시간 가져오기 -->
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
-<c:set var="sessionId" value="${sessionId }"/>
 <!-- 페이지 wrapper -->
 <article class="pg-wrap pg-chat">
 
@@ -102,12 +126,20 @@
 				<div class="chat-bar">
 					<!-- 채팅창에 띄워진 상대방 프사,닉네임,거래품목이미지,가격 -->
 					<div class="bar-inner">
+					<form id="reserve-frm">
+					<input type="hidden" id="proCode" name="proCode" value="${vo.proCode}">
+					<input type="hidden" id="buyer" name="buyer" value="${vo.buyer}">
+					<input type="hidden" id="buyerNik" name="buyerNik" value="${vo.buyerNik}">
+					</form>
 					<c:choose>
 						<c:when test="${vo.channel eq null }">
 							<p class="bar-title">오렌지마켓 회원들과의 채팅을 이용해보세요!</p>
 							<p class="bar-price"></p>
 						</c:when>
 						<c:when test="${vo.channel ne null }">
+							<c:if test="${vo.seller == sessionId}">
+							<input type="button" id="reserveProduct" class="bar-reserve" value="예약하기">
+							</c:if>
 							<p class="bar-title"><a href="product-list-detail?proCode=${vo.proCode}">${vo.title }</a></p>
 							<p class="bar-price">${vo.price}원</p>
 						</c:when>

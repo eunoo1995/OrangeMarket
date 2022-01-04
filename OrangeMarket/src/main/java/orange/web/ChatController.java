@@ -14,6 +14,7 @@ import orange.service.ChatService;
 import orange.service.ChatSubVO;
 import orange.service.ChatVO;
 import orange.service.MemberVO;
+import orange.service.ProductVO;
 
 @Controller
 public class ChatController {
@@ -29,6 +30,7 @@ public class ChatController {
 		int buyer = (int)session.getAttribute("sessionId");
 		vo.setBuyer(buyer);
 		mvo = chatService.selectBuyerInfo(vo);
+		if(mvo.getAddrPass().equals("N")) return "notAddr";
 		String sellerProfile = chatService.selectSellerInfo(vo);
 		vo.setBuyerNik(mvo.getNikName());
 		vo.setBuyerProfile(mvo.getProfileImg());
@@ -85,5 +87,19 @@ public class ChatController {
 		chatService.updateChatStatus(subVo);
 		String respon = subVo.getChannel() + "";
 		return respon;
+	}
+	
+	// 게시물 예약하기
+	@RequestMapping(value="reserve-product")
+	@ResponseBody
+	public String reserveProduct(ChatVO vo) throws Exception {
+		String result = vo.getBuyerNik();
+		int confirm = chatService.confirmBuyer(vo);
+		if(confirm != 0) {
+			result = "exist";
+			return result;
+		}
+		chatService.updateBuyerInfo(vo);
+		return result;
 	}
 }

@@ -157,6 +157,21 @@
 	font-size:13px;
 	color:#666;
 }
+.bar-reserve {
+	width:80px;
+	height:30px;
+	position:absolute;
+	margin-right:550px;
+	background:#fff;
+	border-radius:6px;
+	border:1px solid #ffb319;
+	color:#666;
+	margin-top:5px;
+}
+.bar-reserve:hover {
+	background:#ffb319;
+	color:#fff;
+}
 /*------- 채팅 메인화면-------*/
 /*채팅 메인 화면*/
 .chat-cont-wrap .chat_wrap {

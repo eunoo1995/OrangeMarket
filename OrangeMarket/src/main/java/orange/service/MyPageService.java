@@ -38,4 +38,6 @@ public interface MyPageService {
 	int updateWithdrawal(MemberVO vo) throws Exception;
 	int withdrawalDate(MemberVO vo) throws Exception;
 	
+	// 회원 동네인증 변경
+	int mypageAddrPass(int userId) throws Exception;
 }

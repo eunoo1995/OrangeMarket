@@ -72,6 +72,16 @@ public class ChatImpl extends EgovAbstractServiceImpl implements ChatService {
 	public int getNewChannel(ChatVO vo) throws Exception {
 		return chatDAO.getNewChannel(vo);
 	}
+
+	@Override
+	public int confirmBuyer(ChatVO vo) throws Exception {
+		return chatDAO.confirmBuyer(vo);
+	}
+
+	@Override
+	public int updateBuyerInfo(ChatVO vo) throws Exception {
+		return chatDAO.updateBuyerInfo(vo);
+	}
 	
 
 }
