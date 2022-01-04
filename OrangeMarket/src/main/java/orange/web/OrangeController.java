@@ -70,8 +70,6 @@ public class OrangeController {
 			model.addAttribute("recentList", recent_list);
 		}
 		
-		
-		
 		return "main/main";
 	}
 	
