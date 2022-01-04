@@ -170,7 +170,7 @@ if (joinForm) {
 					success: function(data) {
 						if (data == 'ok') {
 							console.log(data);
-							location.replace('/join-result?userId='+ frm.userId.value);
+							location.replace('/join-result?userId=' + frm.userId.value);
 						} else if (data == 'err') {
 							alert('다시 시도해주세요')
 						}

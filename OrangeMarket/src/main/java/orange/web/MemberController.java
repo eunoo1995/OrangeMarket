@@ -1,5 +1,6 @@
 package orange.web;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import orange.service.EmailVerifVO;
 import orange.service.MemberService;
@@ -38,16 +42,17 @@ public class MemberController {
 
 	@RequestMapping(value = "login")
 	public String login(HttpSession session, Model model) throws Exception {
-		
-		if(session.getAttribute("sessionId") != null) return "redirect:/main";
+
+		if (session.getAttribute("sessionId") != null)
+			return "redirect:/main";
 
 		String isRemChcked = "";
 		String remEmailVal = (String) session.getAttribute("REMEBER_USER_EMAIL");
-		
+
 		if (remEmailVal != null) {
 			isRemChcked = "checked";
 		}
-		
+
 		model.addAttribute("remEmail", isRemChcked);
 
 		return "member/login";
@@ -68,19 +73,19 @@ public class MemberController {
 			return msg;
 		} else {
 			vo = memberService.selectMemberLogin(vo);
-			
+
 			// 이메일 저장이 체크된 경우
-			if(remEmail.equals("true")) {
+			if (remEmail.equals("true")) {
 				session.setAttribute("REMEBER_USER_EMAIL", vo.getEmail());
-				session.setMaxInactiveInterval(60*60*24*3); // 유지시간 설정(7일)
+				session.setMaxInactiveInterval(60 * 60 * 24 * 3); // 유지시간 설정(7일)
 			}
-			
+
 			// 세션 생성
 			session.setAttribute("sessionId", vo.getUserId());
 			session.setMaxInactiveInterval(600); // 세션 유지시간 설정 (10분: 60*10)
-			
+
 			session.setAttribute("USER_NIK", vo.getNikName());
-			
+
 			msg = "ok";
 		}
 
@@ -91,7 +96,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.removeAttribute("sessionId");
 		session.removeAttribute("USER_NIK");
-		
+
 		return "redirect:/main";
 	}
 
@@ -103,7 +108,6 @@ public class MemberController {
 
 	@RequestMapping(value = "join-form")
 	public String joinWrite(String l, Model model) throws Exception {
-		
 
 		// 위치정보 동의 여부
 		if (l != null && l.equals("false")) {
@@ -111,10 +115,9 @@ public class MemberController {
 		} else if (l != null && l.equals("true")) {
 			l = "Y";
 		}
-		
-		
+
 		// 유저 아이디 생성
-		String userId = Integer.toString(memberService.selectNewUserId());
+		int userId = memberService.selectNewUserId();
 
 		model.addAttribute("agreeLoc", l);
 		model.addAttribute("userId", userId);
@@ -274,7 +277,7 @@ public class MemberController {
 
 			insertList.add(agreeMap);
 		}
-		
+
 		System.out.println("insertList" + insertList.toString());
 
 		// 이메일 인증코드 사용여부 업데이트
@@ -299,36 +302,34 @@ public class MemberController {
 
 		return msg;
 	}
-	
-	
+
 	@RequestMapping(value = "join-result")
 	public String joinResult(MemberVO vo, Model model) throws Exception {
-		
+
 		vo = memberService.selectJoinMember(vo);
-		
+
 		model.addAttribute("vo", vo);
-		
+
 		return "member/joinResult";
 	}
-	
-	
+
 	@RequestMapping(value = "find-pw")
 	public String viewFindPw() {
-		
+
 		return "member/findPw";
 	}
-	
+
 	@RequestMapping(value = "find-pw-confirm")
 	@ResponseBody
 	public String FindPwConfirm(MemberVO memVo, EmailVerifVO emailVo) throws Exception {
-		
+
 		String msg = "";
-		
+
 		// 이메일 인증코드 사용여부 업데이트
 		memberService.updateUseEmailCode(emailVo);
-		
+
 		int result = memberService.selectFindPw(memVo);
-		
+
 		if (result == 1) {
 			// 조회 성공
 			msg = "ok";
@@ -336,28 +337,27 @@ public class MemberController {
 			// 조회 실패
 			msg = "err";
 		}
-		
+
 		return msg;
 	}
-	
+
 	@RequestMapping(value = "pw-reset")
 	public String ResetPw(MemberVO vo, Model model) throws Exception {
-		
+
 		model.addAttribute("email", vo.getEmail());
-		
+
 		return "member/findPwReset";
 	}
-	
+
 	@RequestMapping(value = "pw-reset-confrim")
 	@ResponseBody
 	public String ResetPwConfirm(MemberVO vo) throws Exception {
-		
-		
-		String msg ="";
-		
+
+		String msg = "";
+
 		// 비밀번호 변경
 		int result = memberService.updateUserPw(vo);
-		
+
 		if (result == 1) {
 			// 변경 성공
 			msg = "ok";
@@ -365,31 +365,30 @@ public class MemberController {
 			// 변경 실패
 			msg = "err";
 		}
-		
+
 		return msg;
 	}
-	
+
 	@RequestMapping(value = "pw-result")
 	public String ResultPw() {
-		
+
 		return "member/findPwResult";
 	}
-	
+
 	@RequestMapping(value = "find-user")
 	public String findUser() {
-		
+
 		return "member/findUser";
 	}
-	
+
 	@RequestMapping(value = "find-user-confrim")
 	@ResponseBody
 	public String findUserConfirm(MemberVO vo) throws Exception {
-		
-		String msg ="";
+
+		String msg = "";
 		// 계정정보 확인
 		int result = memberService.selectFindUser(vo);
-		
-		
+
 		if (result == 1) {
 			// 조회 성공
 			msg = "ok";
@@ -397,32 +396,28 @@ public class MemberController {
 			// 조회 실패
 			msg = "err";
 		}
-		
+
 		return msg;
 	}
-	
+
 	@RequestMapping(value = "find-result")
 	public String findUserResult(MemberVO vo, Model model) throws Exception {
-		
+
 		String email = memberService.selectUserEmail(vo);
-		
+
 		String emailId = email.split("@")[0];
 		String emailUrl = email.split("@")[1];
-		
+
 		// 이메일 아이디 *로 변환 (앞에 2글자는 보인다.)
-		String frontEmailId = emailId.substring(0,2);
+		String frontEmailId = emailId.substring(0, 2);
 		String backEmailId = emailId.substring(2, emailId.length());
 		backEmailId = backEmailId.replaceAll(".", "*");
-		
-		System.out.println("frontEmailId" + frontEmailId);
-		System.out.println("backEmailId" + backEmailId);
 
-		
 		// 이메일 재조합
 		String findEmail = frontEmailId + backEmailId + "@" + emailUrl;
 		model.addAttribute("userEmail", findEmail);
-		
+
 		return "member/findUserResult";
 	}
-	
+
 }

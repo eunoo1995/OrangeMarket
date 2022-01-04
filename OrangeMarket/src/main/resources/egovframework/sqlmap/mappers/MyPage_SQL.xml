@@ -46,7 +46,7 @@
 
 
 
-	<select id="selectMyKeywordList" parameterType="myKeywordVO" resultType="egovMap">
+	<select id="selectMyKeywordList" parameterType="memberVO" resultType="egovMap">
 		SELECT  MYKEYWORD_UNQ,
 				MYKEYWORD,
 				RDATE,

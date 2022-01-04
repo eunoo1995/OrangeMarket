@@ -66,6 +66,24 @@
     </bean>
 	<!-- /For Pagination Tag -->
 	
+	<!-- json -->
+    <!-- <bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list> <ref bean="jsonHttpMessageConverter"/></list>
+		</property>
+	</bean> -->
+    
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"> 
+          <property name="contentType" value="application/json;charset=UTF-8" /> 
+    </bean> 
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"> 
+          <property name="order" value="1"> </property>
+    </bean>
+	<!-- json end -->
+	
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
     <mvc:default-servlet-handler />
+    <!-- <mvc:annotation-driven /> -->
+    
 </beans>

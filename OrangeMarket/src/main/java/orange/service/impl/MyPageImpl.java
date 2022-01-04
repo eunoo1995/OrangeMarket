@@ -50,8 +50,8 @@ public class MyPageImpl extends EgovAbstractServiceImpl implements MyPageService
 	}
 
 	@Override
-	public List<?> selectMyKeywordList(MyKeywordVO kvo) throws Exception {
-		return myPageDAO.selectMyKeywordList(kvo);
+	public List<?> selectMyKeywordList(MemberVO vo) throws Exception {
+		return myPageDAO.selectMyKeywordList(vo);
 	}
 
 	@Override
