@@ -55,9 +55,65 @@
 				sysdate)
 	</insert>
 	
-	<!-- select -->
+	<insert id="insertReviewGood" parameterType="productVO">
+		INSERT INTO review(
+				unq,
+				pro_code,
+				buyer,
+				pro_category_code,
+				seller,
+				good)
+					
+		VALUES (review_seq.nextval,
+				${proCode},
+				${buyer},
+				${proCategoryCode},
+				${seller},
+				'1')
+		
+	</insert>
 	
-	<!-- 제품 리스트 표시 -->
+	<insert id="insertReviewBad" parameterType="productVO">
+		INSERT INTO review(
+				unq,
+				pro_code,
+				buyer,
+				pro_category_code,
+				seller,
+				bad)
+					
+		VALUES (review_seq.nextval,
+				${proCode},
+				${buyer},
+				${proCategoryCode},
+				${seller},
+				'1')
+		
+	</insert>
+	
+	<!-- select -->
+
+	<!-- 동네 인증 여부 가져오기 -->
+	<select id="selectAddrPass" parameterType="productVO" resultType="memberVO">
+		SELECT
+			addr_pass
+		FROM
+			member
+		WHERE
+			user_id = ${userId}
+	</select>
+	
+	<!-- 멤버 주소 가져오기 (앞부분) -->
+	<select id="selectMemberAddr" resultType="String">
+		SELECT 
+			SUBSTR(addr, 1, INSTR(addr, ' ', 5))
+		FROM 
+			member
+		WHERE
+			user_id = ${userId}
+	</select>
+	
+	<!-- 전체 제품 판매 리스트 -->
 	<select id="selectProductList" resultType="egovMap">
 		SELECT
 			pro_code,
@@ -75,7 +131,16 @@
             WHERE
                 user_id = p.seller) as user_level
 		FROM 
-			product p
+			product p, mem_status m
+			
+		WHERE
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+            AND
+           		p.addr like '${addr}%'
+           	AND
+            	p.status != '0'
 			
 		ORDER BY
 			rdate DESC
@@ -100,10 +165,18 @@
             WHERE
                 user_id = p.seller) as user_level
 		FROM 
-			product p
+			product p, mem_status m
 			
 		WHERE
-			pro_category_code = ${proCategoryCode}
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+            AND
+           		p.addr like '${addr}%'
+           	AND
+            	p.status != '0'
+			AND
+				pro_category_code = ${proCategoryCode}
 			
 		ORDER BY
 			rdate DESC
@@ -211,15 +284,18 @@
 			title,
 			price,
 			status,
-			( select nik_name from member where user_id = p.seller) seller_nik,
-			nvl(buyer_nik, '없음') as buyer_nik,
-			imgs
+			( select nik_name from member where user_id = p.seller) as seller_nik,
+			nvl(( select nik_name from member where user_id = ${buyer}), '없음') as buyer_nik,
+			imgs,
+			(SELECT count(*) FROM review WHERE pro_code = p.pro_code ) as review_cnt
 			
 		FROM
 			product p
 			
 		WHERE
 			buyer = ${buyer}
+		AND
+			status = 0
 	</select>
 	
 	<!-- 수정 위한 제품 데이터 보기 -->
@@ -303,6 +379,15 @@
 		    pro_code = ${proCode}
 	</select>
 	
+	<select id="selectReviewCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			review
+		WHERE
+			pro_code = ${proCode}
+	</select>
+	
 	<!-- select end -->
 	
 	<!-- update start -->
@@ -336,6 +421,29 @@
 			SET
 				status = ${status}
 		WHERE pro_code = ${proCode}
+	</update>
+	
+	<!-- 제품 상태 '판매중'으로 변경 시 구매자 정보 삭제 -->
+	<update id="updateProductStatAndBuyer">
+		UPDATE product
+			SET
+				buyer = null,
+				buyer_nik = null
+		WHERE pro_code = ${proCode}
+	</update>
+	
+	<!-- 거래 후 판매자 평가 좋아요 -->
+	<update id="updateUserLevelGood">
+		UPDATE member
+			SET user_level = user_level + 1
+		WHERE user_id = ${seller}
+	</update>
+	
+	<!-- 거래 후 판매자 평가 싫어요 -->
+	<update id="updateUserLevelBad">
+		UPDATE member
+			SET user_level = user_level - 1
+		WHERE user_id = ${seller}
 	</update>
 	
 	<!-- update end -->

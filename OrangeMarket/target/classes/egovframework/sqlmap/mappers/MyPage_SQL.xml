@@ -107,4 +107,7 @@
 			WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
 	</select>
 	
+	<update id="mypageAddrPass" parameterType="int">
+		UPDATE MEMBER SET ADDR_PASS = 'Y' WHERE USER_ID = #{userId}
+	</update>
 </mapper>

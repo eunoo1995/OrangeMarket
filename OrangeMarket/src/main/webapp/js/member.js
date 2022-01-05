@@ -164,7 +164,7 @@ if (joinForm) {
 
 				$.ajax({
 					type: 'POST',
-					url: 'insert-member',
+					url: '/insert-member',
 					data: formData,
 					dataType: 'text',
 					success: function(data) {
@@ -228,7 +228,7 @@ if (loginForm) {
 
 			$.ajax({
 				type: 'POST',
-				url: 'login-confirm',
+				url: '/login-confirm',
 				data: formData,
 				dataType: 'text',
 				success: function(data) {
@@ -310,7 +310,7 @@ if (pwForm) {
 
 			$.ajax({
 				type: 'POST',
-				url: 'find-pw-confirm',
+				url: '/find-pw-confirm',
 				data: formData,
 				dataType: 'text',
 				success: function(data) {
@@ -372,7 +372,7 @@ if (pwResetForm) {
 
 			$.ajax({
 				type: 'POST',
-				url: 'pw-reset-confrim',
+				url: '/pw-reset-confrim',
 				data: formData,
 				dataType: 'text',
 				success: function(data) {
@@ -421,7 +421,7 @@ if (findUserForm) {
 
 			$.ajax({
 				type: 'POST',
-				url: 'find-user-confrim',
+				url: '/find-user-confrim',
 				data: formData,
 				dataType: 'text',
 				success: function(data) {
@@ -650,7 +650,7 @@ function chkNik($target) {
 
 	$.ajax({
 		type: 'POST',
-		url: 'check-nikname',
+		url: '/check-nikname',
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
@@ -689,7 +689,7 @@ function chkPw1($target) {
 
 	$.ajax({
 		type: 'POST',
-		url: 'check-password',
+		url: '/check-password',
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
@@ -733,7 +733,7 @@ function chkPw2($target) {
 
 	$.ajax({
 		type: 'POST',
-		url: 'check-password',
+		url: '/check-password',
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
@@ -809,7 +809,7 @@ function chkEmail($target) {
 	var formData = 'email=' + frm.email.value;
 	$.ajax({
 		type: 'POST',
-		url: 'check-email',
+		url: '/check-email',
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
@@ -839,7 +839,7 @@ function sendEmailCode($target) {
 
 	$.ajax({
 		type: 'POST',
-		url: 'send-verif-email',
+		url: '/send-verif-email',
 		data: formData,
 		dataType: 'text',
 		success: function(data) {
@@ -883,7 +883,7 @@ function chkEmailVerif($target) {
 
 	$.ajax({
 		type: 'POST',
-		url: 'check-verifcode',
+		url: '/check-verifcode',
 		data: formData,
 		dataType: 'text',
 		success: function(data) {

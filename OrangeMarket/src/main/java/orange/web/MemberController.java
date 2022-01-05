@@ -40,7 +40,7 @@ public class MemberController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
 
-	@RequestMapping(value = "login")
+	@RequestMapping(value = "/login")
 	public String login(HttpSession session, Model model) throws Exception {
 
 		if (session.getAttribute("sessionId") != null)
@@ -58,7 +58,7 @@ public class MemberController {
 		return "member/login";
 	}
 
-	@RequestMapping(value = "login-confirm")
+	@RequestMapping(value = "/login-confirm")
 	@ResponseBody
 	public String loginConfirm(HttpSession session, HttpServletResponse response, MemberVO vo,
 			@RequestParam(value = "remEmail") String remEmail) throws Exception {
@@ -92,7 +92,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping("logout")
+	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("sessionId");
 		session.removeAttribute("USER_NIK");
@@ -100,7 +100,7 @@ public class MemberController {
 		return "redirect:/main";
 	}
 
-	@RequestMapping(value = "join")
+	@RequestMapping(value = "/join")
 	public String join() {
 
 		return "member/joinTerms";
@@ -125,7 +125,7 @@ public class MemberController {
 		return "member/joinForm";
 	}
 
-	@RequestMapping(value = "check-usertel")
+	@RequestMapping(value = "/check-usertel")
 	@ResponseBody
 	public String checkJoinTel(MemberVO vo) throws Exception {
 
@@ -142,7 +142,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "check-nikname")
+	@RequestMapping(value = "/check-nikname")
 	@ResponseBody
 	public String checkJoinNikname(MemberVO vo) throws Exception {
 
@@ -159,7 +159,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "check-password")
+	@RequestMapping(value = "/check-password")
 	@ResponseBody
 	public String checkPassWord(MemberVO vo) throws Exception {
 
@@ -177,7 +177,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "check-email")
+	@RequestMapping(value = "/check-email")
 	@ResponseBody
 	public String checkEmail(MemberVO vo) throws Exception {
 
@@ -195,7 +195,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "send-verif-email")
+	@RequestMapping(value = "/send-verif-email")
 	@ResponseBody
 	public String SendVerifEmail(EmailVerifVO vo) throws Exception {
 
@@ -237,7 +237,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "check-verifcode")
+	@RequestMapping(value = "/check-verifcode")
 	@ResponseBody
 	public String checkEmailCode(EmailVerifVO vo) throws Exception {
 
@@ -254,7 +254,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "insert-member")
+	@RequestMapping(value = "/insert-member")
 	@ResponseBody
 	public String insertMember(MemberVO memVo, EmailVerifVO emailVo, TermsAgreeVO agreeVo) throws Exception {
 
@@ -303,7 +303,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "join-result")
+	@RequestMapping(value = "/join-result")
 	public String joinResult(MemberVO vo, Model model) throws Exception {
 
 		vo = memberService.selectJoinMember(vo);
@@ -319,7 +319,7 @@ public class MemberController {
 		return "member/findPw";
 	}
 
-	@RequestMapping(value = "find-pw-confirm")
+	@RequestMapping(value = "/find-pw-confirm")
 	@ResponseBody
 	public String FindPwConfirm(MemberVO memVo, EmailVerifVO emailVo) throws Exception {
 
@@ -341,7 +341,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "pw-reset")
+	@RequestMapping(value = "/pw-reset")
 	public String ResetPw(MemberVO vo, Model model) throws Exception {
 
 		model.addAttribute("email", vo.getEmail());
@@ -369,7 +369,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "pw-result")
+	@RequestMapping(value = "/pw-result")
 	public String ResultPw() {
 
 		return "member/findPwResult";
@@ -381,7 +381,7 @@ public class MemberController {
 		return "member/findUser";
 	}
 
-	@RequestMapping(value = "find-user-confrim")
+	@RequestMapping(value = "/find-user-confrim")
 	@ResponseBody
 	public String findUserConfirm(MemberVO vo) throws Exception {
 
@@ -400,7 +400,7 @@ public class MemberController {
 		return msg;
 	}
 
-	@RequestMapping(value = "find-result")
+	@RequestMapping(value = "/find-result")
 	public String findUserResult(MemberVO vo, Model model) throws Exception {
 
 		String email = memberService.selectUserEmail(vo);

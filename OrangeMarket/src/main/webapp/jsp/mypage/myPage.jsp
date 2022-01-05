@@ -7,7 +7,17 @@
 	<jsp:param name="cssName" value="mypage" />
 </jsp:include>
 <!-- 헤더 -->
-
+<script>
+$(function(){
+	// 임시 인증
+	$("#mypageAddrPass").click(function(){
+		var userId = $("#userId").val();
+		if(confirm("현위치로 동네 인증을 하시겠습니까?")) {
+			location = "mypage-addr-pass?userId="+userId;
+		}
+	});
+});
+</script>
 <!-- 페이지 wrapper -->
 <article class="pg-wrap myPage-main">
 
@@ -33,8 +43,8 @@
 					<th><img class="myPage-img" src="/images/profiles/${vo.profileImg}"><br>
 						<input type="button" class="myPage-img-btn" value="사진 변경">
 					<form id="frm-profile" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-						<input type="hidden" id=userId name="userId" value="${sessionId}">
-						<input type="hidden" id=profileImg name="profileImg" value="${vo.profileImg}">
+						<input type="hidden" id="userId" name="userId" value="${sessionId}">
+						<input type="hidden" id="profileImg" name="profileImg" value="${vo.profileImg}">
 						<input type="file" id="myPage-img-file" name="uploadProfile" 
 							accept="image/gif,image/png,image/jpeg" multiple style="display: none;">
 					</form>
@@ -61,11 +71,21 @@
 							</tr>
 							<tr>
 								<th>우리동네</th>
-								<td colspan="3">${vo.addr}</td>
+								<td colspan="3">
+								<div style="float:left;">${vo.addr}</div>
+								<c:if test="${vo.addrPass == 'Y'}">
+								<div style="width:8px; height:8px; border-radius:10px;
+									        float:left; background:green; margin-top:7px;
+									        margin-left:8px;"></div>
+								</c:if>
+								</td>
 							</tr>
 						</table>
 						<div class="myPage-div1">
-							<input type="button" id="" value="동네인증하기"> 
+						<c:if test="${vo.addrPass == 'Y'}">
+							<c:set var="hide" value="style='color:#fff; border:0px'"/>
+						</c:if>	
+							<input type="button" ${hide} id="mypageAddrPass" value="동네인증하기"> 
 							<input type="button" id="" value="정보수정"> 
 							<input type="button" id="myPage-withdrawal-btn" value="회원탈퇴">
 						</div>

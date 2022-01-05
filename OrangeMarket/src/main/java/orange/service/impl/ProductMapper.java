@@ -38,5 +38,16 @@ public interface ProductMapper {
 	int selectLikeAllCount(ProductVO vo);
 	
 	int updateProductStatus(ProductVO vo);
+	int updateProductStatAndBuyer(ProductVO vo);
+	
+	int updateUserLevelGood(ProductVO vo);
+	int updateUserLevelBad(ProductVO vo);
+	int updateRatingStatus(ProductVO vo);
+	int insertReviewGood(ProductVO vo);
+	int insertReviewBad(ProductVO vo);
+	int selectReviewCount(ProductVO vo);
+	
+	String selectMemberAddr(ProductVO vo);
+	MemberVO selectAddrPass(ProductVO vo);
 	
 }

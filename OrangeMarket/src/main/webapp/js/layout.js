@@ -27,8 +27,8 @@ $(function() {
 			error: function() {
 			}
 		})
-			.done(function(result) {
-			});
+			/*.done(function(result) {
+			});*/
 	});
 
 	/* 검색 */

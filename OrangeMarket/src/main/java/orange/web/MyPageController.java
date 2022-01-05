@@ -131,6 +131,12 @@ public class MyPageController {
 		}
 		return result+"";
 	}
-
+	@RequestMapping(value="mypage-addr-pass")
+	public String updateAddrPass(int userId) throws Exception {
+		myPageService.mypageAddrPass(userId);
+		
+		return "redirect:mypage";
+	}
+	
 	
 }
