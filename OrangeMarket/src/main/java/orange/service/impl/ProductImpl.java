@@ -25,9 +25,15 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	}
 
 	@Override
-	public int deleteProduct(ProductVO vo) throws Exception {
+	public int deleteProduct(ProductVO vo) throws Exception { // 제품 삭제
 		// TODO Auto-generated method stub
 		return productDAO.deleteProduct(vo);
+	}
+	
+	@Override
+	public int deleteLikeProduct(ProductVO vo) { // 제품 삭제 시 좋아요 태그 동시 삭제
+		// TODO Auto-generated method stub
+		return productDAO.deleteLikeProduct(vo);
 	}
 	
 	@Override
@@ -194,7 +200,7 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	}
 
 	@Override
-	public int selectMykeywrodCount(ProductVO pvo) {
+	public int selectMykeywrodCount(ProductVO pvo) { // 마이키워드 유무 확인용
 		// TODO Auto-generated method stub
 		return productDAO.selectMykeywrodCount(pvo);
 	}

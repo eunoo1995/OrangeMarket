@@ -484,11 +484,20 @@
 	
 	<!-- delete start -->
 	
+	<!-- 제품 삭제 -->
 	<delete id="deleteProduct" parameterType="productVO">
 		DELETE FROM product
 		WHERE
 			pro_code = ${proCode}
 	</delete>
+	
+	<!-- 제품 삭제 시 좋아요 테이블 데이터 삭제 -->
+	<delete id="deleteLikeProduct" parameterType="productVO">
+		DELETE FROM like_product
+		WHERE
+			pro_code = ${proCode}
+	</delete>
+	
 	
 	<!-- delete end -->
 

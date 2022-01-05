@@ -29,7 +29,7 @@
             <h2 class="main-cont-tit" onclick="location='product-list'">최근 등록 상품</h2>
 
             <ul class="main-pro-list">
-            	<c:forEach var="rProduct" items="${recentList}" end="9">
+            	<c:forEach var="rProduct" items="${recentList}" end="4">
                 <li class="list-item">
                     <a href="product-list-detail?proCode=${rProduct.proCode}">
                         <figure class="pro-thumb">
@@ -188,7 +188,7 @@
             <h2 class="main-cont-tit">회원님의 관심 상품은?</h2>
 
             <ul class="main-pro-list">
-               	<c:forEach var="mProduct" items="${myKeywordList}" end="9">
+               	<c:forEach var="mProduct" items="${myKeywordList}" end="4">
                 <li class="list-item">
                     <a href="product-list-detail?proCode=${mProduct.proCode}">
                         <figure class="pro-thumb">

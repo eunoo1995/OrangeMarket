@@ -283,13 +283,13 @@ public class ProductController {
 		String imgs = vo.getImgs();
 		
 		int result = productService.deleteProduct(vo);
-		
 		if(result == 1) {
 			String path = request.getServletContext().getRealPath("/images/products/");
 			// 이미지 파일이 존재할 경우 제거
 			File delFile = new File(path + imgs);
 			if(delFile.exists()) delFile.delete();
 		
+			productService.deleteLikeProduct(vo);
 			System.out.println("삭제 성공");
 		} else {
 			System.out.println("삭제 실패");

@@ -12,6 +12,7 @@ public interface ProductMapper {
 
 	int insertProduct(ProductVO vo);
 	int deleteProduct(ProductVO vo);
+	int deleteLikeProduct(ProductVO vo);
 	ProductVO selectProductAddr(ProductVO vo);
 	int selectSellerCount(ProductVO vo);
 	
