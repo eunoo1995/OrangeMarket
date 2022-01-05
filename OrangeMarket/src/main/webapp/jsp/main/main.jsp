@@ -180,137 +180,35 @@
 
         </div>
     </article>
-
+	
+	<c:if test="${sessionId ne null}">
     <article class="main-article">
         <div class="cont-inner">
-
+			
             <h2 class="main-cont-tit">회원님의 관심 상품은?</h2>
 
             <ul class="main-pro-list">
+               	<c:forEach var="mProduct" items="${myKeywordList}" end="9">
                 <li class="list-item">
-                    <a href="#">
+                    <a href="product-list-detail?proCode=${mProduct.proCode}">
                         <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
+                            <span class="pro-thumb-img">
+                            	<img src="<c:url value='/images/products/${mProduct.imgs}'/>">
+                            </span>
                         </figure>
 
                         <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
+                            <p class="pro-detail-tit">${mProduct.title }</p>
+                            <p class="pro-detail-price">${mProduct.price } 원</p>
                         </div>
                     </a>
                 </li>
-                <li class="list-item">
-                    <a href="#">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
-                        </figure>
-
-                        <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-item">
-                    <a href="#">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
-                        </figure>
-
-                        <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-item">
-                    <a href="#">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
-                        </figure>
-
-                        <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-item">
-                    <a href="#">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
-                        </figure>
-
-                        <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-item">
-                    <a href="#">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
-                        </figure>
-
-                        <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-item">
-                    <a href="#">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
-                        </figure>
-
-                        <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-item">
-                    <a href="#">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
-                        </figure>
-
-                        <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-item">
-                    <a href="#">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
-                        </figure>
-
-                        <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-item">
-                    <a href="#">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
-                        </figure>
-
-                        <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
-                        </div>
-                    </a>
-                </li>
+                </c:forEach>
             </ul>
-
+			
         </div>
     </article>
+    </c:if>
 
 </article>
 

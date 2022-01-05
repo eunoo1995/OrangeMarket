@@ -71,5 +71,10 @@ public interface ProductService {
 	String selectMemberAddr(ProductVO vo);
 	// 사용자 동네 인증 여부 받아오기	
 	MemberVO selectAddrPass(ProductVO vo);
+	
+	// 설정된 마이 키워드를 기준으로 가져오는 리스트
+	List<?> selectMyKeywordList(ProductVO pvo);
+	// 마이키워드 유무 확인용 갯수
+	int selectMykeywrodCount(ProductVO pvo);
 
 }

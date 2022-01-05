@@ -50,4 +50,7 @@ public interface ProductMapper {
 	String selectMemberAddr(ProductVO vo);
 	MemberVO selectAddrPass(ProductVO vo);
 	
+	List<?> selectMyKeywordList(ProductVO pvo);
+	int selectMykeywrodCount(ProductVO pvo);
+	
 }

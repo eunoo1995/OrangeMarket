@@ -66,6 +66,12 @@ public class OrangeController {
 			//등록된 판매 제품 목록 리스트
 			recent_list = productService.selectProductList(pvo);
 			
+			int mykeyword_count = productService.selectMykeywrodCount(pvo);
+			
+			if(mykeyword_count != 0) {
+				List<?> mykeyword_list = productService.selectMyKeywordList(pvo);
+				model.addAttribute("myKeywordList", mykeyword_list);
+			}
 		}
 		
 		model.addAttribute("recentList", recent_list);

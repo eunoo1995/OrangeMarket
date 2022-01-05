@@ -187,4 +187,16 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectAddrPass(vo);
 	}
 
+	@Override
+	public List<?> selectMyKeywordList(ProductVO pvo) { // 설정된 마이 키워드를 기준으로 가져오는 리스트
+		// TODO Auto-generated method stub
+		return productDAO.selectMyKeywordList(pvo);
+	}
+
+	@Override
+	public int selectMykeywrodCount(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		return productDAO.selectMykeywrodCount(pvo);
+	}
+
 }
