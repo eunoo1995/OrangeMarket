@@ -49,7 +49,6 @@ public class OrangeController {
 	public String showMainPage(ProductVO pvo, MemberVO mvo, Model model, HttpSession session) throws Exception {
 		// 최근 제품 표시용 리스트
 		List<?> recent_list = productService.selectProductList(pvo);
-		model.addAttribute("recentList", recent_list);
 		
 		// 세션 발생 시 동네 인증 여부 확인
 		if( session.getAttribute("sessionId") != null ) { 
@@ -59,6 +58,7 @@ public class OrangeController {
 			// 멤버 테이블에서 주소 가져오기
 			String addr = productService.selectMemberAddr(pvo);
 			pvo.setAddr(addr);
+			System.out.println(addr);
 			
 			//동네 인증 여부 가져오기
 			mvo = productService.selectAddrPass(pvo);
@@ -66,9 +66,10 @@ public class OrangeController {
 			//등록된 판매 제품 목록 리스트
 			recent_list = productService.selectProductList(pvo);
 			
-			model.addAttribute("addrPass", mvo.getAddrPass());
-			model.addAttribute("recentList", recent_list);
 		}
+		
+		model.addAttribute("recentList", recent_list);
+		model.addAttribute("addrPass", mvo.getAddrPass());
 		
 		return "main/main";
 	}

@@ -106,7 +106,9 @@
 	<!-- 멤버 주소 가져오기 (앞부분) -->
 	<select id="selectMemberAddr" resultType="String">
 		SELECT 
-			SUBSTR(addr, 1, INSTR(addr, ' ', 5))
+			DECODE(SUBSTR(addr, INSTR(addr,substr(addr, -1), 8), INSTR(addr,substr(addr, -1), 8)), '리',
+                   SUBSTR(addr, 1, INSTR(SUBSTR(addr, 1, INSTR(addr,substr(addr, -1), 8)), ' ', 9) ),
+                   SUBSTR(addr, 1, INSTR(addr,substr(addr, -1), 8)) )
 		FROM 
 			member
 		WHERE
