@@ -36,7 +36,7 @@
 							type : "post",
 				  			url  : "like-product-save",
 				  			data : formdata,
-				  			datatype : "text",
+				  			datatype : "json",
 			  				success : function(data) {
 			  					if(data == "ok") { alert("등록 완료"); location.reload(); }
 			  					else if (data == "already") { alert("이미 등록하신 게시글 입니다."); return false; }
@@ -63,7 +63,7 @@
 		  			type : "post",
 		  			url  : "create-chat",
 		  			data : formdata,
-		  			datatype : "text",
+		  			datatype : "json",
 		  			success : function(data) {
 		  				if(data == "exist") {
 		  					alert("채팅이 이미 존재합니다.");
@@ -93,7 +93,7 @@
 			  			data : formdata,
 			  			processData : false,
 			  			contentType : false,
-			  			datatype : "text",
+			  			datatype : "json",
 			  			success : function(data) {
 		  					location='chat';
 			  			},
