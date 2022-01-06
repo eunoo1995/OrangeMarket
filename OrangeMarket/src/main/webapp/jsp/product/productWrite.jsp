@@ -31,7 +31,7 @@
 					  			data : formdata,
 					  			processData : false,
 					  			contentType : false,
-					  			datatype : "text", //성공여부(ok)
+					  			datatype : "json", //성공여부(ok)
 					  			success : function(data) {
 					  				if(data == "ok") {
 					  					alert("저장 성공");

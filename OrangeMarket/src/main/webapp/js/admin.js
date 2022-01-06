@@ -37,7 +37,7 @@ $(function(){
   			type : "post",
   			url  : "admin-confirm-login",
   			data : formdata,
-  			datatype : "text",
+  			datatype : "json",
   			success : function(data) {
   				if(data == "er1") {
   					alert("존재하지 않는 아이디입니다.");
@@ -124,7 +124,7 @@ $(function(){
 				type : "post",
 				data : formdata,
 				url  : "response-inquiry",
-				datatype : "text",
+				datatype : "json",
 				success : function(data) {
 					if(data == "1") {
 						self.close();
