@@ -65,20 +65,20 @@
 					<div class="keywords-wrap">
 						<article class="keyword popular">
 							<p class="search-keyword-tit">인기 키워드</p>
-							<ul>
-								<li><a href="#"></a></li>
-							</ul>
+							<ul id="keywordPopList"></ul>
 						</article>
 					</div>
 					<div class="keywords-wrap">
 						<article class="">
 							<div class="keyword recent">
 								<p class="search-keyword-tit">최근 검색 키워드</p>
+								<ul id="keywordRecList"></ul>
 							</div>
 							
 							<c:if test="${sessionId != null}">
 							<div class="keyword my">
 								<p class="search-keyword-tit">등록된 키워드</p>
+								<ul id="keywordMyList"></ul>
 							</div>
 							</c:if>
 						</article>

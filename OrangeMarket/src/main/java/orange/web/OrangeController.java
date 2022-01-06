@@ -1,7 +1,9 @@
 package orange.web;
 
 import java.net.InetAddress;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -83,14 +87,17 @@ public class OrangeController {
 		return "main/main";
 	}
 
-	@RequestMapping(value = "/search-list", method = RequestMethod.GET)
+	@RequestMapping(value = "/search-list")
 	@ResponseBody
-	public ModelAndView searchList(HttpSession session, MemberVO vo, KeywordVO keyVo) throws Exception {
-		// Responseentity
+	public Map<String, Object> searchList(HttpSession session, Model model) throws Exception {
+
+		MemberVO vo = new MemberVO();
+		KeywordVO keyVo = new KeywordVO(); 
+		
 		String userIp = getUserIp();
 		keyVo.setSrchIp(userIp);
-
-		ModelAndView mav = new ModelAndView();
+		
+		Map<String, Object> searchObj = new HashMap<String, Object>();
 
 		if (session.getAttribute("sessionId") != null) {
 			int sessionId = (int) session.getAttribute("sessionId");
@@ -98,23 +105,21 @@ public class OrangeController {
 
 			// 회원 별 등록된 키워드 가져오기
 			List<?> myKeywordList = myPageService.selectMyKeywordList(vo);
-			System.out.println(myKeywordList.toString());
-
-			mav.addObject("mykeyword", myKeywordList);
+			searchObj.put("mykeyword", myKeywordList);
 		}
-		;
 
 //		// 인기 검색어 가져오기 
 		List<?> popularKeyword = orangeService.selectPopularKeywordList();
-		mav.addObject("popkeyword", popularKeyword);
+		searchObj.put("popkeyword", popularKeyword);
 
 //		// 최근 검색어 가져오기
 		List<?> recentKeyword = orangeService.selectkeywordListByIp(keyVo);
-		mav.addObject("reckeyword", recentKeyword);
+		searchObj.put("reckeyword", recentKeyword);
 
-		System.out.println(mav.toString());
+		System.out.println(searchObj.toString());
 
-		return mav;
+		return searchObj;
+
 	}
 
 	@RequestMapping(value = "/search-confirm")

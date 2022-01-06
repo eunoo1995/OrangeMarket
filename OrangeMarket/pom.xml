@@ -19,6 +19,7 @@
 	<properties>
 	    <spring.maven.artifact.version>4.3.25.RELEASE</spring.maven.artifact.version>
 		<egovframework.rte.version>3.10.0</egovframework.rte.version>
+		<jackson.version>2.9.10</jackson.version>
 	</properties>
 
 	<repositories>
@@ -175,23 +176,18 @@
         <dependency>
           <groupId>com.fasterxml.jackson.core</groupId> 
           <artifactId>jackson-core</artifactId> 
-          <version>2.9.10</version> 
+          <version>${jackson.version}</version> 
 	    </dependency> 
 	    <dependency> 
 	         <groupId>com.fasterxml.jackson.core</groupId> 
 	         <artifactId>jackson-databind</artifactId> 
-	         <version>2.9.10</version> 
+	         <version>${jackson.version}</version>
 	    </dependency> 
 	    <dependency> 
 	         <groupId>com.fasterxml.jackson.core</groupId> 
 	         <artifactId>jackson-annotations</artifactId> 
-	         <version>2.9.10</version> 
+	         <version>${jackson.version}</version>
 	    </dependency>
-	    <dependency> 
-	         <groupId>com.fasterxml.jackson.core</groupId> 
-	         <artifactId>jackson-annotations</artifactId> 
-	         <version>2.9.10</version> 
-		</dependency>
         <!-- json 데이터 넘기기 e -->
         
          
