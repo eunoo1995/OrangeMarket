@@ -8,31 +8,6 @@
 	<jsp:param name="cssName" value="chat" />
 </jsp:include>
 <!-- 헤더 -->
-<script>
-$(function(){
-	$("#reserveProduct").click(function(){
-		if(confirm("예약을 진행하시겠습니까?")) {
-			var formdata = $("#reserve-frm").serialize();
-			$.ajax({
-				type : "post",
-				data : formdata,
-				url  : "reserve-product",
-				datatype : "text",
-				success : function(data) {
-					if(data == "exist") {
-						alert("이미 예약이 존재합니다.");
-					} else {
-						alert("거래가 예약 되었습니다.");
-					}
-				},
-				error : function() {
-						alert("오류발생");
-				}
-			});
-		}
-	});
-});
-</script>
 <!-- 현재시간 가져오기 -->
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
