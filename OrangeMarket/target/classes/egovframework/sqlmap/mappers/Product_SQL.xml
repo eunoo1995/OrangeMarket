@@ -106,11 +106,32 @@
 	<!-- 멤버 주소 가져오기 (앞부분) -->
 	<select id="selectMemberAddr" resultType="String">
 		SELECT 
-			SUBSTR(addr, 1, INSTR(addr, ' ', 5))
+			DECODE(SUBSTR(addr, INSTR(addr,substr(addr, -1), 8), INSTR(addr,substr(addr, -1), 8)), '리',
+                   SUBSTR(addr, 1, INSTR(SUBSTR(addr, 1, INSTR(addr,substr(addr, -1), 8)), ' ', 9) ),
+                   SUBSTR(addr, 1, INSTR(addr,substr(addr, -1), 8)) )
 		FROM 
 			member
 		WHERE
 			user_id = ${userId}
+	</select>
+	
+	<select id="selectMyKeywordList" resultType="productVO">
+		SELECT 
+			p.pro_code, p.imgs, p.title, p.price, p.keyword
+		FROM
+		    product p, mykeyword mk, mem_status ms
+		WHERE
+				ms.user_id = p.seller
+            AND
+          		ms.mem_state_code = '1'
+            AND
+           		p.addr like '${addr}%'
+           	AND
+            	p.status != '0'
+            AND
+                p.keyword = mk.mykeyword
+		    AND
+		    	mk.user_id = ${userId}
 	</select>
 	
 	<!-- 전체 제품 판매 리스트 -->
@@ -359,6 +380,7 @@
 			user_id = ${seller}
 	</select>
 	
+	<!-- 해당 판매 제품 중복 방지 체크용 좋아요 갯수 -->
 	<select id="selectLikeCount" resultType="int">
 		SELECT 
 		    count(*)
@@ -370,6 +392,7 @@
 		    pro_code = ${proCode}
 	</select>
 	
+	<!-- 해당 제품의 전체 좋아요 갯수 -->
 	<select id="selectLikeAllCount" resultType="int">
 		SELECT 
 		    count(*)
@@ -379,6 +402,7 @@
 		    pro_code = ${proCode}
 	</select>
 	
+	<!-- 거래 완료 후 리뷰 중복 방지용 갯수 -->
 	<select id="selectReviewCount" resultType="int">
 		SELECT
 			count(*)
@@ -386,6 +410,16 @@
 			review
 		WHERE
 			pro_code = ${proCode}
+	</select>
+	
+	<!-- 마이키워드 유무 체크용 갯수 -->
+	<select id="selectMykeywrodCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+		    mykeyword
+		WHERE
+		    user_id = ${userId}
 	</select>
 	
 	<!-- select end -->
@@ -450,11 +484,20 @@
 	
 	<!-- delete start -->
 	
+	<!-- 제품 삭제 -->
 	<delete id="deleteProduct" parameterType="productVO">
 		DELETE FROM product
 		WHERE
 			pro_code = ${proCode}
 	</delete>
+	
+	<!-- 제품 삭제 시 좋아요 테이블 데이터 삭제 -->
+	<delete id="deleteLikeProduct" parameterType="productVO">
+		DELETE FROM like_product
+		WHERE
+			pro_code = ${proCode}
+	</delete>
+	
 	
 	<!-- delete end -->
 

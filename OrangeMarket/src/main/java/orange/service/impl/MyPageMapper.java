@@ -23,7 +23,7 @@ public interface MyPageMapper {
 	
 	int countBuyer(MemberVO vo);
 	
-	List<?> selectMyKeywordList(MyKeywordVO kvo);
+	List<?> selectMyKeywordList(MemberVO vo);
 	
 	int insertMyKeyword(MyKeywordVO vo);
 	

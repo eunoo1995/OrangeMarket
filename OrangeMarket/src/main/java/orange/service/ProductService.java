@@ -9,6 +9,8 @@ public interface ProductService {
 	
 	// 등록 제품 삭제
 	int deleteProduct(ProductVO vo) throws Exception;
+	// 제품 삭제 시 좋아요 관련 테이블 데이터 삭제
+	int deleteLikeProduct(ProductVO vo);
 	
 	// 제품 등록용 사용자 저장된 주소 가져오기
 	ProductVO selectProductAddr(ProductVO vo) throws Exception;
@@ -71,5 +73,11 @@ public interface ProductService {
 	String selectMemberAddr(ProductVO vo);
 	// 사용자 동네 인증 여부 받아오기	
 	MemberVO selectAddrPass(ProductVO vo);
+	
+	// 설정된 마이 키워드를 기준으로 가져오는 리스트
+	List<?> selectMyKeywordList(ProductVO pvo);
+	// 마이키워드 유무 확인용 갯수
+	int selectMykeywrodCount(ProductVO pvo);
+
 
 }

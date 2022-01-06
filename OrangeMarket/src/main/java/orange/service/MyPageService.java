@@ -17,7 +17,7 @@ public interface MyPageService {
 	int countBuyer(MemberVO vo) throws Exception;
 	
 	// 관심키워드 목록
-	List<?> selectMyKeywordList(MyKeywordVO kvo) throws Exception;
+	List<?> selectMyKeywordList(MemberVO vo) throws Exception;
 	
 	// 관심키워드 추가
 	int insertMyKeyword(MyKeywordVO vo) throws Exception;
