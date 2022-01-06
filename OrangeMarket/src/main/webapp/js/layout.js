@@ -29,41 +29,58 @@ $(function() {
 			}
 		})
 	});
-	
+
 	function setJsonList($data) {
 		var popSearchJson = $data.popkeyword;
 		var recSearchJson = $data.reckeyword;
+		var nonData = '<li>등록된 키워드가 없습니다.</li>';
 
 		// 인기 검색어 삽입		
 		var popListEl = '';
-		for(var i=0; i < popSearchJson.length; i++) {
-			popListEl += '<li><span>'+ popSearchJson[i].rn +'</span><span>'+ popSearchJson[i].keyword +'</span></li>';
+		if (popSearchJson.length == 0) {
+			popListEl += nonData;
+		} else {
+			for (var i = 0; i < popSearchJson.length; i++) {
+				popListEl += '<li><span class="num">' + popSearchJson[i].rn + '</span><span>' + popSearchJson[i].keyword + '</span></li>';
+			}
 		}
 		$('#keywordPopList').html(popListEl);
-		
+
 		// 최근 검색어 삽입		
 		var recListEl = '';
-		for(var i=0; i < recSearchJson.length; i++) {
-			recListEl += '<li><span>'+ recSearchJson[i].keyword +'</span></li>';
+		if (recSearchJson.length == 0) {
+			recListEl += nonData;
+		} else {
+			for (var i = 0; i < recSearchJson.length; i++) {
+				recListEl += '<li><span>' + recSearchJson[i].keyword + '</span></li>';
+			}
 		}
 		$('#keywordRecList').html(recListEl);
-		
+
 		// 관심 키워드로 등록된 검색어 삽입
-		if($data.mykeyword) {
-			var mySearchJson = $data.mykeyword;
+		if ($data.myKeyword) {
+			var mySearchJson = $data.myKeyword;
 			var myListEl = '';
-			
-			for(var i=0; i < mySearchJson.length; i++) {
-				myListEl += '<li>'+ mySearchJson[i].keyword +'</span></li>';
+
+			if (recSearchJson.length == 0) {
+				myListEl += nonData;
+			} else {
+				for (var i = 0; i < mySearchJson.length; i++) {
+					myListEl += '<li><span>' + mySearchJson[i].mykeyword + '</span></li>';
+				}
 			}
 			$('#keywordMyList').html(myListEl);
 		}
-		
-		
-
+	
+		$('.header-search__keywords').addClass('on');
 	}
-	
-	
+
+	$('body, html').click(function(e) {
+		if($('.header-search').has(e.target).length === 0) {
+			$('.header-search__keywords').removeClass('on');
+		}
+	})
+
 
 	/* 검색 */
 	$('#headerSearchBtn').on('click', function() {
@@ -76,7 +93,7 @@ $(function() {
 
 		$.ajax({
 			type: 'POST',
-			url: 'search-confirm',
+			url: '/search-confirm',
 			data: formData,
 			dataType: 'text',
 			success: function(data) {

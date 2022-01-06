@@ -49,7 +49,22 @@
 		        ORDER BY rdate DESC
 		    ) a
 		) b
-		WHERE rn BETWEEN 1 AND 8
+		WHERE rn BETWEEN 1 AND 6
+	</select>
+	
+	<select id="selectMykeywordList" parameterType="MemberVO" resultType="egovMap">
+	SELECT b.*
+		FROM (
+		    SELECT ROWNUM rn
+		         , a.*
+		    FROM (
+		        SELECT mykeyword
+		        FROM mykeyword
+		        WHERE user_id=#{userId} 
+		        ORDER BY rdate DESC
+		    ) a
+		) b
+		WHERE rn BETWEEN 1 AND 6
 	</select>
 	
 	<insert id="insertKeyword" parameterType="keywordVO">

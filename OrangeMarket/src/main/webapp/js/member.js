@@ -166,7 +166,7 @@ if (joinForm) {
 					type: 'POST',
 					url: '/insert-member',
 					data: formData,
-					dataType: 'text',
+					dataType: 'json',
 					success: function(data) {
 						if (data == 'ok') {
 							console.log(data);
@@ -230,17 +230,17 @@ if (loginForm) {
 				type: 'POST',
 				url: '/login-confirm',
 				data: formData,
-				dataType: 'text',
+				dataType: 'json',
 				success: function(data) {
 					if (data == 'err') {
 						alert('이메일 혹은 비밀번호가 일치하지 않습니다.');
 					} else if (data == 'ok') {
 						//뒤로갈 히스토리가 있으면,
-						if (document.referrer && document.referrer.indexOf("localhost:8070") != -1) {
+						if (document.referrer && document.referrer.indexOf("localhost:8070/main") < 0) {
 							history.back();
 						} else {
 							// 히스토리가 없으면,
-							location.replace = "/main";
+							location.replace("/main");
 						}
 					}
 				},
@@ -312,7 +312,7 @@ if (pwForm) {
 				type: 'POST',
 				url: '/find-pw-confirm',
 				data: formData,
-				dataType: 'text',
+				dataType: 'json',
 				success: function(data) {
 					if (data == 'ok') {
 						console.log(data);
@@ -374,7 +374,7 @@ if (pwResetForm) {
 				type: 'POST',
 				url: '/pw-reset-confrim',
 				data: formData,
-				dataType: 'text',
+				dataType: 'json',
 				success: function(data) {
 					if (data == 'ok') {
 						location.replace('/pw-result');
@@ -423,7 +423,7 @@ if (findUserForm) {
 				type: 'POST',
 				url: '/find-user-confrim',
 				data: formData,
-				dataType: 'text',
+				dataType: 'json',
 				success: function(data) {
 					if (data == 'ok') {
 						location.replace('/find-result?userName=' + frm.userName.value + "&userPhone=" + frm.tel.value);
@@ -566,7 +566,7 @@ function chkTel($target) {
 		type: 'POST',
 		url: 'check-usertel',
 		data: formData,
-		dataType: 'text',
+		dataType: 'json',
 		success: function(data) {
 			if (data == 'exist') {
 				console.log(data);
@@ -652,7 +652,7 @@ function chkNik($target) {
 		type: 'POST',
 		url: '/check-nikname',
 		data: formData,
-		dataType: 'text',
+		dataType: 'json',
 		success: function(data) {
 			if (data == 'exist') {
 				showFormErr(areaErrMsg, '이미 존재하는 닉네임입니다.');
@@ -691,7 +691,7 @@ function chkPw1($target) {
 		type: 'POST',
 		url: '/check-password',
 		data: formData,
-		dataType: 'text',
+		dataType: 'json',
 		success: function(data) {
 			if (data == 'err') {
 				showFormErr(areaErrMsg, '문자, 숫자, 기호  3종류 조합으로 해주세요 (8-20 글자)');
@@ -735,7 +735,7 @@ function chkPw2($target) {
 		type: 'POST',
 		url: '/check-password',
 		data: formData,
-		dataType: 'text',
+		dataType: 'json',
 		success: function(data) {
 			if (data == 'err') {
 				showFormErr(areaErrMsg, '문자, 숫자, 기호  3종류 조합으로 해주세요 (8-20 글자)');
@@ -811,7 +811,7 @@ function chkEmail($target) {
 		type: 'POST',
 		url: '/check-email',
 		data: formData,
-		dataType: 'text',
+		dataType: 'json',
 		success: function(data) {
 			if (data == 'exist') {
 				showFormErr(areaErrMsg, '이미 존재하는 이메일입니다.');
@@ -841,7 +841,7 @@ function sendEmailCode($target) {
 		type: 'POST',
 		url: '/send-verif-email',
 		data: formData,
-		dataType: 'text',
+		dataType: 'json',
 		success: function(data) {
 			if (data == 'err') {
 				showFormErr(areaErrMsg, '다시 시도해주세요');
@@ -885,7 +885,7 @@ function chkEmailVerif($target) {
 		type: 'POST',
 		url: '/check-verifcode',
 		data: formData,
-		dataType: 'text',
+		dataType: 'json',
 		success: function(data) {
 			if (data == 'ok') {
 				frm.emailFlag.value = 'Y';

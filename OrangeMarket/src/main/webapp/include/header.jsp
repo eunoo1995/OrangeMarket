@@ -72,15 +72,18 @@
 						<article class="">
 							<div class="keyword recent">
 								<p class="search-keyword-tit">최근 검색 키워드</p>
-								<ul id="keywordRecList"></ul>
+								<ul id="keywordRecList" class="tag-list"></ul>
 							</div>
 							
 							<c:if test="${sessionId != null}">
-							<div class="keyword my">
-								<p class="search-keyword-tit">등록된 키워드</p>
-								<ul id="keywordMyList"></ul>
-							</div>
+								<div class="keyword my">
+									<p class="search-keyword-tit">등록된 키워드</p>
+									<ul id="keywordMyList" class="tag-list">
+										
+									</ul>
+								</div>
 							</c:if>
+							
 						</article>
 					</div>
 				</div>

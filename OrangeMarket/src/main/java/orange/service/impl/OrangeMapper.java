@@ -5,6 +5,7 @@ import java.util.List;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 import orange.service.DeptVO;
 import orange.service.KeywordVO;
+import orange.service.MemberVO;
 
 @Mapper("orangeMapper") 
 public interface OrangeMapper {
@@ -22,5 +23,7 @@ public interface OrangeMapper {
 	List<?> selectPopularKeywordList();
 
 	List<?> selectkeywordListByIp(KeywordVO vo);
+
+	List<?> selectMykeywordList(MemberVO vo);
 	
 }

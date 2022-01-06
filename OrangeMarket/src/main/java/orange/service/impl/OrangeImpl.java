@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.DeptVO;
 import orange.service.KeywordVO;
+import orange.service.MemberVO;
 import orange.service.OrangeService;
 
 
@@ -54,6 +55,11 @@ public class OrangeImpl extends EgovAbstractServiceImpl implements OrangeService
 	@Override
 	public List<?> selectkeywordListByIp(KeywordVO vo) {
 		return orangeDAO.selectkeywordListByIp(vo);
+	}
+
+	@Override
+	public List<?> selectMykeywordList(MemberVO vo) {
+		return orangeDAO.selectMykeywordList(vo);
 	}
 	
 	

@@ -25,8 +25,12 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import orange.service.EmailVerifVO;
+import orange.service.KeywordVO;
 import orange.service.MemberService;
 import orange.service.MemberVO;
+import orange.service.MyKeywordVO;
+import orange.service.MyPageService;
+import orange.service.ProductVO;
 import orange.service.TermsAgreeVO;
 
 @Controller
@@ -39,6 +43,7 @@ public class MemberController {
 
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	
 
 	@RequestMapping(value = "/login")
 	public String login(HttpSession session, Model model) throws Exception {

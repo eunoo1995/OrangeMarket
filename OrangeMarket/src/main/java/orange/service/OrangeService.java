@@ -19,4 +19,6 @@ public interface OrangeService {
 
 	List<?> selectkeywordListByIp(KeywordVO vo);
 
+	List<?> selectMykeywordList(MemberVO vo);
+
 }
