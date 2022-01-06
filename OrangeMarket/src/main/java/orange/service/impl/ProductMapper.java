@@ -12,6 +12,7 @@ public interface ProductMapper {
 
 	int insertProduct(ProductVO vo);
 	int deleteProduct(ProductVO vo);
+	int deleteLikeProduct(ProductVO vo);
 	ProductVO selectProductAddr(ProductVO vo);
 	int selectSellerCount(ProductVO vo);
 	
@@ -49,5 +50,8 @@ public interface ProductMapper {
 	
 	String selectMemberAddr(ProductVO vo);
 	MemberVO selectAddrPass(ProductVO vo);
+	
+	List<?> selectMyKeywordList(ProductVO pvo);
+	int selectMykeywrodCount(ProductVO pvo);
 	
 }

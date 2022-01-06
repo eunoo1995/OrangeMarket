@@ -59,31 +59,38 @@ public class OrangeController {
 		return "dept/deptList";
 	}
 
-	@RequestMapping(value = "/main")
+	@RequestMapping(value="/main")
 	public String showMainPage(ProductVO pvo, MemberVO mvo, Model model, HttpSession session) throws Exception {
 		// 최근 제품 표시용 리스트
 		List<?> recent_list = productService.selectProductList(pvo);
-		model.addAttribute("recentList", recent_list);
-
+		
 		// 세션 발생 시 동네 인증 여부 확인
-		if (session.getAttribute("sessionId") != null) {
+		if( session.getAttribute("sessionId") != null ) { 
 			int sessionId = (int) session.getAttribute("sessionId");
 			pvo.setUserId(sessionId);
-
+			
 			// 멤버 테이블에서 주소 가져오기
 			String addr = productService.selectMemberAddr(pvo);
 			pvo.setAddr(addr);
-
-			// 동네 인증 여부 가져오기
+			System.out.println(addr);
+			
+			//동네 인증 여부 가져오기
 			mvo = productService.selectAddrPass(pvo);
-
-			// 등록된 판매 제품 목록 리스트
+			
+			//등록된 판매 제품 목록 리스트
 			recent_list = productService.selectProductList(pvo);
-
-			model.addAttribute("addrPass", mvo.getAddrPass());
-			model.addAttribute("recentList", recent_list);
+			
+			int mykeyword_count = productService.selectMykeywrodCount(pvo);
+			
+			if(mykeyword_count != 0) {
+				List<?> mykeyword_list = productService.selectMyKeywordList(pvo);
+				model.addAttribute("myKeywordList", mykeyword_list);
+			}
 		}
-
+		
+		model.addAttribute("recentList", recent_list);
+		model.addAttribute("addrPass", mvo.getAddrPass());
+		
 		return "main/main";
 	}
 
