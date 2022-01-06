@@ -25,7 +25,7 @@ $(function(){
 	  			type : "post",
 	  			url  : "inquiry-write-save",
 	  			data : formdata,
-	  			datatype : "text", //성공여부(ok)
+	  			datatype : "json", //성공여부(ok)
 	  			success : function(data) {
 	  				if(data == "ok") {
 	  					location="inquiry-list";
@@ -50,7 +50,7 @@ $(function(){
 	  			type : "post",
 	  			url  : "report-write-save",
 	  			data : formdata,
-	  			datatype : "text", //성공여부(ok)
+	  			datatype : "json", //성공여부(ok)
 	  			success : function(data) {
 	  				if(data == "ok") {
 	  					location="report-list";
