@@ -16,7 +16,7 @@ $(function(){
 	  			data : formdata,
 	  			processData : false,
 	  			contentType : false,
-	  			datatype : "text",
+	  			datatype : "json",
 	  			success : function(data) {
 	  					location="mypage";
 	  			},	
@@ -44,7 +44,7 @@ $(function(){
 			type : "post",
 			url  : "mykeyword-save",
 			data : "mykeyword="+mykeyword,
-			datatype : "text",
+			datatype : "json",
 			success : function(data) {
 					location="mypage";
 			},	
@@ -81,7 +81,7 @@ $(function(){
 				type : "post",
 				data : "reason="+reason +"&userPw="+userPw,
 				url  : "update-withdrawal",
-				datatype : "text",
+				datatype : "json",
 				success : function(data) {
 	  				if(data == "1") {
 	  					alert("지금까지 오렌지마켓을 이용해주셔서 감사합니다.");

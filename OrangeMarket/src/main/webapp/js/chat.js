@@ -6,7 +6,7 @@ $(function(){
   			type : "post",
   			url  : "read-chat",
   			data : "channel="+channel,
-  			datatype : "text",
+  			datatype : "json",
   			success : function(data) {
   				location="chat?channel="+data;
   			},
@@ -31,7 +31,7 @@ $(function(){
   			type : "post",
   			url  : "chat-save",
   			data : formdata,
-  			datatype : "text",
+  			datatype : "json",
   			success : function(data) {
   				location="chat?channel="+data;
   			},
@@ -64,7 +64,7 @@ $(function(){
 				type : "post",
 				data : formdata,
 				url  : "reserve-product",
-				datatype : "text",
+				datatype : "json",
 				success : function(data) {
 					if(data == "exist") {
 						alert("이미 예약이 존재합니다.");
