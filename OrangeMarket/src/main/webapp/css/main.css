@@ -2,10 +2,18 @@
 	padding-top: 0;
 }
 
+.main-visual {
+	background: #f9f9f9;
+	background: #f9f9f9 url("/images/bg_main_visual.png") no-repeat right 20% bottom -116px/40%;
+}
+
 .main-visual-banner {
 	width: 100%;
+	max-width: 1400px;
+	margin-left: auto;
+	margin-right: auto;
     height: 600px;
-    background-color: #eee;
+    background: url("/images/main_visual.png") no-repeat left center;
 }
 
 .main-article {
