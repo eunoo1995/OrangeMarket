@@ -56,4 +56,26 @@ $(function(){
             $("#sendChat").click();
         }
     });
+	// 채팅 상대에게 물건 예약 기능
+	$("#reserveProduct").click(function(){
+		if(confirm("예약을 진행하시겠습니까?")) {
+			var formdata = $("#reserve-frm").serialize();
+			$.ajax({
+				type : "post",
+				data : formdata,
+				url  : "reserve-product",
+				datatype : "text",
+				success : function(data) {
+					if(data == "exist") {
+						alert("이미 예약이 존재합니다.");
+					} else {
+						alert("거래가 예약 되었습니다.");
+					}
+				},
+				error : function() {
+						alert("오류발생");
+				}
+			});
+		}
+	});
 });
