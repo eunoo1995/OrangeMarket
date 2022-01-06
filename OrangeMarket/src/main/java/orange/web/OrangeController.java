@@ -24,6 +24,7 @@ import orange.service.DeptVO;
 import orange.service.KeywordVO;
 import orange.service.MemberService;
 import orange.service.MemberVO;
+import orange.service.MyKeywordVO;
 import orange.service.MyPageService;
 import orange.service.OrangeService;
 import orange.service.ProductService;
@@ -40,9 +41,6 @@ public class OrangeController {
 
 	@Resource(name = "memberService")
 	private MemberService memberService;
-	
-	@Resource(name="myPageService")
-	private MyPageService myPageService;
 
 	@RequestMapping(value = "/deptList.do")
 	public String deptlist(DeptVO vo, Model model) throws Exception {
@@ -96,38 +94,40 @@ public class OrangeController {
 
 	@RequestMapping(value = "/search-list")
 	@ResponseBody
-	public Map<String, Object> searchList(HttpSession session, Model model) throws Exception {
+	public Map<String, Object> searchList(HttpSession session) throws Exception {
 
 		MemberVO vo = new MemberVO();
+		MyKeywordVO mykvo = new MyKeywordVO();
 		KeywordVO keyVo = new KeywordVO(); 
-		
+				
 		String userIp = getUserIp();
 		keyVo.setSrchIp(userIp);
 		
 		Map<String, Object> searchObj = new HashMap<String, Object>();
 
-		if (session.getAttribute("sessionId") != null) {
-			int sessionId = (int) session.getAttribute("sessionId");
-			vo.setUserId(sessionId);
 
-			// 회원 별 등록된 키워드 가져오기
-			List<?> myKeywordList = myPageService.selectMyKeywordList(vo);
-			searchObj.put("mykeyword", myKeywordList);
-		}
-
-//		// 인기 검색어 가져오기 
+		// 인기 검색어 가져오기 
 		List<?> popularKeyword = orangeService.selectPopularKeywordList();
 		searchObj.put("popkeyword", popularKeyword);
 
-//		// 최근 검색어 가져오기
+		// 최근 검색어 가져오기
 		List<?> recentKeyword = orangeService.selectkeywordListByIp(keyVo);
 		searchObj.put("reckeyword", recentKeyword);
-
+		
+		// 나의 관심 키워드 가져오기
+		if( session.getAttribute("sessionId") != null ) { 
+			int sessionId = (int) session.getAttribute("sessionId");
+			vo.setUserId(sessionId);
+			
+			List<?> myKeyword = orangeService.selectMykeywordList(vo);
+			searchObj.put("myKeyword", myKeyword);
+			
+		}
 		System.out.println(searchObj.toString());
 
 		return searchObj;
-
 	}
+
 
 	@RequestMapping(value = "/search-confirm")
 	@ResponseBody
