@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import orange.service.InquiryService;
 import orange.service.MemberVO;
+import orange.service.PagingVO;
 import orange.service.ProductService;
 import orange.service.ProductSubVO;
 import orange.service.ProductVO;
@@ -74,15 +75,15 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	}
 
 	@Override
-	public List<?> selectSellProductList(ProductVO vo) { // 사용자의 판매 제품 리스트
+	public List<ProductVO> selectSellProductList(PagingVO pvo) { // 사용자의 판매 제품 리스트
 		// TODO Auto-generated method stub
-		return productDAO.selectSellProductList(vo);
+		return productDAO.selectSellProductList(pvo);
 	}
 
 	@Override
-	public List<?> selectBuyProductList(ProductVO vo) { // 사용자의 구매 제품 리스트
+	public List<ProductVO> selectBuyProductList(PagingVO pvo) { // 사용자의 구매 제품 리스트
 		// TODO Auto-generated method stub
-		return productDAO.selectBuyProductList(vo);
+		return productDAO.selectBuyProductList(pvo);
 	}
 	
 	@Override
@@ -203,6 +204,18 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 	public int selectMykeywrodCount(ProductVO pvo) { // 마이키워드 유무 확인용
 		// TODO Auto-generated method stub
 		return productDAO.selectMykeywrodCount(pvo);
+	}
+
+	@Override
+	public int selectSellHistoryTotal(PagingVO pvo) { // 판매 목록 갯수 카운트
+		// TODO Auto-generated method stub
+		return productDAO.selectSellHistoryTotal(pvo);
+	}
+
+	@Override
+	public int selectBuyHistoryTotal(PagingVO pvo) { // 구매 목록 갯수 카운트
+		// TODO Auto-generated method stub
+		return productDAO.selectBuyHistoryTotal(pvo);
 	}
 
 }

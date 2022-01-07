@@ -181,13 +181,12 @@
         </div>
     </article>
 	
-	<c:if test="${sessionId ne null}">
+	<c:if test="${sessionId ne null && !empty myKeywordList}">
     <article class="main-article">
         <div class="cont-inner">
-			
-            <h2 class="main-cont-tit">회원님의 관심 상품은?</h2>
-
+	        <h2 class="main-cont-tit">회원님의 관심 상품은?</h2>
             <ul class="main-pro-list">
+            	
                	<c:forEach var="mProduct" items="${myKeywordList}" end="4">
                 <li class="list-item">
                     <a href="product-list-detail?proCode=${mProduct.proCode}">

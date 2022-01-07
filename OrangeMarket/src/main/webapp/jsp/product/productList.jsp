@@ -33,31 +33,37 @@
 					<input type="hidden" name="addrPass" id="addrPass" value="${addrPass}">
 				</form>
 				<!-- 리스트 화면 -->
-				<ul class="pro-list">
-					<!-- 상품 리스트 -->
-					<c:forEach var="product" items="${list}">
- 						<li class="list-item"
-							onclick="location='product-list-detail?proCode=${product.proCode}'">
-							<a href="#"> <!-- 상품 이미지 -->
-								<figure class="pro-thumb">
-									<span class="pro-thumb-img">
-										<img src="<c:url value='/images/products/${product.imgs}'/>">
-									</span>
-									<span class="pro-detail-grade trust">${product.userLevel}</span>
-								</figure> <!-- 상품 이미지 --> 
-								
-								<!-- 상품 내용 및 상세 내용 -->
-								<div class="pro-detail">
-									<input type="hidden" name="proCode" id="proCode" value="${product.proCode}">
- 									<p class="pro-detail-tit">${product.title}</p>
-									<p class="pro-detail-price">${product.price} 원</p>
-									<p class="pro-detail-area">${product.addr}</p>
-								</div> <!-- 상품 내용 및 상세 내용 -->
-						</a>
-						</li>
-					</c:forEach>
-				</ul>
-	
+				<c:choose>
+					<c:when test="${empty list }">
+						등록된 제품이 없습니다.
+					</c:when>
+					<c:when test="${!empty list }">
+					<ul class="pro-list">
+						<!-- 상품 리스트 -->
+						<c:forEach var="product" items="${list}">
+	 						<li class="list-item"
+								onclick="location='product-list-detail?proCode=${product.proCode}'">
+								<a href="#"> <!-- 상품 이미지 -->
+									<figure class="pro-thumb">
+										<span class="pro-thumb-img">
+											<img src="<c:url value='/images/products/${product.imgs}'/>">
+										</span>
+										<span class="pro-detail-grade trust">${product.userLevel}</span>
+									</figure> <!-- 상품 이미지 --> 
+									
+									<!-- 상품 내용 및 상세 내용 -->
+									<div class="pro-detail">
+										<input type="hidden" name="proCode" id="proCode" value="${product.proCode}">
+	 									<p class="pro-detail-tit">${product.title}</p>
+										<p class="pro-detail-price">${product.price} 원</p>
+										<p class="pro-detail-area">${product.addr}</p>
+									</div> <!-- 상품 내용 및 상세 내용 -->
+							</a>
+							</li>
+						</c:forEach>
+					</ul>
+					</c:when>
+				</c:choose>
 			</div>
 			<!-- container end -->
 		</article>

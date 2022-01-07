@@ -4,6 +4,7 @@ import java.util.List;
 
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 import orange.service.MemberVO;
+import orange.service.PagingVO;
 import orange.service.ProductSubVO;
 import orange.service.ProductVO;
 
@@ -22,8 +23,8 @@ public interface ProductMapper {
 	List<?> selectCategoryList(ProductVO vo);
 	int updateProductHits(ProductVO vo);
 	
-	List<?> selectSellProductList(ProductVO vo);
-	List<?> selectBuyProductList(ProductVO vo);
+	List<ProductVO> selectSellProductList(PagingVO pvo);
+	List<ProductVO> selectBuyProductList(PagingVO pvo);
 
 	ProductVO selectProductDetail(ProductVO vo);
 
@@ -53,5 +54,8 @@ public interface ProductMapper {
 	
 	List<?> selectMyKeywordList(ProductVO pvo);
 	int selectMykeywrodCount(ProductVO pvo);
+	
+	int selectSellHistoryTotal(PagingVO pvo);
+	int selectBuyHistoryTotal(PagingVO pvo);
 	
 }

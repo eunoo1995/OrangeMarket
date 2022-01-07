@@ -30,9 +30,9 @@ public interface ProductService {
 	int updateProductHits(ProductVO vo);
 	
 	// 자신의 판매 제품 리스트
-	List<?> selectSellProductList(ProductVO vo);
+	List<ProductVO> selectSellProductList(PagingVO pvo);
 	// 구매 제품 리스트
-	List<?> selectBuyProductList(ProductVO vo);
+	List<ProductVO> selectBuyProductList(PagingVO pvo);
 	
 	// 판매 제품 상세보기 기능
 	ProductVO selectProductDetail(ProductVO vo);
@@ -78,6 +78,11 @@ public interface ProductService {
 	List<?> selectMyKeywordList(ProductVO pvo);
 	// 마이키워드 유무 확인용 갯수
 	int selectMykeywrodCount(ProductVO pvo);
+	
+	// 판매 목록 갯수 카운트
+	int selectSellHistoryTotal(PagingVO pvo);
+	// 구매 목록 갯수 카운트
+	int selectBuyHistoryTotal(PagingVO pvo);
 
 
 }

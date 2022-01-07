@@ -280,55 +280,84 @@
 	</select>
 	
 	<!-- 사용자의 판매 제품 리스트  -->
-	<select id="selectSellProductList" resultType="productVO">
-		SELECT
-			pro_code,
-			seller,
-			buyer,
-			pro_category_code,
-			title,
-			price,
-			status,
-			( select nik_name from member where user_id = p.seller) seller_nik,
-			nvl(buyer_nik, '없음') as buyer_nik,
-			imgs
-			
-		FROM
-			product p
-			
-		WHERE
-			seller = ${seller}
-		
-		ORDER BY
-			status DESC, rdate DESC
+	<select id="selectSellProductList" parameterType="pagingVO" resultType="egovMap">
+		SELECT b.* FROM	
+			(SELECT ROWNUM rn, a.* FROM
+				(SELECT
+					pro_code,
+					seller,
+					buyer,
+					pro_category_code,
+					title,
+					price,
+					status,
+					( select nik_name from member where user_id = p.seller) seller_nik,
+					nvl(buyer_nik, '없음') as buyer_nik,
+					imgs
+					
+				FROM
+					product p
+					
+				WHERE
+					seller = ${writer}
+				
+				ORDER BY
+					status DESC, rdate DESC  ) a ) b
+		WHERE rn BETWEEN #{startIndex} AND #{endIndex}	
 		
 	</select>
 	
-		<!-- 사용자의 구매 제품 리스트  -->
-	<select id="selectBuyProductList" resultType="productVO">
+	<!-- 판매 내역 토탈 갯수 -->
+	<select id="selectSellHistoryTotal" resultType="int">
 		SELECT
-			pro_code,
-			seller,
-			buyer,
-			pro_category_code,
-			title,
-			price,
-			status,
-			( select nik_name from member where user_id = p.seller) as seller_nik,
-			nvl(( select nik_name from member where user_id = ${buyer}), '없음') as buyer_nik,
-			imgs,
-			(SELECT count(*) FROM review WHERE pro_code = p.pro_code ) as review_cnt
-			
+			count(*)			
 		FROM
 			product p
 			
 		WHERE
-			buyer = ${buyer}
-		AND
-			status = 0
+			seller = ${writer}
+	</select>
+	
+		<!-- 사용자의 구매 제품 리스트  -->
+	<select id="selectBuyProductList" parameterType="pagingVO" resultType="egovMap">
 		
-		ORDER BY
-			status DESC, rdate DESC
+		SELECT b.* FROM	
+			(SELECT ROWNUM rn, a.* FROM
+				(SELECT
+					pro_code,
+					seller,
+					buyer,
+					pro_category_code,
+					title,
+					price,
+					status,
+					( select nik_name from member where user_id = p.seller) as seller_nik,
+					nvl(( select nik_name from member where user_id = ${writer}), '없음') as buyer_nik,
+					imgs,
+					(SELECT count(*) FROM review WHERE pro_code = p.pro_code ) as review_cnt
+					
+				FROM
+					product p
+					
+				WHERE
+					buyer = ${writer}
+				AND
+					status = 0
+				
+				ORDER BY
+					status DESC, rdate DESC  ) a ) b
+		WHERE rn BETWEEN #{startIndex} AND #{endIndex}
+	</select>
+	
+	<!-- 구매 갯수 카운트 -->
+	<select id="selectBuyHistoryTotal" resultType="int">
+		SELECT
+			count(*)			
+		FROM
+			product p
+			
+		WHERE
+			buyer = ${writer}
 	</select>
 	
 	<!-- 수정 위한 제품 데이터 보기 -->

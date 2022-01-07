@@ -52,8 +52,8 @@
 
 				
 				<tbody>
-<%-- 			<c:choose>
-				<c:when test="${page.total ne 0}"> --%>
+				<c:choose>
+				<c:when test="${page.total ne 0}"> 
 				<c:forEach var="buy" items="${buy}">
 					<tr>
 						<td>
@@ -74,24 +74,22 @@
 								<input type="hidden" name="proCode" id="proCode" value="${buy.proCode}">
 							</c:if>
 							<c:if test="${buy.reviewCnt eq 1}">평가완료</c:if>
-							
 						</td>
-						
 					</tr>
 				</c:forEach>	
 
-<%-- 				</c:when>
+	 				</c:when>
 				<c:when test="${page.total eq 0}">
 					<tr>
-						<th colspan="6">판매중인 제품이 없습니다.</th>
+						<th colspan="5">구매중인 제품이 없습니다.</th>
 					</tr>
 				</c:when>
-				</c:choose> --%>
+				</c:choose> 	
 				</tbody>
 				
 			</table>
 
-<%-- 			<article class="pager-wrap">
+	 			<article class="pager-wrap">
 				<ul class="pager">
 				<c:set var="before" value="${page.startPage-1}"/>
 				<c:set var="next" value="${page.endPage+1}"/>
@@ -112,7 +110,7 @@
 				<li><a href="buy-history?pageNo=${next}">&gt;</a></li>
 				</c:if>		
 				</ul>
-			</article> --%>
+			</article> 	
 
 		</div>
 		</form>

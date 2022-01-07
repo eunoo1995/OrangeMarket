@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import orange.service.ChatService;
 import orange.service.MemberService;
 import orange.service.MemberVO;
+import orange.service.PagingVO;
 import orange.service.ProductService;
 import orange.service.ProductSubVO;
 import orange.service.ProductVO;
@@ -318,40 +319,56 @@ public class ProductController {
 	
 	// 사용자의 제품 판매 리스트
 	@RequestMapping(value="/sell-history")
-	public String selectSellHistory(ProductVO vo, Model model, HttpSession session) throws Exception {
+	public String selectSellHistory(ProductVO vo, PagingVO pvo, Model model, HttpSession session) throws Exception {
 		if(session.getAttribute("sessionId") == null ) return "redirect:login";
 		int sessionId = (int) session.getAttribute("sessionId");
 		
 		vo.setSeller(sessionId);
 		
 		//리스트 총 갯수 카운트 구문 추가 작업
-		//페이징 추가 작업
+		pvo.setWriter(sessionId);
+		int total = productService.selectSellHistoryTotal(pvo);
+		int pageNo = pvo.getPageNo();
+		int pageUnit = 5;
 		
+		System.out.println(total);
 		
-		List<?> sell_list = productService.selectSellProductList(vo);
+		pvo = new PagingVO(total,pageNo,pageUnit);
+		pvo.setWriter(sessionId);
+		
+		List<ProductVO> sell_list = productService.selectSellProductList(pvo);
 		List<?> category_list = productService.selectCategoryList(vo);
 		
 		model.addAttribute("sell", sell_list);
 		model.addAttribute("category", category_list);
+		model.addAttribute("page", pvo);
 		
 		return "mypage/sellHistory";
 	}
 	
 	// 사용자의 제품 구매 리스트
 	@RequestMapping(value="/buy-history")
-	public String selectBuyHistory(ProductVO vo, Model model, HttpSession session) throws Exception {
+	public String selectBuyHistory(ProductVO vo, PagingVO pvo, Model model, HttpSession session) throws Exception {
 		if(session.getAttribute("sessionId") == null ) return "redirect:login";
 		int sessionId = (int) session.getAttribute("sessionId");
 		
 		vo.setBuyer(sessionId);
 		
 		//리스트 총 갯수 카운트 구문 추가 작업
-		//페이징 추가 작업
-		List<?> buy_list = productService.selectBuyProductList(vo);
+		pvo.setWriter(sessionId);
+		int total = productService.selectBuyHistoryTotal(pvo);
+		int pageNo = pvo.getPageNo();
+		int pageUnit = 5;
+		
+		pvo = new PagingVO(total,pageNo,pageUnit);
+		pvo.setWriter(sessionId);
+		
+		List<ProductVO> buy_list = productService.selectBuyProductList(pvo);
 		List<?> category_list = productService.selectCategoryList(vo);
 		
 		model.addAttribute("buy", buy_list);
 		model.addAttribute("category", category_list);
+		model.addAttribute("page", pvo);
 		
 		return "mypage/BuyHistory";
 	}
