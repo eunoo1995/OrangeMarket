@@ -8,7 +8,7 @@ function updateStatus(proCode) {
 
 	var statusConfirm = confirm('상태변경 시 수정이 불가능합니다.\n상태변경 하겠습니까?');
 	if (statusConfirm) { location = "update-product-status?proCode=" + proCode + "&status=" + selectValue; }
-	else {location = "sell-history";}
+	else { location = "sell-history"; }
 }
 
 /* SellHistory.jsp end */
@@ -318,6 +318,19 @@ $(function() {
 						}
 					});
 		 */
+	});
+
+	//신고 기능
+	$("#report").click(function() {
+		if ($("#userId").val() == "" || $("#userId").val() == null) {
+			alert("로그인이 필요한 기능입니다.");
+			return false;
+		} else if ($("#userId").val() == $("#seller").val()) {
+			alert("작성한 글은 신고할 수 없습니다.");
+			return false;
+		}
+		var proCode = $("#proCode").val();
+		location = "report-write?proCode=" + proCode;
 	});
 
 	/* productDetail.jsp end */

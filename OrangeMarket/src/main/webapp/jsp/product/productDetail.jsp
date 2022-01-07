@@ -18,31 +18,6 @@
 			</div>
 		</header>
 		
-		<script>
-		$(function(){
-			
-			
-			
-			
-			
-			});		
-			
-			//신고 기능
-			$("#report").click(function(){
-				if( $("#userId").val() == "" || $("#userId").val() == null ) {
-					alert("로그인이 필요한 기능입니다.");
-					return false;
-				} else if($ ("#userId").val() == $("#seller").val() ) {
-					alert("작성한 글은 신고할 수 없습니다.");
-					return false;
-				}
-				var proCode = $("#proCode").val();
-				location="report-write?proCode="+proCode;
-			});
-			
-		});
-		</script>
-
 		<!-- 상세 정보 화면 -->
 		<article class="pro-detail-wrap">
 			<!-- container -->
