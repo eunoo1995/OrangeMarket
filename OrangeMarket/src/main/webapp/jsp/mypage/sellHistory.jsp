@@ -20,21 +20,6 @@
 		</div>
 	</header>
 	
-	<script>
-		function updateStatus(proCode) {
-			// 제품 코드, 상태 값
-			var proCode = proCode;
-			var selectStat = document.getElementById("status");
-			var selectValue = selectStat.options[selectStat.selectedIndex].value;
-			
-			location = "update-product-status?proCode=" + proCode + "&status=" + selectValue;
-		}
-	
-		$(function(){
-			
-		});
-	</script>
-	
 	<article class="board-wrap">
 		<form name="frm" id="frm" method="post">
 		<!-- container -->
@@ -140,5 +125,7 @@
 <!-- 페이지 wraper end -->
 
 <!-- 푸터 -->
-<jsp:include page="/include/footer.jsp" flush="false" />
+<jsp:include page="/include/footer.jsp" flush="false">
+	<jsp:param name="jsName" value="product" />
+</jsp:include>
 <!-- 푸터 -->

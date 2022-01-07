@@ -20,88 +20,11 @@
 		
 		<script>
 		$(function(){
-			//관심 기능
-			$("#like").click(function(){
-				if($("#userId").val() == "") {
-					alert("로그인 후 이용해주세요.");
-					return false;
-				}
-				if($("#userId").val() == $("#seller").val()) {
-					alert("작성한 글은 관심 등록할 수 없습니다.");
-					return false;
-				} else {
-				var formdata = $("#frm").serialize();
-	
-					$.ajax({
-							type : "post",
-				  			url  : "like-product-save",
-				  			data : formdata,
-				  			datatype : "json",
-			  				success : function(data) {
-			  					if(data == "ok") { alert("등록 완료"); location.reload(); }
-			  					else if (data == "already") { alert("이미 등록하신 게시글 입니다."); return false; }
-				  			},
-				  			error : function (request, status, error){
-								alert("전송 실패");
-				  			}
-				  		});
-					}
-				});
 			
-			// 채팅 기능
-			$("#chat").click(function(){
-				if($("#userId").val() == "") {
-					alert("로그인 후 이용해주세요.");
-					return false;
-				}
-				if($("#userId").val() == $("#seller").val()) {
-					alert("본인과의 채팅은 불가능합니다.");
-					return false;
-				}
-				var formdata = $("#frm").serialize();
-		  		$.ajax({
-		  			type : "post",
-		  			url  : "create-chat",
-		  			data : formdata,
-		  			datatype : "json",
-		  			success : function(data) {
-		  				if(data == "exist") {
-		  					alert("채팅이 이미 존재합니다.");
-		  					return false;
-		  				} else if( data == "notAddr") {
-		  					alert("동네 인증 후 거래를 이용하실 수 있습니다.");
-		  					return false; 
-		  				}
-		  				location="chat?channel="+data;
-		  			},
-		  			error: function(request, status, error){
-		  				alert("code : " + request.status + "\n" 
-		  				    + "message : " + request.responseText + "\n" 
-		  				    + "error : " + error);
-		  		    }
-		  		});
-			});
 			
-			//시세 조회 기능
-			$("#avg-search").click(function(){
-				var formdata = $("#frm").serialize();
-				alert("avg-search");
-			/* 					
-			  		$.ajax({
-			  			type : "post",
-			  			url  : "like-product",
-			  			data : formdata,
-			  			processData : false,
-			  			contentType : false,
-			  			datatype : "json",
-			  			success : function(data) {
-		  					location='chat';
-			  			},
-			  			error : function (request, status, error){
-							alert("전송 실패");
-			  			}
-			  		});
-			 */
+			
+			
+			
 			});		
 			
 			//신고 기능

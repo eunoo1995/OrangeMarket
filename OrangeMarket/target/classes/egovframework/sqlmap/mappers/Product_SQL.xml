@@ -114,7 +114,8 @@
 		WHERE
 			user_id = ${userId}
 	</select>
-	
+
+	<!-- 지정한 키워드 물품 목록 리스트 (나의 관심 목록) -->	
 	<select id="selectMyKeywordList" resultType="productVO">
 		SELECT 
 			p.pro_code, p.imgs, p.title, p.price, p.keyword
@@ -130,8 +131,12 @@
             	p.status != '0'
             AND
                 p.keyword = mk.mykeyword
+            AND
+            	p.seller != ${userId}
 		    AND
 		    	mk.user_id = ${userId}
+		    	
+		    ORDER BY p.rdate DESC
 	</select>
 	
 	<!-- 전체 제품 판매 리스트 -->
@@ -293,6 +298,10 @@
 			
 		WHERE
 			seller = ${seller}
+		
+		ORDER BY
+			status DESC, rdate DESC
+		
 	</select>
 	
 		<!-- 사용자의 구매 제품 리스트  -->
@@ -317,6 +326,9 @@
 			buyer = ${buyer}
 		AND
 			status = 0
+		
+		ORDER BY
+			status DESC, rdate DESC
 	</select>
 	
 	<!-- 수정 위한 제품 데이터 보기 -->

@@ -20,20 +20,6 @@
 		</div>
 	</header>
 	
-	<script>
-		$(function() {
-			var proCode = $("#proCode").val();
-			
-			$("#good").click(function(){
-				location = "update-user-level?stat=good&proCode=" + proCode;
-			});
-			
-			$("#bad").click(function(){
-				location = "update-user-level?stat=bad&proCode=" + proCode;
-			});
-		});
-	</script>
-	
 	<article class="board-wrap">
 		<form name="frm" id="frm" method="post">
 		<!-- container -->
@@ -138,5 +124,7 @@
 <!-- 페이지 wraper end -->
 
 <!-- 푸터 -->
-<jsp:include page="/include/footer.jsp" flush="false" />
+<jsp:include page="/include/footer.jsp" flush="false">
+	<jsp:param name="jsName" value="product" />
+</jsp:include>
 <!-- 푸터 -->

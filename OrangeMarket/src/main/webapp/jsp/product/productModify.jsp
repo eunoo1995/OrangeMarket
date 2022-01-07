@@ -19,47 +19,6 @@
 			</div>
 		</header>
 		
-		<script type="text/javascript">
-				$(function(){
-					//작성 저장 ajax
-					$("#pro-btn-save").click(function(){
-					  		var formdata = new FormData(document.getElementById("frm-product"));
-					  		$.ajax({
-					  			type : "post",
-					  			url  : "product-modify-save",
-					  			data : formdata,
-					  			processData : false,
-					  			contentType : false,
-					  			datatype : "json", //성공여부(ok)
-					  			success : function(data) {
-					  					location = "product-list-detail?proCode=" + data;
-					  			},
-					  			error : function (request,status,error){
-					  		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					  			}
-					  		});
-					  	});
-				 //프로필 사진 미리보기 설정
-			      $("#imgs").click(function(){
-			         $("#product-img-file").click();
-			      });
-			      $("#product-img-file").on('change', function(){
-			          readURL(this);
-			      });
-				});
-				//프로필 사진 미리보기 설정
-				function readURL(input) {
-				       if (input.files && input.files[0]) {
-				          var reader = new FileReader();
-				          reader.onload = function (e) {
-				             $('#imgs').attr('src', e.target.result);
-				          }
-				          reader.readAsDataURL(input.files[0]);
-				          var URL = "productWrite.jsp?data=" + input.files[0];
-				       }
-				   }
-		</script>
-		
 		<div class="product-write-content">
 			<div class="product-write-content__head">
 				<p class="product-write-star1">* 필수항목</p>
@@ -208,7 +167,7 @@
 			</div>
 
 			<div class="btn-match">
-				<button class="btn btn-solid-point" id="pro-btn-save">저장</button>
+				<button class="btn btn-solid-point" id="pro-btn-modify">저장</button>
 				<button class="btn btn-solid" onclick="history.back();">취소</button>
 			</div>
 
