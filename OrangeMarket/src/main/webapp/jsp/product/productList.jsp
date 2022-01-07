@@ -35,7 +35,7 @@
 				<!-- 리스트 화면 -->
 				<c:choose>
 					<c:when test="${empty list }">
-						등록된 제품이 없습니다.
+						첫 상품을 등록해주세요!
 					</c:when>
 					<c:when test="${!empty list }">
 					<ul class="pro-list">

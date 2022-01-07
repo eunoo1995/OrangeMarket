@@ -84,6 +84,8 @@ public class OrangeController {
 				List<?> mykeyword_list = productService.selectMyKeywordList(pvo);
 				model.addAttribute("myKeywordList", mykeyword_list);
 			}
+			System.out.println(mykeyword_count);
+			model.addAttribute("mykeywordCount", mykeyword_count);
 		}
 		
 		model.addAttribute("recentList", recent_list);
