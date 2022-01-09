@@ -57,5 +57,8 @@ public interface ProductMapper {
 	
 	int selectSellHistoryTotal(PagingVO pvo);
 	int selectBuyHistoryTotal(PagingVO pvo);
+	List<?> selectLikeProductList(ProductVO pvo);
+	List<?> selectKeywordList(ProductVO vo);
+	List<?> selectProductPriceAvg(ProductVO vo);
 	
 }

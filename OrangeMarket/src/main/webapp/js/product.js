@@ -300,24 +300,9 @@ $(function() {
 
 	//시세 조회 기능
 	$("#avg-search").click(function() {
-		var formdata = $("#frm").serialize();
-		alert("avg-search");
-		/* 					
-					$.ajax({
-						type : "post",
-						url  : "like-product",
-						data : formdata,
-						processData : false,
-						contentType : false,
-						datatype : "json",
-						success : function(data) {
-							location='chat';
-						},
-						error : function (request, status, error){
-						alert("전송 실패");
-						}
-					});
-		 */
+		var w = window.open("about:blank","_blank");
+			w.location.href = "product-price-avg?keyword=" + $("#keyword").val();
+					
 	});
 
 	//신고 기능

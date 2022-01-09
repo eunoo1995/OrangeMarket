@@ -92,6 +92,41 @@
 	</insert>
 	
 	<!-- select -->
+	
+	<!-- 검색 기능 및 연관 상품 기능 -->
+	<select id="selectKeywordList" resultType="productVO">
+		SELECT
+			pro_code,
+			decode(status,1,'판매중',2,'예약중', 0, '거래완료') status,
+			title,
+			price,
+			addr,
+            keyword,
+			imgs,
+			(select 
+                CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
+                WHEN USER_LEVEL >= 40 THEN '일반회원' 
+                ELSE '주의회원' END
+             FROM
+                member
+            WHERE
+                user_id = p.seller) as user_level
+		FROM 
+			product p, mem_status m
+			
+		WHERE
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+            AND
+           		p.addr like '${addr}%'
+           	AND
+            	p.status != '0'
+			AND
+                p.keyword = '${keyword}'
+		ORDER BY
+			rdate DESC
+	</select>
 
 	<!-- 동네 인증 여부 가져오기 -->
 	<select id="selectAddrPass" parameterType="productVO" resultType="memberVO">
@@ -118,7 +153,20 @@
 	<!-- 지정한 키워드 물품 목록 리스트 (나의 관심 목록) -->	
 	<select id="selectMyKeywordList" resultType="productVO">
 		SELECT 
-			p.pro_code, p.imgs, p.title, p.price, p.keyword
+			p.pro_code, 
+			p.imgs, 
+			p.title, 
+			p.price, 
+			p.keyword,
+			(select 
+                CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
+                WHEN USER_LEVEL >= 40 THEN '일반회원' 
+                ELSE '주의회원' END
+             FROM
+                member
+            WHERE
+                user_id = p.seller) as p.user_level
+			
 		FROM
 		    product p, mykeyword mk, mem_status ms
 		WHERE
@@ -171,6 +219,38 @@
 		ORDER BY
 			rdate DESC
 			
+	</select>
+	
+	<!-- 동네별 관심순 리스트 -->
+	<select id="selectLikeProductList" resultType="productVO">
+		SELECT
+   			pro_code, 
+   			title, 
+   			price, 
+   			imgs,
+   			(select count(*) from like_product where pro_code = p.pro_code) like_cnt,
+   			(select 
+                CASE WHEN USER_LEVEL >= 70 THEN '신뢰회원' 
+                WHEN USER_LEVEL >= 40 THEN '일반회원' 
+                ELSE '주의회원' END
+             FROM
+                member m
+            WHERE
+                m.user_id = p.seller) as user_level
+		FROM
+		    product p, mem_status m
+			
+		WHERE
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+            AND
+           		p.addr like '${addr}%'
+           	AND
+            	p.status != '0'
+			
+		
+		ORDER BY like_cnt DESC
 	</select>
 	
 	<!-- 카테고리별 제품 리스트 표시 -->
@@ -396,6 +476,39 @@
 			
 		WHERE
 			pro_code = ${proCode}
+	</select>
+	
+	<!-- 시세조회 -->
+	<select id="selectProductPriceAvg" resultType="productVO">
+		SELECT
+			pro_code,
+            p.pro_category_code,
+			decode(status,1,'판매중',2,'예약중', 0, '거래완료') status,
+			title,
+			price,
+			addr,
+            keyword,
+            ( select nik_name from member where user_id = p.seller) seller_nik,
+            (SELECT count(*) FROM product p, mem_status m
+			WHERE
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+			AND
+                p.keyword = '${keyword}') like_cnt
+			
+		FROM 
+			product p, mem_status m
+			
+		WHERE
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+			AND
+                p.keyword = '${keyword}'
+                
+		ORDER BY
+			rdate DESC
 	</select>
 	
 	<!-- 글 작성 시 이미지 파일명에 적용할 숫자. 판매자가 등록한 게시글 카운트 후 증가하여 이미지 뒤에 붙이기 -->

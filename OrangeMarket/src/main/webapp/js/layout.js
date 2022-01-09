@@ -84,20 +84,22 @@ $(function() {
 
 	/* 검색 */
 	$('#headerSearchBtn').on('click', function() {
-		
+		var pre_data = $('#headerSearchText').val();
 		if($('#headerSearchText').val() == '') {
 			alert('검색어를 입력해주세요');
 			
 			return false;			
+		} else {
+			location = 	"product-list?keyword=" + pre_data;
 		}
 
-		var formData = {
+/*		var formData = {
 			'keyword': $('#headerSearchText').val().trim()
 		}
 
 		$.ajax({
 			type: 'POST',
-			url: '/search-confirm',
+			url: '/search-keyword',
 			data: formData,
 			dataType: 'text',
 			success: function(data) {
@@ -109,7 +111,7 @@ $(function() {
 			},
 			error: function() {
 			}
-		});
+		});*/
 	});
 
 });
