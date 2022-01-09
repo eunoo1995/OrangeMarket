@@ -61,21 +61,35 @@
     <article class="main-article">
         <div class="cont-inner">
 
-            <h2 class="main-cont-tit">우리 동네 추천 상품</h2>
+            <c:choose>
+				<c:when test="${empty likeList}">
+					<h2 class="main-cont-tit"><a href="#">첫 상품을 등록해주세요!</a></h2>
+				</c:when>
+				
+				<c:when test="${!empty likeList}">
+					<h2 class="main-cont-tit"><a href="product-list">인기 상품</a></h2>
+				</c:when>
+			</c:choose>
+            
 
             <ul class="main-pro-list">
+            	<c:forEach var="lProduct" items="${likeList}" end="4">
                 <li class="list-item">
-                    <a href="#">
+                    <a href="product-list-detail?proCode=${lProduct.proCode}">
                         <figure class="pro-thumb">
-                            <span class="pro-thumb-img"></span>
+                            <span class="pro-thumb-img">
+                            	<img src="<c:url value='/images/products/${lProduct.imgs}'/>">
+                            </span>
                         </figure>
 
                         <div class="pro-detail">
-                            <p class="pro-detail-tit">제품명</p>
-                            <p class="pro-detail-price">19,000원</p>
+                            <p class="pro-detail-tit">${lProduct.title }</p>
+                            <p class="pro-detail-price">${lProduct.price } 원</p>
                         </div>
                     </a>
                 </li>
+                </c:forEach>
+            </ul>
         </div>
     </article>
 	
@@ -88,7 +102,7 @@
         			  <h2 class="main-cont-tit">관심 키워드를 등록해주세요!</h2>
         		</c:when>
         		<c:when test="${empty myKeywordList}">
-        			  <h2 class="main-cont-tit">아직 상품이 없어요..</h2>
+        			  <h2 class="main-cont-tit">아직 관심 상품이 없어요..</h2>
         		</c:when>
         		<c:when test="${!empty myKeywordList}">
         			  <h2 class="main-cont-tit">회원님의 관심 상품은?</h2>

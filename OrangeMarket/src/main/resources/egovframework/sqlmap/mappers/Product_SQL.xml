@@ -173,6 +173,30 @@
 			
 	</select>
 	
+	<!-- 동네별 관심순 리스트 -->
+	<select id="selectLikeProductList" resultType="productVO">
+		SELECT
+   			pro_code, 
+   			title, 
+   			price, 
+   			imgs,
+   			(select count(*) from like_product where pro_code = p.pro_code) like_cnt
+		FROM
+		    product p, mem_status m
+			
+		WHERE
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+            AND
+           		p.addr like '${addr}%'
+           	AND
+            	p.status != '0'
+			
+		
+		ORDER BY like_cnt DESC
+	</select>
+	
 	<!-- 카테고리별 제품 리스트 표시 -->
 	<select id="selectProductCategoryList" resultType="egovMap">
 		SELECT

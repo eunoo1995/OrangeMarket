@@ -218,4 +218,10 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectBuyHistoryTotal(pvo);
 	}
 
+	@Override
+	public List<?> selectLikeProductList(ProductVO pvo) { // 동네별 관심순 리스트 출력
+		// TODO Auto-generated method stub
+		return productDAO.selectLikeProductList(pvo);
+	}
+
 }

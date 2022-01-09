@@ -84,5 +84,8 @@ public interface ProductService {
 	// 구매 목록 갯수 카운트
 	int selectBuyHistoryTotal(PagingVO pvo);
 
+	// 동네별 관심순 리시트 정렬
+	List<?> selectLikeProductList(ProductVO pvo);
+
 
 }

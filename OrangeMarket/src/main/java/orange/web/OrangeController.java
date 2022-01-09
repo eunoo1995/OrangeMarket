@@ -61,6 +61,7 @@ public class OrangeController {
 	public String showMainPage(ProductVO pvo, MemberVO mvo, Model model, HttpSession session) throws Exception {
 		// 최근 제품 표시용 리스트
 		List<?> recent_list = productService.selectProductList(pvo);
+		List<?> like_list = productService.selectLikeProductList(pvo);
 		
 		// 세션 발생 시 동네 인증 여부 확인
 		if( session.getAttribute("sessionId") != null ) { 
@@ -77,6 +78,7 @@ public class OrangeController {
 			
 			//등록된 판매 제품 목록 리스트
 			recent_list = productService.selectProductList(pvo);
+			like_list = productService.selectLikeProductList(pvo);
 			
 			int mykeyword_count = productService.selectMykeywrodCount(pvo);
 			
@@ -89,6 +91,7 @@ public class OrangeController {
 		}
 		
 		model.addAttribute("recentList", recent_list);
+		model.addAttribute("likeList", like_list);
 		model.addAttribute("addrPass", mvo.getAddrPass());
 		
 		return "main/main";
