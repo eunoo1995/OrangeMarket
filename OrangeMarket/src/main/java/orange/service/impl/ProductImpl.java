@@ -230,4 +230,10 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectKeywordList(vo);
 	}
 
+	@Override
+	public List<?> selectProductPriceAvg(ProductVO vo) {
+		// TODO Auto-generated method stub
+		return productDAO.selectProductPriceAvg(vo);
+	}
+
 }

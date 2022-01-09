@@ -478,6 +478,39 @@
 			pro_code = ${proCode}
 	</select>
 	
+	<!-- 시세조회 -->
+	<select id="selectProductPriceAvg" resultType="productVO">
+		SELECT
+			pro_code,
+            p.pro_category_code,
+			decode(status,1,'판매중',2,'예약중', 0, '거래완료') status,
+			title,
+			price,
+			addr,
+            keyword,
+            ( select nik_name from member where user_id = p.seller) seller_nik,
+            (SELECT count(*) FROM product p, mem_status m
+			WHERE
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+			AND
+                p.keyword = '${keyword}') like_cnt
+			
+		FROM 
+			product p, mem_status m
+			
+		WHERE
+				m.user_id = p.seller
+            AND
+          		m.mem_state_code = '1'
+			AND
+                p.keyword = '${keyword}'
+                
+		ORDER BY
+			rdate DESC
+	</select>
+	
 	<!-- 글 작성 시 이미지 파일명에 적용할 숫자. 판매자가 등록한 게시글 카운트 후 증가하여 이미지 뒤에 붙이기 -->
 	<select id="selectSellerCount" resultType="int">
 		SELECT 

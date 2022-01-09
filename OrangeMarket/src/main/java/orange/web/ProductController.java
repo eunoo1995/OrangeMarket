@@ -438,4 +438,15 @@ public class ProductController {
 		return "redirect:buy-history";
 	}
 	
+	@RequestMapping(value="/product-price-avg")
+	public String selectProductPriceAvg(ProductVO vo, Model model) throws Exception {
+		
+		List<?> list = productService.selectProductPriceAvg(vo);
+		List<?> category = productService.selectCategoryList(vo);
+		
+		model.addAttribute("category", category);
+		model.addAttribute("list", list);
+		
+		return "product/productPriceAvg";
+	}
 }

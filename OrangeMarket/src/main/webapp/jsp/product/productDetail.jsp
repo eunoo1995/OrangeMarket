@@ -38,6 +38,7 @@
 					<input type="hidden" name="seller" id="seller" value="${product.seller }">
 					<input type="hidden" name="sellerNik" id="sellerNik" value="${product.sellerNik }">
 					<input type="hidden" name="userId" id="userId" value="${sessionId}">
+					<input type="hidden" name="keyword" id="keyword" value="${product.keyword }">
 				</form>
 				
 				<!-- 상품 내용 및 상세 내용 -->
