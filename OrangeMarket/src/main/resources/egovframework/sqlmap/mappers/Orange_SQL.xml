@@ -28,9 +28,7 @@
 		         , a.*
 		    FROM (
 		        SELECT keyword
-		             , COUNT(keyword) cnt
 		        FROM keyword
-		        GROUP BY keyword
 		        ORDER BY cnt DESC
 		    ) a
 		) b
@@ -46,7 +44,7 @@
 		        SELECT keyword
 		        FROM keyword
 		        WHERE srch_ip=#{srchIp} 
-		        ORDER BY rdate DESC
+		        ORDER BY srch_date DESC
 		    ) a
 		) b
 		WHERE rn BETWEEN 1 AND 6
@@ -82,7 +80,8 @@
 	</insert>
 	
 	<update id="updateKeyword" parameterType="keywordVO">
-		UPDATE keyword SET srch_date=sysdate
+		UPDATE keyword SET cnt=cnt+1
+				, srch_date=sysdate
 			WHERE srch_ip=#{srchIp} 
 				AND keyword=#{keyword}
 	</update>

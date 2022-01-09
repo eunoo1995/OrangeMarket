@@ -125,7 +125,6 @@ public class OrangeController {
 			searchObj.put("myKeyword", myKeyword);
 			
 		}
-		System.out.println(searchObj.toString());
 
 		return searchObj;
 	}
