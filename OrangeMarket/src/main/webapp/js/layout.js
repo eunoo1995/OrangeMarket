@@ -22,7 +22,6 @@ $(function() {
 			data: '',
 			dataType: 'json',
 			success: function(data) {
-				console.log(data);
 				setJsonList(data);
 			},
 			error: function() {
@@ -38,10 +37,10 @@ $(function() {
 		// 인기 검색어 삽입		
 		var popListEl = '';
 		if (popSearchJson.length == 0) {
-			popListEl += nonData;
+			popListEl = nonData;
 		} else {
 			for (var i = 0; i < popSearchJson.length; i++) {
-				popListEl += '<li><span class="num">' + popSearchJson[i].rn + '</span><span>' + popSearchJson[i].keyword + '</span></li>';
+				popListEl += '<li><span class="num">' + popSearchJson[i].rn + '.</span><span>' + popSearchJson[i].keyword + '</span></li>';
 			}
 		}
 		$('#keywordPopList').html(popListEl);
@@ -49,7 +48,7 @@ $(function() {
 		// 최근 검색어 삽입		
 		var recListEl = '';
 		if (recSearchJson.length == 0) {
-			recListEl += nonData;
+			recListEl = nonData;
 		} else {
 			for (var i = 0; i < recSearchJson.length; i++) {
 				recListEl += '<li><span>' + recSearchJson[i].keyword + '</span></li>';
@@ -61,9 +60,10 @@ $(function() {
 		if ($data.myKeyword) {
 			var mySearchJson = $data.myKeyword;
 			var myListEl = '';
-
-			if (recSearchJson.length == 0) {
-				myListEl += nonData;
+			
+			if (mySearchJson.length == 0) {
+				myListEl = nonData;
+				
 			} else {
 				for (var i = 0; i < mySearchJson.length; i++) {
 					myListEl += '<li><span>' + mySearchJson[i].mykeyword + '</span></li>';
@@ -84,12 +84,16 @@ $(function() {
 
 	/* 검색 */
 	$('#headerSearchBtn').on('click', function() {
+		
+		if($('#headerSearchText').val() == '') {
+			alert('검색어를 입력해주세요');
+			
+			return false;			
+		}
 
 		var formData = {
 			'keyword': $('#headerSearchText').val().trim()
 		}
-
-		console.log(formData);
 
 		$.ajax({
 			type: 'POST',

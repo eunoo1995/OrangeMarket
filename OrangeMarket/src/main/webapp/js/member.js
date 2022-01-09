@@ -235,13 +235,9 @@ if (loginForm) {
 					if (data == 'err') {
 						alert('이메일 혹은 비밀번호가 일치하지 않습니다.');
 					} else if (data == 'ok') {
-						//뒤로갈 히스토리가 있으면,
-						if (document.referrer && document.referrer.indexOf("localhost:8070/main") < 0) {
-							history.back();
-						} else {
-							// 히스토리가 없으면,
+						
 							location.replace("/main");
-						}
+						
 					}
 				},
 				error: function() {
