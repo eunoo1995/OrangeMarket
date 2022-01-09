@@ -147,21 +147,23 @@
 					<!-- 연관 상품 표시 -->
 					<div class="related-text">
 						<!-- 실제 구현 시 키워드는 표시하지 않고 연관 상품만 표시 -->
-						<p class="rel-title">연관상품 (키워드 : ${product.keyword })</p>
+						<p class="rel-title">연관상품</p>
 					</div>
 	
 					<!-- 연관 상품 리스트  -->
 					<ul class="pro-list related-list">
-						<c:forEach var="i" begin="1" end="5">
+						<c:forEach var="kProduct" items="${keywordList }" end="5">
 							<!--  연관 상품 -->
 							<li class="list-item"><a
-								href="productListDetail.do?category=category"> <!-- 상품 이미지 -->
+								href="product-list-detail?proCode=${kProduct.proCode }"> <!-- 상품 이미지 -->
 									<figure class="pro-thumb">
-										<span class="pro-thumb-img"><img
-											src="<c:url value='/images/product/org_goods/test_goods0${i}.jpeg'/>"></span>
-									</figure> <!-- 상품 내용 및 상세 내용 -->
+										<span class="pro-thumb-img">
+											<img src="<c:url value='/images/products/${kProduct.imgs}'/>">
+										</span>
+										<span class="pro-detail-grade trust">${kProduct.userLevel}</span>
+									</figure> <!-- 상품 이미지 -->  <!-- 상품 내용 및 상세 내용 -->
 									<div class="pro-detail">
-										<p class="pro-detail-tit">제품명</p>
+										<p class="pro-detail-tit">${kProduct.title}</p>
 									</div> <!-- 상품 내용 및 상세 내용 -->
 							</a></li>
 						</c:forEach>

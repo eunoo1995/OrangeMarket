@@ -224,4 +224,10 @@ public class ProductImpl extends EgovAbstractServiceImpl implements ProductServi
 		return productDAO.selectLikeProductList(pvo);
 	}
 
+	@Override
+	public List<?> selectKeywordList(ProductVO vo) { // 연관상품 및 검색 기능
+		// TODO Auto-generated method stub
+		return productDAO.selectKeywordList(vo);
+	}
+
 }

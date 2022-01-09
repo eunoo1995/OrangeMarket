@@ -33,19 +33,10 @@ public class ProductController {
 	// 제품 리스트 표시 및 상세 보기 기능
 	@RequestMapping(value="/product-list")
 	public String productList(ProductVO vo, MemberVO mvo, Model model, HttpSession session) throws Exception {
-		String category = "전체 목록";
-		
-		// 카테고리 미선택 시
-		if(vo.getProCategoryCode() == 0) { 
-			model.addAttribute("category", category);
+		if(vo.getKeyword() != null) {
+			List<?> list = productService.selectKeywordList(vo);
 			
-			if(session.getAttribute("sessionId") == null) {
-				//등록된 판매 제품 목록 리스트
-				List<?> list = productService.selectProductList(vo);
-				model.addAttribute("list", list);
-				
-				System.out.println("세션 없음");
-			} else {
+			if(session.getAttribute("sessionId") != null) {
 				int sessionId = (int) session.getAttribute("sessionId");
 				vo.setUserId(sessionId);
 				
@@ -53,45 +44,80 @@ public class ProductController {
 				String addr = productService.selectMemberAddr(vo);
 				vo.setAddr(addr);
 				
-				//등록된 판매 제품 목록 리스트
-				List<?> list = productService.selectProductList(vo);
+				//검색 판매 제품 목록 리스트
+				list = productService.selectKeywordList(vo);
 				
 				//동네 인증 여부 가져오기
 				mvo = productService.selectAddrPass(vo);
 				
-				model.addAttribute("list", list);
 				model.addAttribute("userId", sessionId);
 				model.addAttribute("addrPass", mvo.getAddrPass());
-				
 			}
-		} else { // 카테고리 선택 시
-			category = productService.selectProCategory(vo);
-			model.addAttribute("category", category);
+			model.addAttribute("keyword", vo.getKeyword());
+			model.addAttribute("list", list);
 			
-			if(session.getAttribute("sessionId") == null) {
-				//등록된 판매 제품 목록 리스트
-				List<?> list = productService.selectProductCategoryList(vo);
-				model.addAttribute("list", list);
+		} else {
+		
+			String category = "전체 목록";
+			
+			// 카테고리 미선택 시
+			if(vo.getProCategoryCode() == 0) { 
+				model.addAttribute("category", category);
 				
-				System.out.println("세션 없음");
-			} else {
-				int sessionId = (int) session.getAttribute("sessionId");
-				vo.setUserId(sessionId);
+				if(session.getAttribute("sessionId") == null) {
+					//등록된 판매 제품 목록 리스트
+					List<?> list = productService.selectProductList(vo);
+					model.addAttribute("list", list);
+					
+					System.out.println("세션 없음");
+				} else {
+					int sessionId = (int) session.getAttribute("sessionId");
+					vo.setUserId(sessionId);
+					
+					// 멤버 테이블에서 주소 가져오기
+					String addr = productService.selectMemberAddr(vo);
+					vo.setAddr(addr);
+					
+					//등록된 판매 제품 목록 리스트
+					List<?> list = productService.selectProductList(vo);
+					
+					//동네 인증 여부 가져오기
+					mvo = productService.selectAddrPass(vo);
+					
+					model.addAttribute("list", list);
+					model.addAttribute("userId", sessionId);
+					model.addAttribute("addrPass", mvo.getAddrPass());
+					
+				}
+			} else { // 카테고리 선택 시
+				category = productService.selectProCategory(vo);
+				model.addAttribute("category", category);
 				
-				// 멤버 테이블에서 주소 가져오기
-				String addr = productService.selectMemberAddr(vo);
-				vo.setAddr(addr);
-				
-				//등록된 판매 제품 목록 리스트
-				List<?> list = productService.selectProductCategoryList(vo);
-				
-				//동네 인증 여부 가져오기
-				mvo = productService.selectAddrPass(vo);
-				
-				model.addAttribute("list", list);
-				model.addAttribute("userId", sessionId);
-				model.addAttribute("addrPass", mvo.getAddrPass());
-				
+				if(session.getAttribute("sessionId") == null) {
+					//등록된 판매 제품 목록 리스트
+					List<?> list = productService.selectProductCategoryList(vo);
+					model.addAttribute("list", list);
+					
+					System.out.println("세션 없음");
+				} else {
+					int sessionId = (int) session.getAttribute("sessionId");
+					vo.setUserId(sessionId);
+					
+					// 멤버 테이블에서 주소 가져오기
+					String addr = productService.selectMemberAddr(vo);
+					vo.setAddr(addr);
+					
+					//등록된 판매 제품 목록 리스트
+					List<?> list = productService.selectProductCategoryList(vo);
+					
+					//동네 인증 여부 가져오기
+					mvo = productService.selectAddrPass(vo);
+					
+					model.addAttribute("list", list);
+					model.addAttribute("userId", sessionId);
+					model.addAttribute("addrPass", mvo.getAddrPass());
+					
+				}
 			}
 		}
 		
@@ -104,7 +130,6 @@ public class ProductController {
 		int chatCnt = productService.selectChatCount(vo);
 		int likeAllCnt = productService.selectLikeAllCount(vo);
 	
-		// 세션값이 없으면 로그인 화면으로 리턴
 		if(session.getAttribute("sessionId") == null) {
 			productService.updateProductHits(vo);
 			model.addAttribute("userId", null);
@@ -130,6 +155,9 @@ public class ProductController {
 			
 			model.addAttribute("product", vo);
 		}
+		
+		List<?> keyword_list = productService.selectKeywordList(vo);
+		model.addAttribute("keywordList", keyword_list);
 		
 		return "product/productDetail";
 	}

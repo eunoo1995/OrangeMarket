@@ -40,11 +40,12 @@
             	<c:forEach var="rProduct" items="${recentList}" end="4">
                 <li class="list-item">
                     <a href="product-list-detail?proCode=${rProduct.proCode}">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img">
-                            	<img src="<c:url value='/images/products/${rProduct.imgs}'/>">
-                            </span>
-                        </figure>
+                       <figure class="pro-thumb">
+										<span class="pro-thumb-img">
+											<img src="<c:url value='/images/products/${rProduct.imgs}'/>">
+										</span>
+										<span class="pro-detail-grade trust">${rProduct.userLevel}</span>
+									</figure> 
 
                         <div class="pro-detail">
                             <p class="pro-detail-tit">${rProduct.title }</p>
@@ -76,11 +77,12 @@
             	<c:forEach var="lProduct" items="${likeList}" end="4">
                 <li class="list-item">
                     <a href="product-list-detail?proCode=${lProduct.proCode}">
-                        <figure class="pro-thumb">
-                            <span class="pro-thumb-img">
-                            	<img src="<c:url value='/images/products/${lProduct.imgs}'/>">
-                            </span>
-                        </figure>
+                       <figure class="pro-thumb">
+										<span class="pro-thumb-img">
+											<img src="<c:url value='/images/products/${lProduct.imgs}'/>">
+										</span>
+										<span class="pro-detail-grade trust">${lProduct.userLevel}</span>
+									</figure> 
 
                         <div class="pro-detail">
                             <p class="pro-detail-tit">${lProduct.title }</p>
@@ -117,10 +119,11 @@
                 <li class="list-item">
                     <a href="product-list-detail?proCode=${mProduct.proCode}">
                         <figure class="pro-thumb">
-                            <span class="pro-thumb-img">
-                            	<img src="<c:url value='/images/products/${mProduct.imgs}'/>">
-                            </span>
-                        </figure>
+										<span class="pro-thumb-img">
+											<img src="<c:url value='/images/products/${mProduct.imgs}'/>">
+										</span>
+										<span class="pro-detail-grade trust">${mProduct.userLevel}</span>
+									</figure> 
 
                         <div class="pro-detail">
                             <p class="pro-detail-tit">${mProduct.title }</p>

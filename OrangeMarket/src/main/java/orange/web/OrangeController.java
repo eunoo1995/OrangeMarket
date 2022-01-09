@@ -56,7 +56,9 @@ public class OrangeController {
 
 		return "dept/deptList";
 	}
+	
 
+	
 	@RequestMapping(value="/main")
 	public String showMainPage(ProductVO pvo, MemberVO mvo, Model model, HttpSession session) throws Exception {
 		// 최근 제품 표시용 리스트
@@ -96,7 +98,7 @@ public class OrangeController {
 		
 		return "main/main";
 	}
-
+	
 	@RequestMapping(value = "/search-list")
 	@ResponseBody
 	public Map<String, Object> searchList(HttpSession session) throws Exception {
@@ -104,12 +106,12 @@ public class OrangeController {
 		MemberVO vo = new MemberVO();
 		MyKeywordVO mykvo = new MyKeywordVO();
 		KeywordVO keyVo = new KeywordVO(); 
+		ProductVO proVo = new ProductVO();
 				
 		String userIp = getUserIp();
 		keyVo.setSrchIp(userIp);
 		
 		Map<String, Object> searchObj = new HashMap<String, Object>();
-
 
 		// 인기 검색어 가져오기 
 		List<?> popularKeyword = orangeService.selectPopularKeywordList();

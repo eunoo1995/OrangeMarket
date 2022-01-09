@@ -87,5 +87,7 @@ public interface ProductService {
 	// 동네별 관심순 리시트 정렬
 	List<?> selectLikeProductList(ProductVO pvo);
 
+	// 키워드 관련으로 리스트 출력 (검색 관련기능도 동일)
+	List<?> selectKeywordList(ProductVO vo);
 
 }

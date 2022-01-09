@@ -15,7 +15,14 @@
 		<!-- 타이틀 및 메뉴 -->
 		<header class="sub-page-head">
 			<div class="cont-inner">
-				<h2 class="sub-page-title">${category}</h2>
+				<c:choose>
+					<c:when test="${!empty category}">
+						<h2 class="sub-page-title">${category}</h2>
+					</c:when>
+					<c:when test="${empty category}">
+						<h2 class="sub-page-title">'${keyword }' 검색결과</h2>
+					</c:when>
+				</c:choose>
 			</div>
 		</header>
 		
