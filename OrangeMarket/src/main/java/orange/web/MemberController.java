@@ -48,8 +48,9 @@ public class MemberController {
 	@RequestMapping(value = "/login")
 	public String login(HttpSession session, Model model) throws Exception {
 
-		if (session.getAttribute("sessionId") != null)
+		if (session.getAttribute("sessionId") != null) {
 			return "redirect:/main";
+		}
 
 		String isRemChcked = "";
 		String remEmailVal = (String) session.getAttribute("REMEBER_USER_EMAIL");
@@ -59,13 +60,15 @@ public class MemberController {
 		}
 
 		model.addAttribute("remEmail", isRemChcked);
+		
+		
 
 		return "member/login";
 	}
 
 	@RequestMapping(value = "/login-confirm")
 	@ResponseBody
-	public String loginConfirm(HttpSession session, HttpServletResponse response, MemberVO vo,
+	public String loginConfirm(HttpSession session, HttpServletRequest request, HttpServletResponse response, MemberVO vo,
 			@RequestParam(value = "remEmail") String remEmail) throws Exception {
 
 		String msg = "";
@@ -78,18 +81,19 @@ public class MemberController {
 			return msg;
 		} else {
 			vo = memberService.selectMemberLogin(vo);
+			int update = memberService.updateLoginDate(vo);
 
 			// 이메일 저장이 체크된 경우
 			if (remEmail.equals("true")) {
 				session.setAttribute("REMEBER_USER_EMAIL", vo.getEmail());
-				session.setMaxInactiveInterval(60 * 60 * 24 * 3); // 유지시간 설정(7일)
 			}
 
 			// 세션 생성
 			session.setAttribute("sessionId", vo.getUserId());
 			session.setMaxInactiveInterval(600); // 세션 유지시간 설정 (10분: 60*10)
-
 			session.setAttribute("USER_NIK", vo.getNikName());
+			
+//			response.sendRedirect(request.getHeader("referer"));
 
 			msg = "ok";
 		}

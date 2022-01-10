@@ -28,7 +28,9 @@
 		         , a.*
 		    FROM (
 		        SELECT keyword
+		             , COUNT(keyword) cnt
 		        FROM keyword
+		        GROUP BY keyword
 		        ORDER BY cnt DESC
 		    ) a
 		) b
