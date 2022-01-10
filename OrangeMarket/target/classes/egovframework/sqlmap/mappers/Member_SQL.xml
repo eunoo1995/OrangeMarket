@@ -191,5 +191,10 @@
 		UPDATE member SET user_pw=#{userPw}
 			WHERE email=#{email}
 	</update>
+	
+	<update id="updateLoginDate" parameterType="java.lang.Integer">
+		UPDATE member SET udate=sysdate
+		WHERE user_id=#{userId}
+	</update>
 
 </mapper>

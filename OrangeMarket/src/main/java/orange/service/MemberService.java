@@ -39,4 +39,6 @@ public interface MemberService {
 
 	MemberVO selectJoinMember(MemberVO vo) throws Exception;
 
+	int updateLoginDate(MemberVO vo);
+
 }
