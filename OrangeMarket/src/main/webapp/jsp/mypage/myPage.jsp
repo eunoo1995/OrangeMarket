@@ -16,6 +16,10 @@ $(function(){
 			location = "mypage-addr-pass?userId="+userId;
 		}
 	});
+	$("#mypageModifyInfo").click(function(){
+		var userId = $("#userId").val();
+		location = "mypage-modify-info?userId="+userId;
+	});
 });
 </script>
 <!-- 페이지 wrapper -->
@@ -86,7 +90,7 @@ $(function(){
 							<c:set var="hide" value="style='color:#fff; border:0px'"/>
 						</c:if>	
 							<input type="button" ${hide} id="mypageAddrPass" value="동네인증하기"> 
-							<input type="button" id="" value="정보수정"> 
+							<input type="button" id="mypageModifyInfo" value="정보수정"> 
 							<input type="button" id="myPage-withdrawal-btn" value="회원탈퇴">
 						</div>
 					</td>

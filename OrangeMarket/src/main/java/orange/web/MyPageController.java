@@ -137,4 +137,14 @@ public class MyPageController {
 		
 		return "redirect:mypage";
 	}
+	
+	// 회원정보 수정 화면
+	@RequestMapping(value="mypage-modify-info")
+	public String modifyInfo(MemberVO vo, Model model) throws Exception {
+		vo = myPageService.selectMemberInfo(vo);
+		
+		model.addAttribute("vo",vo);
+		return "mypage/modifyInfo";
+	}
+	
 }
