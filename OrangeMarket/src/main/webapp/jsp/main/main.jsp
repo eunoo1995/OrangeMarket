@@ -104,7 +104,7 @@
         			  <h2 class="main-cont-tit">관심 키워드를 등록해주세요!</h2>
         		</c:when>
         		<c:when test="${empty myKeywordList}">
-        			  <h2 class="main-cont-tit">아직 관심 상품이 없어요..</h2>
+        			  <h2 class="main-cont-tit">아직 등록된 관심 상품이 없어요..</h2>
         		</c:when>
         		<c:when test="${!empty myKeywordList}">
         			  <h2 class="main-cont-tit">회원님의 관심 상품은?</h2>
