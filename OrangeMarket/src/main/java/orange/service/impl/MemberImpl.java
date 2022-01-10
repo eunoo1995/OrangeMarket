@@ -106,5 +106,11 @@ public class MemberImpl extends EgovAbstractServiceImpl implements MemberService
 		return memberDAO.selectJoinMember(vo);
 	}
 
+	@Override
+	public int updateLoginDate(MemberVO vo) {
+		return memberDAO.updateLoginDate(vo);
+	}
+
+	
 
 }

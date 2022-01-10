@@ -48,5 +48,7 @@ public interface MemberMapper {
 
 	MemberVO selectJoinMember(MemberVO vo);
 
+	int updateLoginDate(MemberVO vo);
+
 
 }

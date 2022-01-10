@@ -165,12 +165,12 @@
              FROM
                 member
             WHERE
-                user_id = p.seller) as p.user_level
+                user_id = p.seller) as user_level
 			
 		FROM
 		    product p, mykeyword mk, mem_status ms
 		WHERE
-				ms.user_id = p.seller
+				p.seller = ms.user_id
             AND
           		ms.mem_state_code = '1'
             AND
@@ -179,10 +179,10 @@
             	p.status != '0'
             AND
                 p.keyword = mk.mykeyword
-            AND
-            	p.seller != ${userId}
 		    AND
 		    	mk.user_id = ${userId}
+		    AND
+                p.seller != ${userId}
 		    	
 		    ORDER BY p.rdate DESC
 	</select>
