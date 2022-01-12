@@ -40,7 +40,8 @@ $(function() {
 			popListEl = nonData;
 		} else {
 			for (var i = 0; i < popSearchJson.length; i++) {
-				popListEl += '<li><span class="num">' + popSearchJson[i].rn + '.</span><span>' + popSearchJson[i].keyword + '</span></li>';
+				popListEl += '<li><span class="num">' + popSearchJson[i].rn + '.</span>'
+					+ '<a  href="product-list?keyword='+ popSearchJson[i].keyword +'"><span>' + popSearchJson[i].keyword + '</span></a></li>';
 			}
 		}
 		$('#keywordPopList').html(popListEl);
@@ -51,7 +52,7 @@ $(function() {
 			recListEl = nonData;
 		} else {
 			for (var i = 0; i < recSearchJson.length; i++) {
-				recListEl += '<li><span>' + recSearchJson[i].keyword + '</span></li>';
+				recListEl += '<li><a href="product-list?keyword='+ recSearchJson[i].keyword +'">' + recSearchJson[i].keyword + '</a></li>';
 			}
 		}
 		$('#keywordRecList').html(recListEl);
@@ -66,7 +67,7 @@ $(function() {
 				
 			} else {
 				for (var i = 0; i < mySearchJson.length; i++) {
-					myListEl += '<li><span>' + mySearchJson[i].mykeyword + '</span></li>';
+					myListEl += '<li><a href="product-list?keyword='+ mySearchJson[i].keyword +'">' + mySearchJson[i].mykeyword + '</a></li>';
 				}
 			}
 			$('#keywordMyList').html(myListEl);

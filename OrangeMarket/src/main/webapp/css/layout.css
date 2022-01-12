@@ -80,7 +80,7 @@ img {
 	float: left;
 }
 
-.header-search button {
+.header-search #headerSearchBtn {
 	border: 2px solid #ffda77;
 	width: 60px;
 	height: 40px;
@@ -116,6 +116,11 @@ img {
 	display: block;
 }
 
+.header-search__keywords button {
+	width: auto;
+	height: auto;
+}
+
 .header-search__keywords .search-keyword-tit {
 	font-size: 16px;
 	font-weight: bold;
@@ -142,7 +147,28 @@ img {
 	margin-bottom: 0;
 }
 
-#keywordPopList span {
+#keywordPopList a {
+	padding: 0;
+    margin: 0;
+    background: none;
+    border: 0;
+    width: auto;
+    border-radius: 0;
+    height: auto;
+    float: inherit;
+    line-height: 1;
+    text-align: left;
+    transition-duration: 0.1s;
+}
+
+#keywordPopList a:focus,
+#keywordPopList a:hover {
+	color: #ffb319;
+}
+
+
+#keywordPopList span,
+#keywordPopList button {
 	display: inline-block;
 	vertical-align: top;
 }
@@ -167,18 +193,25 @@ img {
 	color: #666;
 }
 
-.header-search__keywords .tag-list span {
+.header-search__keywords .tag-list a {
 	display: inline-block;
 	max-width: 120px;
 	border-radius: 20px;
-	padding: 4px 10px;
+	padding: 0 10px 2px;
 	text-align: center;
 	background-color: #eee;
 	color: #111;
+	line-height: 24px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+
+.header-search__keywords .tag-list a:focus,
+.header-search__keywords .tag-list a:hover {
+	background-color: #fbf6f0;
+}
+
 
 .gnb, .util-menu, .log-menu {
 	position: absolute;
