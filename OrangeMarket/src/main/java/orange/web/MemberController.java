@@ -93,6 +93,12 @@ public class MemberController {
 			session.setMaxInactiveInterval(600); // 세션 유지시간 설정 (10분: 60*10)
 			session.setAttribute("USER_NIK", vo.getNikName());
 			
+			String referer = request.getHeader("Referer");
+			
+			System.out.println(referer);
+			
+			//request.getSession().setAttribute("redirectURI", referer);
+			
 //			response.sendRedirect(request.getHeader("referer"));
 
 			msg = "ok";

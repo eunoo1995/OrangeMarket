@@ -83,35 +83,46 @@ $(function() {
 
 
 	/* 검색 */
-	$('#headerSearchBtn').on('click', function() {
-		var pre_data = $('#headerSearchText').val();
-		if($('#headerSearchText').val() == '') {
+	$('#headerSearchText').on('keydown', function(e) {
+		if (e.key == 'Enter'){
+			$('#headerSearchBtn').click();
+
+			return false;
+    	}
+	});
+	
+	$('#headerSearchBtn').click(function(e) {
+		var pre_data = $('#headerSearchText').val().trim();
+		
+		if(pre_data == '') {
 			alert('검색어를 입력해주세요');
 			
 			return false;			
 		} else {
-			location = 	"product-list?keyword=" + pre_data;
-		}
-
-/*		var formData = {
-			'keyword': $('#headerSearchText').val().trim()
-		}
-
-		$.ajax({
-			type: 'POST',
-			url: '/search-keyword',
-			data: formData,
-			dataType: 'text',
-			success: function(data) {
-				if (data == 'ok') {
-					console.log(data);
-				} else if (data == 'err') {
-					alert('다시 시도해주세요')
-				}
-			},
-			error: function() {
+			var formData = {
+				'keyword': pre_data
 			}
-		});*/
+			
+			$.ajax({
+				type: 'POST',
+				url: '/search-confirm',
+				data: formData,
+				dataType: 'json',
+				success: function(data) {
+					if (data == 'ok') {
+						location = 	"product-list?keyword=" + pre_data;
+						
+					} else if (data == 'err') {
+						alert('다시 시도해주세요')
+					}
+				},
+				error: function() {
+					alert('전송실패');
+				}
+			});
+		}
+
+		
 	});
 
 });
